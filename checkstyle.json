@@ -1,0 +1,123 @@
+{
+  "defaultSeverity": "INFO",
+  "checks": [
+    {
+      "type": "EmptyLines",
+      "props": {
+        "requireEmptyLineAfterClass": false,
+        "requireEmptyLineAfterInterface": false,
+        "requireEmptyLineAfterAbstract": false,
+        "max": 1
+      }
+    },
+    {
+      "type": "UnusedImport",
+      "props": {
+        "severity": "WARNING"
+      }
+    },
+    {
+      "type": "StringLiteral",
+      "props": {
+        "policy": "onlySingle",
+        "allowException": true,
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "LeftCurly",
+      "props": {
+        "severity": "WARNING",
+        "option": "eol",
+        "ignoreEmptySingleline": true,
+        "tokens": [
+            "CLASS_DEF",
+            "ENUM_DEF",
+            "ABSTRACT_DEF",
+            "TYPEDEF_DEF",
+            "INTERFACE_DEF",
+            "FUNCTION",
+            "FOR",
+            "IF",
+            "WHILE",
+            "SWITCH",
+            "TRY",
+            "CATCH",
+            "REIFICATION",
+            "ARRAY_COMPREHENSION"
+        ]
+      }
+    },
+    {
+      "type": "MultipleVariableDeclarations",
+      "props": {
+        "severity": "WARNING"
+      }
+    },
+    {
+      "type": "SimplifyBooleanReturn",
+      "props": {
+        "severity": "WARNING"
+      }
+    },
+    {
+      "type": "UnusedLocalVar"
+    },
+    {
+      "type": "Spacing",
+      "props": {
+        "severity": "INFO",
+        "spaceIfCondition": "should",
+        "spaceForLoop": "should",
+        "spaceWhileLoop": "should",
+        "spaceSwitchCase": "should",
+        "spaceCatch": "should",
+        "spaceAroundBinop": true,
+        "noSpaceAroundUnop": true,
+        "ignoreRangeOperator": true
+      }
+    },
+    {
+      "type": "TrailingWhitespace",
+      "props": {
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "RedundantModifier",
+      "props": {
+        "enforcePublicPrivate": false,
+        "enforcePublic": false,
+        "enforcePrivate": false,
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "Final",
+      "props": {
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "LineLength",
+      "props": {
+        "severity": "ERROR",
+        "max": 120
+      }
+    },
+    {
+      "type": "NeedBraces",
+      "props": {
+        "allowSingleLineStatement": true,
+        "tokens": [
+          "FOR",
+          "IF",
+          "ELSE_IF",
+          "WHILE",
+          "DO_WHILE"
+        ],
+        "severity": "INFO"
+      }
+    }
+  ]
+}
