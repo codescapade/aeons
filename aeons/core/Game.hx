@@ -9,7 +9,7 @@ class Game {
 
 typedef GameOptions = {
   var title: String;
-  var startScene: Scene;
+  var startScene: Class<Scene>;
   var ?preload: Bool;
   var ?designWidth: Int;
   var ?designHeight: Int;
