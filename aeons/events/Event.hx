@@ -1,7 +1,8 @@
 package aeons.events;
 
 /**
- * `Event` base class.
+ * `Event` base class. Each event derived from this class has an object pool and a `get` function to get
+ * an event from the pool and initialize it. Those are automatically added with the build macro below.
  */
  @:autoBuild(aeons.core.Macros.buildEvent())
 class Event {
