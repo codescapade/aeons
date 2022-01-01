@@ -1,8 +1,8 @@
 package aeons.core;
 
 class Entity {
-
-  function new() {
-
+  public final id: Int;
+  public function new(id: Int) {
+    this.id = id;
   }
 }
