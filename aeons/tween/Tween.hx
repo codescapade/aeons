@@ -1,8 +1,11 @@
 package aeons.tween;
 
+import aeons.graphics.Color;
+import aeons.graphics.ColorEx;
 import aeons.tween.easing.Ease;
 import aeons.tween.easing.Easing;
 import aeons.utils.Pool;
+
 
 /**
  * The `Tween` class is used to tween values over time.
@@ -70,14 +73,21 @@ class Tween {
   var paused: Bool;
 
   /**
+   * True if this is tweening a color.
+   */
+  var isColor: Bool;
+
+  /**
   * Get an instance from the pool.
   * @param target The target to tween.
   * @param duration How long the tween takes to complete in seconds.
   * @param properties The properties on the target to tween.
+  * @param isColor Is the property a color. They are different from normal values.
+  * @return The initialized tween.
   */
-  static function get(target: Dynamic, duration: Float, properties: Dynamic): Tween {
+  static function get(target: Dynamic, duration: Float, properties: Dynamic, isColor: Bool): Tween {
     final tween = pool.get();
-    tween.reset(target, duration, properties);
+    tween.reset(target, duration, properties, isColor);
 
     return tween;
   }
@@ -99,10 +109,12 @@ class Tween {
   * @param target The target to tween.
   * @param duration How long the tween takes to complete in seconds.
   * @param properties The properties on the target to tween.
+  * @param isColor Is the property a color. They are different from normal values.
   */
-  public function reset(target: Dynamic, duration: Float, properties: Dynamic) {
+  public function reset(target: Dynamic, duration: Float, properties: Dynamic, isColor: Bool) {
     this.target = target;
     this.duration = duration;
+    this.isColor = isColor;
     createDataList(target, properties);
     ease = Easing.linear;
     onComplete = null;
@@ -225,10 +237,21 @@ class Tween {
   * @param data The tween info.
   */
   function setField(data: TweenData) {
-    var value = ease(time, data.start, data.change, duration);
-    if (complete) {
-      value = data.end;
+    if (isColor) {
+      final factor = ease(time, 0, 1, duration);
+      final start: Color = cast data.start;
+      final end: Color = cast data.end;
+      var color = ColorEx.interpolate(start, end, factor);
+      if (complete) {
+        color = end;
+      }
+      Reflect.setProperty(target, data.propertyName, color);
+    } else {
+      var value = ease(time, data.start, data.change, duration);
+      if (complete) {
+        value = data.end;
+      }
+      Reflect.setProperty(target, data.propertyName, value);
     }
-    Reflect.setProperty(target, data.propertyName, value);
   }
 }
