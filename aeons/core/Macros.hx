@@ -3,7 +3,6 @@ package aeons.core;
 #if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
-import haxe.macro.Type;
 
 using haxe.macro.Tools;
 
@@ -29,7 +28,7 @@ class Macros {
     final path = classType.pack.concat([classType.name]);
 
     // Create the 'new Pool(EventClass)'; expresion to initialize the static pool.
-    final newPoolExpr = macro new aeons.utils.Pool($p{ path });
+    final newPoolExpr = macro new aeons.utils.Pool($p{path});
 
     var putFunction: Field;
     var hasGet = false;
@@ -66,23 +65,25 @@ class Macros {
 
       final paramFields: Array<FunctionArg> = [typeParam];
       for (field in fields) {
+        if (field.meta != null) {
+          for (tag in field.meta) {
+            trace(tag.name);
+          }
+        }
         switch (field.kind) {
           case FVar(fType, fExpr):
             if (!field.access.contains(AStatic)) {
               // Make var fields public properties.
               field.access = [APublic];
               field.kind = FProp('default', 'null', fType, fExpr);
-
               // Get the class as parameter types for the get function.
-              final classType = fType.toType().getClass();
-              paramFields.push({ name: field.name, type: TPath({ name: classType.name, pack: classType.pack }) });
+              paramFields.push({ name: field.name, type: fType });
             }
-
           case FProp(get, set, fType, fExpr):
             if (!field.access.contains(AStatic) && field.access.contains(APublic)) {
+
               // Get the class as parameter types for the get function.
-              var classType = fType.toType().getClass();
-              paramFields.push({ name: field.name, type: TPath({ name: classType.name, pack: classType.pack }) });
+              paramFields.push({ name: field.name, type: fType });
             }
 
           case _:
@@ -93,7 +94,7 @@ class Macros {
       final assignExprs: Array<Expr> = [];
       for (param in paramFields) {
         final name = param.name;
-        assignExprs.push(macro { this.$name = $i{ name }; });
+        assignExprs.push(macro { this.$name = $i{name}; });
       }
 
       // Create the init function that sets the new values for the event.
@@ -103,13 +104,13 @@ class Macros {
         pos: Context.currentPos(),
         kind: FFun({
           args: paramFields,
-          expr: macro $b{assignExprs}
+          expr: macro $b{ assignExprs }
         })
       });
 
       final paramNames: Array<Expr> = [];
       for (param in paramFields) {
-        paramNames.push(macro $i{ param.name });
+        paramNames.push(macro $i{param.name});
       }
 
       // Create the static get function. This has all the non static fields as parameters and calls
@@ -122,7 +123,7 @@ class Macros {
           args: paramFields,
           expr: macro {
             var event = pool.get();
-            event.init($a{ paramNames });
+            event.init($a{paramNames});
 
             return event;
           },
@@ -152,7 +153,7 @@ class Macros {
       switch (putFunction.kind) {
         case FFun(func):
           final expr = macro { pool.put(this); };
-          func.expr = macro $b{ [func.expr, expr] };
+          func.expr = macro $b{[func.expr, expr]};
         case _:
       }
     }

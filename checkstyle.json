@@ -43,7 +43,6 @@
             "SWITCH",
             "TRY",
             "CATCH",
-            "REIFICATION",
             "ARRAY_COMPREHENSION"
         ]
       }
