@@ -1,11 +1,16 @@
 package aeons.core;
 
+import aeons.events.EventEmitter;
+import aeons.math.Random;
+import aeons.utils.TimeStep;
+import aeons.audio.Audio;
+import aeons.graphics.RenderTarget;
 import kha.Scheduler;
 import aeons.events.SceneEvent;
 import kha.Framebuffer;
 import haxe.Timer;
-import kha.Assets;
 import kha.System;
+import aeons.assets.Assets;
 
 class Game {
 
@@ -14,6 +19,18 @@ class Game {
   var loadFinished: Void->Void;
 
   var updateRate: Int;
+
+  var renderTarget: RenderTarget;
+
+  var audio: Audio;
+
+  var timeStep: TimeStep;
+
+  var random: Random;
+
+  var events: EventEmitter;
+
+  var assets: Assets;
 
   public function new(options:GameOptions) {
     final designWidth = options.designWidth == null ? 800 : options.designWidth;
@@ -35,7 +52,7 @@ class Game {
       },
     }, (_) -> {
       if (options.preload != null && options.preload) {
-        Assets.loadEverything(preloadComplete);
+        kha.Assets.loadEverything(preloadComplete);
       } else {
         // Without the timer the callback doesn't get called properly.
         Timer.delay(() -> {

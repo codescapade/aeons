@@ -20,9 +20,10 @@ class Tweens {
    * @param target The target to tween.
    * @param duration The duration in seconds.
    * @param properties The properties of the target class to tween.
+   * @param isColor Is the property a color.
    */
-  public function create(target: Dynamic, duration: Float, properties: Dynamic): Tween {
-    final tween = Tween.get(target, duration, properties);
+  public function create(target: Dynamic, duration: Float, properties: Dynamic, isColor = false): Tween {
+    final tween = Tween.get(target, duration, properties, isColor);
     tweens.push(tween);
 
     return tween;
