@@ -1,37 +1,105 @@
 package aeons.core;
 
+import aeons.assets.Assets;
+import aeons.audio.Audio;
+import aeons.core.Scene.SceneRefs;
 import aeons.events.EventEmitter;
+import aeons.events.SceneEvent;
+import aeons.input.Input;
+import aeons.graphics.RenderTarget;
 import aeons.math.Random;
 import aeons.utils.TimeStep;
-import aeons.audio.Audio;
-import aeons.graphics.RenderTarget;
-import kha.Scheduler;
-import aeons.events.SceneEvent;
-import kha.Framebuffer;
+
 import haxe.Timer;
+
+import kha.Framebuffer;
+import kha.Scaler;
+import kha.Scheduler;
 import kha.System;
-import aeons.assets.Assets;
 
+/**
+ * The `Game` class is use to start Aeons. You create a new instance of it to start it.
+ */
 class Game {
+  /**
+   * Global debug draw flag.
+   */
+  public static var debugDraw = false;
 
-  var display: Display;
-
-  var loadFinished: Void->Void;
-
+  /**
+   * The update refresh rate in frames per second.
+   */
   var updateRate: Int;
 
+  /**
+   * The main render target.
+   */
   var renderTarget: RenderTarget;
 
-  var audio: Audio;
-
-  var timeStep: TimeStep;
-
-  var random: Random;
-
-  var events: EventEmitter;
-
+  /**
+   * Asset manager reference.
+   */
   var assets: Assets;
 
+  /**
+   * Audio manager reference.
+   */
+  var audio: Audio;
+
+  /**
+   * Event emitter reference.
+   */
+  var events: EventEmitter;
+
+  /**
+   * Random number generator reference.
+   */
+  var random: Random;
+
+  /**
+   * Time step reference.
+   */
+  var timeStep: TimeStep;
+
+  /**
+   * Input manager reference.
+   */
+  var input: Input;
+
+  /**
+   * The scene that is active.
+   */
+  var currentScene: Scene;
+
+  /**
+   * The index in the scenes array for the current scene.
+   */
+  var currentSceneIndex = 0;
+
+  /**
+   * Display reference.
+   */
+  final display: Display;
+
+  /**
+   * The scene stack.
+   */
+  final scenes: Array<Scene> = [];
+
+  /**
+   * The first scene in the game.
+   */
+  final startScene: Class<Scene>;
+
+  /**
+   * Callback when the game has finished loading.
+   */
+  final loadFinished: Void->Void;
+
+  /**
+   * Game constructor.
+   * @param options Start options.
+   */
   public function new(options:GameOptions) {
     final designWidth = options.designWidth == null ? 800 : options.designWidth;
     final designHeight = options.designHeight == null ? 600 : options.designHeight;
@@ -40,9 +108,11 @@ class Game {
     final windowHeight = options.windowHeight == null ? designHeight : options.windowHeight;
     updateRate = options.updateFrequency == null ? kha.Display.primary.frequency : options.updateFrequency;
     loadFinished = options.loadFinished;
+    startScene = options.startScene;
 
     display = new Display(designWidth, designHeight);
 
+    // Start Kha.
     System.start({
       title: options.title,
       width: windowWidth,
@@ -62,57 +132,179 @@ class Game {
     });
   }
 
+  /**
+   * Setup the game when Kha has finished loading.
+   */
   function preloadComplete() {
     display.scaleToWindow();
 
+    renderTarget = new RenderTarget(display.viewWidth, display.viewHeight);
+
+    audio = new Audio();
+    assets = new Assets();
+    events = new EventEmitter();
+    timeStep = new TimeStep();
+    random = new Random();
+    input = new Input(events);
+
+    events.pushSceneList();
+
+    // Setup the scene change listeners.
+    events.on(SceneEvent.PUSH, pushScene, true, 0, true);
+    events.on(SceneEvent.POP, pushScene, true, 0, true);
+    events.on(SceneEvent.REPLACE, pushScene, true, 0, true);
+
+    createScene(startScene, null);
+
+    // Setup kha callbacks.
     System.notifyOnApplicationState(toForeground, willResume, willPause, toBackground, shutdown);
     Scheduler.addTimeTask(update, 0, 1.0 / updateRate);
-
     System.notifyOnFrames(render);
+
+    if (loadFinished != null) {
+      loadFinished();
+    }
   }
 
+  /**
+   * Called at the specified update frequency or same as frame update.
+   */
   function update() {
-    
+    timeStep.update();
+    currentScene.update(timeStep.dt);
   }
 
+  /**
+   * Called every frame.
+   * @param frames List of frame buffers.
+   */
   function render(frames: Array<Framebuffer>) {
-    
+    timeStep.render();
+
+    // Render the scene below the current scene if the current scene is a sub scene.
+    if (currentScene.isSubScene && currentSceneIndex > 0) {
+      scenes[currentSceneIndex - 1].render(renderTarget);
+    }
+    currentScene.render(renderTarget);
+
+    /**
+     * Render the main renderTarget to the screen.
+     */
+    final mainBuffer = frames[0].g2;
+    mainBuffer.color = White;
+    mainBuffer.begin();
+    mainBuffer.imageScaleQuality = High;
+    Scaler.scale(renderTarget.image, frames[0], System.screenRotation);
+    mainBuffer.end();
   }
 
+  /**
+   * Called when Kha will pause.
+   */
   function willPause() {
-
+    currentScene.willPause();
   }
 
+  /**
+   * Called when Kha will resume.
+   */
   function willResume() {
-
+    currentScene.willResume();
   }
 
+  /**
+   * Called when Kha goes to the background.
+   */
   function toBackground() {
-
+    currentScene.toBackground();
   }
 
+  /**
+   * Called when Kha goes to the foreground.
+   */
   function toForeground() {
-
+    timeStep.reset();
+    currentScene.toForeground();
   }
 
-  function shutdown() {
+  /**
+   * Called when kha shuts down.
+   */
+  function shutdown() {}
 
-  }
-
+  /**
+   * Pop a scene from the stack. Does nothing if there is only one scene in the stack.
+   * @param event The scene event.
+   */
   function popScene(event: SceneEvent) {
+    event.canceled = true;
+    if (scenes.length > 1) {
+      scenes.pop().cleanup();
+      events.popSceneList();
 
+      currentSceneIndex--;
+      currentScene = scenes[currentSceneIndex];
+      currentScene.willResume();
+    }
   }
 
+  /**
+   * Push a scene to the stack. This pauses the current scene.
+   * @param event The scene event with the new scene type and user data.
+   */
   function pushScene(event: SceneEvent) {
+    event.canceled = true;
+    currentScene.willPause();
+    currentSceneIndex++;
 
+    events.pushSceneList();
+    createScene(event.sceneType, event.userData);
   }
 
+  /**
+   * Replace the current scene. This removes the current scene and cleans it up.
+   * @param event The scene event with the new scene type and user data.
+   */
   function replaceScene(event: SceneEvent) {
+    event.canceled = true;
+    if (event.clearAll) {
+      while (scenes.length > 0) {
+        scenes.pop().cleanup();
+        events.popSceneList();
+      }
 
+      events.resetIndex();
+      currentSceneIndex = 0;
+    } else {
+      scenes.pop().cleanup();
+      events.popSceneList();
+    }
+
+    events.pushSceneList();
+    createScene(event.sceneType, event.userData);
   }
 
-  function createScene(scene: Class<Scene>, userData: Dynamic) {
+  /**
+   * Create a new scene instance.
+   * @param sceneType The scene type to instantiate.
+   * @param userData Data to transfer between scenes.
+   */
+  function createScene(sceneType: Class<Scene>, userData: Dynamic) {
+    // All the references that can be used in the scene.
+    final sceneRefs: SceneRefs = {
+      assets: assets,
+      audio: audio,
+      display: display,
+      events: events,
+      random: random,
+      timeStep: timeStep,
+      userData: userData,
+    };
 
+    final scene = Type.createInstance(sceneType, [sceneRefs]);
+    scenes.push(scene);
+    currentScene = scene;
+    scene.init();
   }
 }
 

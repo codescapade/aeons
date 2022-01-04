@@ -144,4 +144,21 @@ class EventEmitter {
       }
     }
   }
+
+  @:allow(aeons.core.Game)
+  function pushSceneList() {
+    sceneHandlers.push(new Map<String, Array<EventHandler>>());
+    sceneIndex++;
+  }
+
+  @:allow(aeons.core.Game)
+  function popSceneList() {
+    sceneHandlers.pop().clear();
+    sceneIndex--;
+  }
+
+  @:allow(aeons.core.Game)
+  function resetIndex() {
+    sceneIndex = -1;
+  }
 }
