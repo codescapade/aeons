@@ -24,6 +24,7 @@ class Component {
   var tweens: Tweens;
   var timers: Timers;
   var timeStep: TimeStep;
+  var entities: Entities;
 
   public function cleanup() {}
 
@@ -37,6 +38,19 @@ class Component {
     tweens = refs.tweens;
     timers = refs.timers;
     timeStep = refs.timeStep;
+    entities = refs.entities;
+  }
+
+  public inline function getComponent<T: Component>(componentType: Class<T>): T {
+    return entities.getComponent(entityId, componentType);
+  }
+
+  public inline function hasComponent(componentType: Class<Component>): Bool {
+    return entities.hasComponent(entityId, componentType);
+  }
+
+  public inline function hasComponents(componentTypes: Array<Class<Component>>): Bool {
+    return entities.hasComponents(entityId, componentTypes);
   }
 
   function get_requiredComponents(): Array<Class<Component>> {

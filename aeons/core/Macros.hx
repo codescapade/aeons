@@ -3,9 +3,13 @@ package aeons.core;
 #if macro
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import haxe.macro.Type;
 
 using haxe.macro.Tools;
 
+/**
+ * The build system macros are inspired by Cog https://github.com/AustinEast/cog.
+ */
 class Macros {
   /**
    * @:autobuild function for the event classes.
@@ -25,6 +29,7 @@ class Macros {
     // The event complex type.
     final eventType = Context.getLocalType().toComplexType();
 
+    // The full path to the class.
     final path = classType.pack.concat([classType.name]);
 
     // Create the 'new Pool(EventClass)'; expresion to initialize the static pool.
@@ -44,7 +49,7 @@ class Macros {
           }
 
         // Ignore everything else.
-        case _:
+        default:
       }
     }
 
@@ -64,12 +69,8 @@ class Macros {
           params: [TPType(eventType)] })};
 
       final paramFields: Array<FunctionArg> = [typeParam];
+      // TODO: Make optional fields optional parameters.
       for (field in fields) {
-        if (field.meta != null) {
-          for (tag in field.meta) {
-            trace(tag.name);
-          }
-        }
         switch (field.kind) {
           case FVar(fType, fExpr):
             if (!field.access.contains(AStatic)) {
@@ -86,7 +87,7 @@ class Macros {
               paramFields.push({ name: field.name, type: fType });
             }
 
-          case _:
+          default:
         }
       }
 
@@ -154,11 +155,280 @@ class Macros {
         case FFun(func):
           final expr = macro { pool.put(this); };
           func.expr = macro $b{[func.expr, expr]};
-        case _:
+
+        default:
       }
     }
 
     return fields;
+  }
+
+  /**
+   * Check if a type already exsits.
+   * @param typeName The type to check.
+   * @return True if the type exists.
+   */
+  static function typeExists(typeName: String): Bool {
+    try {
+      if (Context.getType(typeName) != null) {
+        return true;
+      }
+    } catch (error: String) {
+
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if one class is a subclass of another.
+   * @param sub The sub class.
+   * @param parent The parent class to match.
+   * @return True if the sub class is derived from the parent class.
+   */
+  static function isSubClass(sub: ClassType, parent: ClassType): Bool {
+    if (sub.superClass == null) {
+      return false;
+    }
+
+    if (sub.superClass.t.get().name != parent.name) {
+      return isSubClass(sub.superClass.t.get(), parent);
+    }
+
+    return true;
+  }
+
+  /**
+   * Macro to build the bundle types in the system classes.
+   * @return The updated system fields.
+   */
+  static function buildSystem(): Array<Field> {
+    final fields = Context.getBuildFields();
+    var constructor: Field;
+    var cleanup: Field;
+
+    // Check if a constructor or cleanup function already exists.
+    for (field in fields) {
+      switch (field.kind) {
+        case FFun(func):
+          if (field.name == 'new') {
+            constructor = field;
+          }
+
+          if (field.name == 'cleanup') {
+            cleanup = field;
+          }
+
+        default:
+      }
+    }
+
+    // Create a constructor if it doesn't exist.
+    if (constructor == null) {
+      constructor = {
+        name: 'new',
+        pos: Context.currentPos(),
+        access: [APrivate],
+        kind: FFun({
+          args: [{name: 'refs', type: TPath({name: 'SystemRefs', pack: ['aeons', 'core']})}],
+          expr: macro {super(refs);},
+          ret: macro: Void
+        })
+      };
+      fields.push(constructor);
+    }
+
+    // Create a cleanup function if it doesn't exist.
+    if (cleanup == null) {
+      cleanup = {
+        name: 'cleanup',
+        pos: Context.currentPos(),
+        access: [AOverride, APublic],
+        kind: FFun({
+          args: [],
+          expr: macro {super.cleanup();},
+          ret: macro: Void
+        })
+      };
+      fields.push(cleanup);
+    }
+
+    for (field in fields) {
+      switch (field.kind) {
+        case FVar(fType, fExpr):
+
+          // Check if the field is a Bundle type field. If not skip this field.
+          switch (fType) {
+            case ComplexType.TPath(typePath):
+              if (typePath.name != 'Bundle') {
+                continue;
+              }
+
+            default:
+          }
+
+          final fieldName = field.name;
+          // Set the field type to `BundleList<BundleOfType>`.
+          field.kind = FieldType.FVar(macro: aeons.core.BundleList<$fType>, fExpr);
+
+          final classType = fType.toType().getClass();
+          final typePath = {
+            name: classType.name,
+            pack: classType.pack
+          };
+
+          // Get the fields of the created bundle. This will have the components for that bundle.
+          // With these we can add the listeners for these components in the system.
+          final bundleFields = fType.toType().getClass().fields.get();
+          var componentClasses: Array<String> = [];
+          for (bundleField in bundleFields) {
+            componentClasses.push(bundleField.type.getClass().module);
+          }
+
+          // Initialize the bundleList in the constructor and add listeners for the components in the bundles.
+          switch (constructor.kind) {
+            case FFun(o):
+              final constructorExprs = [o.expr];
+              // initialize the bundleList at the end of the system constructor.
+              final initBundleExpr = macro { $i{fieldName} = new aeons.core.BundleList<$fType>(); };
+              constructorExprs.push(initBundleExpr);
+
+              for (component in componentClasses) {
+                final listenerExpr = macro {
+                  // Add event listener.
+                  events.on($v{component} + '_added', (event: aeons.events.ComponentEvent) -> {
+                    // Check if the entity has all required components.
+                    if (event.entity.hasBundleComponents($v{componentClasses})) {
+                      // Check if the entity i not already in the bundleList.
+                      if (!$i{fieldName}.hasEntity(event.entity)) {
+                        var b = new $typePath(event.entity);
+                        $i{fieldName}.addBundle(b);
+                      }
+                    }
+                  });
+                }
+                constructorExprs.push(listenerExpr);
+              }
+
+              // set the constructor expressions to the newly added lines.
+              o.expr = macro $b{constructorExprs};
+            case _:
+          }
+
+        default:
+      }
+    }
+
+    return fields;
+  }
+
+  /**
+   * Create a new bundle type.
+   * @return The created bundle type.
+   */
+  static function buildBundle(): ComplexType {
+    return switch (Context.getLocalType()) {
+      case TInst(_.get() => {name: 'Bundle'}, params):
+        buildBundleClass(params);
+      default:
+        throw false;
+    }
+  }
+
+  /**
+   * Build bundle class type from the parameters. 
+   * @param params <Position, Velocity, etc.>.
+   * @return The newly created type.
+   */
+  static function buildBundleClass(params: Array<Type>): ComplexType {
+    final names: Array<String> = [];
+    for (param in params) {
+      // Get the last part of the path which is the class name.
+      // example 'aeons.core.Game'. result is 'Game'.
+      final name = param.getClass().name.split('.').pop();
+      names.push(name);
+    }
+
+    // Create a name for the bundle class using all component names together with 'Bundle' in front.
+    // Bundle<Position, Velocity> will create class BundlePositionVelocity.
+    var paramNames = names.join('');
+    var name = 'Bundle$paramNames';
+
+    trace(name);
+    // Only add a new class if it does not exist yet.
+    if (!typeExists('aeons.bundles.$name')) {
+      var pos = Context.currentPos();
+      var fields:Array<Field> = [];
+      var constructorExprs:Array<Expr> = [];
+      var regex = ~/(?<!^)([A-Z])/g;
+
+      // Add an Expr to get the 'components' to the constructor
+      constructorExprs.push(macro {
+        this.entity = entity;
+      });
+
+      // Loop through the params and add them to the Node's fields
+      for (param in params) {
+        var paramClass = param.getClass();
+
+        var componentClass = Context.getType('aeons.core.Component').getClass();
+        if (!isSubClass(paramClass, componentClass)) {
+          throw('Class `${paramClass.name}` does not extend `aeons.core.Component`.');
+        }
+
+        // Make the param name snake_case
+        var paramName = '';
+        var testName = paramClass.name;
+        while (regex.match(testName)) {
+          paramName += regex.matchedLeft() + '_' + regex.matched(1);
+          testName = regex.matchedRight();
+        }
+        paramName += testName;
+        paramName = paramName.toLowerCase();
+
+        // Add the Component to the Node's fields
+        fields.push({
+          name: paramName,
+          pos: pos,
+          kind: FVar(param.toComplexType()),
+          access: [APublic]
+        });
+
+        var componentPath = paramClass.pack.concat([paramClass.name]);
+        if (componentPath.length <= 1) componentPath.insert(0, paramClass.module);
+
+        // Add an expression to get the component in the Node's constructor
+        constructorExprs.push(macro this.$paramName = entity.getComponent($p{componentPath}));
+      }
+
+      // Create the Constructor
+      fields.push({
+        name: 'new',
+        access: [APublic],
+        pos: pos,
+        kind: FFun({
+          args: [{name: 'entity', type: TPath({name: 'Entity', pack: ['aeons', 'core']})}],
+          expr: macro $b{constructorExprs},
+          ret: macro:Void
+        })
+      });
+
+      // Create the new bundle type.
+      Context.defineType({
+        pack: ['aeons', 'bundles'],
+        name: name,
+        pos: pos,
+        params: [],
+        kind: TDClass({
+          pack: ['aeons', 'core'],
+          name: 'BundleBase',
+        }),
+        fields: fields
+      });
+    }
+
+    // Return the path to the new type.
+    return TPath({pack: ['aeons', 'bundles'], name: name, params: []});
   }
 }
 #end

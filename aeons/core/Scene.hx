@@ -65,6 +65,23 @@ class Scene {
    */
   final random: Random;
 
+  final entities: Entities;
+
+  /**
+   * All systems that are in the scene.
+   */
+  var systemMap = new Map<String, System>();
+
+  /**
+   * List of systems that need to be updated every frame.
+   */
+  var updateSystems: Array<Updatable> = [];
+
+  /**
+   * List of systems that need to render every frame.
+   */
+  var renderSystems: Array<Renderable> = [];
+
   /**
    * Override this method to initalize your scene.
    */
@@ -79,15 +96,26 @@ class Scene {
    * Called every update.
    * @param dt The time passed since the last update.
    */
-  public function update(dt: Float) {}
+  public function update(dt: Float) {
+    entities.updateAddRemove();
+    tweens.update(dt);
+    timers.update(dt);
+
+    for (system in updateSystems) {
+      system.update(dt);
+    }
+  }
 
   /**
    * Gets called every frame.
    * @param target The target to render to.
    */
   public function render(target: RenderTarget) {
-
+    for (system in renderSystems) {
+      system.render(target);
+    }
   }
+
 
   /**
    * Called before the scene gets paused.
@@ -126,6 +154,104 @@ class Scene {
 
     tweens = new Tweens();
     timers = new Timers();
+
+    entities = new Entities({
+      audio: audio,
+      id: -1,
+      entities: null,
+      timeStep: timeStep,
+      random: random,
+      timers: timers,
+      tweens: tweens,
+      display: display,
+      events: events,
+      assets: assets
+    });
+  }
+
+  inline function addEntity<T: Entity>(entityType: Class<T>): T {
+    return entities.addEntity(entityType);
+  }
+
+  inline function removeEntity(entity: Entity) {
+    return entities.removeEntity(entity);
+  }
+
+  inline function getEntityById(id: Int): Entity {
+    return entities.getEntityById(id);
+  }
+
+  inline function removeEntityById(id: Int) {
+    return entities.removeEntityById(id);
+  }
+
+  /**
+   * Add a system to the scene. Throws an error if the system type has already been added.
+   * @param systemType The type of system to add.
+   * @return The newly created system
+   */
+  function addSystem<T: System>(systemType: Class<T>): T {
+    final name = Type.getClassName(systemType);
+    if (systemMap[name] != null) {
+      throw 'System $name already exists.';
+    }
+
+    final system = Type.createInstance(systemType, [{ systemMap: systemMap, updateSystems: updateSystems,
+        renderSystems: renderSystems, assets: assets, events: events, display: display, random: random, audio: audio,
+        tweens: tweens }]);
+    systemMap[name] = system;
+
+    // Add to the update systems.
+    if (Std.isOfType(system, Updatable)) {
+      updateSystems.push(cast system);
+    }
+    // Add to the render systems.
+    if (Std.isOfType(system, Renderable)) {
+      renderSystems.push(cast system);
+    }
+
+    return system;
+  }
+
+  /**
+   * Remove a system from the scene.
+   * @param systemType The type of system to remove.
+   */
+  function removeSystem(systemType: Class<System>) {
+    final name = Type.getClassName(systemType);
+    final system = systemMap[name];
+    if (system == null) {
+      return;
+    }
+
+    systemMap.remove(name);
+
+    // Remove from the update systems.
+    if (Std.isOfType(system, Updatable)) {
+      updateSystems.remove(cast system);
+    }
+
+    // Remove from the render systems.
+    if (Std.isOfType(system, Renderable)) {
+      renderSystems.remove(cast system);
+    }
+
+    system.cleanup();
+  }
+
+  /**
+   * Get a system using its type.
+   * @param systemType The type of system you want to get a reference from.
+   * @return The system if it exists. Otherwise null.
+   */
+  function getSystem<T: System>(systemType: Class<T>): T {
+    final name = Type.getClassName(systemType);
+    final system = systemMap[name];
+    if (system == null) {
+      return null;
+    }
+
+    return cast system;
   }
 }
 

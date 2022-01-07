@@ -1,8 +1,9 @@
 package aeons.core;
 
+import aeons.components.CRender;
+import aeons.components.CUpdate;
 import aeons.events.ComponentEvent;
 import aeons.events.EventType;
-import haxe.macro.Type.ClassType;
 import aeons.math.AeMath;
 import aeons.utils.TimeStep;
 import aeons.math.Random;
@@ -20,7 +21,11 @@ class Entities {
   final entitiesToAdd: Array<Entity> = [];
   final entitiesToRemove: Array<Entity> = [];
 
-  final updatedComponents: Array<ComponentUpdate> = [];
+  final componentsToAdd: Array<ComponentUpdate> = [];
+  final componentsToRemove: Array<ComponentUpdate> = [];
+
+  final updateComponents: Array<Array<Updatable>> = [];
+  final renderComponents: Array<Array<Renderable>> = [];
 
   final freeIds: Array<Int> = [];
 
@@ -41,32 +46,116 @@ class Entities {
     while (entitiesToRemove.length > 0) {
       final entity = entitiesToRemove.pop();
       freeIds.push(entity.id);
-      final allComponents = getAllComponentsForEntity(entity);
+      final allComponents = getAllComponentsForEntity(entity.id);
 
       for (component in allComponents) {
         final name = Type.getClassName(Type.getClass(component));
         components[name][entity.id] = null;
+        if (Std.isOfType(component, Updatable)) {
+          updateComponents[entity.id].remove(cast component);
+        }
+        if (Std.isOfType(component, Renderable)) {
+          renderComponents[entity.id].remove(cast component);
+        }
+
         final eventType: EventType<ComponentEvent> = '${name}_removed';
-        refs.events.emit(ComponentEvent.get(eventType, entity)); 
+        refs.events.emit(ComponentEvent.get(eventType, entity));
 
         component.cleanup();
       }
     }
 
-    while (updatedComponents.length > 0) {
-      final update = updatedComponents.pop();
-      switch (update.update) {
-        case ADDED:
-          components[update.componentName][update.entity.id] = update.component;
-          final eventType: EventType<ComponentEvent> = '${update.componentName}_added';
-          refs.events.emit(ComponentEvent.get(eventType, update.entity)); 
+    while (componentsToAdd.length > 0) {
+      final update = componentsToAdd.pop();
+      var eventType: EventType<ComponentEvent> = '${update.componentName}_added';
 
-        case REMOVED:
-          components[update.componentName][update.entity.id] = null;
-          final eventType: EventType<ComponentEvent> = '${update.componentName}_removed';
-          refs.events.emit(ComponentEvent.get(eventType, update.entity)); 
+      if (components[update.componentName] == null) {
+        components[update.componentName] = [];
+      }
+      components[update.componentName][update.entity.id] = update.component;
+      refs.events.emit(ComponentEvent.get(eventType, update.entity));
 
-          update.component.cleanup();
+      if (Std.isOfType(update.component, Updatable)) {
+        if (updateComponents[update.entity.id] == null) {
+          updateComponents[update.entity.id] = [cast update.component];
+
+          // Add an update component if it does not exist yet.
+          if (!hasComponent(update.entity.id, CUpdate)) {
+            var updateComp = Type.createInstance(CUpdate, [refs]).init();
+            var updateCompName = Type.getClassName(CUpdate);
+            if (components[updateCompName] == null) {
+              components[updateCompName] = [];
+            }
+            components[updateCompName][update.entity.id] = updateComp;
+
+            eventType = '${updateCompName}_added';
+            refs.events.emit(ComponentEvent.get(eventType, update.entity));
+          }
+        } else {
+          updateComponents[update.entity.id].push(cast update.component);
+        }
+      }
+
+      if (Std.isOfType(update.component, Renderable)) {
+        if (renderComponents[update.entity.id] == null) {
+          renderComponents[update.entity.id] = [cast update.component];
+
+          // Add a render component if it does not exist yet.
+          if (!hasComponent(update.entity.id, CRender)) {
+            var renderComp = Type.createInstance(CRender, [refs]).init();
+            var renderCompName = Type.getClassName(CRender);
+            if (components[renderCompName] == null) {
+              components[renderCompName] = [];
+            }
+            components[renderCompName][update.entity.id] = renderComp;
+
+            eventType = '${renderCompName}_added';
+            refs.events.emit(ComponentEvent.get(eventType, update.entity));
+          }
+        } else {
+          renderComponents[update.entity.id].push(cast update.component);
+        }
+      }
+    }
+
+    while (componentsToRemove.length > 0) {
+      final update = componentsToAdd.pop();
+      var eventType: EventType<ComponentEvent> = '${update.componentName}_removed';
+
+      components[update.componentName][update.entity.id] = null;
+      refs.events.emit(ComponentEvent.get(eventType, update.entity));
+      update.component.cleanup();
+
+      if (Std.isOfType(update.component, Updatable)) {
+
+        updateComponents[update.entity.id].remove(cast update.component);
+
+        // Remove the update component if there are no more components left to update.
+        if (updateComponents[update.entity.id].length == 0) {
+          updateComponents[update.entity.id] = null;
+          final updateComp = getComponent(update.entity.id, CUpdate);
+          final updateCompName = Type.getClassName(CUpdate);
+          eventType = '${updateCompName}_removed';
+          components[updateCompName][update.entity.id] = null;
+          refs.events.emit(ComponentEvent.get(eventType, update.entity));
+          updateComp.cleanup();
+        }
+      }
+
+      if (Std.isOfType(update.component, Renderable)) {
+
+        renderComponents[update.entity.id].remove(cast update.component);
+
+        // Remove the render component if there are no more components left to render.
+        if (renderComponents[update.entity.id].length == 0) {
+          renderComponents[update.entity.id] = null;
+          final renderComp = getComponent(update.entity.id, CRender);
+          final renderCompName = Type.getClassName(CRender);
+          eventType = '${renderCompName}_removed';
+          components[renderCompName][update.entity.id] = null;
+          refs.events.emit(ComponentEvent.get(eventType, update.entity));
+          renderComp.cleanup();
+        }
       }
     }
   }
@@ -113,7 +202,7 @@ class Entities {
 
     refs.id = entity.id;
     final component = Type.createInstance(componentType, [refs]);
-    updatedComponents.push({ entity: entity, componentName: name, component: component, update: ADDED });
+    componentsToAdd.push({ entity: entity, componentName: name, component: component });
 
     return component;
   }
@@ -126,22 +215,50 @@ class Entities {
     }
 
     final component = components[name][entity.id];
-    updatedComponents.push({ entity: entity, componentName: name, component: component, update: REMOVED });
+    componentsToRemove.push({ entity: entity, componentName: name, component: component });
   }
 
-  public function hasComponent(entity: Entity, componentType: Class<Component>): Bool {
+  public function getComponent<T: Component>(entityId: Int, componentType: Class<T>): T {
+    final name = Type.getClassName(componentType);
+    if (components[name] != null) {
+      final component = components[name][entityId];
+      if (component != null) {
+        return cast component;
+      }
+    }
+
+    throw 'Component ${name} does not exist on entity with id ${entityId}.';
+  }
+
+  public function getUpdateComponents(entityId: Int): Array<Updatable> {
+    if (updateComponents[entityId] == null) {
+      return [];
+    }
+
+    return updateComponents[entityId];
+  }
+
+  public function getRenderComponents(entityId: Int): Array<Renderable> {
+    if (renderComponents[entityId] == null) {
+      return [];
+    }
+
+    return renderComponents[entityId];
+  }
+
+  public function hasComponent(entityId: Int, componentType: Class<Component>): Bool {
     final name = Type.getClassName(componentType);
 
     if (components[name] == null) {
       return false;
     }
 
-    return components[name][entity.id] != null;
+    return components[name][entityId] != null;
   }
 
-  public function hasComponents(entity: Entity, componentTypes: Array<Class<Component>>): Bool {
+  public function hasComponents(entityId: Int, componentTypes: Array<Class<Component>>): Bool {
     for (component in componentTypes) {
-      if (!hasComponent(entity, component)) {
+      if (!hasComponent(entityId, component)) {
         return false;
       }
     }
@@ -149,10 +266,24 @@ class Entities {
     return true;
   }
 
-  public function getAllComponentsForEntity(entity: Entity): Array<Component> {
+  public function hasBundleComponents(entityId: Int, componentNames: Array<String>): Bool {
+    for (name in componentNames) {
+      if (components[name] == null) {
+        return false;
+      }
+
+      if (components[name][entityId] == null) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  public function getAllComponentsForEntity(entityId: Int): Array<Component> {
     final entityComponents: Array<Component> = [];
     for (list in components) {
-      final component = list[entity.id];
+      final component = list[entityId];
       if (component != null) {
         entityComponents.push(component);
       }
@@ -191,10 +322,4 @@ typedef ComponentUpdate = {
   var entity: Entity;
   var component: Component;
   var componentName: String;
-  var update: Update;
-}
-
-enum Update {
-  ADDED;
-  REMOVED;
 }

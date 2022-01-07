@@ -45,7 +45,7 @@ package aeons.utils;
    * Update all timers.
    * @param dt Time passed since last update in seconds.
    */
-  @:allow(spirit.core.Scene)
+  @:allow(aeons.core.Scene)
   function update(dt: Float) {
     for (timer in timers) {
       timer.update(dt);
