@@ -354,7 +354,6 @@ class Macros {
     var paramNames = names.join('');
     var name = 'Bundle$paramNames';
 
-    trace(name);
     // Only add a new class if it does not exist yet.
     if (!typeExists('aeons.bundles.$name')) {
       var pos = Context.currentPos();

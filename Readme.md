@@ -15,3 +15,10 @@ Entities can have components that are just data or you can put all functionality
 A Scene has an update and render function. So do entities. Components can have them and systems as well. This way you have choose for yourself how to use them.
 
 The built-in components and systems use ECS for the most part, but components have functions when I think it is easier that way.
+
+
+### Running unit tests
+To run the unit tests, Aeons expects that mockatoo and buddy are installed with haxelib from the following urls:
+
+Mockatoo: [https://github.com/codescapade/mockatoo](https://github.com/codescapade/mockatoo)  
+Buddy: [https://github.com/codescapade/buddy](https://github.com/codescapade/buddy)

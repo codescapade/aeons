@@ -16,7 +16,6 @@ class UpdateSystem extends System implements Updatable {
   }
 
   public function update(dt: Float) {
-    trace(updateComps.count());
     for (comp in updateComps) {
       comp.c_update.update(dt);
     }
