@@ -5,27 +5,19 @@ import aeons.core.Entity;
 import aeons.systems.UpdateSystem;
 import aeons.graphics.RenderTarget;
 import aeons.core.Scene;
-
-using aeons.utils.TimSort;
+import aeons.events.input.KeyboardEvent;
 
 class GameScene extends Scene {
 
+  var entity: Entity;
   public override function init() {
     trace('this works!');
     addSystem(UpdateSystem).init();
 
-    var e = addEntity(Entity);
-    e.addComponent(CSimpleUpdate).init();
+    entity = addEntity(Entity);
+    entity.addComponent(CSimpleUpdate).init();
 
-    var numbers = [];
-    for (i in 0...300) {
-      numbers.push(random.int(0, 1000));
-    }
-    numbers.timSort(compare);
-  }
-
-  function compare(a: Int, b: Int): Int {
-    return a - b;
+    events.on(KeyboardEvent.KEY_DOWN, keyDown);
   }
 
   public override function update(dt: Float) {
@@ -38,5 +30,9 @@ class GameScene extends Scene {
     target.start();
     target.drawRect(10, 10, 200, 100, Green, 4, Inside);
     target.present();
+  }
+
+  function keyDown(event: KeyboardEvent) {
+    entity.removeComponent(CSimpleUpdate);
   }
 }

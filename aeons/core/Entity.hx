@@ -21,6 +21,7 @@ class Entity {
 
   final events: EventEmitter;
 
+  @:noCompletion
   final entities: Entities;
 
   final display: Display;

@@ -1,53 +1,107 @@
 package aeons.core;
 
+import aeons.assets.Assets;
+import aeons.audio.Audio;
 import aeons.components.CRender;
 import aeons.components.CUpdate;
 import aeons.events.ComponentEvent;
+import aeons.events.EventEmitter;
 import aeons.events.EventType;
 import aeons.math.AeMath;
-import aeons.utils.TimeStep;
 import aeons.math.Random;
+import aeons.utils.TimeStep;
 import aeons.utils.Timers;
 import aeons.tween.Tweens;
-import aeons.assets.Assets;
-import aeons.audio.Audio;
-import aeons.events.EventEmitter;
 
+/**
+ * `Entities` is the entity manager for a scene.
+ */
 class Entities {
-
+  /**
+   * A map with all components in the scene.
+   * They are stored [componentClassName][entityId]
+   */
   final components = new Map<String, Array<Component>>();
+
+  /**
+   * A list of all entities in the game.
+   */
   final entities: Array<Entity> = [];
 
+  /**
+   * A list of entities to add at the start of the next update.
+   */
   final entitiesToAdd: Array<Entity> = [];
+
+  /**
+   * A list of entities to remove at the start of the next update.
+   */
   final entitiesToRemove: Array<Entity> = [];
 
+  /**
+   * A list of components to add at the start of the next update.
+   */
   final componentsToAdd: Array<ComponentUpdate> = [];
+
+  /**
+   * A list of components to remove at the start of the next update.
+   */
   final componentsToRemove: Array<ComponentUpdate> = [];
 
+  /**
+   * A list of components that should be updated every update call.
+   * These are stored [entityId][List of components]
+   */
   final updateComponents: Array<Array<Updatable>> = [];
+
+  /**
+   * A list of components that should be rendered every frame.
+   * These are stored [entityId][List of components]
+   */
   final renderComponents: Array<Array<Renderable>> = [];
 
+  /**
+   * Entity ids that have been used but are free now.
+   */
   final freeIds: Array<Int> = [];
 
+  /**
+   * The manager references.
+   */
   final refs: EntitiesRefs;
 
+  /**
+   * The id to use for the next entity if there are no free ids in the list above.
+   */
   var nextEntityId = -1;
 
+  /**
+   * Entities constructor.
+   * @param refs The manager references.
+   */
   public function new(refs: EntitiesRefs) {
+    // Set this manager in the refs because this is used by entities and components.
     refs.entities = this;
     this.refs = refs;
   }
 
+  /**
+   * Update the entities and components that have been added or removed in the last update.
+   */
   public function updateAddRemove() {
+
+    // Add entities.
     while (entitiesToAdd.length > 0) {
       entities.push(entitiesToAdd.pop());
     }
 
+    // Remove entities.
     while (entitiesToRemove.length > 0) {
       final entity = entitiesToRemove.pop();
       freeIds.push(entity.id);
-      final allComponents = getAllComponentsForEntity(entity.id);
 
+      // Loop through all components and remove them.
+      final allComponents = getAllComponentsForEntity(entity.id);
       for (component in allComponents) {
         final name = Type.getClassName(Type.getClass(component));
         components[name][entity.id] = null;
@@ -58,6 +112,7 @@ class Entities {
           renderComponents[entity.id].remove(cast component);
         }
 
+        // Send the component_removed message to all the systems that care about them so they can be updated.
         final eventType: EventType<ComponentEvent> = '${name}_removed';
         refs.events.emit(ComponentEvent.get(eventType, entity));
 
@@ -65,6 +120,7 @@ class Entities {
       }
     }
 
+    // Add new components.
     while (componentsToAdd.length > 0) {
       final update = componentsToAdd.pop();
       var eventType: EventType<ComponentEvent> = '${update.componentName}_added';
@@ -73,6 +129,8 @@ class Entities {
         components[update.componentName] = [];
       }
       components[update.componentName][update.entity.id] = update.component;
+
+      // Send an event to systems that listen for this component.
       refs.events.emit(ComponentEvent.get(eventType, update.entity));
 
       if (Std.isOfType(update.component, Updatable)) {
@@ -118,11 +176,14 @@ class Entities {
       }
     }
 
+    // Remove components.
     while (componentsToRemove.length > 0) {
-      final update = componentsToAdd.pop();
+      final update = componentsToRemove.pop();
       var eventType: EventType<ComponentEvent> = '${update.componentName}_removed';
 
       components[update.componentName][update.entity.id] = null;
+
+      // Send an event to systems that listen for this component.
       refs.events.emit(ComponentEvent.get(eventType, update.entity));
       update.component.cleanup();
 

@@ -14,6 +14,6 @@ class CSimpleUpdate extends Component implements Updatable {
   }
 
   public function update(dt: Float) {
-    // trace(sometext);
+    trace(sometext);
   }
 }
