@@ -2,18 +2,34 @@ package aeons.core;
 
 import haxe.iterators.ArrayIterator;
 
+/**
+ * A `BundleList` holds an array of all bundles that a list of components matches.
+ */
 class BundleList<T: BundleBase> {
-
+  /**
+   * The list of bundles.
+   */
   var bundles: Array<T>;
 
+  /**
+   * BundleList constructor.
+   */
   public function new() {
     bundles = [];
   }
 
+  /**
+   * Add a bundle to the list. This is done automatically in a system.
+   * @param bundle The bundle to add.
+   */
   public function addBundle(bundle: T) {
     bundles.push(bundle);
   }
 
+  /**
+   * Remove a bundle from the list. This is done automatically in a system.
+   * @param entity The entity the bundle belongs to.
+   */
   public function removeBundle(entity: Entity) {
     for (bundle in bundles) {
       if (bundle.entity == entity) {
@@ -23,6 +39,11 @@ class BundleList<T: BundleBase> {
     }
   }
 
+  /**
+   * Check if a bundle for this entity already.
+   * @param entity The entity to check.
+   * @return True if a bundle already exists.
+   */
   public function hasEntity(entity: Entity): Bool {
     for (bundle in bundles) {
       if (bundle.entity == entity) {
@@ -33,10 +54,18 @@ class BundleList<T: BundleBase> {
     return false;
   }
 
+  /**
+   * Forward the list iterator so 'for in' can be used on the bundleList.
+   * @return The bundles iterator.
+   */
   public inline function iterator(): ArrayIterator<T> {
     return bundles.iterator();
   }
 
+  /**
+   * Return the number of bundles in this list.
+   * @return The number of bundles.
+   */
   public inline function count(): Int {
     return bundles.length;
   }
