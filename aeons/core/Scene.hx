@@ -116,7 +116,6 @@ class Scene {
     }
   }
 
-
   /**
    * Called before the scene gets paused.
    */
@@ -177,7 +176,7 @@ class Scene {
     return entities.removeEntity(entity);
   }
 
-  inline function getEntityById(id: Int): Entity {
+  inline function getEntityById<T: Entity>(id: Int): T {
     return entities.getEntityById(id);
   }
 

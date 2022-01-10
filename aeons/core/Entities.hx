@@ -89,6 +89,10 @@ class Entities {
    * Update the entities and components that have been added or removed in the last update.
    */
   public function updateAddRemove() {
+    // TODO: FIXME: This has a major design flaw. You can't access an entity or component until the
+    // next frame. Multiple components added on the same frame on an enity cannot check for required components
+    // like this. Probably update this to only send the events here for adding and do the actual adding in the addEntity
+    // and addComponent.
 
     // Add entities.
     while (entitiesToAdd.length > 0) {
@@ -221,6 +225,11 @@ class Entities {
     }
   }
 
+  /**
+   * Add a new entity to the manager.
+   * @param entityType The type of entity to add.
+   * @return The created entity.
+   */
   public function addEntity<T: Entity>(entityType: Class<T>): T {
     final id = getNextEntityId();
     refs.id = id;
@@ -231,20 +240,33 @@ class Entities {
     return entity;
   }
 
+  /**
+   * Remove an entity from the manager.
+   * @param entity The entity to remove.
+   */
   public function removeEntity(entity: Entity) {
     entitiesToRemove.push(entity);
   }
 
-  public function getEntityById(id: Int): Entity {
+  /**
+   * Get an entity using the id.
+   * @param id The id of the entity.
+   * @return The entity.
+   */
+  public function getEntityById<T: Entity>(id: Int): T {
     for (entity in entities) {
       if (entity.id == id) {
-        return entity;
+        return cast entity;
       }
     }
 
     return null;
   }
 
+  /**
+   * Remove an entity by its id.
+   * @param id The entity id.
+   */
   public function removeEntityById(id: Int) {
     final entity = getEntityById(id);
     if (entity != null) {
@@ -252,6 +274,12 @@ class Entities {
     }
   }
 
+  /**
+   * Add a component to an entity.
+   * @param entity The entity to add to.
+   * @param componentType The type of component to add.
+   * @return The created component.
+   */
   public function addComponent<T: Component>(entity: Entity, componentType: Class<T>): T {
     final name = Type.getClassName(componentType);
 
@@ -268,6 +296,11 @@ class Entities {
     return component;
   }
 
+  /**
+   * Remove a component from an entity.
+   * @param entity The entity to remove from.
+   * @param componentType The component type to remove.
+   */
   public function removeComponent(entity: Entity, componentType: Class<Component>) {
     final name = Type.getClassName(componentType);
 
@@ -279,6 +312,12 @@ class Entities {
     componentsToRemove.push({ entity: entity, componentName: name, component: component });
   }
 
+  /**
+   * Get a component from an entity.
+   * @param entityId The id of the entity.
+   * @param componentType The type of component you want.
+   * @return The component. Throws if the component does not exist.
+   */
   public function getComponent<T: Component>(entityId: Int, componentType: Class<T>): T {
     final name = Type.getClassName(componentType);
     if (components[name] != null) {
@@ -291,6 +330,11 @@ class Entities {
     throw 'Component ${name} does not exist on entity with id ${entityId}.';
   }
 
+  /**
+   * Get all updatable components on an entity. The order will be the order they are added in with addComponent.
+   * @param entityId The entity id
+   * @return The list of updatable components.
+   */
   public function getUpdateComponents(entityId: Int): Array<Updatable> {
     if (updateComponents[entityId] == null) {
       return [];
@@ -299,6 +343,11 @@ class Entities {
     return updateComponents[entityId];
   }
 
+  /**
+   * Get all renderable components on an entity. The order will be the order they are added in with addComponent.
+   * @param entityId The entity id
+   * @return The list of renderable components.
+   */
   public function getRenderComponents(entityId: Int): Array<Renderable> {
     if (renderComponents[entityId] == null) {
       return [];
@@ -307,6 +356,12 @@ class Entities {
     return renderComponents[entityId];
   }
 
+  /**
+   * Check if an entity has a component type.
+   * @param entityId The entity id to check.
+   * @param componentType The component type to check.
+   * @return True if the entity has that component.
+   */
   public function hasComponent(entityId: Int, componentType: Class<Component>): Bool {
     final name = Type.getClassName(componentType);
 
@@ -317,6 +372,12 @@ class Entities {
     return components[name][entityId] != null;
   }
 
+  /**
+   * Check if an entity has all components in a list.
+   * @param entityId The entity id to check.
+   * @param componentTypess The component types to check.
+   * @return True if the entity has all the components in the list.
+   */
   public function hasComponents(entityId: Int, componentTypes: Array<Class<Component>>): Bool {
     for (component in componentTypes) {
       if (!hasComponent(entityId, component)) {
@@ -327,6 +388,12 @@ class Entities {
     return true;
   }
 
+  /**
+   * Same as hasComponents but uses the class as string instead of a type. 
+   * @param entityId The entity id to check.
+   * @param componentTypess The component types to check.
+   * @return True if the entity has all the components in the list.
+   */
   public function hasBundleComponents(entityId: Int, componentNames: Array<String>): Bool {
     for (name in componentNames) {
       if (components[name] == null) {
@@ -341,6 +408,11 @@ class Entities {
     return true;
   }
 
+  /**
+   * Get a list of all components an entity has. This will be a list of base components.
+   * @param entityId The entity to get the components from.
+   * @return The list of components.
+   */
   public function getAllComponentsForEntity(entityId: Int): Array<Component> {
     final entityComponents: Array<Component> = [];
     for (list in components) {
@@ -353,7 +425,12 @@ class Entities {
     return entityComponents;
   }
 
+  /**
+   * Get an id for the next entity. All entities should have a unique id.
+   * @return The id.
+   */
   function getNextEntityId(): Int {
+    // First check if we can reuse an existing id.
     if (freeIds.length > 0) {
       return freeIds.shift();
     } else if (nextEntityId < AeMath.MAX_VALUE_INT) {
