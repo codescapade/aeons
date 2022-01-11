@@ -11,7 +11,6 @@ class UpdateSystem extends System implements Updatable {
   var updateComps: Bundle<CUpdate>;
 
   public function init(): UpdateSystem {
-    trace('testing');
     return this;
   }
 

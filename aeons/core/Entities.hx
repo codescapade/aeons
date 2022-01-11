@@ -29,11 +29,6 @@ class Entities {
   final entities: Array<Entity> = [];
 
   /**
-   * A list of entities to add at the start of the next update.
-   */
-  final entitiesToAdd: Array<Entity> = [];
-
-  /**
    * A list of entities to remove at the start of the next update.
    */
   final entitiesToRemove: Array<Entity> = [];
@@ -41,12 +36,12 @@ class Entities {
   /**
    * A list of components to add at the start of the next update.
    */
-  final componentsToAdd: Array<ComponentUpdate> = [];
+  final componentsToAdd: Array<ComponentEvent> = [];
 
   /**
    * A list of components to remove at the start of the next update.
    */
-  final componentsToRemove: Array<ComponentUpdate> = [];
+  final componentsToRemove: Array<ComponentRemovedInfo> = [];
 
   /**
    * A list of components that should be updated every update call.
@@ -89,16 +84,6 @@ class Entities {
    * Update the entities and components that have been added or removed in the last update.
    */
   public function updateAddRemove() {
-    // TODO: FIXME: This has a major design flaw. You can't access an entity or component until the
-    // next frame. Multiple components added on the same frame on an enity cannot check for required components
-    // like this. Probably update this to only send the events here for adding and do the actual adding in the addEntity
-    // and addComponent.
-
-    // Add entities.
-    while (entitiesToAdd.length > 0) {
-      entities.push(entitiesToAdd.pop());
-    }
-
     // Remove entities.
     while (entitiesToRemove.length > 0) {
       final entity = entitiesToRemove.pop();
@@ -124,60 +109,9 @@ class Entities {
       }
     }
 
-    // Add new components.
+    // Send to systems the notifications of the new components.
     while (componentsToAdd.length > 0) {
-      final update = componentsToAdd.pop();
-      var eventType: EventType<ComponentEvent> = '${update.componentName}_added';
-
-      if (components[update.componentName] == null) {
-        components[update.componentName] = [];
-      }
-      components[update.componentName][update.entity.id] = update.component;
-
-      // Send an event to systems that listen for this component.
-      refs.events.emit(ComponentEvent.get(eventType, update.entity));
-
-      if (Std.isOfType(update.component, Updatable)) {
-        if (updateComponents[update.entity.id] == null) {
-          updateComponents[update.entity.id] = [cast update.component];
-
-          // Add an update component if it does not exist yet.
-          if (!hasComponent(update.entity.id, CUpdate)) {
-            var updateComp = Type.createInstance(CUpdate, [refs]).init();
-            var updateCompName = Type.getClassName(CUpdate);
-            if (components[updateCompName] == null) {
-              components[updateCompName] = [];
-            }
-            components[updateCompName][update.entity.id] = updateComp;
-
-            eventType = '${updateCompName}_added';
-            refs.events.emit(ComponentEvent.get(eventType, update.entity));
-          }
-        } else {
-          updateComponents[update.entity.id].push(cast update.component);
-        }
-      }
-
-      if (Std.isOfType(update.component, Renderable)) {
-        if (renderComponents[update.entity.id] == null) {
-          renderComponents[update.entity.id] = [cast update.component];
-
-          // Add a render component if it does not exist yet.
-          if (!hasComponent(update.entity.id, CRender)) {
-            var renderComp = Type.createInstance(CRender, [refs]).init();
-            var renderCompName = Type.getClassName(CRender);
-            if (components[renderCompName] == null) {
-              components[renderCompName] = [];
-            }
-            components[renderCompName][update.entity.id] = renderComp;
-
-            eventType = '${renderCompName}_added';
-            refs.events.emit(ComponentEvent.get(eventType, update.entity));
-          }
-        } else {
-          renderComponents[update.entity.id].push(cast update.component);
-        }
-      }
+      refs.events.emit(componentsToAdd.pop());
     }
 
     // Remove components.
@@ -235,7 +169,7 @@ class Entities {
     refs.id = id;
 
     final entity = Type.createInstance(entityType, [refs]);
-    entitiesToAdd.push(entity);
+    entities.push(entity);
 
     return entity;
   }
@@ -291,7 +225,57 @@ class Entities {
 
     refs.id = entity.id;
     final component = Type.createInstance(componentType, [refs]);
-    componentsToAdd.push({ entity: entity, componentName: name, component: component });
+
+      final eventType: EventType<ComponentEvent> = '${name}_added';
+
+      if (components[name] == null) {
+        components[name] = [];
+      }
+      components[name][entity.id] = component;
+
+      componentsToAdd.push(ComponentEvent.get(eventType, entity));
+
+      if (Std.isOfType(component, Updatable)) {
+        if (updateComponents[entity.id] == null) {
+          updateComponents[entity.id] = [cast component];
+
+          // Add an update component if it does not exist yet.
+          if (!hasComponent(entity.id, CUpdate)) {
+            final updateComp = Type.createInstance(CUpdate, [refs]).init();
+            final updateCompName = Type.getClassName(CUpdate);
+            if (components[updateCompName] == null) {
+              components[updateCompName] = [];
+            }
+            components[updateCompName][entity.id] = updateComp;
+
+            final updateEventType = '${updateCompName}_added';
+            componentsToAdd.push(ComponentEvent.get(updateEventType, entity));
+          }
+        } else {
+          updateComponents[entity.id].push(cast component);
+        }
+      }
+
+      if (Std.isOfType(component, Renderable)) {
+        if (renderComponents[entity.id] == null) {
+          renderComponents[entity.id] = [cast component];
+
+          // Add a render component if it does not exist yet.
+          if (!hasComponent(entity.id, CRender)) {
+            final renderComp = Type.createInstance(CRender, [refs]).init();
+            final renderCompName = Type.getClassName(CRender);
+            if (components[renderCompName] == null) {
+              components[renderCompName] = [];
+            }
+            components[renderCompName][entity.id] = renderComp;
+
+            final renderEventType = '${renderCompName}_added';
+            componentsToAdd.push(ComponentEvent.get(renderEventType, entity));
+          }
+        } else {
+          renderComponents[entity.id].push(cast component);
+        }
+      }
 
     return component;
   }
@@ -443,21 +427,79 @@ class Entities {
   }
 }
 
-typedef EntitiesRefs = {
-  var audio: Audio;
-  var assets: Assets;
-  var events: EventEmitter;
-  var display: Display;
-  var tweens: Tweens;
-  var timers: Timers;
-  var random: Random;
-  var entities: Entities;
-  var timeStep: TimeStep;
-  var id: Int;
+/**
+ * Manager references.
+ */
+@:structInit
+class EntitiesRefs {
+  /**
+   * The asset manager.
+   */
+  public final assets: Assets;
+
+  /**
+   * The audio manager.
+   */
+  public final audio: Audio;
+
+  /**
+   * The event manager.
+   */
+  public final events: EventEmitter;
+
+  /**
+   * The display info.
+   */
+  public final display: Display;
+
+  /**
+   * Random number generator.
+   */
+  public final random: Random;
+
+  /**
+   * Timer manager.
+   */
+  public final timers: Timers;
+
+  /**
+   * Delta time and time scale related things.
+   */
+  public final timeStep: TimeStep;
+
+  /**
+   * Tween manager.
+   */
+  public final tweens: Tweens;
+
+  /**
+   * Entity manager.
+   */
+  public var entities: Entities;
+
+  /**
+   * Entity id when passing this to and entity or component.
+   */
+  public var id: Int;
 }
 
-typedef ComponentUpdate = {
-  var entity: Entity;
-  var component: Component;
-  var componentName: String;
+/**
+ * Component info that is stored when a component is removed so it can be deleted and the start of the next frame.
+ */
+@:structInit
+class ComponentRemovedInfo {
+  /**
+   * The entity that was changed.
+   */
+  public final entity: Entity;
+
+  /**
+   * The component that was removed from the entity.
+   */
+  public final component: Component;
+
+  /**
+   * The class name of the component as string.
+   */
+  public final componentName: String;
 }
