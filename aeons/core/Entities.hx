@@ -107,6 +107,7 @@ class Entities {
 
         component.cleanup();
       }
+      entity.cleanup();
     }
 
     // Send to systems the notifications of the new components.
@@ -407,6 +408,13 @@ class Entities {
     }
 
     return entityComponents;
+  }
+
+  public function cleanup() {
+    for (entity in entities) {
+      removeEntity(entity);
+    }
+    updateAddRemove();
   }
 
   /**

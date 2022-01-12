@@ -127,6 +127,9 @@ class Component {
     }
   }
 
+  /**
+   * Required components getter. Override this in a derived class to set the required components.
+   */
   function get_requiredComponents(): Array<Class<Component>> {
     return [];
   }

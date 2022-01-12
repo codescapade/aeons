@@ -65,6 +65,9 @@ class Scene {
    */
   final random: Random;
 
+  /**
+   * The entity manager.
+   */
   final entities: Entities;
 
   /**
@@ -80,7 +83,7 @@ class Scene {
   /**
    * List of systems that need to render every frame.
    */
-  var renderSystems: Array<Renderable> = [];
+  var renderSystems: Array<SysRenderable> = [];
 
   /**
    * Override this method to initalize your scene.
@@ -90,7 +93,9 @@ class Scene {
   /**
    * Override this method to cleanup scene when it gets removed.
    */
-  public function cleanup() {}
+  public function cleanup() {
+    entities.cleanup();
+  }
 
   /**
    * Called every update.
@@ -133,7 +138,6 @@ class Scene {
 
   /**
    * Called when the game comes back from the background to the foreground.
-   * 
    */
   public function toForeground() {}
 
@@ -168,18 +172,36 @@ class Scene {
     });
   }
 
+  /**
+   * Add an entity to the scene.
+   * @param entityThe entity type to add.
+   * @return The created entity.
+   */
   inline function addEntity<T: Entity>(entityType: Class<T>): T {
     return entities.addEntity(entityType);
   }
 
+  /**
+   * Remove an entity from the scene.
+   * @param entity The entity to remove.
+   */
   inline function removeEntity(entity: Entity) {
     return entities.removeEntity(entity);
   }
 
+  /**
+   * Get an entity by its unique id.
+   * @param id The entity id.
+   * @return The entity.
+   */
   inline function getEntityById<T: Entity>(id: Int): T {
     return entities.getEntityById(id);
   }
 
+  /**
+   * Remove an entity by id.
+   * @param id The entity id.
+   */
   inline function removeEntityById(id: Int) {
     return entities.removeEntityById(id);
   }
@@ -195,9 +217,17 @@ class Scene {
       throw 'System $name already exists.';
     }
 
-    final system = Type.createInstance(systemType, [{ systemMap: systemMap, updateSystems: updateSystems,
-        renderSystems: renderSystems, assets: assets, events: events, display: display, random: random, audio: audio,
-        tweens: tweens }]);
+    final system = Type.createInstance(systemType, [{
+      systemMap: systemMap,
+      updateSystems: updateSystems,
+      renderSystems: renderSystems,
+      assets: assets,
+      events: events,
+      display: display,
+      random: random,
+      audio: audio,
+      tweens: tweens
+    }]);
     systemMap[name] = system;
 
     // Add to the update systems.
@@ -205,7 +235,7 @@ class Scene {
       updateSystems.push(cast system);
     }
     // Add to the render systems.
-    if (Std.isOfType(system, Renderable)) {
+    if (Std.isOfType(system, SysRenderable)) {
       renderSystems.push(cast system);
     }
 
