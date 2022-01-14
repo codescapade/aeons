@@ -295,15 +295,22 @@ class Macros {
 
               for (component in componentClasses) {
                 final listenerExpr = macro {
-                  // Add event listener.
-                  events.on($v{component} + '_added', (event: aeons.events.ComponentEvent) -> {
+                  // Component added event listener.
+                  events.on('aeons_' + $v{component} + '_added', (event: aeons.events.ComponentEvent) -> {
                     // Check if the entity has all required components.
                     if (event.entity.hasBundleComponents($v{componentClasses})) {
-                      // Check if the entity i not already in the bundleList.
+                      // Check if the entity is not already in the bundleList.
                       if (!$i{fieldName}.hasEntity(event.entity)) {
                         var b = new $typePath(event.entity);
                         $i{fieldName}.addBundle(b);
                       }
+                    }
+                  });
+
+                  // Component removed event listener.
+                  events.on('aeons_' + $v{component} + '_removed', (event: aeons.events.ComponentEvent) -> {
+                    if ($i{fieldName}.hasEntity(event.entity)) {
+                      $i{fieldName}.removeBundle(event.entity);
                     }
                   });
                 }

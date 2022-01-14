@@ -1,7 +1,6 @@
 package aeons.systems;
 
 import aeons.core.Updatable;
-import aeons.components.CRender;
 import aeons.components.CUpdate;
 import aeons.core.Bundle;
 import aeons.core.System;

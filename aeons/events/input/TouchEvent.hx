@@ -7,17 +7,17 @@ class TouchEvent extends Event {
   /**
    * Touch start event type.
    */
-  public static inline final TOUCH_START: EventType<TouchEvent> = 'phantom_touch_start';
+  public static inline final TOUCH_START: EventType<TouchEvent> = 'aeons_touch_start';
 
   /**
    * Touch end event type.
    */
-  public static inline final TOUCH_END: EventType<TouchEvent> = 'phantom_touch_end';
+  public static inline final TOUCH_END: EventType<TouchEvent> = 'aeons_touch_end';
 
   /**
    * Touch move event type.
    */
-  public static inline final TOUCH_MOVE: EventType<TouchEvent> = 'phantom_touch_move';
+  public static inline final TOUCH_MOVE: EventType<TouchEvent> = 'aeons_touch_move';
 
   /**
    * touch id used.

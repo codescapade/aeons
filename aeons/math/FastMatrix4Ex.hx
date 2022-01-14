@@ -4,6 +4,20 @@ package aeons.math;
  * `FastMatrix4Ex` has static extension functions for the `FastMatrix4Ex` class.
  */
 class FastMatrix4Ex {
+
+  /**
+   * Set a FastMatrix4 from a rotation translation and scale.
+   * @param matrix The matrix to update.
+   * @param rotation The rotation quaternion.
+   * @param translation The x and y translation values. 
+   * @param scale The x and y scale values.
+   * @return The updated matrix.
+   */
+  public static inline function from2dRotationTranslationScale(matrix: FastMatrix4, rotation: Quaternion,
+      translation: Vector2, scale: Vector2): FastMatrix4 {
+    return fromRotationTranslationScaleVal(matrix, rotation, translation.x, translation.y, 0, scale.x, scale.y, 1);
+  }
+
   /**
    * Set a FastMatrix4 from a rotation translation and scale.
    * @param matrix The matrix to update.
@@ -16,7 +30,7 @@ class FastMatrix4Ex {
    * @param scaleZ The scale z.
    * @return The updated matrix.
    */
-  public static function fromRotationTranslationScale(matrix: FastMatrix4, rotation: Quaternion, x: FastFloat,
+  public static function fromRotationTranslationScaleVal(matrix: FastMatrix4, rotation: Quaternion, x: FastFloat,
       y: FastFloat, z: FastFloat, scaleX: FastFloat, scaleY: FastFloat, scaleZ: FastFloat): FastMatrix4 {
 
     final rx = rotation.x;

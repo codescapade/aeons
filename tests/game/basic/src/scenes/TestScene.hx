@@ -1,5 +1,7 @@
 package scenes;
 
+import components.CAdd;
+import systems.TestSystem;
 import aeons.events.input.KeyboardEvent;
 import components.CSimpleUpdate;
 import aeons.systems.UpdateSystem;
@@ -13,6 +15,7 @@ class TestScene extends Scene {
 
   public override function init() {
     addSystem(UpdateSystem).init();
+    addSystem(TestSystem).init();
 
     var e = addEntity(ETest).init();
     trace(e.test);
@@ -21,16 +24,13 @@ class TestScene extends Scene {
     trace(ee.test);
 
     entity = addEntity(Entity);
-    entity.addComponent(CSimpleUpdate).init();
-
+    entity.addComponent(CAdd);
     events.on(KeyboardEvent.KEY_DOWN, keyDown);
   }
 
   function keyDown(event: KeyboardEvent) {
     if (event.key == S) {
-      if (entity.hasComponent(CSimpleUpdate)) {
-        entity.removeComponent(CSimpleUpdate);
-      }
+      entity.removeComponent(CAdd);
     }
   }
 }

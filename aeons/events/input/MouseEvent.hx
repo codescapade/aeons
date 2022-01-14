@@ -6,27 +6,27 @@ class MouseEvent extends Event {
   /**
    * Mouse down event type.
    */
-  public static inline final MOUSE_DOWN: EventType<MouseEvent> = 'phantom_mouse_down';
+  public static inline final MOUSE_DOWN: EventType<MouseEvent> = 'aeons_mouse_down';
 
   /**
    * Mouse up event type.
    */
-  public static inline final MOUSE_UP: EventType<MouseEvent> = 'phantom_mouse_up';
+  public static inline final MOUSE_UP: EventType<MouseEvent> = 'aeons_mouse_up';
 
   /**
    * Mouse move event type.
    */
-  public static inline final MOUSE_MOVE: EventType<MouseEvent> = 'phantom_mouse_move';
+  public static inline final MOUSE_MOVE: EventType<MouseEvent> = 'aeons_mouse_move';
 
   /**
    * Mouse scroll event type.
    */
-  public static inline final MOUSE_SCROLL: EventType<MouseEvent> = 'phantom_mouse_scroll';
+  public static inline final MOUSE_SCROLL: EventType<MouseEvent> = 'aeons_mouse_scroll';
 
   /**
    * Mouse leave event type.
    */
-  public static inline final MOUSE_LEAVE: EventType<MouseEvent> = 'phantom_mouse_leave';
+  public static inline final MOUSE_LEAVE: EventType<MouseEvent> = 'aeons_mouse_leave';
 
   /**
    * The button pressed.

@@ -102,7 +102,7 @@ class Entities {
         }
 
         // Send the component_removed message to all the systems that care about them so they can be updated.
-        final eventType: EventType<ComponentEvent> = '${name}_removed';
+        final eventType: EventType<ComponentEvent> = 'aeons_${name}_removed';
         refs.events.emit(ComponentEvent.get(eventType, entity));
 
         component.cleanup();
@@ -118,7 +118,7 @@ class Entities {
     // Remove components.
     while (componentsToRemove.length > 0) {
       final update = componentsToRemove.pop();
-      var eventType: EventType<ComponentEvent> = '${update.componentName}_removed';
+      var eventType: EventType<ComponentEvent> = 'aeons_${update.componentName}_removed';
 
       components[update.componentName][update.entity.id] = null;
 
@@ -135,7 +135,7 @@ class Entities {
           updateComponents[update.entity.id] = null;
           final updateComp = getComponent(update.entity.id, CUpdate);
           final updateCompName = Type.getClassName(CUpdate);
-          eventType = '${updateCompName}_removed';
+          eventType = 'aeons_${updateCompName}_removed';
           components[updateCompName][update.entity.id] = null;
           refs.events.emit(ComponentEvent.get(eventType, update.entity));
           updateComp.cleanup();
@@ -151,7 +151,7 @@ class Entities {
           renderComponents[update.entity.id] = null;
           final renderComp = getComponent(update.entity.id, CRender);
           final renderCompName = Type.getClassName(CRender);
-          eventType = '${renderCompName}_removed';
+          eventType = 'aeons_${renderCompName}_removed';
           components[renderCompName][update.entity.id] = null;
           refs.events.emit(ComponentEvent.get(eventType, update.entity));
           renderComp.cleanup();
@@ -227,7 +227,7 @@ class Entities {
     refs.id = entity.id;
     final component = Type.createInstance(componentType, [refs]);
 
-      final eventType: EventType<ComponentEvent> = '${name}_added';
+      final eventType: EventType<ComponentEvent> = 'aeons_${name}_added';
 
       if (components[name] == null) {
         components[name] = [];
@@ -249,7 +249,7 @@ class Entities {
             }
             components[updateCompName][entity.id] = updateComp;
 
-            final updateEventType = '${updateCompName}_added';
+            final updateEventType = 'aeons_${updateCompName}_added';
             componentsToAdd.push(ComponentEvent.get(updateEventType, entity));
           }
         } else {
@@ -270,7 +270,7 @@ class Entities {
             }
             components[renderCompName][entity.id] = renderComp;
 
-            final renderEventType = '${renderCompName}_added';
+            final renderEventType = 'aeons_${renderCompName}_added';
             componentsToAdd.push(ComponentEvent.get(renderEventType, entity));
           }
         } else {

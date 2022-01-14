@@ -7,22 +7,22 @@ class GamepadEvent extends Event {
   /**
    * Gamepad connected event type.
    */
-  public static inline final GAMEPAD_CONNECTED: EventType<GamepadEvent> = 'phantom_gamepad_connected';
+  public static inline final GAMEPAD_CONNECTED: EventType<GamepadEvent> = 'aeons_gamepad_connected';
 
   /**
    * Gamepad disconnected event type.
    */
-  public static inline final GAMEPAD_DISCONNECTED: EventType<GamepadEvent> = 'phantom_gamepad_disconnected';
+  public static inline final GAMEPAD_DISCONNECTED: EventType<GamepadEvent> = 'aeons_gamepad_disconnected';
 
   /**
    * Gamepad axis event type.
    */
-  public static inline final GAMEPAD_AXIS: EventType<GamepadEvent> = 'phantom_gamepad_axis';
+  public static inline final GAMEPAD_AXIS: EventType<GamepadEvent> = 'aeons_gamepad_axis';
 
   /**
    * Gamepad button event type.
    */
-  public static inline final GAMEPAD_BUTTON: EventType<GamepadEvent> = 'phantom_gamepad_button';
+  public static inline final GAMEPAD_BUTTON: EventType<GamepadEvent> = 'aeons_gamepad_button';
 
   /**
    * The controller id.
