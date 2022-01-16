@@ -254,72 +254,78 @@ class Macros {
     }
 
     for (field in fields) {
+      // Check for @:bundle tags
+      var hasBundleTag = false;
+      if (field.meta != null) {
+        for (tag in field.meta) {
+          if (tag.name == ':bundle') {
+            hasBundleTag = true;
+          }
+        }
+      }
+      if (!hasBundleTag) {
+        continue;
+      }
+
       switch (field.kind) {
         case FVar(fType, fExpr):
-
-          // Check if the field is a Bundle type field. If not skip this field.
-          switch (fType) {
-            case ComplexType.TPath(typePath):
-              if (typePath.name != 'Bundle') {
-                continue;
-              }
-
-            default:
-          }
-
           final fieldName = field.name;
           // Set the field type to `BundleList<BundleOfType>`.
           field.kind = FieldType.FVar(macro: aeons.core.BundleList<$fType>, fExpr);
 
-          final classType = fType.toType().getClass();
-          final typePath = {
-            name: classType.name,
-            pack: classType.pack
-          };
+          try {
+            // toType() can throw an error and break completion so wrapping it in try catch.
+            final classType = fType.toType().getClass();
+            final typePath = {
+              name: classType.name,
+              pack: classType.pack
+            };
 
-          // Get the fields of the created bundle. This will have the components for that bundle.
-          // With these we can add the listeners for these components in the system.
-          final bundleFields = fType.toType().getClass().fields.get();
-          var componentClasses: Array<String> = [];
-          for (bundleField in bundleFields) {
-            componentClasses.push(bundleField.type.getClass().module);
-          }
+            // Get the fields of the created bundle. This will have the components for that bundle.
+            // With these we can add the listeners for these components in the system.
+            final bundleFields = fType.toType().getClass().fields.get();
+            var componentClasses: Array<String> = [];
+            for (bundleField in bundleFields) {
+              componentClasses.push(bundleField.type.getClass().module);
+            }
 
-          // Initialize the bundleList in the constructor and add listeners for the components in the bundles.
-          switch (constructor.kind) {
-            case FFun(o):
-              final constructorExprs = [o.expr];
-              // initialize the bundleList at the end of the system constructor.
-              final initBundleExpr = macro { $i{fieldName} = new aeons.core.BundleList<$fType>(); };
-              constructorExprs.push(initBundleExpr);
+            // Initialize the bundleList in the constructor and add listeners for the components in the bundles.
+            switch (constructor.kind) {
+              case FFun(o):
+                final constructorExprs = [o.expr];
+                // initialize the bundleList at the end of the system constructor.
+                final initBundleExpr = macro { $i{fieldName} = new aeons.core.BundleList<$fType>(); };
+                constructorExprs.push(initBundleExpr);
 
-              for (component in componentClasses) {
-                final listenerExpr = macro {
-                  // Component added event listener.
-                  events.on('aeons_' + $v{component} + '_added', (event: aeons.events.ComponentEvent) -> {
-                    // Check if the entity has all required components.
-                    if (event.entity.hasBundleComponents($v{componentClasses})) {
-                      // Check if the entity is not already in the bundleList.
-                      if (!$i{fieldName}.hasEntity(event.entity)) {
-                        var b = new $typePath(event.entity);
-                        $i{fieldName}.addBundle(b);
+                for (component in componentClasses) {
+                  final listenerExpr = macro {
+                    // Component added event listener.
+                    events.on('aeons_' + $v{component} + '_added', (event: aeons.events.ComponentEvent) -> {
+                      // Check if the entity has all required components.
+                      if (event.entity.hasBundleComponents($v{componentClasses})) {
+                        // Check if the entity is not already in the bundleList.
+                        if (!$i{fieldName}.hasEntity(event.entity)) {
+                          var b = new $typePath(event.entity);
+                          $i{fieldName}.addBundle(b);
+                        }
                       }
-                    }
-                  });
+                    });
 
-                  // Component removed event listener.
-                  events.on('aeons_' + $v{component} + '_removed', (event: aeons.events.ComponentEvent) -> {
-                    if ($i{fieldName}.hasEntity(event.entity)) {
-                      $i{fieldName}.removeBundle(event.entity);
-                    }
-                  });
+                    // Component removed event listener.
+                    events.on('aeons_' + $v{component} + '_removed', (event: aeons.events.ComponentEvent) -> {
+                      if ($i{fieldName}.hasEntity(event.entity)) {
+                        $i{fieldName}.removeBundle(event.entity);
+                      }
+                    });
+                  }
+                  constructorExprs.push(listenerExpr);
                 }
-                constructorExprs.push(listenerExpr);
-              }
 
-              // set the constructor expressions to the newly added lines.
-              o.expr = macro $b{constructorExprs};
-            case _:
+                // set the constructor expressions to the newly added lines.
+                o.expr = macro $b{constructorExprs};
+              default:
+            }
+          } catch (e) {
           }
 
         default:

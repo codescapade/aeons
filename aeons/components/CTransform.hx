@@ -11,9 +11,9 @@ using aeons.math.QuaternionEx;
 using aeons.math.FastMatrix4Ex;
 
 /**
- * `Transform` component to handle position, rotation and scale of an entity.
+ * `CTransform` component to handle position, rotation and scale of an entity.
  */
-class Transform extends Component {
+class CTransform extends Component {
   /**
    * The matrix made up of the position, rotation and scale.
    */
@@ -52,7 +52,7 @@ class Transform extends Component {
   /**
    * The parent transform component.
    */
-  public var parent: Transform;
+  public var parent: CTransform;
 
   /**
    * Internal rotation quaternion.
@@ -80,14 +80,14 @@ class Transform extends Component {
    */
   var worldAngle: Float;
 
-  @:allow(spirit.components.Camera)
+  @:allow(aeons.components.CCamera)
   var isCameraTransform = false;
 
   /**
    * Initialize the component.
    * @param options The initialization options.
    */
-  public function init(?options: TransformOptions): Transform {
+  public function init(?options: TransformOptions): CTransform {
     matrix = FastMatrix4.identity();
     rotation = new Quaternion();
     worldPosition = new Vector2();
@@ -305,7 +305,7 @@ class Transform extends Component {
    * @param transformParent The transform to check.
    * @return True if the transform is a parent or higher.
    */
-  public function containsParent(transformParent: Transform): Bool {
+  public function containsParent(transformParent: CTransform): Bool {
     if (parent != null) {
       return parent.containsParent(transformParent);
     }
@@ -460,5 +460,5 @@ typedef TransformOptions = {
   /**
    * The parent transform.
    */
-  var ?parent: Transform;
+  var ?parent: CTransform;
 }

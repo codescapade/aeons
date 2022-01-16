@@ -7,6 +7,7 @@ import aeons.core.System;
 
 class UpdateSystem extends System implements Updatable {
 
+  @:bundle
   var updateComps: Bundle<CUpdate>;
 
   public function init(): UpdateSystem {

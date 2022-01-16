@@ -7,6 +7,7 @@ import aeons.core.System;
 
 class TestSystem extends System {
 
+  @:bundle
   var add: Bundle<CAdd>;
 
   public function init(): TestSystem {

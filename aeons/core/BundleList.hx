@@ -9,7 +9,7 @@ class BundleList<T: BundleBase> {
   /**
    * The list of bundles.
    */
-  var bundles: Array<T>;
+  public final bundles: Array<T>;
 
   /**
    * BundleList constructor.
