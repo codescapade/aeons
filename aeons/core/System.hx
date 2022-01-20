@@ -66,7 +66,7 @@ class System {
   /**
    * A list of all render systems.
    */
-  final renderSystems: Array<Renderable>;
+  final renderSystems: Array<SysRenderable>;
 
   /**
    * Clean up variables after the scene gets removed.
@@ -159,5 +159,5 @@ class SystemRefs {
   /**
    * A list of all render systems.
    */
-  public final renderSystems: Array<Renderable>;
+  public final renderSystems: Array<SysRenderable>;
 }

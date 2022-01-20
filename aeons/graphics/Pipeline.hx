@@ -33,7 +33,7 @@ class Pipeline {
     structure = new VertexStructure();
     structure.add('vertexPosition', Float3);
     if (hasTexture) {
-      structure.add('texPosition', Float2);
+      structure.add('vertexUV', Float2);
     }
     structure.add('vertexColor', Float4);
     state = new PipelineState();

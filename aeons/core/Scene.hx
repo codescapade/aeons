@@ -2,7 +2,9 @@ package aeons.core;
 
 import aeons.assets.Assets;
 import aeons.audio.Audio;
+import aeons.core.Entities.EntitiesRefs;
 import aeons.events.EventEmitter;
+import aeons.core.System.SystemRefs;
 import aeons.graphics.RenderTarget;
 import aeons.math.Random;
 import aeons.utils.TimeStep;
@@ -158,7 +160,7 @@ class Scene {
     tweens = new Tweens();
     timers = new Timers();
 
-    entities = new Entities({
+    final refs: EntitiesRefs = {
       audio: audio,
       id: -1,
       entities: null,
@@ -169,7 +171,9 @@ class Scene {
       display: display,
       events: events,
       assets: assets
-    });
+    };
+
+    entities = new Entities(refs);
   }
 
   /**
@@ -217,7 +221,7 @@ class Scene {
       throw 'System $name already exists.';
     }
 
-    final system = Type.createInstance(systemType, [{
+    final refs: SystemRefs = {
       systemMap: systemMap,
       updateSystems: updateSystems,
       renderSystems: renderSystems,
@@ -226,8 +230,12 @@ class Scene {
       display: display,
       random: random,
       audio: audio,
-      tweens: tweens
-    }]);
+      tweens: tweens,
+      timers: timers,
+      timeStep: timeStep
+    };
+
+    final system = Type.createInstance(systemType, [refs]);
     systemMap[name] = system;
 
     // Add to the update systems.
