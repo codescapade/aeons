@@ -1,48 +1,74 @@
 package aeons.systems;
 
-import aeons.graphics.Color;
-import aeons.events.SortEvent;
+import aeons.components.CCamera;
 import aeons.components.CRender;
 import aeons.components.CTransform;
-import aeons.components.CCamera;
 import aeons.core.Bundle;
-import aeons.graphics.RenderTarget;
 import aeons.core.SysRenderable;
 import aeons.core.System;
+import aeons.events.SortEvent;
+import aeons.graphics.Color;
+import aeons.graphics.RenderTarget;
 
 using aeons.utils.TimSort;
 
+/**
+ * The `RenderSystem` renders everything on screen.
+ */
 class RenderSystem extends System implements SysRenderable {
 
+  /**
+   * All camera bundles in the scene.
+   */
   @:bundle
-  var cameras: Bundle<CCamera, CTransform>;
+  var cameraBundles: Bundle<CCamera, CTransform>;
 
+  /**
+   * All renderable bundles in the scene.
+   */
   @:bundle
-  var renderables: Bundle<CRender, CTransform>;
+  var renderBundles: Bundle<CRender, CTransform>;
 
+  /**
+   * Should the bundles be sorted the next frame.
+   */
   var sortZ: Bool = false;
 
+  /**
+   * Initialize the system.
+   * @return this RenderSystem. 
+   */
   public function init(): RenderSystem {
     return this;
   }
 
+  /**
+   * Gets called every frame.
+   * @param target The main render target.
+   */
   public function render(target: RenderTarget) {
+    // Sort all bundles if required.
     if (sortZ) {
-      renderables.bundles.timSort(sort);
+      renderBundles.bundles.timSort(sort);
     }
 
-    for (renderable in renderables) {
+    /**
+     * Update all transforms so the multiply further down goes correct.
+     */
+    for (renderable in renderBundles) {
       renderable.c_transform.updateMatrix();
     }
 
-    for (camera in cameras) {
-      var cam = camera.c_camera;
-      var camTransform = camera.c_transform;
-      cam.updateMatrix();
-      var camTarget = cam.renderTarget;
+    // Loop through all cameras and render the entities.
+    for (camBundle in cameraBundles) {
+      var camera = camBundle.c_camera;
+      var camTransform = camBundle.c_transform;
+      camera.updateMatrix();
+      var camTarget = camera.renderTarget;
 
+      // Render all the bundles to the current camera.
       camTarget.start();
-      for (renderable in renderables) {
+      for (renderable in renderBundles) {
         if (renderable.c_transform.containsParent(camTransform)) {
           camTarget.transform.setFrom(renderable.c_transform.matrix);
         } else {
@@ -53,18 +79,30 @@ class RenderSystem extends System implements SysRenderable {
       camTarget.present();
     }
 
+    // Render all cameras to the main target.
     target.start();
-    for (camera in cameras) {
-      final cam = camera.c_camera;
-      target.drawImage(cam.viewX, cam.viewY, cam.renderTarget.image, Color.White);
+    for (camBundle in cameraBundles) {
+      final camera = camBundle.c_camera;
+      target.drawImage(camera.viewX, camera.viewY, camera.renderTarget.image, Color.White);
     }
     target.present();
   }
 
+  /**
+   * The sort z event listener.
+   * @param event The sort event.
+   */
   function sortListener(event: SortEvent) {
     sortZ = true;
   }
 
+  /**
+   * Sort function for render bundles.
+   * Have to use the full path for the bundles because they don't exist
+   * before the macros create them.
+   * @param a The first bundle.
+   * @param b The next bundle.
+   */
   function sort(a: aeons.bundles.BundleCRenderCTransform, b: aeons.bundles.BundleCRenderCTransform) {
     if (a.c_transform.zIndex > b.c_transform.zIndex) {
       return 1;

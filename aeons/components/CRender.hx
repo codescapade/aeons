@@ -31,6 +31,8 @@ class CRender extends Component {
   public function render(target: RenderTarget) {
     for (component in components) {
       final comp: Component = cast component;
+      // TODO: All in camera bounds check somewhere. Possibly in its own function that is checked
+      // by the render system.
       if (comp.active) {
         component.render(target);
       }

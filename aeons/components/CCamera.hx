@@ -51,6 +51,7 @@ class CCamera extends Component {
   /**
    * The render texture for this camera.
    */
+  // TODO: Don't use a render target for each camera.
   public var renderTarget(default, null): RenderTarget;
 
   /**
