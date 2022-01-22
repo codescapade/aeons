@@ -195,7 +195,7 @@ class CCamera extends Component {
   /**
    * Clear the current main camera.
    */
-  @:allow(spirit.core.Game)
+  @:allow(aeons.core.Game)
   static function clearMain() {
     main = null;
   }

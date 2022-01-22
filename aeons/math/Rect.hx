@@ -25,6 +25,26 @@ package aeons.math;
   public var height: Float;
 
   /**
+   * The integer x position of the rectangle.
+   */
+  public var xi(get, never): Int;
+
+  /**
+   * The integer y position of the rectangle.
+   */
+  public var yi(get, never): Int;
+
+  /**
+   * The integer width of the rectangle.
+   */
+  public var widthi(get, never): Int;
+
+  /**
+   * The integer height of the rectangle.
+   */
+  public var heighti(get, never): Int;
+
+  /**
    * Rectangle constructor.
    * @param x 
    * @param y 
@@ -69,10 +89,128 @@ package aeons.math;
   }
 
   /**
+   * Check if a line overlaps with this rectangle.
+   * @param p1 The start point of the line.
+   * @param p2 The end point of the line.
+   * @return True if the line overlaps.
+   */
+  public function intersectsLine(p1: Vector2, p2: Vector2, ?out: Vector2): Bool {
+    var b1 = Vector2.get(x, y);
+    var b2 = Vector2.get(x + width, y);
+
+    var intersects = false;
+    if (linesIntersect(p1, p2, b1, b2, out)) {
+      intersects = true;
+    }
+
+    b1.set(x + width, y + height);
+    if (linesIntersect(p1, p2, b1, b2, out)) {
+      intersects = true;
+    }
+
+    b2.set(x, y + height);
+    if (linesIntersect(p1, p2, b1, b2, out)) {
+      intersects = true;
+    }
+
+    b1.set(x, y);
+    if (linesIntersect(p1, p2, b1, b2, out)) {
+      intersects = true;
+    }
+
+    b1.put();
+    b2.put();
+
+    return intersects;
+  }
+  /**
    * String representation of the rectangle.
    * @return The string representation.
    */
   public inline function toString(): String {
     return 'x: $x, y: $y, width: $width, height: $height';
+  }
+
+  static function linesIntersect(a1: Vector2, a2: Vector2, b1: Vector2, b2: Vector2, ?out: Vector2): Bool {
+    var b = Vector2.get();
+    Vector2.subVectors(a2, a1, b);
+
+    var d = Vector2.get();
+    Vector2.subVectors(b2, b1, d);
+
+    var bDotDPerp = b.x * d.y - b.y * d.x;
+    if (bDotDPerp == 0) {
+      b.put();
+      d.put();
+      return false;
+    }
+
+    var c = Vector2.get();
+    Vector2.subVectors(b1, a1, c);
+    var t = (c.x * d.y - c.y * d.x) / bDotDPerp;
+    if ( t < 0 || t > 1) {
+      b.put();
+      d.put();
+      c.put();
+      return false;
+    }
+
+    var u = (c.x * b.y - c.y * b.x) / bDotDPerp;
+    if (u < 0 || u > 1) {
+      b.put();
+      d.put();
+      c.put();
+      return false;
+    }
+
+    if (out != null) {
+      var point = Vector2.get();
+      point.copyFrom(a1);
+      b.mulVal(t);
+      point.add(b);
+
+      // Choose the closest hit.
+      if (out.equals(Vector2.ZERO)) {
+        out.copyFrom(point);
+      } else {
+        if (Vector2.distance(a1, point) < Vector2.distance(a1, out)) {
+          out.copyFrom(point);
+        }
+      }
+      point.put();
+    }
+
+    b.put();
+    d.put();
+    c.put();
+
+    return true;
+  }
+  /**
+   * xi getter.
+   */
+  function get_xi(): Int {
+    return Std.int(x);
+  }
+
+  /**
+   * yi getter.
+   */
+  function get_yi(): Int {
+    return Std.int(y);
+  }
+
+  /**
+   * widthi getter.
+   */
+  function get_widthi(): Int {
+    return Std.int(width);
+  }
+
+  /**
+   * heighti getter.
+   */
+  function get_heighti(): Int {
+    return Std.int(height);
   }
 }
