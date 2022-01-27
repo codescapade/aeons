@@ -1,5 +1,6 @@
 package;
 
+import haxe.Json;
 import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
@@ -13,9 +14,10 @@ class RunScript {
     final args = Sys.args();
     final wd = args.pop();
 
+    final version = getVersion();
     // aeons help
     if (args.length == 1 && args[0] == 'help' || args[0] == 'h') {
-      printLogo();
+      printLogo(version);
       showHelp();
       Sys.exit(0);
     // aeons setup
@@ -32,7 +34,7 @@ class RunScript {
       Sys.exit(build(wd, args));
     }
 
-    printLogo();
+    printLogo(version);
     Sys.println('Use \'aeons help\' for a list of commands.');
     Sys.exit(0);
   }
@@ -65,6 +67,14 @@ class RunScript {
 
 		return result;
 	}
+
+  private static function getVersion(): String {
+    var libPath = getHaxelibPath('aeons');
+    var haxelib = Path.join([libPath, 'haxelib.json']);
+    var json = Json.parse(File.getContent(haxelib));
+
+    return json.version;
+  }
 
   /**
    * Run a Sys command and restore the working directory after.
@@ -153,7 +163,9 @@ class RunScript {
 
     Sys.setCwd(libPath);
 
-    return runCommand('', 'git', ['clone', 'https://github.com/codescapade/KhaBundled']);
+    runCommand('', 'git', ['clone', 'https://github.com/codescapade/KhaBundled']);
+    runCommand('KhaBundled', 'git', ['checkout', '27d7302']);
+
     Sys.println('Download of Kha completed');
   }
 
@@ -171,7 +183,7 @@ class RunScript {
     return runCommand('', 'node', args);
   }
 
-  private static function printLogo() {
+  private static function printLogo(version: String) {
     Sys.println('');
     Sys.println('   @@@@@@   @@@@@@@@   @@@@@@   @@@  @@@   @@@@@@ ');
     Sys.println('  @@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@ @@@  @@@@@@@ ');
@@ -185,7 +197,7 @@ class RunScript {
     Sys.println('   :   : :  : :: ::    : :  :   ::    :   :: : :  ');
     Sys.println('----------------------------------------------------');
     Sys.println('');
-    Sys.println('Aeons command line tools version 0.1.0.');
+    Sys.println('Aeons version ${version}.');
   }
 
   /**
