@@ -26,9 +26,14 @@ class RunScript {
     } else if (args.length > 1 && args[0] == 'create') {
       createProject(wd, args[1]);
       Sys.exit(0);
+    // aeons build [platform]
+    } else if (args.length > 1 && args[0] == 'build') {
+      args.shift();
+      Sys.exit(build(wd, args));
     }
 
     printLogo();
+    Sys.println('Use \'aeons help\' for a list of commands.');
     Sys.exit(0);
   }
 
@@ -141,7 +146,7 @@ class RunScript {
       FileSystem.createDirectory(libPath);
     }
 
-    final path = Path.join([libPath, 'lib/KhaBundled']);
+    final path = Path.join([libPath, 'KhaBundled']);
     if (FileSystem.exists(path)) {
       deleteDir(path);
     }
@@ -150,6 +155,20 @@ class RunScript {
 
     return runCommand('', 'git', ['clone', 'https://github.com/codescapade/KhaBundled']);
     Sys.println('Download of Kha completed');
+  }
+
+  /**
+   * Aeons build command that uses Kha to build the project.
+   * @param projectDir The project directory. 
+   * @param args Arguments for khamake. Must have at least the platform.
+   */
+  private static function build(projectDir: String, args: Array<String>) {
+    Sys.setCwd(projectDir);
+
+    final khaPath = Path.join([getHaxelibPath('aeons'), 'lib/KhaBundled']);
+    final makePath = Path.join([khaPath, 'make.js']);
+    args.unshift(makePath);
+    return runCommand('', 'node', args);
   }
 
   private static function printLogo() {
@@ -167,7 +186,6 @@ class RunScript {
     Sys.println('----------------------------------------------------');
     Sys.println('');
     Sys.println('Aeons command line tools version 0.1.0.');
-    Sys.println('Use \'aeons help\' for a list of commands.');
   }
 
   /**
@@ -260,8 +278,9 @@ class RunScript {
   private static function showHelp() {
     Sys.println('');
     Sys.println('The following commands are available:');
-    Sys.println('- aeons create [project_name]  Create a starter project in the current directory.');
     Sys.println('- aeons setup                  Download Kha and install the aeons command line command.');
+    Sys.println('- aeons create [project_name]  Create a starter project in the current directory.');
+    Sys.println('- aeons build [platform]       Build the project. See Kha for all supported platforms.');
     Sys.println('- aeons help                   Show this list');
   }
 }
