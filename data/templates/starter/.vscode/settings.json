@@ -1,0 +1,4 @@
+{
+  "kha.khaPath": "{{kha_path}}",
+  "kha.buildDir": "build"
+}
