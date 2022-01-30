@@ -1,13 +1,12 @@
 package aeons.components;
 
-import aeons.math.AeMath;
-import aeons.components.CTransform;
-import aeons.math.Rect;
+import aeons.core.Component;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
+import aeons.math.AeMath;
 import aeons.math.FastMatrix4;
+import aeons.math.Rect;
 import aeons.math.Vector2;
-import aeons.core.Component;
 
 /**
  * `CCamera` is a component that renders a view in the render system.

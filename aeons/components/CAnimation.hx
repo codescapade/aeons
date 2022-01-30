@@ -1,8 +1,7 @@
 package aeons.components;
 
-import aeons.graphics.texturepacker.SpriteSheet;
 import aeons.core.Component;
-import aeons.graphics.texturepacker.Frame;
+import aeons.graphics.texturepacker.SpriteSheet;
 import aeons.graphics.animation.Animation;
 
 /**

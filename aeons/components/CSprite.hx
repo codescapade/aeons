@@ -31,12 +31,12 @@ class CSprite extends Component implements Renderable {
   /**
    * The width of the image / sprite frame in pixels.
    */
-  public var width(get, null): Int;
+  public var width(get, never): Int;
 
   /**
    * The height of the image / sprite frame in pixels.
    */
-  public var height(get, null): Int;
+  public var height(get, never): Int;
 
   /**
    * The x axis anchor. (0 to 1).

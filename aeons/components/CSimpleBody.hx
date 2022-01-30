@@ -76,12 +76,12 @@ class CSimpleBody extends Component {
   /**
    * The sides of the body that are touching another body.
    */
-  public var touching(get, null): Touching;
+  public var touching(get, never): Touching;
 
   /**
    * The sides of the body that were touching another body the last update.
    */
-  public var wasTouching(get, null): Touching;
+  public var wasTouching(get, never): Touching;
 
   /**
    * The sides the body will collide. Useful for one way platforms. Defaults to all sides.
@@ -224,7 +224,6 @@ class CSimpleBody extends Component {
   inline function get_acceleration(): Vector2 {
     return body.acceleration;
   }
-
 
   /**
    * Offset getter
@@ -403,7 +402,7 @@ typedef SimpleBodyOptions = {
    * The start velocity.
    */
   var ?velocity: { x: Float, y: Float };
-  
+
   /**
    * The x and y max velocity.
    */

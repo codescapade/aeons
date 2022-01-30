@@ -26,7 +26,7 @@ class Assets {
    * @param name The name of the image.
    * @param complete The function to call when the loading is complete.
    */
-  public inline function loadImage(name: String, complete: Image->Void) {
+  public inline function loadImage(name: String, complete: (Image)->Void) {
     kha.Assets.loadImage(name, complete, failed);
   }
 
@@ -52,7 +52,7 @@ class Assets {
    * @param name The name of the font.
    * @param complete The function to call when the loading is complete.
    */
-  public inline function loadFont(name: String, complete: Font->Void) {
+  public inline function loadFont(name: String, complete: (Font)->Void) {
     kha.Assets.loadFont(name, complete, failed);
   }
 
@@ -78,7 +78,7 @@ class Assets {
    * @param name The name of the blob.
    * @param complete The function to call when the loading is complete.
    */
-  public inline function loadBlob(name: String, complete: Blob->Void) {
+  public inline function loadBlob(name: String, complete: (Blob)->Void) {
     kha.Assets.loadBlob(name, complete, failed);
   }
 
@@ -105,7 +105,7 @@ class Assets {
    * @param name The name of the sound.
    * @param complete The function to call when the loading is complete.
    */
-  public inline function loadSound(name: String, complete: Sound->Void) {
+  public inline function loadSound(name: String, complete: (Sound)->Void) {
     kha.Assets.loadSound(name, complete, failed);
   }
 
@@ -132,7 +132,7 @@ class Assets {
    * @param name The name of the video.
    * @param complete The function to call when the loading is complete.
    */
-  public inline function loadVideo(name: String, complete: Video->Void) {
+  public inline function loadVideo(name: String, complete: (Video)->Void) {
     kha.Assets.loadVideo(name, complete, failed);
   }
 

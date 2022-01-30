@@ -38,16 +38,16 @@ class Input {
 
   // TODO: Don't hardcode 4 gamepads.
   // Gamepad access callback for gamepad 1 to 4.
-  var gpa0: Int->Float->Void;
-  var gpa1: Int->Float->Void;
-  var gpa2: Int->Float->Void;
-  var gpa3: Int->Float->Void;
+  var gpa0: (Int, Float)->Void;
+  var gpa1: (Int, Float)->Void;
+  var gpa2: (Int, Float)->Void;
+  var gpa3: (Int, Float)->Void;
 
   // Gamepad button callback for gamepad 1 to 4.
-  var gpb0: Int->Float->Void;
-  var gpb1: Int->Float->Void;
-  var gpb2: Int->Float->Void;
-  var gpb3: Int->Float->Void;
+  var gpb0: (Int, Float)->Void;
+  var gpb1: (Int, Float)->Void;
+  var gpb2: (Int, Float)->Void;
+  var gpb3: (Int, Float)->Void;
 
   /**
    * The event emitter reference.

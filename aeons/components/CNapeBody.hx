@@ -1,5 +1,8 @@
 package aeons.components;
 
+import aeons.core.Component;
+import aeons.math.Vector2;
+
 import nape.callbacks.CbType;
 import nape.dynamics.InteractionFilter;
 import nape.geom.Vec2;
@@ -9,9 +12,6 @@ import nape.phys.Material;
 import nape.shape.Circle;
 import nape.shape.Polygon;
 import nape.space.Space;
-
-import aeons.core.Component;
-import aeons.math.Vector2;
 
 /**
  * `CNapeBody` is the body component for the nape physics system.

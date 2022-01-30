@@ -1,5 +1,9 @@
 package aeons.components;
 
+import aeons.core.Component;
+import aeons.physics.utils.TilemapCollision;
+import aeons.tilemap.TiledObject;
+
 import nape.callbacks.CbType;
 import nape.geom.GeomPoly;
 import nape.geom.Vec2;
@@ -8,10 +12,6 @@ import nape.phys.BodyType;
 import nape.phys.Material;
 import nape.shape.Polygon;
 import nape.space.Space;
-
-import aeons.core.Component;
-import aeons.physics.utils.TilemapCollision;
-import aeons.tilemap.TiledObject;
 
 /**
  * Tilemap collider component for Nape physics.

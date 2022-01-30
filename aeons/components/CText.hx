@@ -1,11 +1,11 @@
 package aeons.components;
 
-import aeons.graphics.RenderTarget;
-import aeons.graphics.Font;
 import aeons.core.Component;
 import aeons.core.Renderable;
-import aeons.math.Rect;
 import aeons.graphics.Color;
+import aeons.graphics.Font;
+import aeons.graphics.RenderTarget;
+import aeons.math.Rect;
 
 /**
  * `CText` component to render bitmap text.
@@ -70,7 +70,7 @@ class CText extends Component implements Renderable {
       anchorX = 0.5;
       anchorY = 0.5;
     } else {
-      text = options.text == null ? "" : options.text;
+      text = options.text == null ? '' : options.text;
       if (options.font != null) font = options.font;
       if (options.fontSize != null) fontSize = options.fontSize;
       if (options.color != null) {
@@ -97,7 +97,6 @@ class CText extends Component implements Renderable {
 
     target.drawString(-width * anchorX, -height * anchorY, text, font, fontSize, color);
   }
-
 
   /**
    * Font height getter.

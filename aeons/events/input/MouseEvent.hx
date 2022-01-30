@@ -1,4 +1,5 @@
 package aeons.events.input;
+
 /**
  * `MouseEvent` for sending mouse input events.
  */

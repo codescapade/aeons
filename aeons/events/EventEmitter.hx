@@ -34,7 +34,7 @@ class EventEmitter {
    * @param priority Higher priority handlers are called first.
    * @param isGlobal Is this a global or scene event.
    */
-  public function on<T: Event>(type: EventType<T>, callback: T->Void, canCancel = true, priority = 0,
+  public function on<T: Event>(type: EventType<T>, callback: (T)->Void, canCancel = true, priority = 0,
       isGlobal = false) {
     final handler = new EventHandler(callback, canCancel, priority);
     final handlers = isGlobal ? globalHandlers : sceneHandlers[sceneIndex];
@@ -63,7 +63,7 @@ class EventEmitter {
    * @param callback The callback function to find the handler with. 
    * @param isGlobal Is this a global or scene handler.
    */
-  public function off<T: Event>(type: EventType<T>, callback: T->Void, isGlobal = false) {
+  public function off<T: Event>(type: EventType<T>, callback: (T)->Void, isGlobal = false) {
     final handlers = isGlobal ? globalHandlers[type] : sceneHandlers[sceneIndex][type];
 
     if (handlers != null) {
@@ -83,7 +83,7 @@ class EventEmitter {
    * @param callback The callback function to check if you want to check for a specific handler.
    * @return True if the handler exists.
    */
-  public function has<T: Event>(type: EventType<T>, isGlobal = false, ?callback: T->Void): Bool {
+  public function has<T: Event>(type: EventType<T>, isGlobal = false, ?callback: (T)->Void): Bool {
     final handlers = isGlobal ? globalHandlers[type] : sceneHandlers[sceneIndex][type];
 
     // No handlers for this event.

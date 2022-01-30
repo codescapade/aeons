@@ -1,12 +1,10 @@
 package aeons.components;
 
-import aeons.graphics.RenderTarget;
 import aeons.core.Component;
 import aeons.core.Renderable;
-import aeons.math.Rect;
-import aeons.math.AeMath;
 import aeons.graphics.Color;
-import aeons.graphics.LineAlign;
+import aeons.graphics.RenderTarget;
+import aeons.math.Rect;
 
 /**
  * `CBoxShape` is a component to draw single color boxes.

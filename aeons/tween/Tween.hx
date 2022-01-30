@@ -6,7 +6,6 @@ import aeons.tween.easing.Ease;
 import aeons.tween.easing.Easing;
 import aeons.utils.Pool;
 
-
 /**
  * The `Tween` class is used to tween values over time.
  */
@@ -55,7 +54,7 @@ class Tween {
   /**
   * Function to call when the tween is complete.
   */
-  var onComplete: Void->Void;
+  var onComplete: ()->Void;
 
   /**
   * The delay before the tween starts.
@@ -148,7 +147,7 @@ class Tween {
   * Add a function to be called when the tween is complete.
   * @param callback The callback function.
   */
-  public function setOnComplete(callback: Void->Void): Tween {
+  public function setOnComplete(callback: ()->Void): Tween {
     this.onComplete = callback;
 
     return this;

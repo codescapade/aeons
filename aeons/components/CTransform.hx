@@ -61,7 +61,7 @@ class CTransform extends Component {
 
   /**
    * Keeps track if the matrix needs to be updated.
-   * Matrix updating is expensive so only to it if something changes.
+   * Matrix updating is expensive so only do it if something changes.
    */
   var changed = true;
 

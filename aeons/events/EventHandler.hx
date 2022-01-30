@@ -7,7 +7,7 @@ class EventHandler {
   /**
    * The function to call when the event is triggered.
    */
-  public final callback: Dynamic->Void;
+  public final callback: (Dynamic)->Void;
 
   /**
    * If true this callback can cancel an event.
@@ -25,7 +25,7 @@ class EventHandler {
    * @param canCancel Can the callback cancel an event.
    * @param priority The handler priority.
    */
-  public function new(callback: Dynamic->Void, canCancel: Bool, priority: Int) {
+  public function new(callback: (Dynamic)->Void, canCancel: Bool, priority: Int) {
     this.callback = callback;
     this.canCancel = canCancel;
     this.priority = priority;

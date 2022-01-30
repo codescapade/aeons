@@ -3,8 +3,8 @@ package aeons.core;
 import aeons.assets.Assets;
 import aeons.audio.Audio;
 import aeons.events.EventEmitter;
-import aeons.tween.Tweens;
 import aeons.math.Random;
+import aeons.tween.Tweens;
 import aeons.utils.Timers;
 import aeons.utils.TimeStep;
 

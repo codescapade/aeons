@@ -1,11 +1,11 @@
 package aeons.components;
 
-import aeons.graphics.RenderTarget;
 import aeons.core.Component;
 import aeons.core.Renderable;
 import aeons.math.Rect;
 import aeons.graphics.Color;
 import aeons.graphics.Image;
+import aeons.graphics.RenderTarget;
 import aeons.graphics.texturepacker.Frame;
 import aeons.graphics.texturepacker.SpriteSheet;
 
