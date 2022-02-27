@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "name": "Aeons: HTML5",
+      "request": "launch",
+      "type": "pwa-chrome",
+      "cwd": "${workspaceFolder}/build/debug-html5",
+      "runtimeExecutable": "${command:kha.findKhaElectron}",
+      "runtimeArgs": [
+        "--no-sandbox",
+        "--force-device-scale-factor=1",
+        "."
+      ],
+      "outFiles": [
+        "${workspaceFolder}/build/debug-html5/*.js"
+      ],
+      "preLaunchTask": "Build Aeons Html5 Debug",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ],
+  "compounds": []
+}

@@ -1,5 +1,6 @@
 package;
 
+import haxe.Exception;
 import haxe.Json;
 import haxe.io.Path;
 import sys.FileSystem;
@@ -24,6 +25,9 @@ class RunScript {
     } else if (args.length == 1 && args[0] == 'setup') {
       setupAeons();
       Sys.exit(0);
+    } else if (args.length == 1 && args[0] == 'atlas') {
+      generateAtlas(wd);
+      Sys.exit(0);
     // aeons create [project_name]
     } else if (args.length > 1 && args[0] == 'create') {
       createProject(wd, args[1]);
@@ -31,6 +35,10 @@ class RunScript {
     // aeons build [platform]
     } else if (args.length > 1 && args[0] == 'build') {
       args.shift();
+      if (args.indexOf('--no-atlas') == -1) {
+        args.remove('--no-atlas');
+        generateAtlas(wd);
+      }
       Sys.exit(build(wd, args));
     }
 
@@ -118,7 +126,7 @@ class RunScript {
    */
   private static function setupAlias() {
     final platform = Sys.systemName();
-    final binPath = if (platform == 'Mac') "/usr/local/bin" else "/usr/bin";
+    final binPath = platform == 'Mac' ? "/usr/local/bin" : "/usr/bin";
 
     if (platform == 'Windows') {
       var haxePath: String = Sys.getEnv('HAXEPATH');
@@ -126,7 +134,7 @@ class RunScript {
         haxePath = 'C:\\HaxeToolkit\\haxe\\';
 
       final destination = Path.join([haxePath ,'aeons.bat']);
-      final source = Path.join([getHaxelibPath('aeons'), 'data/bin/aeons.bat']);
+      final source = Path.join([getHaxelibPath('aeons'), 'tools/data/bin/aeons.bat']);
 
       if (FileSystem.exists(source)) {
         File.copy(source, destination);
@@ -134,11 +142,11 @@ class RunScript {
         throw 'Could not find the aeons alias script.';
       }
     } else {
-      final source = Path.join([getHaxelibPath('aeons'), 'data/bin/aeons.sh']);
+      final source = Path.join([getHaxelibPath('aeons'), 'tools/data/bin/aeons.sh']);
 
       if (FileSystem.exists(source)) {
-        Sys.command("sudo", ["cp", source, binPath + "/flixel"]);
-        Sys.command("sudo", ["chmod", "+x", binPath + "/flixel"]);
+        Sys.command("sudo", ["cp", source, binPath + "/aeons"]);
+        Sys.command("sudo", ["chmod", "+x", binPath + "/aeons"]);
       }
       else {
         throw 'Could not find the aeons alias script.';
@@ -150,15 +158,17 @@ class RunScript {
    * Download Kha. Overwrite the existing installation if it exists.
    */
   private static function downloadKha() {
-    Sys.println('Downloading Kha to aeons/lib/KhaBundled');
     final libPath = Path.join([getHaxelibPath('aeons'), 'lib']);
-    if (!FileSystem.exists(libPath)) {
-      FileSystem.createDirectory(libPath);
+    final path = Path.join([libPath, 'KhaBundled']);
+
+    if (FileSystem.exists(path)) {
+      Sys.println('${path} already exists. Skipping Kha download.');
+      return;
     }
 
-    final path = Path.join([libPath, 'KhaBundled']);
-    if (FileSystem.exists(path)) {
-      deleteDir(path);
+    Sys.println('Downloading Kha to aeons/lib/KhaBundled');
+    if (!FileSystem.exists(libPath)) {
+      FileSystem.createDirectory(libPath);
     }
 
     Sys.setCwd(libPath);
@@ -177,10 +187,39 @@ class RunScript {
   private static function build(projectDir: String, args: Array<String>) {
     Sys.setCwd(projectDir);
 
-    final khaPath = Path.join([getHaxelibPath('aeons'), 'lib/KhaBundled']);
+    final haxelibPath = getHaxelibPath('aeons');
+    final khaPath = Path.join([haxelibPath, 'lib/KhaBundled']);
     final makePath = Path.join([khaPath, 'make.js']);
     args.unshift(makePath);
     return runCommand('', 'node', args);
+  }
+
+  /**
+   * Generate a sprite atlas using AeonsAtlas.
+   * @param projectDir The project directory.
+   */
+  private static function generateAtlas(projectDir: String) {
+    Sys.setCwd(projectDir);
+    final platform = Sys.systemName();
+
+    final haxelibPath = getHaxelibPath('aeons');
+
+    var appPath = '';
+
+    // TODO: Add mac and linux.
+    if (platform == 'Windows') {
+      appPath = Path.join([haxelibPath, 'tools/atlas/AeonsAtlas.exe']);
+    }
+
+    if (appPath == '') {
+      Sys.println('Aeons Atlas executable not found. Skipping atlas generation.');
+    } else {
+      if (FileSystem.exists('atlas.json')) {
+        runCommand('', appPath, []);
+      } else {
+        Sys.println('No atlas.json file found. Skipping atlas generation.');
+      }
+    }
   }
 
   private static function printLogo(version: String) {
@@ -215,7 +254,7 @@ class RunScript {
     }
 
     final aeonsPath = getHaxelibPath('aeons');
-    final templatePath = Path.join([aeonsPath, 'data/templates/starter']);
+    final templatePath = Path.join([aeonsPath, 'tools/data/templates/starter']);
 
     FileSystem.createDirectory(destination);
 
@@ -229,6 +268,10 @@ class RunScript {
     // Create empty 'shaders' folder.
     final shadersPath = Path.join([destination, 'shaders']);
     FileSystem.createDirectory(shadersPath);
+
+    // Create empty 'atlasImages' folder.
+    final atlasPath = Path.join([destination, 'atlasImages']);
+    FileSystem.createDirectory(atlasPath);
 
     // Update the project name place holders.
     Sys.println('Updating placeholders');
@@ -272,11 +315,21 @@ class RunScript {
     final files = FileSystem.readDirectory(dir);
     for (file in files) {
       final path = Path.join([dir, file]);
+      trace(path);
       if (FileSystem.isDirectory(path)) {
         deleteDir(path);
-        FileSystem.deleteDirectory(path);
+        var newFiles = FileSystem.readDirectory(path);
+        if (newFiles.length == 0) {
+          FileSystem.deleteDirectory(path);
+        }
       } else {
-        FileSystem.deleteFile(path);
+        if (FileSystem.exists(path)) {
+          try {
+            FileSystem.deleteFile(path);
+          } catch (e: Exception) {
+            trace(e.toString());
+          }
+        }
       }
     }
   }

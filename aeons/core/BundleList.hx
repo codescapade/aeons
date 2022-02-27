@@ -23,7 +23,8 @@ class BundleList<T: BundleBase> {
    * @param bundle The bundle to add.
    */
   public function addBundle(bundle: T) {
-    bundles.push(bundle);
+    // Add a bundle to the start of the array.
+    bundles.unshift(bundle);
   }
 
   /**

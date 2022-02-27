@@ -4,7 +4,7 @@ import aeons.audio.Sound;
 import aeons.graphics.Font;
 import aeons.graphics.Image;
 import aeons.graphics.Video;
-import aeons.graphics.texturepacker.SpriteSheet;
+import aeons.graphics.atlas.Atlas;
 import aeons.utils.Blob;
 
 /**
@@ -12,9 +12,9 @@ import aeons.utils.Blob;
  */
 class Assets {
   /**
-   * The added sprite sheets.
+   * The added sprite atlasses.
    */
-  final spriteSheets = new Map<String, SpriteSheet>();
+  final atlasses = new Map<String, Atlas>();
 
   /**
    * Assets constructor.
@@ -154,36 +154,34 @@ class Assets {
   }
 
   /**
-   * Add a sprite sheet to the manager.
-   * @param name The name for this sprite sheet.
-   * @param imagePath The image asset path.
-   * @param dataPath The data asset path.
-   * @return The loaded sprite sheet.
+   * Add an atlas to the manager.
+   * @param name The name of this atlas.
+   * @return The loaded atlas.
    */
-  public function loadSheet(name: String, imagePath: String, dataPath: String): SpriteSheet {
-    var sheet = new SpriteSheet(getImage(imagePath), getBlob(dataPath).toString());
-    spriteSheets.set(name, sheet);
+  public function loadAtlas(name: String): Atlas {
+    var atlas = new Atlas(getImage(name), getBlob('${name}_json').toString());
+    atlasses.set(name, atlas);
 
-    return sheet;
+    return atlas;
   }
 
   /**
-   * Remove a sheet from the asset manager.
-   * @param name The name of the sheet to remove.
+   * Remove an atlas from the asset manager.
+   * @param name The name of the atlas to remove.
    */
-  public function unLoadSheet(name: String) {
-    if (spriteSheets.exists(name)) {
-      spriteSheets[name].cleanup();
+  public function unLoadAtlas(name: String) {
+    if (atlasses.exists(name)) {
+      atlasses[name].cleanup();
     }
-    spriteSheets.remove(name);
+    atlasses.remove(name);
   }
 
   /**
-   * Get a sprite sheet.
-   * @param name The name of the sheet.
+   * Get an atlas.
+   * @param name The name of the atlas.
    */
-  public inline function getSheet(name: String): SpriteSheet {
-    return spriteSheets[name];
+  public inline function getAtlas(name: String): Atlas {
+    return atlasses[name];
   }
 
   /**

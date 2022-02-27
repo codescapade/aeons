@@ -1,13 +1,13 @@
-package aeons.graphics.texturepacker;
+package aeons.graphics.atlas;
 
 import haxe.Json;
 
 /**
- * `SpriteSheet` is for createing a sprite sheet from a texturepacker atlas.
+ * `Atlas` is for createing a texture atlas from a texturepacker atlas.
  */
-class SpriteSheet {
+class Atlas {
   /**
-   * The sprite sheet image.
+   * The atlas sheet image.
    */
   public var image(default, null): Image;
 
@@ -17,14 +17,14 @@ class SpriteSheet {
   var frames = new Map<String, Frame>();
 
   /**
-   * SpriteSheet constructor.
-   * @param image The image for the sheet.
+   * Atlas constructor.
+   * @param image The image for the atlas.
    * @param data The data file text.
    */
   public function new(image: Image, data: String) {
     this.image = image;
-    final spriteData = Json.parse(data);
-    final frameList: Array<Dynamic> = spriteData.frames;
+    final atlasData = Json.parse(data);
+    final frameList: Array<Dynamic> = atlasData.frames;
     for (frameInfo in frameList) {
       final frame = Frame.fromTexturePackerFrame(frameInfo);
       frames[frame.name] = frame;
@@ -33,7 +33,7 @@ class SpriteSheet {
 
   /**
    * Get a frame by name.
-   * @param name The name of the sprite in texturepacker.
+   * @param name The name of the sprite in the atlas.
    * @return The frame. 
    */
   public function getFrame(name: String): Frame {
@@ -49,7 +49,7 @@ class SpriteSheet {
   }
 
   /**
-   * Clean up the data when removing the sprite sheet.
+   * Clean up the data when removing the atlas.
    */
   public function cleanup() {
     image = null;

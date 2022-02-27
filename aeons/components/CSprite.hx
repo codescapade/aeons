@@ -4,24 +4,18 @@ import aeons.core.Component;
 import aeons.core.Renderable;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
-import aeons.graphics.texturepacker.Frame;
-import aeons.graphics.texturepacker.SpriteSheet;
-import aeons.graphics.Image;
+import aeons.graphics.atlas.Frame;
+import aeons.graphics.atlas.Atlas;
 import aeons.math.Rect;
 
 /**
- * The `CSprite` component can be used to render images and sprite sheet frames.
+ * The `CSprite` component can be used to render sprite atlas frames.
  */
 class CSprite extends Component implements Renderable {
   /**
-   * The image to render when not using a sprite sheet.
+   * The atlas to use.
    */
-  public var image: Image;
-
-  /**
-   * The sprite sheet to use when not using an image.
-   */
-  public var sheet: SpriteSheet;
+  public var atlas: Atlas;
 
   /**
    * The sprite frame name.
@@ -29,12 +23,12 @@ class CSprite extends Component implements Renderable {
   public var frameName(default, null) = '';
 
   /**
-   * The width of the image / sprite frame in pixels.
+   * The width of the sprite frame in pixels.
    */
   public var width(get, never): Int;
 
   /**
-   * The height of the image / sprite frame in pixels.
+   * The height of the sprite frame in pixels.
    */
   public var height(get, never): Int;
 
@@ -72,8 +66,7 @@ class CSprite extends Component implements Renderable {
       if (options.color != null) color = options.color;
       if (options.anchorX != null) anchorX = options.anchorX;
       if (options.anchorY != null) anchorY = options.anchorY;
-      if (options.image != null) image = options.image;
-      if (options.sheet != null) sheet = options.sheet;
+      if (options.atlas != null) atlas = options.atlas;
       if (options.frameName != null) setFrame(options.frameName);
     }
 
@@ -85,45 +78,38 @@ class CSprite extends Component implements Renderable {
    * @param graphics The graphics reference used to actually draw things.
    */
   public function render(target: RenderTarget) {
-    if (!active || (image == null && (sheet == null || frame == null))) {
+    if (!active || atlas == null || frame == null) {
       return;
     }
 
-    // Draw a sprite sheet frame.
-    if (image == null) {
-      target.drawImageSection(-(frame.sourceSize.width * anchorX) + frame.sourceRect.x,
-          -(frame.sourceSize.height * anchorY) + frame.sourceRect.y, frame.frame.x, frame.frame.y, frame.frame.width,
-          frame.frame.height, sheet.image, color);
-    // Draw an image.
-    } else {
-      target.drawImage(-(image.width * anchorX), -(image.height * anchorY), image, color);
-    }
+    // Draw an atlas frame.
+    target.drawImageSection(-(frame.sourceSize.width * anchorX) + frame.sourceRect.x,
+        -(frame.sourceSize.height * anchorY) + frame.sourceRect.y, frame.frame.x, frame.frame.y, frame.frame.width,
+        frame.frame.height, atlas.image, color);
   }
 
   /**
-   * Set a new frame for a sprite sheet.
+   * Set a new frame for a atlas.
    * @param frameName The new frame name.
-   * @param sheet The new sprite sheet if needed.
+   * @param atlas The new atlas sheet if needed.
    */
-  public function setFrame(frameName: String, ?sheet: SpriteSheet) {
-    if (sheet != null) {
-      this.sheet = sheet;
+  public function setFrame(frameName: String, ?atlas: Atlas) {
+    if (atlas != null) {
+      this.atlas = atlas;
     }
 
-    if (this.sheet == null) {
+    if (this.atlas == null) {
       throw 'No sprite sheet assigned';
     }
 
-    frame = this.sheet.getFrame(frameName);
+    frame = this.atlas.getFrame(frameName);
   }
 
   /**
    * Sprite width getter.
    */
   function get_width(): Int {
-    if (image != null) {
-      return image.width;
-    } else if (frame != null) {
+    if (frame != null) {
       return Std.int(frame.sourceSize.width);
     }
 
@@ -134,9 +120,7 @@ class CSprite extends Component implements Renderable {
    * Sprite height getter.
    */
   function get_height(): Int {
-    if (image != null) {
-      return image.height;
-    } else if (frame != null) {
+    if (frame != null) {
       return Std.int(frame.sourceSize.height);
     }
 
@@ -149,14 +133,9 @@ class CSprite extends Component implements Renderable {
  */
 typedef CSpriteOptions = {
   /**
-   * The image to use when not using a sprite sheet.
+   * The sprite atlas to use.
    */
-  var ?image: Image;
-
-  /**
-   * The sprite sheet to use.
-   */
-  var ?sheet: SpriteSheet;
+  var ?atlas: Atlas;
 
   /**
    * The sprite frame to use.

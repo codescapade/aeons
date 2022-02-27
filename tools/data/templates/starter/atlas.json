@@ -1,0 +1,12 @@
+{
+  "configs": [
+    {
+      "name": "atlas",
+      "saveFolder": "assets",
+      "folders": ["atlasImages"],
+      "trimmed": true,
+      "extrude": 1,
+      "packMethod": "optimal"
+    }
+  ]
+}

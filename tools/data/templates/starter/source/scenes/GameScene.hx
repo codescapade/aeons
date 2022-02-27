@@ -20,15 +20,15 @@ class GameScene extends Scene {
 
     createCamera();
 
-    var box1 = createBox(display.viewCenterX, display.viewCenterY, 100, 100, Color.Green, 30);
-    var parent = box1.getComponent(CTransform);
+    final box1 = createBox(display.viewCenterX, display.viewCenterY, 100, 100, Color.Green, 30);
+    final parent = box1.getComponent(CTransform);
 
     createBox(-200, 0, 40, 50, Color.Red, -100, parent);
     createBox(200, 0, 70, 20, Color.Blue, 60, parent);
   }
 
   function createCamera() {
-    var eCamera = addEntity(Entity);
+    final eCamera = addEntity(Entity);
     eCamera.addComponent(CTransform).init();
     eCamera.addComponent(CCamera).init();
   }
@@ -36,7 +36,7 @@ class GameScene extends Scene {
   function createBox(x: Float, y: Float, width: Float, height: Float, color: Color, speed: Float,
       ?parent: CTransform): Entity {
 
-    var box = addEntity(Entity);
+    final box = addEntity(Entity);
 
     box.addComponent(CTransform).init({
       x: x,

@@ -1,19 +1,19 @@
-package aeons.graphics.texturepacker;
+package aeons.graphics.atlas;
 
 import aeons.math.Rect;
 import aeons.math.Size;
 
 /**
- * The `Frame` has the dimensions and location of a frame in a texturepacker sprite sheet.
+ * The `Frame` has the dimensions and location of a frame in an atlas.
  */
 class Frame {
   /**
-   * The name of the sprite in texturepacker.
+   * The name of the sprite in the atlas.
    */
   public var name(default, null): String;
 
   /**
-   * The position and size of the image in the sheet.
+   * The position and size of the image in the atlas.
    */
   public var frame(default, null): Rect;
 
@@ -33,8 +33,8 @@ class Frame {
   public var sourceSize(default, null): Size;
 
   /**
-   * Create a new frame from texturepacker data.
-   * @param frameInfo The texturepacker data for the frame.
+   * Create a new frame from atlas data.
+   * @param frameInfo The atlas data for the frame.
    * @return The created frame.
    */
   public static function fromTexturePackerFrame(frameInfo: Dynamic): Frame {
@@ -48,7 +48,7 @@ class Frame {
 
   /**
    * Create a new frame.
-   * @param name The name of the frame in texturepacker.
+   * @param name The name of the frame in the atlas.
    * @param frame The frame position and size in pixels.
    * @param trimmed Is the empty space around the image trimmed.
    * @param sourceRect The frame size without trimming.

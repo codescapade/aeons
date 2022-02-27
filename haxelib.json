@@ -1,7 +1,7 @@
 {
   "name": "aeons",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "license": "MIT",
-  "releasenote": "",
+  "releasenote": "Added automatic atlas generation. Moved scripts and templates into a tools folder.",
   "contributors": ["codescapade"]
 }
