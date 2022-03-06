@@ -12,6 +12,11 @@ class BundleList<T: BundleBase> {
   public final bundles: Array<T>;
 
   /**
+   * The number of bundles in this list.
+   */
+  public var count(get, never): Int;
+
+  /**
    * BundleList constructor.
    */
   public function new() {
@@ -67,7 +72,7 @@ class BundleList<T: BundleBase> {
    * Return the number of bundles in this list.
    * @return The number of bundles.
    */
-  public inline function count(): Int {
+  inline function get_count(): Int {
     return bundles.length;
   }
 }

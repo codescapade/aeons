@@ -62,8 +62,8 @@ class RenderSystem extends System implements SysRenderable {
     // Loop through all cameras and render the entities.
     for (camBundle in cameraBundles) {
       var camera = camBundle.c_camera;
-      var camTransform = camBundle.c_transform;
       camera.updateMatrix();
+      var camTransform = camBundle.c_transform;
       var camTarget = camera.renderTarget;
 
       // Render all the bundles to the current camera.
@@ -72,11 +72,16 @@ class RenderSystem extends System implements SysRenderable {
         if (renderable.c_transform.containsParent(camTransform)) {
           camTarget.transform.setFrom(renderable.c_transform.matrix);
         } else {
-          camTarget.transform.setFrom(camTransform.matrix.multmat(renderable.c_transform.matrix));
+          var c = camera.matrix.multmat(renderable.c_transform.matrix);
+          camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
         }
         renderable.c_render.render(camTarget);
       }
       camTarget.present();
+    }
+
+    for (renderable in renderBundles) {
+      renderable.c_transform.resetChanged();
     }
 
     // Render all cameras to the main target.
