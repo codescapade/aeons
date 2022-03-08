@@ -89,8 +89,9 @@ class CText extends Component implements Renderable {
   /**
    * Render the text.
    * @param target The renderer.
+   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget) {
+  public function render(target: RenderTarget, cameraBounds: Rect) {
     if (font == null) {
       return;
     }

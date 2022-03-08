@@ -232,7 +232,8 @@ class Scene {
       audio: audio,
       tweens: tweens,
       timers: timers,
-      timeStep: timeStep
+      timeStep: timeStep,
+      entities: entities
     };
 
     final system = Type.createInstance(systemType, [refs]);

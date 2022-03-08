@@ -25,6 +25,7 @@ interface Renderable {
   /**
    * Gets called every frame.
    * @param target The target image to render to.
+   * @param cameraBounds Used to render only what the camera can see.
    */
-  function render(target: RenderTarget): Void;
+  function render(target: RenderTarget, cameraBounds: Rect): Void;
 }

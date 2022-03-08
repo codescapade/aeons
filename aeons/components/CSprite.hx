@@ -75,9 +75,10 @@ class CSprite extends Component implements Renderable {
 
   /**
    * Render the image.
-   * @param graphics The graphics reference used to actually draw things.
+   * @param target The target image to render to.
+   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget) {
+  public function render(target: RenderTarget, cameraBounds: Rect) {
     if (!active || atlas == null || frame == null) {
       return;
     }

@@ -9,6 +9,7 @@ import aeons.core.System;
 import aeons.events.SortEvent;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
+import aeons.math.Rect;
 
 using aeons.utils.TimSort;
 
@@ -46,7 +47,7 @@ class RenderSystem extends System implements SysRenderable {
    * Gets called every frame.
    * @param target The main render target.
    */
-  public function render(target: RenderTarget) {
+  public function render(target: RenderTarget,?cameraBounds: Rect) {
     // Sort all bundles if required.
     if (sortZ) {
       renderBundles.bundles.timSort(sort);
@@ -75,7 +76,7 @@ class RenderSystem extends System implements SysRenderable {
           var c = camera.matrix.multmat(renderable.c_transform.matrix);
           camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
         }
-        renderable.c_render.render(camTarget);
+        renderable.c_render.render(camTarget, camera.bounds);
       }
       camTarget.present();
     }

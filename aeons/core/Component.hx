@@ -72,9 +72,11 @@ class Component {
   /**
    * Entity manager.
    */
-  @:noCompletion
   var entities: Entities;
 
+  /**
+   * Called before a component is removed.
+   */
   public function cleanup() {}
 
   /**
@@ -103,7 +105,7 @@ class Component {
   public inline function hasComponents(componentTypes: Array<Class<Component>>): Bool {
     return entities.hasComponents(entityId, componentTypes);
   }
-
+  
   /**
    * Private constructor. Components should only be created by the entity manager.
    * @param refs Manager references.

@@ -3,6 +3,7 @@ package aeons.components;
 import aeons.core.Component;
 import aeons.core.Renderable;
 import aeons.graphics.RenderTarget;
+import aeons.math.Rect;
 
 /**
  * `CRender` Is a component that gets added automatically to an entity that has a component that extends `Renderable`.
@@ -27,14 +28,13 @@ class CRender extends Component {
   /**
    * Render the components.
    * @param target The render target to render to.
+   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget) {
+  public function render(target: RenderTarget, cameraBounds: Rect) {
     for (component in components) {
       final comp: Component = cast component;
-      // TODO: All in camera bounds check somewhere. Possibly in its own function that is checked
-      // by the render system.
       if (comp.active) {
-        component.render(target);
+        component.render(target, cameraBounds);
       }
     }
   }

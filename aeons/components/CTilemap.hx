@@ -81,11 +81,13 @@ class CTilemap extends Component implements Renderable {
   /**
    * Render the tilemap.
    * @param target The graphics buffer to use.
+   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget) {
+  public function render(target: RenderTarget, cameraBounds: Rect) {
     if (tiles == null) {
       return;
     }
+    updateVisibleTiles(cameraBounds);
 
     for (y in visibleBounds.yi...visibleBounds.heighti) {
       for (x in visibleBounds.xi...visibleBounds.widthi) {

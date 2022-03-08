@@ -69,6 +69,11 @@ class System {
   final renderSystems: Array<SysRenderable>;
 
   /**
+   * The entity manager.
+   */
+  final entities: Entities;
+
+  /**
    * Clean up variables after the scene gets removed.
    */
   public function cleanup() {}
@@ -86,6 +91,7 @@ class System {
     systemMap = refs.systemMap;
     updateSystems = refs.updateSystems;
     renderSystems = refs.renderSystems;
+    entities = refs.entities;
   }
 
   /**
@@ -160,4 +166,9 @@ class SystemRefs {
    * A list of all render systems.
    */
   public final renderSystems: Array<SysRenderable>;
+
+  /**
+   * The entity manager.
+   */
+  public final entities: Entities;
 }

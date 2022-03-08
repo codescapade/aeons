@@ -87,8 +87,9 @@ class CBoxShape extends Component implements Renderable {
   /**
    * Render the box.
    * @param target Used to render the box.
+   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget) {
+  public function render(target: RenderTarget, cameraBounds: Rect) {
     if (!active) {
       return;
     }
