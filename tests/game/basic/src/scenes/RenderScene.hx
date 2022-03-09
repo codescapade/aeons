@@ -20,6 +20,6 @@ class RenderScene extends Scene {
 
     var eSprite = addEntity(Entity);
     eSprite.addComponent(CTransform).init({ x: 100, y: 100 });
-    eSprite.addComponent(CSprite).init({ image: bunnyImg });
+    // eSprite.addComponent(CSprite).init({ image: bunnyImg });
   }
 }

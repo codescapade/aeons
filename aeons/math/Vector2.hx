@@ -60,7 +60,7 @@ class Vector2 {
    * Object pool for this class.
    */
   @:noCompletion
-  static final pool = new Pool<Vector2>(Vector2);
+  static final pool = new Pool(Vector2);
 
   /**
    * Get a vector from the object pool.

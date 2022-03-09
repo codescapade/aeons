@@ -29,7 +29,7 @@ class Tween {
   /**
   * Object pool for tween reuse.
   */
-  static final pool: Pool<Tween> = new Pool<Tween>(Tween);
+  static final pool: Pool<Tween> = new Pool(Tween);
 
   /**
   * The time since the tween started in seconds.

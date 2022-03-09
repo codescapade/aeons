@@ -25,7 +25,7 @@ class Interaction {
    * The interaction object pool.
    */
   @:noCompletion
-  static var pool: Pool<Interaction> = new Pool<Interaction>(Interaction);
+  static var pool: Pool<Interaction> = new Pool(Interaction);
 
   /**
    * Get an interaction from the object pool.

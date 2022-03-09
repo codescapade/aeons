@@ -18,7 +18,7 @@ class TestSystem extends System {
 
   function keyDown(event: KeyboardEvent) {
     if (event.key == A) {
-      trace(add.count());
+      trace(add.count);
     } else if (event.key == D) {
 
     }

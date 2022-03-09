@@ -73,7 +73,6 @@ class RenderSystem extends System implements SysRenderable {
         if (renderable.c_transform.containsParent(camTransform)) {
           camTarget.transform.setFrom(renderable.c_transform.matrix);
         } else {
-          var c = camera.matrix.multmat(renderable.c_transform.matrix);
           camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
         }
         renderable.c_render.render(camTarget, camera.bounds);
