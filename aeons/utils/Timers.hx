@@ -1,18 +1,6 @@
 package aeons.utils;
 
-/**
- * The `Timers` class managers all timers.
- */
- class Timers {
-  /**
-   * List of current timers.
-   */
-  final timers: Array<Timer> = [];
-
-  /**
-   * Timers constructor.
-   */
-  public function new() {}
+interface Timers {
 
   /**
    * Create a new timer.
@@ -22,33 +10,17 @@ package aeons.utils;
    * @param startNow Should the timer start now.
    * @return The created timer.
    */
-  public function create(interval: Float, callback: Void->Void, repeat: Int, startNow = false): Timer {
-    final timer = new Timer(interval, callback, repeat);
-    timers.push(timer);
-
-    if (startNow) {
-      timer.start();
-    }
-
-    return timer;
-  }
-
-  /**
-   * Remove a timer.
-   * @param timer The timer to remove.
-   */
-  public inline function remove(timer: Timer) {
-    timers.remove(timer);
-  }
+  function create(interval: Float, callback: ()->Void, repeat: Int, startNow: Bool = false): Timer;
 
   /**
    * Update all timers.
    * @param dt Time passed since last update in seconds.
    */
-  @:allow(aeons.core.Scene)
-  function update(dt: Float) {
-    for (timer in timers) {
-      timer.update(dt);
-    }
-  }
+  function update(dt: Float): Void;
+
+  /**
+   * Remove a timer.
+   * @param timer The timer to remove.
+   */
+  function remove(timer: Timer): Void;
 }

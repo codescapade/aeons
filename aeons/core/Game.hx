@@ -1,14 +1,14 @@
 package aeons.core;
 
-import aeons.assets.Assets;
-import aeons.audio.Audio;
-import aeons.core.Scene.SceneRefs;
-import aeons.events.EventEmitter;
+import aeons.utils.services.InternalTimeStep;
+import aeons.math.services.InternalRandom;
+import aeons.events.services.InternalEvents;
+import aeons.core.services.InternalDisplay;
+import aeons.audio.services.InternalAudio;
+import aeons.assets.services.InternalAssets;
 import aeons.events.SceneEvent;
 import aeons.input.Input;
 import aeons.graphics.RenderTarget;
-import aeons.math.Random;
-import aeons.utils.TimeStep;
 
 import haxe.Timer;
 
@@ -22,11 +22,6 @@ import kha.System;
  */
 class Game {
   /**
-   * Global debug draw flag.
-   */
-  public static var debugDraw = false;
-
-  /**
    * The update refresh rate in frames per second.
    */
   var updateRate: Int;
@@ -35,31 +30,6 @@ class Game {
    * The main render target.
    */
   var renderTarget: RenderTarget;
-
-  /**
-   * Asset manager reference.
-   */
-  var assets: Assets;
-
-  /**
-   * Audio manager reference.
-   */
-  var audio: Audio;
-
-  /**
-   * Event emitter reference.
-   */
-  var events: EventEmitter;
-
-  /**
-   * Random number generator reference.
-   */
-  var random: Random;
-
-  /**
-   * Time step reference.
-   */
-  var timeStep: TimeStep;
 
   /**
    * Input manager reference.
@@ -75,11 +45,6 @@ class Game {
    * The index in the scenes array for the current scene.
    */
   var currentSceneIndex = 0;
-
-  /**
-   * Display reference.
-   */
-  final display: Display;
 
   /**
    * The scene stack.
@@ -110,7 +75,8 @@ class Game {
     loadFinished = options.loadFinished;
     startScene = options.startScene;
 
-    display = new Display(designWidth, designHeight);
+    Aeons.provideDisplay(new InternalDisplay());
+    Aeons.display.init(designWidth, designHeight);
 
     // Start Kha.
     System.start({
@@ -136,23 +102,24 @@ class Game {
    * Setup the game when Kha has finished loading.
    */
   function preloadComplete() {
-    display.scaleToWindow();
+    Aeons.display.scaleToWindow();
 
-    renderTarget = new RenderTarget(display.viewWidth, display.viewHeight);
+    renderTarget = new RenderTarget(Aeons.display.viewWidth, Aeons.display.viewHeight);
 
-    audio = new Audio();
-    assets = new Assets();
-    events = new EventEmitter();
-    timeStep = new TimeStep();
-    random = new Random();
-    input = new Input(events);
+    Aeons.provideAssets(new InternalAssets());
+    Aeons.provideAudio(new InternalAudio());
+    Aeons.provideEvents(new InternalEvents());
+    Aeons.provideRandom(new InternalRandom());
+    Aeons.provideTimeStep(new InternalTimeStep());
+    
+    input = new Input();
 
-    events.pushSceneList();
+    Aeons.events.pushSceneList();
 
     // Setup the scene change listeners.
-    events.on(SceneEvent.PUSH, pushScene, true, 0, true);
-    events.on(SceneEvent.POP, pushScene, true, 0, true);
-    events.on(SceneEvent.REPLACE, pushScene, true, 0, true);
+    Aeons.events.on(SceneEvent.PUSH, pushScene, true, 0, true);
+    Aeons.events.on(SceneEvent.POP, pushScene, true, 0, true);
+    Aeons.events.on(SceneEvent.REPLACE, pushScene, true, 0, true);
 
     createScene(startScene, null);
 
@@ -170,8 +137,8 @@ class Game {
    * Called at the specified update frequency or same as frame update.
    */
   function update() {
-    timeStep.update();
-    currentScene.update(timeStep.dt);
+    Aeons.timeStep.update();
+    currentScene.update(Aeons.timeStep.dt);
   }
 
   /**
@@ -179,7 +146,7 @@ class Game {
    * @param frames List of frame buffers.
    */
   function render(frames: Array<Framebuffer>) {
-    timeStep.render();
+    Aeons.timeStep.render();
 
     // Render the scene below the current scene if the current scene is a sub scene.
     if (currentScene.isSubScene && currentSceneIndex > 0) {
@@ -223,7 +190,7 @@ class Game {
    * Called when Kha goes to the foreground.
    */
   function toForeground() {
-    timeStep.reset();
+    Aeons.timeStep.reset();
     currentScene.toForeground();
   }
 
@@ -240,7 +207,7 @@ class Game {
     event.canceled = true;
     if (scenes.length > 1) {
       scenes.pop().cleanup();
-      events.popSceneList();
+      Aeons.events.popSceneList();
 
       currentSceneIndex--;
       currentScene = scenes[currentSceneIndex];
@@ -257,7 +224,7 @@ class Game {
     currentScene.willPause();
     currentSceneIndex++;
 
-    events.pushSceneList();
+    Aeons.events.pushSceneList();
     createScene(event.sceneType, event.userData);
   }
 
@@ -270,17 +237,17 @@ class Game {
     if (event.clearAll) {
       while (scenes.length > 0) {
         scenes.pop().cleanup();
-        events.popSceneList();
+        Aeons.events.popSceneList();
       }
 
-      events.resetIndex();
+      Aeons.events.resetIndex();
       currentSceneIndex = 0;
     } else {
       scenes.pop().cleanup();
-      events.popSceneList();
+      Aeons.events.popSceneList();
     }
 
-    events.pushSceneList();
+    Aeons.events.pushSceneList();
     createScene(event.sceneType, event.userData);
   }
 
@@ -290,18 +257,7 @@ class Game {
    * @param userData Data to transfer between scenes.
    */
   function createScene(sceneType: Class<Scene>, userData: Dynamic) {
-    // All the references that can be used in the scene.
-    final sceneRefs: SceneRefs = {
-      assets: assets,
-      audio: audio,
-      display: display,
-      events: events,
-      random: random,
-      timeStep: timeStep,
-      userData: userData,
-    };
-
-    final scene = Type.createInstance(sceneType, [sceneRefs]);
+    final scene = Type.createInstance(sceneType, [userData]);
     scenes.push(scene);
     currentScene = scene;
     scene.init();

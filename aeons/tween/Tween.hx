@@ -9,7 +9,7 @@ import aeons.utils.Pool;
 /**
  * The `Tween` class is used to tween values over time.
  */
-@:allow(aeons.tween.Tweens)
+@:allow(aeons.tween.services.InternalTweens)
 class Tween {
   /**
   * Is the tween complete.

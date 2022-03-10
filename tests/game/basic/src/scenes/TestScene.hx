@@ -3,7 +3,6 @@ package scenes;
 import components.CAdd;
 import systems.TestSystem;
 import aeons.events.input.KeyboardEvent;
-import components.CSimpleUpdate;
 import aeons.systems.UpdateSystem;
 import aeons.core.Entity;
 import entities.ETest;

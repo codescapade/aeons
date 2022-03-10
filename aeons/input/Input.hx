@@ -1,6 +1,6 @@
 package aeons.input;
 
-import aeons.events.EventEmitter;
+import aeons.Aeons;
 import aeons.events.input.GamepadEvent;
 import aeons.events.input.KeyboardEvent;
 import aeons.events.input.MouseEvent;
@@ -50,17 +50,10 @@ class Input {
   var gpb3: (Int, Float)->Void;
 
   /**
-   * The event emitter reference.
-   */
-  var events: EventEmitter;
-
-  /**
    * Constructor.
    * @param events The event emitter reference. 
    */
-  public function new(events: EventEmitter) {
-    this.events = events;
-
+  public function new() {
     #if !no_keyboard
     keyboardEnabled = true;
     Keyboard.get().notify(keyDown, keyUp);
@@ -166,7 +159,7 @@ class Input {
    * @param key Keycode pressed or released.
    */
   inline function keyDown(key: KeyCode) {
-    events.emit(KeyboardEvent.get(KeyboardEvent.KEY_DOWN, key));
+    Aeons.events.emit(KeyboardEvent.get(KeyboardEvent.KEY_DOWN, key));
   }
 
   /**
@@ -174,7 +167,7 @@ class Input {
    * @param key Keycode pressed or released.
    */
   inline function keyUp(key: KeyCode) {
-    events.emit(KeyboardEvent.get(KeyboardEvent.KEY_UP, key));
+    Aeons.events.emit(KeyboardEvent.get(KeyboardEvent.KEY_UP, key));
   }
 
   /**
@@ -184,7 +177,7 @@ class Input {
    * @param y The y position in  window pixels.
    */
   inline function mouseDown(button: Int, x: Int, y: Int) {
-    events.emit(MouseEvent.get(MouseEvent.MOUSE_DOWN, button, x, y, 0, 0, 0, false));
+    Aeons.events.emit(MouseEvent.get(MouseEvent.MOUSE_DOWN, button, x, y, 0, 0, 0, false));
   }
 
   /**
@@ -194,7 +187,7 @@ class Input {
    * @param y The y position in  window pixels.
    */
   inline function mouseUp(button: Int, x: Int, y: Int) {
-    events.emit(MouseEvent.get(MouseEvent.MOUSE_UP, button , x, y, 0, 0, 0, false));
+    Aeons.events.emit(MouseEvent.get(MouseEvent.MOUSE_UP, button , x, y, 0, 0, 0, false));
   }
 
   /**
@@ -205,7 +198,7 @@ class Input {
    * @param deltaY The amount moved on the y axis since last callback in window pixels.
    */
   inline function mouseMove(x: Int, y: Int, deltaX: Int, deltaY: Int) {
-    events.emit(MouseEvent.get(MouseEvent.MOUSE_MOVE, -1, x, y, deltaX, deltaY, 0, false));
+    Aeons.events.emit(MouseEvent.get(MouseEvent.MOUSE_MOVE, -1, x, y, deltaX, deltaY, 0, false));
   }
 
   /**
@@ -213,14 +206,14 @@ class Input {
    * @param direction The direction scrolled. -1 is up. 1 is down.
    */
   inline function mouseScroll(direction: Int) {
-    events.emit(MouseEvent.get(MouseEvent.MOUSE_SCROLL, -1, 0, 0, 0, 0, direction, false));
+    Aeons.events.emit(MouseEvent.get(MouseEvent.MOUSE_SCROLL, -1, 0, 0, 0, 0, direction, false));
   }
 
   /**
    * Mouse left screen callback.
    */
   inline function mouseLeave() {
-    events.emit(MouseEvent.get(MouseEvent.MOUSE_LEAVE, -1, 0, 0, 0, 0, 0, true));
+    Aeons.events.emit(MouseEvent.get(MouseEvent.MOUSE_LEAVE, -1, 0, 0, 0, 0, 0, true));
   }
 
   /**
@@ -230,7 +223,7 @@ class Input {
    * @param y The y position in window pixels.
    */
   inline function touchStart(id: Int, x: Int, y: Int) {
-    events.emit(TouchEvent.get(TouchEvent.TOUCH_START, id, x, y));
+    Aeons.events.emit(TouchEvent.get(TouchEvent.TOUCH_START, id, x, y));
   }
 
   /**
@@ -240,7 +233,7 @@ class Input {
    * @param y The y position in window pixels.
    */
   inline function touchEnd(id: Int, x: Int, y: Int) {
-    events.emit(TouchEvent.get(TouchEvent.TOUCH_END, id, x, y));
+    Aeons.events.emit(TouchEvent.get(TouchEvent.TOUCH_END, id, x, y));
   }
 
   /**
@@ -250,7 +243,7 @@ class Input {
    * @param y The y position in window pixels.
    */
   inline function touchMove(id: Int, x: Int, y: Int) {
-    events.emit(TouchEvent.get(TouchEvent.TOUCH_MOVE, id, x, y));
+    Aeons.events.emit(TouchEvent.get(TouchEvent.TOUCH_MOVE, id, x, y));
   }
 
   /**
@@ -258,7 +251,7 @@ class Input {
    * @param id The gamepad id.
    */
   inline function gamepadConnected(id: Int) {
-    events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_CONNECTED, id, -1, -1, 0.0));
+    Aeons.events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_CONNECTED, id, -1, -1, 0.0));
   }
 
   /**
@@ -266,7 +259,7 @@ class Input {
    * @param id The gamepad id.
    */
   inline function gamepadDisconnected(id: Int) {
-    events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_DISCONNECTED, id, -1, -1, 0.0));
+    Aeons.events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_DISCONNECTED, id, -1, -1, 0.0));
   }
 
   /**
@@ -276,7 +269,7 @@ class Input {
    * @param value The gamepad value.
    */
   inline function gamepadAxis(id: Int, axis: Int, value: Float) {
-    events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_AXIS, id, axis, -1, value));
+    Aeons.events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_AXIS, id, axis, -1, value));
   }
 
   /**
@@ -286,6 +279,6 @@ class Input {
    * @param value The gamepad value.
    */
   inline function gamepadButton(id: Int, button: Int, value: Float) {
-    events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_BUTTON, id, -1, button, value));
+    Aeons.events.emit(GamepadEvent.get(GamepadEvent.GAMEPAD_BUTTON, id, -1, button, value));
   }
 }

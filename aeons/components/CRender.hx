@@ -20,7 +20,7 @@ class CRender extends Component {
    * @return This component.
    */
   public function init(): CRender {
-    components = entities.getRenderComponents(entityId);
+    components = Aeons.entities.getRenderComponents(entityId);
 
     return this;
   }

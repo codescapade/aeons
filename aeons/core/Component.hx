@@ -1,14 +1,5 @@
 package aeons.core;
 
-import aeons.assets.Assets;
-import aeons.audio.Audio;
-import aeons.core.Entities.EntitiesRefs;
-import aeons.events.EventEmitter;
-import aeons.math.Random;
-import aeons.tween.Tweens;
-import aeons.utils.TimeStep;
-import aeons.utils.Timers;
-
 /**
  * The component base class.
  */
@@ -30,51 +21,6 @@ class Component {
   var requiredComponents(get, never): Array<Class<Component>>;
 
   /**
-   * The audio manager.
-   */
-  var audio: Audio;
-
-  /**
-   * The asset manager.
-   */
-  var assets: Assets;
-
-  /**
-   * Display info.
-   */
-  var display: Display;
-
-  /**
-   * Random number generator.
-   */
-  var random: Random;
-
-  /**
-   * Event manager.
-   */
-  var events: EventEmitter;
-
-  /**
-   * Tween manager.
-   */
-  var tweens: Tweens;
-
-  /**
-   * Timer manager.
-   */
-  var timers: Timers;
-
-  /**
-   * Time step.
-   */
-  var timeStep: TimeStep;
-
-  /**
-   * Entity manager.
-   */
-  var entities: Entities;
-
-  /**
    * Called before a component is removed.
    */
   public function cleanup() {}
@@ -85,7 +31,7 @@ class Component {
    * @return The component.
    */
   public inline function getComponent<T: Component>(componentType: Class<T>): T {
-    return entities.getComponent(entityId, componentType);
+    return Aeons.entities.getComponent(entityId, componentType);
   }
 
   /**
@@ -94,7 +40,7 @@ class Component {
    * @return True if the entity has the component.
    */
   public inline function hasComponent(componentType: Class<Component>): Bool {
-    return entities.hasComponent(entityId, componentType);
+    return Aeons.entities.hasComponent(entityId, componentType);
   }
 
   /**
@@ -103,24 +49,15 @@ class Component {
    * @return True if the entity has all components.
    */
   public inline function hasComponents(componentTypes: Array<Class<Component>>): Bool {
-    return entities.hasComponents(entityId, componentTypes);
+    return Aeons.entities.hasComponents(entityId, componentTypes);
   }
-  
+
   /**
    * Private constructor. Components should only be created by the entity manager.
    * @param refs Manager references.
    */
-  function new(refs: EntitiesRefs) {
-    entityId = refs.id;
-    audio = refs.audio;
-    assets = refs.assets;
-    display = refs.display;
-    random = refs.random;
-    events = refs.events;
-    tweens = refs.tweens;
-    timers = refs.timers;
-    timeStep = refs.timeStep;
-    entities = refs.entities;
+  function new(entityId: Int) {
+    this.entityId = entityId;
 
     for (component in requiredComponents) {
       if (!hasComponent(component)) {

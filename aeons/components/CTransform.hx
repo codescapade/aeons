@@ -417,7 +417,7 @@ class CTransform extends Component {
 
   inline function set_zIndex(value: Float): Float {
     zIndex = value;
-    events.emit(SortEvent.get(SortEvent.SORT_Z));
+    Aeons.events.emit(SortEvent.get(SortEvent.SORT_Z));
 
     return value;
   }

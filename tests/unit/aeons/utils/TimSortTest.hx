@@ -38,7 +38,7 @@ class TimSortTest extends BuddySuite {
     });
   }
 
-  function randomNumber(min: Int, max: Int): Int { 
+  function randomNumber(min: Int, max: Int): Int {
     return Std.int(Math.random() * (max - min) + min);
   }
 

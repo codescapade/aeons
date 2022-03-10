@@ -18,7 +18,7 @@ class CUpdate extends Component {
    * @return This components.
    */
   public function init(): CUpdate {
-    components = entities.getUpdateComponents(entityId);
+    components = Aeons.entities.getUpdateComponents(entityId);
 
     return this;
   }

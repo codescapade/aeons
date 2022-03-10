@@ -1,5 +1,6 @@
 package aeons.components;
 
+import aeons.Aeons;
 import aeons.core.Component;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
@@ -85,11 +86,11 @@ class CCamera extends Component {
    */
   public function init(?options: CameraOptions): CCamera {
     if (options == null) {
-      viewWidth = display.viewWidth;
-      viewHeight = display.viewHeight;
+      viewWidth = Aeons.display.viewWidth;
+      viewHeight = Aeons.display.viewHeight;
     } else {
-      viewWidth = options.viewWidth == null ? display.viewWidth : options.viewWidth;
-      viewHeight = options.viewHeight == null ? display.viewHeight : options.viewHeight;
+      viewWidth = options.viewWidth == null ? Aeons.display.viewWidth : options.viewWidth;
+      viewHeight = options.viewHeight == null ? Aeons.display.viewHeight : options.viewHeight;
       if (options.zoom != null) zoom = options.zoom;
       if (options.viewX != null) viewX = options.viewX;
       if (options.viewY != null) viewY = options.viewY;
@@ -164,8 +165,8 @@ class CCamera extends Component {
    */
   public function screenToWorld(x: Float, y: Float, ?out: Vector2): Vector2 {
     // TODO: Make this use invert matrix function. At the moment this doesn't work when you rotate the camera.
-    final worldX = (worldPosition.x - viewWidth * 0.5 / zoom) + (x / display.windowWidth * (viewWidth / zoom));
-    final worldY = (worldPosition.y - viewHeight * 0.5 / zoom) + (y / display.windowHeight * (viewHeight / zoom));
+    final worldX = (worldPosition.x - viewWidth * 0.5 / zoom) + (x / Aeons.display.windowWidth * (viewWidth / zoom));
+    final worldY = (worldPosition.y - viewHeight * 0.5 / zoom) + (y / Aeons.display.windowHeight * (viewHeight / zoom));
     if (out == null) {
       out = Vector2.get();
     }
@@ -181,8 +182,8 @@ class CCamera extends Component {
    * @return The view position.
    */
   public function screenToView(x: Float, y: Float, ?out: Vector2): Vector2 {
-    final vX = x / display.windowWidth * display.viewWidth;
-    final vY = y / display.windowHeight * display.viewHeight;
+    final vX = x / Aeons.display.windowWidth * Aeons.display.viewWidth;
+    final vY = y / Aeons.display.windowHeight * Aeons.display.viewHeight;
 
     if (out == null) {
       out = Vector2.get();

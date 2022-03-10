@@ -3,7 +3,7 @@ package aeons.utils;
 /**
  * The `Timer` class is to create timers to delay things or repeat them.
  */
- class Timer {
+class Timer {
   /**
    * True if the time is complete.
    */
@@ -32,7 +32,7 @@ package aeons.utils;
   /**
    * The function to call when the timer is completed.
    */
-  var callback: Void->Void;
+  var callback: ()->Void;
 
   /**
    * Number of repeats. -1 Repeats forever.
@@ -50,7 +50,7 @@ package aeons.utils;
    * @param callback The function to call after the interval time has passed.
    * @param repeat How many times to repeat. -1 is infinite.
    */
-  @:allow(aeons.utils.Timers)
+  @:allow(aeons.utils.services.InternalTimers)
   function new(interval: Float, callback: Void->Void, repeat = 0) {
     this.interval = interval;
     this.callback = callback;
@@ -111,7 +111,7 @@ package aeons.utils;
    * Update the timer.
    * @param dt The time passed since the last frame in seconds.
    */
-  @:allow(aeons.utils.Timers)
+  @:allow(aeons.utils.services.InternalTimers)
   function update(dt: Float) {
     if (!started || paused || complete) {
       return;
