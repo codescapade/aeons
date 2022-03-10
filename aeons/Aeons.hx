@@ -1,25 +1,25 @@
 package aeons;
 
-import aeons.core.Systems;
-import aeons.core.Entities;
+import aeons.assets.Assets;
+import aeons.assets.services.NullAssets;
+import aeons.audio.Audio;
+import aeons.audio.services.NullAudio;
 import aeons.core.Display;
+import aeons.core.Entities;
+import aeons.core.Systems;
+import aeons.core.services.NullDisplay;
+import aeons.core.services.NullEntities;
+import aeons.core.services.NullSystems;
+import aeons.events.Events;
+import aeons.events.services.NullEvents;
+import aeons.math.Random;
+import aeons.math.services.NullRandom;
+import aeons.tween.Tweens;
 import aeons.tween.services.NullTweens;
+import aeons.utils.Timers;
+import aeons.utils.TimeStep;
 import aeons.utils.services.NullTimeStep;
 import aeons.utils.services.NullTimers;
-import aeons.math.services.NullRandom;
-import aeons.events.services.NullEvents;
-import aeons.core.services.NullEntities;
-import aeons.core.services.NullDisplay;
-import aeons.core.services.NullSystems;
-import aeons.utils.TimeStep;
-import aeons.utils.Timers;
-import aeons.tween.Tweens;
-import aeons.math.Random;
-import aeons.events.Events;
-import aeons.audio.services.NullAudio;
-import aeons.audio.Audio;
-import aeons.assets.services.NullAssets;
-import aeons.assets.Assets;
 
 class Aeons {
 
@@ -113,43 +113,83 @@ class Aeons {
     _tweens = tweens;
   }
 
-  static function get_assets(): Assets {
+  static inline function get_assets(): Assets {
+    #if debug
     return _assets == null ? nullAssets : _assets;
+    #else
+    return _assets;
+    #end
   }
 
-  static function get_audio(): Audio {
+  static inline function get_audio(): Audio {
+    #if debug
     return _audio == null ? nullAudio : _audio;
+    #else
+    return _audio;
+    #end
   }
 
-  static function get_display(): Display {
+  static inline function get_display(): Display {
+    #if debug
     return _display == null ? nullDisplay : _display;
+    #else
+    return _display;
+    #end
   }
 
-  static function get_entities(): Entities {
+  static inline function get_entities(): Entities {
+    #if debug
     return _entities == null ? nullEntities : _entities;
+    #else
+    return _entities;
+    #end
   }
 
-  static function get_events(): Events {
+  static inline function get_events(): Events {
+    #if debug
     return _events == null ? nullEvents : _events;
+    #else
+    return _events;
+    #end
   }
 
-  static function get_random(): Random {
+  static inline function get_random(): Random {
+    #if debug
     return _random == null ? nullRandom : _random;
+    #else
+    return _random;
+    #end
   }
 
-  static function get_systems(): Systems {
+  static inline function get_systems(): Systems {
+    #if debug
     return _systems == null ? nullSystems : _systems;
+    #else
+    return _systems;
+    #end
   }
 
-  static function get_timers(): Timers {
+  static inline function get_timers(): Timers {
+    #if debug
     return _timers == null ? nullTimers : _timers;
+    #else
+    return _timers;
+    #end
   }
 
-  static function get_timeStep(): TimeStep {
+  static inline function get_timeStep(): TimeStep {
+    #if debug
     return _timeStep == null ? nullTimeStep : _timeStep;
+    #else
+    return _timeStep;
+    #end
   }
 
-  static function get_tweens(): Tweens {
+  static inline function get_tweens(): Tweens {
+    #if debug
     return _tweens == null ? nullTweens : _tweens;
+    #else
+    return _tweens;
+    #end
   }
 }
