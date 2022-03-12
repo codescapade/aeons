@@ -7,24 +7,24 @@ class NullSystems implements Systems {
 
   public function new() {}
 
-  public function addSystem<T: System>(systemType: Class<T>): T {
-    trace('addSystem is not implemented');
+  public function add<T: System>(systemType: Class<T>): T {
+    trace('add is not implemented');
 
     return null;
   }
 
-  public function removeSystem(systemType: Class<System>) {
-    trace('removeSystem is not implemented');
+  public function remove(systemType: Class<System>) {
+    trace('remove is not implemented');
   }
 
-	public function getSystem<T: System>(systemType: Class<T>): T {
-    trace('getSystem is not implemented');
+	public function get<T: System>(systemType: Class<T>): T {
+    trace('get is not implemented');
 
     return null;
 	}
 
-	public function hasSystem(systemType: Class<System>): Bool {
-    trace('hasSystem is not implemented');
+	public function has(systemType: Class<System>): Bool {
+    trace('has is not implemented');
 
     return false;
 	}

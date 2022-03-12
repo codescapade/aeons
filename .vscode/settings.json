@@ -2,5 +2,6 @@
   "haxecheckstyle.sourceFolders": [
     "aeons",
     "tests"
-  ]
+  ],
+  "kha.khaPath": "lib/KhaBundled"
 }

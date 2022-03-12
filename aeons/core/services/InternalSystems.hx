@@ -21,7 +21,7 @@ class InternalSystems implements Systems {
 
   public function new() {}
 
-  public function addSystem<T: System>(systemType: Class<T>): T {
+  public function add<T: System>(systemType: Class<T>): T {
     final name = Type.getClassName(systemType);
     if (systemMap[name] != null) {
       throw 'System $name already exists.';
@@ -42,7 +42,7 @@ class InternalSystems implements Systems {
     return system;
   }
 
-  public function removeSystem(systemType: Class<System>) {
+  public function remove(systemType: Class<System>) {
     final name = Type.getClassName(systemType);
     final system = systemMap[name];
     if (system == null) {
@@ -64,7 +64,7 @@ class InternalSystems implements Systems {
     system.cleanup();
   }
 
-  public function getSystem<T: System>(systemType: Class<T>): T {
+  public function get<T: System>(systemType: Class<T>): T {
     final name = Type.getClassName(systemType);
     final system = systemMap[name];
     if (system == null) {
@@ -74,7 +74,7 @@ class InternalSystems implements Systems {
     return cast system;
   }
 
-  public function hasSystem(systemType: Class<System>): Bool {
+  public function has(systemType: Class<System>): Bool {
     final name = Type.getClassName(systemType);
 
     return systemMap[name] != null;
