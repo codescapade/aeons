@@ -21,13 +21,13 @@ class InternalSystems implements Systems {
 
   public function new() {}
 
-  public function add<T: System>(systemType: Class<T>): T {
-    final name = Type.getClassName(systemType);
+  public function add<T: System>(system: T): T {
+    final systemClass = Type.getClass(system);
+    final name = Type.getClassName(systemClass);
     if (systemMap[name] != null) {
       throw 'System $name already exists.';
     }
 
-    final system = Type.createInstance(systemType, []);
     systemMap[name] = system;
 
     // Add to the update systems.
@@ -38,6 +38,8 @@ class InternalSystems implements Systems {
     if (Std.isOfType(system, SysRenderable)) {
       renderSystems.push(cast system);
     }
+
+    system.init();
 
     return system;
   }

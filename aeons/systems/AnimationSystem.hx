@@ -11,8 +11,8 @@ class AnimationSystem extends System implements Updatable {
   @:bundle
   var animBundles: Bundle<CAnimation, CSprite>;
 
-  public function init(): AnimationSystem {
-    return this;
+  public function new() {
+    super();
   }
 
   public function update(dt: Float) {
@@ -20,7 +20,7 @@ class AnimationSystem extends System implements Updatable {
       final anim = bundle.c_animation;
       anim.updateAnim(dt);
       if (anim.currentFrame != null) {
-        bundle.c_sprite.setFrame(anim.currentFrame, anim.spriteSheet);
+        bundle.c_sprite.setFrame(anim.currentFrame, anim.atlas);
       }
     }
   }

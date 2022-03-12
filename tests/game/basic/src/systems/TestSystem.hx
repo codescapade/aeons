@@ -10,10 +10,9 @@ class TestSystem extends System {
   @:bundle
   var add: Bundle<CAdd>;
 
-  public function init(): TestSystem {
+  public function new() {
+    super();
     events.on(KeyboardEvent.KEY_DOWN, keyDown);
-
-    return this;
   }
 
   function keyDown(event: KeyboardEvent) {

@@ -1,13 +1,14 @@
 package aeons.components;
 
+import aeons.graphics.atlas.Atlas;
 import aeons.core.Component;
 import aeons.core.Renderable;
 import aeons.math.Rect;
 import aeons.graphics.Color;
 import aeons.graphics.Image;
 import aeons.graphics.RenderTarget;
-import aeons.graphics.texturepacker.Frame;
-import aeons.graphics.texturepacker.SpriteSheet;
+import aeons.graphics.atlas.Atlas;
+import aeons.graphics.atlas.Frame;
 
 /**
  * Nine slice is a sprite that can scale without changing the corners.
@@ -45,14 +46,9 @@ class CNineSlice extends Component implements Renderable {
   public var bounds = new Rect();
 
   /**
-   * The image for the slice if not using a sprite sheet.
+   * The atlas to use.
    */
-  var image: Image;
-
-  /**
-   * The sprite sheet to use.
-   */
-  var sheet: SpriteSheet;
+  var atlas: Atlas;
 
   /**
    * The sprite frame to use.
@@ -105,87 +101,71 @@ class CNineSlice extends Component implements Renderable {
   var bottomRight: Slice;
 
   /**
-   * Initialize the component.
+   * CNineSlice constructor.
    * @param options The init options.
-   * @return This component.
    */
-  public function init(options: NineSliceOptions): CNineSlice {
-    if (options.image != null) {
-      image = options.image;
-      createFrames(0, 0, image.width, image.height, options.insetLeft, options.insetRight, options.insetTop,
-          options.insetBottom);
-    } else if (options.sheet != null && options.frameName != null) {
-      sheet = options.sheet;
-      frame = sheet.getFrame(options.frameName);
-      createFrames(frame.frame.x, frame.frame.y, frame.frame.width, frame.frame.height,
-          options.insetLeft, options.insetRight, options.insetTop, options.insetBottom);
-    } else {
-      throw 'Missing image or sprite sheet and frame';
-    }
+  public function new(options: NineSliceOptions) {
+    super();
+    atlas = options.atlas;
+    frame = atlas.getFrame(options.frameName);
+    createFrames(frame.frame.x, frame.frame.y, frame.frame.width, frame.frame.height,
+        options.insetLeft, options.insetRight, options.insetTop, options.insetBottom);
+
     anchorX = options.anchorX == null ? 0.5 : options.anchorX;
     anchorY = options.anchorY == null ? 0.5 : options.anchorY;
 
     width = options.width;
     height = options.height;
-
-    return this;
   }
 
   /**
    * Render the slices.
    * @param target The target to render to.
    */
-  public function render(target: RenderTarget) {
-    var img: Image;
-    if (image == null) {
-      img = sheet.image;
-    } else {
-      img = image;
-    }
-
+  public function render(target: RenderTarget, cameraBounds: Rect) {
     // Top left.
     target.drawImageSection(-(width * anchorX) + topLeft.x, -(height * anchorY) + topLeft.y, topLeft.frameRect.x,
-        topLeft.frameRect.y, topLeft.frameRect.width, topLeft.frameRect.height, img, color);
+        topLeft.frameRect.y, topLeft.frameRect.width, topLeft.frameRect.height, atlas.image, color);
 
     // Top.
     target.drawImageSectionWithSize(-(width * anchorX) + top.x, -(height * anchorY) + top.y,
         top.frameRect.width * top.scaleX, top.frameRect.height, top.frameRect.x, top.frameRect.y, top.frameRect.width,
-        top.frameRect.height, img, color);
+        top.frameRect.height, atlas.image, color);
 
     // Top right.
     target.drawImageSection(-(width * anchorX) + topRight.x, -(height * anchorY) + topRight.y,
         topRight.frameRect.x, topRight.frameRect.y,
-        topRight.frameRect.width, topRight.frameRect.height, img, color);
+        topRight.frameRect.width, topRight.frameRect.height, atlas.image, color);
 
     // Left.
     target.drawImageSectionWithSize(-(width * anchorX) + left.x, -(height * anchorY) + left.y,
         left.frameRect.width, left.frameRect.height * left.scaleY, left.frameRect.x, left.frameRect.y,
-        left.frameRect.width, left.frameRect.height, img, color);
+        left.frameRect.width, left.frameRect.height, atlas.image, color);
 
     // Center.
     target.drawImageSectionWithSize(-(width * anchorX) + center.x, -(height * anchorY) + center.y,
         center.frameRect.width * center.scaleX, center.frameRect.height * center.scaleY, center.frameRect.x,
-        center.frameRect.y, center.frameRect.width, center.frameRect.height, img, color);
+        center.frameRect.y, center.frameRect.width, center.frameRect.height, atlas.image, color);
 
     // Right.
     target.drawImageSectionWithSize(-(width * anchorX) + right.x, -(height * anchorY) + right.y,
         right.frameRect.width, right.frameRect.height * right.scaleY, right.frameRect.x, right.frameRect.y,
-        right.frameRect.width, right.frameRect.height, img, color);
+        right.frameRect.width, right.frameRect.height, atlas.image, color);
 
     // Bottom left.
     target.drawImageSection(-(width * anchorX) + bottomLeft.x, -(height * anchorY) + bottomLeft.y,
-        bottomLeft.frameRect.x, bottomLeft.frameRect.y, bottomLeft.frameRect.width, bottomLeft.frameRect.height, img,
-        color);
+        bottomLeft.frameRect.x, bottomLeft.frameRect.y, bottomLeft.frameRect.width, bottomLeft.frameRect.height,
+        atlas.image, color);
 
     // Bottom.
     target.drawImageSectionWithSize(-(width * anchorX) + bottom.x, -(height * anchorY) + bottom.y,
         bottom.frameRect.width * bottom.scaleX, bottom.frameRect.height, bottom.frameRect.x, bottom.frameRect.y,
-        bottom.frameRect.width, bottom.frameRect.height, img, color);
+        bottom.frameRect.width, bottom.frameRect.height, atlas.image, color);
 
     // Bottom right.
     target.drawImageSection(-(width * anchorX) + bottomRight.x, -(height * anchorY) + bottomRight.y,
         bottomRight.frameRect.x, bottomRight.frameRect.y, bottomRight.frameRect.width, bottomRight.frameRect.height,
-        img, color);
+        atlas.image, color);
   }
 
   /**
@@ -295,19 +275,14 @@ typedef NineSliceOptions = {
   var height: Int;
 
   /**
-   * The source image if not using a sprite sheet.
+   * The atlas to use as source.
    */
-  var ?image: Image;
+  var atlas: Atlas;
 
   /**
-   * The sprite sheet to use as source.
+   * The atlas frame name.
    */
-  var ?sheet: SpriteSheet;
-
-  /**
-   * The frame name if using a sprite sheet.
-   */
-  var ?frameName: String;
+  var frameName: String;
 
   /**
    * The x axis anchor.

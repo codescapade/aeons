@@ -70,7 +70,9 @@ class CBoxShape extends Component implements Renderable {
    * @param options The values you want to set.
    * @return A reference to this component.
    */
-  public function init(options: CBoxShapeOptions): CBoxShape {
+  public function new (options: CBoxShapeOptions) {
+    super();
+
     width = options.width;
     height = options.height;
     if (options.hasStroke != null) hasStroke = options.hasStroke;
@@ -80,8 +82,6 @@ class CBoxShape extends Component implements Renderable {
     if (options.fillColor != null) fillColor = options.fillColor;
     if (options.anchorX != null) anchorX = options.anchorX;
     if (options.anchorY != null) anchorY = options.anchorY;
-
-    return this;
   }
 
   /**

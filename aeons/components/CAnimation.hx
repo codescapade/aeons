@@ -1,7 +1,7 @@
 package aeons.components;
 
 import aeons.core.Component;
-import aeons.graphics.texturepacker.SpriteSheet;
+import aeons.graphics.atlas.Atlas;
 import aeons.graphics.animation.Animation;
 
 /**
@@ -25,9 +25,9 @@ class CAnimation extends Component {
   public var currentFrame(default, null): String;
 
   /**
-   * The sprite sheet of the current animation.
+   * The atlas of the current animation.
    */
-  public var spriteSheet(get, never): SpriteSheet;
+  public var atlas(get, never): Atlas;
 
   /**
    * Has the current animation finished.
@@ -50,12 +50,10 @@ class CAnimation extends Component {
   var anims = new Map<String, Animation>();
 
   /**
-   * Initialize the component.
-   * @return A reference to this component.
+   * CAnimation constructor.
    */
-  public function init(): CAnimation {
-
-    return this;
+  public function new() {
+    super();
   }
 
   /**
@@ -131,9 +129,9 @@ class CAnimation extends Component {
   }
 
   /**
-   * Sprite sheet getter.
+   * Atlas getter.
    */
-  inline function get_spriteSheet(): SpriteSheet {
-    return anim == null ? null : anim.sheet;
+  inline function get_atlas(): Atlas{
+    return anim == null ? null : anim.atlas;
   }
 }

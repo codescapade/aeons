@@ -2,15 +2,15 @@ package aeons.core.services;
 
 class NullEntities implements Entities {
 
-  public function new() {}
+public function new() {}
 
-  public function addEntity<T: Entity>(entityType: Class<T>): T {
+  public function addEntity<T: Entity>(entityType: T): T{
     trace('addEntity is not implemented');
 
     return null;
   }
 
-	public function removeEntity(entity: Entity): Void {
+	public function removeEntity(entity: Entity) {
     trace('removeEntity is not implemented');
 	}
 
@@ -20,17 +20,17 @@ class NullEntities implements Entities {
     return null;
 	}
 
-	public function removeEntityById(id: Int): Void {
+	public function removeEntityById(id: Int) {
     trace('removeEntityById is not implemented');
   }
 
-	public function addComponent<T: Component>(entity: Entity, componentType: Class<T>): T {
+	public function addComponent<T: Component>(entity: Entity, component: T): T {
     trace('addComponent is not implemented');
 
     return null;
 	}
 
-	public function removeComponent(entity: Entity, componentType: Class<Component>): Void {
+	public function removeComponent(entity: Entity, componentType: Class<Component>) {
     trace('removeComponent is not implemented');
 	}
 
@@ -76,11 +76,11 @@ class NullEntities implements Entities {
     return [];
 	}
 
-	public function cleanup(): Void {
+	public function cleanup() {
     trace('cleanup is not implemented');
 	}
 
-  public function updateAddRemove(): Void {
+  public function updateAddRemove() {
     trace('updateAddRemove is not implemented');
   }
 }

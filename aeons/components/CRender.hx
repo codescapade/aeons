@@ -15,14 +15,17 @@ class CRender extends Component {
    */
   var components: Array<Renderable>;
 
+  public function new() {
+    super();
+  }
+
   /**
    * Initialize the component.
    * @return This component.
    */
-  public function init(): CRender {
+  public override function init(entityId: Int) {
+    super.init(entityId);
     components = Aeons.entities.getRenderComponents(entityId);
-
-    return this;
   }
 
   /**

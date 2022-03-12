@@ -57,10 +57,12 @@ class CText extends Component implements Renderable {
   public var bounds = new Rect();
 
   /**
-   * Initialize the component.
+   * CText constructor.
    * @param options The options for initialization.
    */
-  public function init(?options: TextOptions): CText {
+  public function new(?options: TextOptions) {
+    super();
+
     bounds = new Rect();
     if (options == null) {
       // Defautls when no options are specified.
@@ -82,8 +84,6 @@ class CText extends Component implements Renderable {
       anchorX = options.anchorX == null ? 0.5 : options.anchorX;
       anchorY = options.anchorY == null ? 0.5 : options.anchorY;
     }
-
-    return this;
   }
 
   /**

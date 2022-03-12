@@ -105,10 +105,12 @@ class CSimpleBody extends Component {
   var body: Body;
 
   /**
-   * Set start values.
+   * CSimpleBody constructor.
    * @param options The values you want to set.
    */
-  public function init(?options: SimpleBodyOptions): CSimpleBody {
+  public function new (?options: SimpleBodyOptions) {
+    super();
+
     body = new Body();
     if (options != null) {
       if (options.type != null) type = options.type;
@@ -135,8 +137,6 @@ class CSimpleBody extends Component {
     } else {
       type = DYNAMIC;
     }
-
-    return this;
   }
 
   /**

@@ -6,10 +6,9 @@ class CRotate extends Component {
 
   public var speed: Float;
 
-  public function init(options: CRotateOptions): CRotate {
+  public function new(options: CRotateOptions) {
+    super();
     speed = options.speed;
-
-    return this;
   }
 }
 

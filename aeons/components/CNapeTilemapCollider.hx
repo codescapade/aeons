@@ -41,12 +41,15 @@ class CNapeTilemapCollider extends Component {
   /**
    * Get the other components
    */
-  public function init(): CNapeTilemapCollider {
+  public function new() {
+    super();
+  }
+
+  public override function init(entityId: Int) {
+    super.init(entityId);
     transform = getComponent(CTransform);
     tilemap = getComponent(CTilemap);
     bodies = [];
-
-    return this;
   }
 
   /**

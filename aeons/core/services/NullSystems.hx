@@ -7,7 +7,7 @@ class NullSystems implements Systems {
 
   public function new() {}
 
-  public function add<T: System>(systemType: Class<T>): T {
+  public function add<T: System>(system: T): T {
     trace('add is not implemented');
 
     return null;

@@ -9,7 +9,7 @@ interface Systems {
    * @param systemType The type of system to add.
    * @return The newly created system
    */
-  function add<T: System>(systemType: Class<T>): T;
+  function add<T: System>(system: T): T;
 
   /**
    * Remove a system from the scene.

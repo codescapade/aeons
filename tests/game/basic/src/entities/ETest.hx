@@ -6,9 +6,8 @@ class ETest extends Entity {
 
   public var test: String;
 
-  public function init(): ETest {
+  public function new() {
+    super();
     test = 'testing';
-
-    return this;
   }
 }

@@ -69,13 +69,16 @@ class CTilemap extends Component implements Renderable {
 
 	public var anchorY = 0.0;
 
+  public function new() {
+    super();
+  }
+
   /**
    * Initialize the component.
    */
-  public function init(): CTilemap {
+  public override function init(entityId: Int) {
+    super.init(entityId);
     transform = getComponent(CTransform);
-
-    return this;
   }
 
   /**

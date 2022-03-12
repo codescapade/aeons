@@ -1,7 +1,7 @@
 package aeons.graphics.animation;
 
-import aeons.graphics.texturepacker.Frame;
-import aeons.graphics.texturepacker.SpriteSheet;
+import aeons.graphics.atlas.Frame;
+import aeons.graphics.atlas.Atlas;
 
 /**
  * The `Animation` class can be used for sprite sheet animations.
@@ -28,22 +28,22 @@ class Animation {
   public var playMode: AnimationMode;
 
   /**
-   * The sprite sheet used for the animation.
+   * The atlas used for the animation.
    */
-  public var sheet: SpriteSheet;
+  public var atlas: Atlas;
 
   /**
    * Animation constructor.
    * @param name The name of the animation.
-   * @param sheet The sprite sheet.
+   * @param atlas The atlas used in the animation.
    * @param frames The frame names.
    * @param frameDuration The duration of a frame in seconds.
    * @param animationMode The animation play mode.
    */
-  public function new(name: String, sheet: SpriteSheet, frames: Array<String>, frameDuration: Float,
+  public function new(name: String, atlas: Atlas, frames: Array<String>, frameDuration: Float,
       playMode: AnimationMode = NORMAL) {
     this.name = name;
-    this.sheet = sheet;
+    this.atlas = atlas;
     this.frames = frames;
     this.frameDuration = frameDuration;
     this.playMode = playMode;
@@ -55,7 +55,7 @@ class Animation {
    * @return The frame from the animation.
    */
   public function getFrame(time: Float): Frame {
-    return sheet.getFrame(frames[getFrameIndex(time)]);
+    return atlas.getFrame(frames[getFrameIndex(time)]);
   }
 
   /**

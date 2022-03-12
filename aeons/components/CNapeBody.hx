@@ -60,25 +60,31 @@ class CNapeBody extends Component {
 
   var tempPoint = new Vec2();
 
+  var tempOptions: NapeBodyOptions;
+
   /**
    * Set start values.
    * @param options The values you want to set.
    */
-  public function init(?options: NapeBodyOptions): CNapeBody {
+  public function new(?options: NapeBodyOptions) {
+    tempOptions = options;
+  }
+
+  public override function init(entityId: Int) {
+    super.init(entityId);
+
     transform = getComponent(CTransform);
-    var type = options != null && options.type != null ? options.type : BodyType.DYNAMIC;
+    var type = tempOptions != null && tempOptions.type != null ? tempOptions.type : BodyType.DYNAMIC;
     body = new Body(type, Vec2.weak(transform.x, transform.y));
     isSensor = false;
 
-    if (options != null) {
-      if (options.isSensor != null) isSensor = options.isSensor;
-      if (options.allowMovement != null) allowMovement = options.allowMovement;
-      if (options.allowRotation != null) allowRotation = options.allowRotation;
-      if (options.material != null) setMaterial(options.material);
-      if (options.addToSpace != null && options.addToSpace) body.space = space;
+    if (tempOptions != null) {
+      if (tempOptions.isSensor != null) isSensor = tempOptions.isSensor;
+      if (tempOptions.allowMovement != null) allowMovement = tempOptions.allowMovement;
+      if (tempOptions.allowRotation != null) allowRotation = tempOptions.allowRotation;
+      if (tempOptions.material != null) setMaterial(tempOptions.material);
+      if (tempOptions.addToSpace != null && tempOptions.addToSpace) body.space = space;
     }
-
-    return this;
   }
 
   /**

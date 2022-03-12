@@ -4,10 +4,10 @@ interface Entities {
 
   /**
    * Add a new entity to the manager.
-   * @param entityType The type of entity to add.
-   * @return The created entity.
+   * @param entity The entity you want to add.
+   * @return The id the entity got when it was added to the entities.
    */
-  function addEntity<T: Entity>(entityType: Class<T>): T;
+  function addEntity<T: Entity>(entity: T): T;
 
   /**
    * Remove an entity from the manager.
@@ -39,7 +39,7 @@ interface Entities {
    * @param componentType The type of component to add.
    * @return The created component.
    */
-  function addComponent<T: Component>(entity: Entity, componentType: Class<T>): T;
+  function addComponent<T: Component>(entity: Entity, component: T): T;
 
   /**
    * Remove a component from an entity.

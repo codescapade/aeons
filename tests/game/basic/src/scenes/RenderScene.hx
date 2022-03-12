@@ -1,5 +1,6 @@
 package scenes;
 
+import aeons.systems.AnimationSystem;
 import aeons.graphics.atlas.Atlas;
 import aeons.Aeons;
 import aeons.components.CSprite;
@@ -12,20 +13,19 @@ import aeons.core.Scene;
 class RenderScene extends Scene {
 
   public override function init() {
-    Aeons.systems.addSystem(RenderSystem).init();
+    Aeons.systems.add(new RenderSystem());
 
-    // var atlas = assets.loadAtlas('atlas');
     var atlas: Atlas;
     Aeons.assets.loadAtlas('atlas', (at: Atlas) -> {
       atlas = at;
     });
 
-    var eCam = Aeons.entities.addEntity(Entity);
-    eCam.addComponent(CTransform).init();
-    eCam.addComponent(CCamera).init();
+    final eCam = Aeons.entities.addEntity(new Entity());
+    eCam.addComponent(new CTransform());
+    eCam.addComponent(new CCamera());
 
-    var eSprite = Aeons.entities.addEntity(Entity);
-    eSprite.addComponent(CTransform).init({ x: 100, y: 100 });
-    eSprite.addComponent(CSprite).init({ atlas: atlas, frameName: 'bunny' });
+    final eSprite = Aeons.entities.addEntity(new Entity());
+    eSprite.addComponent(new CTransform({ x: 100, y: 100 }));
+    eSprite.addComponent(new CSprite({ atlas: atlas, frameName: 'bunny' }));
   }
 }

@@ -7,7 +7,7 @@ class Component {
   /**
    * The entity this component belongs to.
    */
-  public final entityId: Int;
+  public var entityId(default, null): Int;
 
   /**
    * Is this component active.
@@ -19,6 +19,21 @@ class Component {
    * using other components directly in this component.
    */
   var requiredComponents(get, never): Array<Class<Component>>;
+
+  /**
+   * Component constructor.
+   */
+  public function new() {}
+
+  public function init(entityId: Int) {
+    this.entityId = entityId;
+
+    for (component in requiredComponents) {
+      if (!hasComponent(component)) {
+        throw 'Entity ${entityId} is missing a required ${Type.getClassName(component)} component.';
+      }
+    }
+  }
 
   /**
    * Called before a component is removed.
@@ -50,20 +65,6 @@ class Component {
    */
   public inline function hasComponents(componentTypes: Array<Class<Component>>): Bool {
     return Aeons.entities.hasComponents(entityId, componentTypes);
-  }
-
-  /**
-   * Private constructor. Components should only be created by the entity manager.
-   * @param refs Manager references.
-   */
-  function new(entityId: Int) {
-    this.entityId = entityId;
-
-    for (component in requiredComponents) {
-      if (!hasComponent(component)) {
-        throw 'Entity ${entityId} is missing a required ${Type.getClassName(component)} component.';
-      }
-    }
   }
 
   /**

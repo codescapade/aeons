@@ -13,14 +13,17 @@ class CUpdate extends Component {
    */
   var components: Array<Updatable>;
 
+  public function new() {
+    super();
+  }
+
   /**
    * Initialize the CUpate component.
    * @return This components.
    */
-  public function init(): CUpdate {
+  public override function init(entityId: Int) {
+    super.init(entityId);
     components = Aeons.entities.getUpdateComponents(entityId);
-
-    return this;
   }
 
   /**

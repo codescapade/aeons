@@ -10,7 +10,7 @@ class Entity {
   /**
    * The unique id for this entity.
    */
-  public final id: Int;
+  public var id(default, null): Int;
 
   /**
    * Is this entity active. This also updates all components that are on this entity.
@@ -18,10 +18,16 @@ class Entity {
   public var active(default, set) = true;
 
   /**
-   * Private constructor. Only the entity manager should create an entity.
-   * @param refs 
+   * Entity constructor.
    */
-  function new(id: Int) {
+  public function new() {}
+
+  /**
+   * Initialize variables in the entity. This gets called when the entity is added to the entity manager
+   * using `Aeons.entities.addEntity`.
+   * @param id 
+   */
+  public function init(id: Int) {
     this.id = id;
   }
 
@@ -30,8 +36,8 @@ class Entity {
    * @param componentType The component type to add.
    * @return The created component.
    */
-  public inline function addComponent<T: Component>(componentType: Class<T>): T {
-    return Aeons.entities.addComponent(this, componentType);
+  public inline function addComponent(component: Component) {
+    return Aeons.entities.addComponent(this, component);
   }
 
   /**

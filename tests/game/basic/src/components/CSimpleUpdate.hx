@@ -7,10 +7,9 @@ class CSimpleUpdate extends Component implements Updatable {
 
   var sometext: String;
 
-  public function init(): CSimpleUpdate {
+  public function new() {
+    super();
     sometext = 'Let\'s show this';
-
-    return this;
   }
 
   public function update(dt: Float) {

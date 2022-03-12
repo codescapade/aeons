@@ -58,10 +58,12 @@ class CSprite extends Component implements Renderable {
   var frame: Frame;
 
   /**
-   * Initialize the compoenet.
+   * CSprite constructor.
    * @param options The options for initialization.
    */
-  public function init(?options: CSpriteOptions): CSprite {
+  public function new(?options: CSpriteOptions) {
+    super();
+
     if (options != null) {
       if (options.color != null) color = options.color;
       if (options.anchorX != null) anchorX = options.anchorX;
@@ -69,8 +71,6 @@ class CSprite extends Component implements Renderable {
       if (options.atlas != null) atlas = options.atlas;
       if (options.frameName != null) setFrame(options.frameName);
     }
-
-    return this;
   }
 
   /**

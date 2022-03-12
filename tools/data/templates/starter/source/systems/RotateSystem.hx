@@ -1,10 +1,11 @@
 package systems;
 
-import components.CRotate;
 import aeons.components.CTransform;
 import aeons.core.Bundle;
 import aeons.core.Updatable;
 import aeons.core.System;
+
+import components.CRotate;
 
 class RotateSystem extends System implements Updatable {
 
@@ -13,10 +14,9 @@ class RotateSystem extends System implements Updatable {
 
   var useDeltaTime: Bool;
 
-  public function init(options: RotateSystemOptions): RotateSystem {
+  public function new(options: RotateSystemOptions) {
+    super();
     useDeltaTime = options.useDeltaTime;
-
-    return this;
   }
 
   public function update(dt: Float) {

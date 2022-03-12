@@ -35,12 +35,8 @@ class RenderSystem extends System implements SysRenderable {
    */
   var sortZ: Bool = false;
 
-  /**
-   * Initialize the system.
-   * @return this RenderSystem. 
-   */
-  public function init(): RenderSystem {
-    return this;
+  public function new() {
+    super();
   }
 
   /**

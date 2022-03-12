@@ -84,7 +84,9 @@ class CCamera extends Component {
    * @param options Initialization options.
    * @return A reference to the camera.
    */
-  public function init(?options: CameraOptions): CCamera {
+  public function new (?options: CameraOptions) {
+    super();
+
     if (options == null) {
       viewWidth = Aeons.display.viewWidth;
       viewHeight = Aeons.display.viewHeight;
@@ -97,6 +99,14 @@ class CCamera extends Component {
       if (options.backgroundColor != null) backgroundColor = options.backgroundColor;
       if (options.isMain) main = this;
     }
+  }
+
+  /**
+   * Initialize the camera component.
+   * @param entityId The entity id this component belongs to.
+   */
+  public override function init(entityId: Int) {
+    super.init(entityId);
 
     transform = getComponent(CTransform);
     matrix = FastMatrix4.identity();
@@ -113,8 +123,6 @@ class CCamera extends Component {
     }
 
     tempMatrix = FastMatrix4.identity();
-
-    return this;
   }
 
   /**

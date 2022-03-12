@@ -63,11 +63,10 @@ class InternalEntities implements Entities {
    */
   public function new() {}
 
-  public function addEntity<T: Entity>(entityType: Class<T>): T {
+  public function addEntity<T: Entity>(entity: T): T {
     final id = getNextEntityId();
-
-    final entity = Type.createInstance(entityType, [id]);
     entities.push(entity);
+    entity.init(id);
 
     return entity;
   }
@@ -93,8 +92,9 @@ class InternalEntities implements Entities {
     }
   }
 
-  public function addComponent<T: Component>(entity: Entity, componentType: Class<T>): T {
-    final name = Type.getClassName(componentType);
+  public function addComponent<T: Component>(entity: Entity, component: T): T {
+    final componentClass = Type.getClass(component);
+    final name = Type.getClassName(componentClass);
 
     if (components[name] != null) {
       if (components[name][entity.id] != null) {
@@ -102,14 +102,13 @@ class InternalEntities implements Entities {
       }
     }
 
-    final component = Type.createInstance(componentType, [entity.id]);
-
     final eventType: EventType<ComponentEvent> = 'aeons_${name}_added';
 
     if (components[name] == null) {
       components[name] = [];
     }
     components[name][entity.id] = component;
+    component.init(entity.id);
 
     componentsToAdd.push(ComponentEvent.get(eventType, entity));
 
@@ -119,12 +118,13 @@ class InternalEntities implements Entities {
 
         // Add an update component if it does not exist yet.
         if (!hasComponent(entity.id, CUpdate)) {
-          final updateComp = Type.createInstance(CUpdate, [entity.id]).init();
+          final updateComp = new CUpdate();
           final updateCompName = Type.getClassName(CUpdate);
           if (components[updateCompName] == null) {
             components[updateCompName] = [];
           }
           components[updateCompName][entity.id] = updateComp;
+          updateComp.init(entity.id);
 
           final updateEventType = 'aeons_${updateCompName}_added';
           componentsToAdd.push(ComponentEvent.get(updateEventType, entity));
@@ -140,12 +140,13 @@ class InternalEntities implements Entities {
 
         // Add a render component if it does not exist yet.
         if (!hasComponent(entity.id, CRender)) {
-          final renderComp = Type.createInstance(CRender, [entity.id]).init();
+          final renderComp = new CRender();
           final renderCompName = Type.getClassName(CRender);
           if (components[renderCompName] == null) {
             components[renderCompName] = [];
           }
           components[renderCompName][entity.id] = renderComp;
+          renderComp.init(entity.id);
 
           final renderEventType = 'aeons_${renderCompName}_added';
           componentsToAdd.push(ComponentEvent.get(renderEventType, entity));

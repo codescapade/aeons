@@ -45,16 +45,20 @@ class CSimpleTilemapCollider extends Component {
    */
   var tags: Array<String>;
 
+  public function new() {
+    super();
+  }
+
   /**
    * Called when adding the component to an entity.
    */
-  public function init(): CSimpleTilemapCollider{
+  public override function init(entityId: Int) {
+    super.init(entityId);
+
     transform = getComponent(CTransform);
     tilemap = getComponent(CTilemap);
     bodies = [];
     tags = [];
-
-    return this;
   }
 
   /**
