@@ -6,7 +6,6 @@ import aeons.graphics.RenderTarget;
  * The `Entity` class is the main container class in the game.
  * Components can be added to it for functionality.
  */
-@:autoBuild(aeons.core.Macros.buildPool())
 class Entity {
   /**
    * The unique id for this entity.
@@ -37,7 +36,7 @@ class Entity {
    * @param componentType The component type to add.
    * @return The created component.
    */
-  public inline function addComponent(component: Component) {
+  public inline function addComponent<T: Component>(component: T): T{
     return Aeons.entities.addComponent(this, component);
   }
 

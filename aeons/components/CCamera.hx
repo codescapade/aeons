@@ -204,7 +204,7 @@ class CCamera extends Component {
     return out.set(vX, vY);
   }
 
-  public function put() {
+  public override function put() {
     if (main == this) {
       main = null;
     }

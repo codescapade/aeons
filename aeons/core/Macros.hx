@@ -578,7 +578,7 @@ class Macros {
       fields.push({
         name: 'put',
         pos: Context.currentPos(),
-        access: [APublic],
+        access: [APublic, AOverride],
         kind: FFun({
           args: [],
           expr: macro {

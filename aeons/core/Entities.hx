@@ -12,8 +12,9 @@ interface Entities {
   /**
    * Remove an entity from the manager.
    * @param entity The entity to remove.
+   * @param pool Should the components on this entity be put back in their object pools.
    */
-  function removeEntity(entity: Entity): Void;
+  function removeEntity(entity: Entity, pool: Bool = false): Void;
 
   /**
    * Get an entity using the id.
@@ -25,8 +26,9 @@ interface Entities {
   /**
    * Remove an entity by its id.
    * @param id The entity id.
+   * @param pool Should the components on this entity be put back in their object pools.
    */
-  function removeEntityById(id: Int): Void;
+  function removeEntityById(id: Int, pool: Bool = false): Void;
 
   /**
    * Update the entities and components that have been added or removed in the last update.
@@ -46,7 +48,7 @@ interface Entities {
    * @param entity The entity to remove from.
    * @param componentType The component type to remove.
    */
-  function removeComponent(entity: Entity, componentType: Class<Component>): Void;
+  function removeComponent(entity: Entity, componentType: Class<Component>, pool: Bool = false): Void;
 
   /**
    * Get a component from an entity.

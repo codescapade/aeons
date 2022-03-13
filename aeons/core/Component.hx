@@ -36,6 +36,8 @@ class Component {
     }
   }
 
+  public function put() {}
+
   /**
    * Called before a component is removed.
    */

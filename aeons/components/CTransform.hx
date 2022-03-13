@@ -22,32 +22,32 @@ class CTransform extends Component {
   /**
    * The position on the x axis.
    */
-  public var x(default, set) = 0.0;
+  public var x(default, set): Float;
 
   /**
    * The position on the y axis.
    */
-  public var y(default, set) = 0.0;
+  public var y(default, set): Float;
 
   /**
    * The z index for render ordering. Higher is more in front.
    */
-  public var zIndex(default, set) = 0.0;
+  public var zIndex(default, set): Float;
 
   /**
    * The rotation angle in degrees.
    */
-  public var angle(default, set) = 0.0;
+  public var angle(default, set): Float;
 
   /**
    * The scale on the x axis.
    */
-  public var scaleX(default, set) = 1.0;
+  public var scaleX(default, set): Float;
 
   /**
    * The scale on the y axis.
    */
-  public var scaleY(default, set) = 1.0;
+  public var scaleY(default, set): Float;
 
   /**
    * The parent transform component.
@@ -95,23 +95,27 @@ class CTransform extends Component {
     worldPosition = new Vector2();
     worldScale = new Vector2();
     worldAngle = 0;
+    isCameraTransform = false;
 
     if (options != null) {
-      if (options.x != null) x = options.x;
-      if (options.y != null) y = options.y;
-      if (options.angle != null) angle = options.angle;
-      if (options.scaleX != null) scaleX = options.scaleX;
-      if (options.scaleY != null) scaleY = options.scaleY;
-      if (options.parent != null) parent = options.parent;
+      x = (options.x == null) ? 0.0 : options.x;
+      y = (options.y == null) ? 0.0 : options.y;
+      angle = (options.angle == null) ? 0.0 : options.angle;
+      scaleX = (options.scaleX == null) ? 1.0 : options.scaleX;
+      scaleY = (options.scaleY == null) ? 1.0 : options.scaleY;
+      parent = (options.parent == null) ? null : options.parent;
       zIndex = options.zIndex == null ? 0.0 : options.zIndex;
     } else {
       x = 0.0;
       y = 0.0;
       angle = 0.0;
-      scaleX = 0.0;
-      scaleY = 0.0;
+      scaleX = 1.0;
+      scaleY = 1.0;
       zIndex = 0.0;
+      parent = null;
     }
+
+    changed = true;
   }
 
   /**

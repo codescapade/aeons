@@ -58,6 +58,77 @@ class Scene {
   }
 
   /**
+   * Add a new entity to the manager.
+   * @param entity The entity you want to add.
+   * @return The id the entity got when it was added to the entities.
+   */
+  public inline function addEntity<T: Entity>(entity: T): T {
+    return Aeons.entities.addEntity(entity);
+  }
+
+  /**
+   * Remove an entity from the manager.
+   * @param entity The entity to remove.
+   * @param pool Should the components on this entity be put back in their object pools.
+   */
+  public inline function removeEntity(entity: Entity, pool: Bool = false) {
+    Aeons.entities.removeEntity(entity, pool);
+  }
+
+  /**
+   * Get an entity using the id.
+   * @param id The id of the entity.
+   * @return The entity.
+   */
+  public inline function getEntityById<T: Entity>(id: Int): T {
+    return Aeons.entities.getEntityById(id);
+  }
+
+  /**
+   * Remove an entity by its id.
+   * @param id The entity id.
+   * @param pool Should the components on this entity be put back in their object pools.
+   */
+  public inline function removeEntityById(id: Int, pool: Bool = false) {
+    Aeons.entities.removeEntityById(id, pool);
+  }
+
+  /**
+   * Add a system to the scene. Throws an error if the system type has already been added.
+   * @param systemType The type of system to add.
+   * @return The newly created system
+   */
+  public inline function addSystem<T: System>(system: T): T {
+    return Aeons.systems.add(system);
+  }
+
+  /**
+   * Remove a system from the scene.
+   * @param systemType The type of system to remove.
+   */
+  public inline function removeSystem(systemType: Class<System>) {
+    Aeons.systems.remove(systemType);
+  }
+
+  /**
+   * Get a system using its type.
+   * @param systemType The type of system you want to get a reference from.
+   * @return The system if it exists. Otherwise null.
+   */
+  public inline function getSystem<T: System>(systemType: Class<T>): T {
+    return Aeons.systems.get(systemType);
+  }
+
+  /**
+   * Check if a system has been added.
+   * @param systemType The type of system you want to check for.
+   * @return True is the system was found.
+   */
+  public inline function has(systemType: Class<System>): Bool {
+    return Aeons.systems.has(systemType);
+  }
+
+  /**
    * Called before the scene gets paused.
    */
   public function willPause() {}

@@ -24,7 +24,7 @@ class InternalEntities implements Entities {
   /**
    * A list of entities to remove at the start of the next update.
    */
-  final entitiesToRemove: Array<Entity> = [];
+  final entitiesToRemove: Array<EntityRemovedInfo> = [];
 
   /**
    * A list of components to add at the start of the next update.
@@ -71,8 +71,8 @@ class InternalEntities implements Entities {
     return entity;
   }
 
-  public function removeEntity(entity: Entity) {
-    entitiesToRemove.push(entity);
+  public function removeEntity(entity: Entity, pool = false) {
+    entitiesToRemove.push({ entity: entity, pool: pool });
   }
 
   public function getEntityById<T: Entity>(id: Int): T {
@@ -85,10 +85,10 @@ class InternalEntities implements Entities {
     return null;
   }
 
-  public function removeEntityById(id: Int) {
+  public function removeEntityById(id: Int, pool = false) {
     final entity = getEntityById(id);
     if (entity != null) {
-      entitiesToRemove.push(entity);
+      entitiesToRemove.push({ entity: entity, pool: pool });
     }
   }
 
@@ -159,7 +159,7 @@ class InternalEntities implements Entities {
     return component;
   }
 
-  public function removeComponent(entity: Entity, componentType: Class<Component>) {
+  public function removeComponent(entity: Entity, componentType: Class<Component>, pool: Bool = false) {
     final name = Type.getClassName(componentType);
 
     if (components[name] == null || components[name][entity.id] == null) {
@@ -167,7 +167,7 @@ class InternalEntities implements Entities {
     }
 
     final component = components[name][entity.id];
-    componentsToRemove.push({ entity: entity, componentName: name, component: component });
+    componentsToRemove.push({ entity: entity, componentName: name, component: component, pool: pool });
   }
 
   public function getComponent<T: Component>(entityId: Int, componentType: Class<T>): T {
@@ -254,28 +254,32 @@ class InternalEntities implements Entities {
   public function updateAddRemove() {
     // Remove entities.
     while (entitiesToRemove.length > 0) {
-      final entity = entitiesToRemove.pop();
-      freeIds.push(entity.id);
+      final entityInfo = entitiesToRemove.pop();
+      freeIds.push(entityInfo.entity.id);
 
       // Loop through all components and remove them.
-      final allComponents = getAllComponentsForEntity(entity.id);
+      final allComponents = getAllComponentsForEntity(entityInfo.entity.id);
       for (component in allComponents) {
         final name = Type.getClassName(Type.getClass(component));
-        components[name][entity.id] = null;
+        components[name][entityInfo.entity.id] = null;
         if (Std.isOfType(component, Updatable)) {
-          updateComponents[entity.id].remove(cast component);
+          updateComponents[entityInfo.entity.id].remove(cast component);
         }
         if (Std.isOfType(component, Renderable)) {
-          renderComponents[entity.id].remove(cast component);
+          renderComponents[entityInfo.entity.id].remove(cast component);
         }
 
         // Send the component_removed message to all the systems that care about them so they can be updated.
         final eventType: EventType<ComponentEvent> = 'aeons_${name}_removed';
-        Aeons.events.emit(ComponentEvent.get(eventType, entity));
+        Aeons.events.emit(ComponentEvent.get(eventType, entityInfo.entity));
 
-        component.cleanup();
+        if (entityInfo.pool) {
+          component.put();
+        } else {
+          component.cleanup();
+        }
       }
-      entity.cleanup();
+      entityInfo.entity.cleanup();
     }
 
     // Send to systems the notifications of the new components.
@@ -363,4 +367,22 @@ class ComponentRemovedInfo {
    * The class name of the component as string.
    */
   public final componentName: String;
+
+  /**
+   * Should the component be put back in its object pool.
+   */
+  public final pool: Bool;
+}
+
+@:structInit
+class EntityRemovedInfo {
+  /**
+   * The entity to remove.
+   */
+  public final entity: Entity;
+
+  /**
+   * Should the components be pooled.
+   */
+  public final pool: Bool;
 }
