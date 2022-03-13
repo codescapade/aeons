@@ -15,8 +15,8 @@ import systems.RotateSystem;
 class GameScene extends Scene {
 
   public override function init() {
-    Aeons.systems.add(new RotateSystem({ useDeltaTime: true }));
-    Aeons.systems.add(new RenderSystem());
+    addSystem(new RotateSystem({ useDeltaTime: true }));
+    addSystem(new RenderSystem());
 
     createCamera();
 
@@ -28,7 +28,7 @@ class GameScene extends Scene {
   }
 
   function createCamera() {
-    final eCamera = Aeons.entities.addEntity(new Entity());
+    final eCamera = addEntity(new Entity());
     eCamera.addComponent(new CTransform());
     eCamera.addComponent(new CCamera());
   }
@@ -36,7 +36,7 @@ class GameScene extends Scene {
   function createBox(x: Float, y: Float, width: Float, height: Float, color: Color, speed: Float,
       ?parent: CTransform): Entity {
 
-    final box = Aeons.entities.addEntity(new Entity());
+    final box = addEntity(new Entity());
 
     box.addComponent(new CTransform({
       x: x,

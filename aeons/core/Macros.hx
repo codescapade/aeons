@@ -292,37 +292,6 @@ class Macros {
             switch (constructor.kind) {
               case FFun(o):
                 final constructorExprs = [o.expr];
-                // o.expr.iter((f: Expr) -> {
-                //   switch (f.expr) {
-                //     case EBlock(exprs):
-                //       trace('before loop');
-                //       for (ex in exprs) {
-                //         trace(ex.toString());
-                //       }
-                //       f.expr = EBlock(exprs);
-                //     default:
-                //   }
-                // });
-
-                // switch (o.expr.expr) {
-                //   case EBlock(exprs):
-                //     for (expr in exprs) {
-                //       switch (expr.expr) {
-                //         case EBlock(exprs2):
-                //           var supr: Expr;
-                //           for (ex in exprs2) {
-                //             if (ex.toString() == 'super()') {
-                //               supr = ex;
-                //             }
-                //           }
-                //           // if (supr != null) {
-                //           //   exprs2.remove(supr);
-                //           // }
-                //         default:
-                //       }
-                //     }
-                //   default:
-                // }
                 // initialize the bundleList at the end of the system constructor.
                 final initBundleExpr = macro { $i{fieldName} = new aeons.core.BundleList<$fType>(); };
                 constructorExprs.push(initBundleExpr);
@@ -560,7 +529,7 @@ class Macros {
           kind: FFun({
             args: args,
             expr: macro {
-              var component = pool.get();
+              var component = pool.get($a{paramNames});
               component.reset($a{paramNames});
 
               return component;

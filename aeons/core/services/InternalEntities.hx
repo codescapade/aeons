@@ -264,9 +264,15 @@ class InternalEntities implements Entities {
         components[name][entityInfo.entity.id] = null;
         if (Std.isOfType(component, Updatable)) {
           updateComponents[entityInfo.entity.id].remove(cast component);
+          if (updateComponents[entityInfo.entity.id].length == 0) {
+            updateComponents[entityInfo.entity.id] = null;
+          }
         }
         if (Std.isOfType(component, Renderable)) {
           renderComponents[entityInfo.entity.id].remove(cast component);
+          if (renderComponents[entityInfo.entity.id].length == 0) {
+            renderComponents[entityInfo.entity.id] = null;
+          }
         }
 
         // Send the component_removed message to all the systems that care about them so they can be updated.
@@ -296,7 +302,12 @@ class InternalEntities implements Entities {
 
       // Send an event to systems that listen for this component.
       Aeons.events.emit(ComponentEvent.get(eventType, update.entity));
-      update.component.cleanup();
+
+      if (update.pool) {
+        update.component.put();
+      } else {
+        update.component.cleanup();
+      }
 
       if (Std.isOfType(update.component, Updatable)) {
         updateComponents[update.entity.id].remove(cast update.component);

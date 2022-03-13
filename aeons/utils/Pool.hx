@@ -32,15 +32,20 @@ class Pool<T> {
 
   /**
    * Get an object from the pool. If the pool is empty create a new instance.
+   * TODO: Need to figure out how to do object pools with arguments better.
    * @return The object.
    */
-  public function get(): T {
+  public function get(?options: Dynamic): T {
     if (pool.length > 0) {
       final item = pool.pop();
 
       return item;
     } else {
-      return Type.createInstance(classType, []);
+      if (options == null) {
+        return Type.createInstance(classType, []);
+      } else {
+        return Type.createInstance(classType, [options]);
+      }
     }
   }
 
