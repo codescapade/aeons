@@ -21,17 +21,17 @@ class CCamera extends Component {
   /**
    * The camera zoom.
    */
-  public var zoom = 1.0;
+  public var zoom: Float;
 
   /**
    * The x position in the window.
    */
-  public var viewX = 0;
+  public var viewX: Int;
 
   /**
    * The y position in the window.
    */
-  public var viewY = 0;
+  public var viewY: Int;
 
   /**
    * The width of the camera view in pixels.
@@ -57,7 +57,7 @@ class CCamera extends Component {
   /**
    * The camera background color. Defaults to black.
    */
-  public var backgroundColor = Color.Black;
+  public var backgroundColor: Color;
 
   /**
    * The camera bounds.
@@ -88,15 +88,19 @@ class CCamera extends Component {
     super();
 
     if (options == null) {
+      viewX = 0;
+      viewY = 0;
       viewWidth = Aeons.display.viewWidth;
       viewHeight = Aeons.display.viewHeight;
+      zoom = 1.0;
+      backgroundColor = Color.Black;
     } else {
       viewWidth = options.viewWidth == null ? Aeons.display.viewWidth : options.viewWidth;
       viewHeight = options.viewHeight == null ? Aeons.display.viewHeight : options.viewHeight;
-      if (options.zoom != null) zoom = options.zoom;
-      if (options.viewX != null) viewX = options.viewX;
-      if (options.viewY != null) viewY = options.viewY;
-      if (options.backgroundColor != null) backgroundColor = options.backgroundColor;
+      zoom = options.zoom == null ? 1.0 : options.zoom;
+      viewX = options.viewX == null ? 0 : options.viewX;
+      viewY = options.viewY == null ? 0 : options.viewY;
+      backgroundColor =  options.backgroundColor == null ? Color.Black : options.backgroundColor;
       if (options.isMain) main = this;
     }
   }
@@ -198,6 +202,12 @@ class CCamera extends Component {
     }
 
     return out.set(vX, vY);
+  }
+
+  public function put() {
+    if (main == this) {
+      main = null;
+    }
   }
 
   /**

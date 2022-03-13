@@ -231,8 +231,7 @@ class Macros {
         access: [APrivate],
         kind: FFun({
           args: [],
-          expr: macro {super();},
-          ret: macro: Void
+          expr: macro {super();}
         })
       };
       fields.push(constructor);
@@ -293,13 +292,44 @@ class Macros {
             switch (constructor.kind) {
               case FFun(o):
                 final constructorExprs = [o.expr];
+                // o.expr.iter((f: Expr) -> {
+                //   switch (f.expr) {
+                //     case EBlock(exprs):
+                //       trace('before loop');
+                //       for (ex in exprs) {
+                //         trace(ex.toString());
+                //       }
+                //       f.expr = EBlock(exprs);
+                //     default:
+                //   }
+                // });
+
+                // switch (o.expr.expr) {
+                //   case EBlock(exprs):
+                //     for (expr in exprs) {
+                //       switch (expr.expr) {
+                //         case EBlock(exprs2):
+                //           var supr: Expr;
+                //           for (ex in exprs2) {
+                //             if (ex.toString() == 'super()') {
+                //               supr = ex;
+                //             }
+                //           }
+                //           // if (supr != null) {
+                //           //   exprs2.remove(supr);
+                //           // }
+                //         default:
+                //       }
+                //     }
+                //   default:
+                // }
                 // initialize the bundleList at the end of the system constructor.
                 final initBundleExpr = macro { $i{fieldName} = new aeons.core.BundleList<$fType>(); };
                 constructorExprs.push(initBundleExpr);
 
                 for (component in componentClasses) {
                   final listenerExpr = macro {
-                    // Component added event listener.
+                    // Component added event listener. 
                     aeons.Aeons.events.on('aeons_' + $v{component} + '_added', (event: aeons.events.ComponentEvent) -> {
                       // Check if the entity has all required components.
                       if (event.entity.hasBundleComponents($v{componentClasses})) {
@@ -442,6 +472,132 @@ class Macros {
 
     // Return the path to the new type.
     return TPath({pack: ['aeons', 'bundles'], name: name, params: []});
+  }
+
+  static function buildPool(): Array<Field> {
+    final fields = Context.getBuildFields();
+
+    var constructor: Field;
+    var putFunction: Field;
+
+    // Check if a constructor or put function already exists.
+    for (field in fields) {
+      switch (field.kind) {
+        case FFun(func):
+          if (field.name == 'new') {
+            constructor = field;
+          } else if (field.name == 'put') {
+            putFunction = field;
+          }
+        default:
+      }
+    }
+
+    final classType = Context.getLocalClass().get();
+    final complexType = Context.getLocalType().toComplexType();
+    final path = classType.pack.concat([classType.name]);
+    final poolExpr = macro new aeons.utils.Pool($p{path});
+
+    // Create the static object pool.
+    fields.push({
+      name: 'pool',
+      access: [APrivate, AStatic],
+      pos: Context.currentPos(),
+      kind: FVar(null, poolExpr)
+    });
+
+    // Add a constructor if it doesn't exist.
+    if (constructor == null) {
+      constructor = {
+        name: 'new',
+        pos: Context.currentPos(),
+        access: [APublic],
+        kind: FFun({
+          args: [],
+          expr: macro {super();}
+        })
+      };
+      fields.push(constructor);
+    }
+
+    switch (constructor.kind) {
+      case FFun(o):
+        var args = o.args;
+        var body: Array<Expr> = [];
+
+        // Get the code inside the constructor except for the super(); call to copy it into the reset field.
+        // Reset is called automatically when using get().
+        o.expr.iter((f: Expr) -> {
+          if (f.toString() != 'super()') {
+            body.push(f);
+          }
+        });
+
+        // Create the reset function with the same parameters and code inside as the constructor so
+        // you can use the constructor to set / reset the variables and it works for get() as well.
+        fields.push({
+          name: 'reset',
+          pos: Context.currentPos(),
+          access: [APublic],
+          kind: FFun({
+            args: args,
+            expr: macro $b{body},
+            ret: macro: Void
+          })
+        });
+
+        // Convert the function parameters to variable names to pass into the reset function.
+        var paramNames: Array<Expr> = [];
+        for (param in args) {
+          paramNames.push(macro $i{param.name});
+        }
+
+        // Create the static get function to get a component from the object pool.
+        fields.push({
+          name: 'get',
+          access: [APublic, AStatic],
+          pos: Context.currentPos(),
+          kind: FFun({
+            args: args,
+            expr: macro {
+              var component = pool.get();
+              component.reset($a{paramNames});
+
+              return component;
+            },
+            ret: complexType
+          })
+        });
+
+      default:
+    }
+
+    // create an override put function and add pool.put(); to is so the event is returned to the pool.
+    // if the put function already exists add that to the existing function.
+    if (putFunction == null) {
+      fields.push({
+        name: 'put',
+        pos: Context.currentPos(),
+        access: [APublic],
+        kind: FFun({
+          args: [],
+          expr: macro {
+            pool.put(this);
+          },
+          ret: macro: Void
+        })
+      });
+    } else {
+      switch (putFunction.kind) {
+        case FFun(func):
+          final expr = macro { pool.put(this); };
+          func.expr = macro $b{[func.expr, expr]};
+
+        default:
+      }
+    }
+
+    return fields;
   }
 }
 #end

@@ -3,6 +3,7 @@ package aeons.core;
 /**
  * The component base class.
  */
+@:autoBuild(aeons.core.Macros.buildPool())
 class Component {
   /**
    * The entity this component belongs to.

@@ -71,6 +71,14 @@ class CTilemap extends Component implements Renderable {
 
   public function new() {
     super();
+
+    color = Color.White;
+    anchorX = 0.0;
+    anchorY = 0.0;
+    tileset = null;
+    tiles = null;
+    visibleBounds.set(0, 0, 0, 0);
+    bounds.set(0, 0, 0, 0);
   }
 
   /**

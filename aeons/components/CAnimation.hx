@@ -12,7 +12,7 @@ class CAnimation extends Component {
   /**
    * Is the current animation playing.
    */
-  public var playing(default, null) = false;
+  public var playing(default, null): Bool;
 
   /**
    * The name of the current animation.
@@ -42,18 +42,23 @@ class CAnimation extends Component {
   /**
    * Animation play time.
    */
-  var time = 0.0;
+  var time: Float;
 
   /**
    * Dictionary of animations added to the component.
    */
-  var anims = new Map<String, Animation>();
+  var anims: Map<String, Animation>;
 
   /**
    * CAnimation constructor.
    */
   public function new() {
     super();
+    playing = false;
+    currentFrame = null;
+    anim = null;
+    time = 0.0;
+    anims = new Map<String, Animation>();
   }
 
   /**

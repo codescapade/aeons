@@ -18,42 +18,42 @@ class CBoxShape extends Component implements Renderable {
   /**
    * The color of the box. Defaults to white.
    */
-  public var fillColor = Color.White;
+  public var fillColor: Color;
 
   /**
    * The stroke color. Defaults to white.
    */
-  public var strokeColor = Color.White;
+  public var strokeColor: Color;
 
   /**
    * The width of the box in pixels.
    */
-  public var width = 10.0;
+  public var width: Float;
 
   /**
    * The height of the box in pixels.
    */
-  public var height = 10.0;
+  public var height: Float;
 
   /**
    * The x axis anchor.
    */
-  public var anchorX = 0.5;
+  public var anchorX: Float;
 
   /**
    * The y axis anchor.
    */
-  public var anchorY = 0.5;
+  public var anchorY: Float;
 
   /**
    * Should the box be filled with color.
    */
-  public var filled = false;
+  public var filled: Bool;
 
   /**
    * Should the box have an outline stroke.
    */
-  public var hasStroke = true;
+  public var hasStroke: Bool;
 
   /**
    * The stroke width in pixels.
@@ -75,13 +75,13 @@ class CBoxShape extends Component implements Renderable {
 
     width = options.width;
     height = options.height;
-    if (options.hasStroke != null) hasStroke = options.hasStroke;
-    if (options.strokeColor != null) strokeColor = options.strokeColor;
-    if (options.strokeWidth != null) strokeWidth = options.strokeWidth;
-    if (options.filled != null) filled = options.filled;
-    if (options.fillColor != null) fillColor = options.fillColor;
-    if (options.anchorX != null) anchorX = options.anchorX;
-    if (options.anchorY != null) anchorY = options.anchorY;
+    hasStroke = options.hasStroke == null ? true : options.hasStroke;
+    strokeColor = options.strokeColor == null ? Color.White : options.strokeColor;
+    strokeWidth = options.strokeWidth == null ? 1.0 : options.strokeWidth;
+    filled = options.filled == null ? false : options.filled;
+    fillColor = options.fillColor == null ? Color.White : options.fillColor;
+    anchorX = options.anchorX == null ? 0.5 : options.anchorX;
+    anchorY = options.anchorY == null ? 0.5 : options.anchorY;
   }
 
   /**

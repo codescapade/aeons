@@ -105,6 +105,11 @@ class CTransform extends Component {
       if (options.parent != null) parent = options.parent;
       zIndex = options.zIndex == null ? 0.0 : options.zIndex;
     } else {
+      x = 0.0;
+      y = 0.0;
+      angle = 0.0;
+      scaleX = 0.0;
+      scaleY = 0.0;
       zIndex = 0.0;
     }
   }

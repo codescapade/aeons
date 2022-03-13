@@ -61,16 +61,14 @@ class CSprite extends Component implements Renderable {
    * CSprite constructor.
    * @param options The options for initialization.
    */
-  public function new(?options: CSpriteOptions) {
+  public function new(options: CSpriteOptions) {
     super();
 
-    if (options != null) {
-      if (options.color != null) color = options.color;
-      if (options.anchorX != null) anchorX = options.anchorX;
-      if (options.anchorY != null) anchorY = options.anchorY;
-      if (options.atlas != null) atlas = options.atlas;
-      if (options.frameName != null) setFrame(options.frameName);
-    }
+    atlas = options.atlas;
+    setFrame(options.frameName);
+    color = options.color == null ? Color.White : options.color;
+    anchorX = options.anchorX == null ? 0.5 : options.anchorX;
+    anchorY = options.anchorY == null ? 0.5 : options.anchorY;
   }
 
   /**
@@ -136,12 +134,12 @@ typedef CSpriteOptions = {
   /**
    * The sprite atlas to use.
    */
-  var ?atlas: Atlas;
+  var atlas: Atlas;
 
   /**
    * The sprite frame to use.
    */
-  var ?frameName: String;
+  var frameName: String;
 
   /**
    * The x axis anchor.
