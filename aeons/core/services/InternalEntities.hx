@@ -286,6 +286,7 @@ class InternalEntities implements Entities {
         }
       }
       entityInfo.entity.cleanup();
+      entities.remove(entityInfo.entity);
     }
 
     // Send to systems the notifications of the new components.
