@@ -102,7 +102,9 @@ class Game {
    * Setup the game when Kha has finished loading.
    */
   function preloadComplete() {
+    #if !nodejs
     Aeons.display.scaleToWindow();
+    #end
 
     renderTarget = new RenderTarget(Aeons.display.viewWidth, Aeons.display.viewHeight);
 
@@ -111,8 +113,10 @@ class Game {
     Aeons.provideEvents(new InternalEvents());
     Aeons.provideRandom(new InternalRandom());
     Aeons.provideTimeStep(new InternalTimeStep());
-    
+
+    #if !nodejs
     input = new Input();
+    #end
 
     Aeons.events.pushSceneList();
 

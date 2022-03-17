@@ -1,0 +1,52 @@
+{"frames": [
+
+{
+	"filename": "bunny",
+	"frame": {"x":35,"y":1,"w":26,"h":37},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":37},
+	"sourceSize": {"w":26,"h":37}
+},
+{
+	"filename": "coin_turn_00",
+	"frame": {"x":1,"y":1,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "coin_turn_01",
+	"frame": {"x":1,"y":35,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "coin_turn_02",
+	"frame": {"x":29,"y":40,"w":18,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":0,"w":18,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "coin_turn_03",
+	"frame": {"x":49,"y":40,"w":10,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":10,"h":32},
+	"sourceSize": {"w":32,"h":32}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "testSprites.png",
+	"format": "RGBA8888",
+	"size": {"w":62,"h":73},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d9ee9fac781c47275a653b080c365da3:88960a8340f5486c3cdc13284d7a7297:5d05aa6dfa2ec06b681481edda1793e0$"
+}
+}

@@ -3,3 +3,4 @@ build/
 .vscode/launch.json
 .DS_Store
 /lib/
+/tests/khafile.js

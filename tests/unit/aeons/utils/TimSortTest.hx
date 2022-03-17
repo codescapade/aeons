@@ -1,10 +1,10 @@
 package aeons.utils;
 
 import buddy.BuddySuite;
-import mockatoo.Mockatoo.*;
+// import mockatoo.Mockatoo.*;
 
 using buddy.Should;
-using mockatoo.Mockatoo;
+// using mockatoo.Mockatoo;
 
 using aeons.utils.TimSort;
 

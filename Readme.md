@@ -47,7 +47,4 @@ When writing code in visual studio code you can use the [Kha Extionsion Pack](ht
 <br/>
 
 ## Running unit tests
-To run the unit tests, Aeons expects that mockatoo and buddy are installed with haxelib from the following urls:
-
-Mockatoo: [https://github.com/codescapade/mockatoo](https://github.com/codescapade/mockatoo)  
-Buddy: [https://github.com/codescapade/buddy](https://github.com/codescapade/buddy)
+To run the unit tests, Aeons expects that buddy is installed with haxelib from the following urls:
