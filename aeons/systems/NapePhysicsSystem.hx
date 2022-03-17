@@ -52,9 +52,12 @@ class NapePhysicsSystem extends System implements Updatable {
   var ids: Array<Int> = [];
 
   /**
-   * System setup.
+   * Constructor.
+   * @param options The setup options.
    */
-  public function init(?options: NapePhysicsSystemOptions): NapePhysicsSystem {
+  public function new(?options: NapePhysicsSystemOptions) {
+    super();
+
     space = new Space();
     napeDebug = new DebugDraw(space);
 
@@ -63,8 +66,6 @@ class NapePhysicsSystem extends System implements Updatable {
         setGravity(options.gravity.x, options.gravity.y);
       }
     }
-
-    return this;
   }
 
   /**

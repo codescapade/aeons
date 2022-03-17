@@ -1,0 +1,1 @@
+node ..\..\lib\KhaBundled\make html5 & haxelib run dox -i build/docs -in aeons -o ..\..\docs\api

@@ -10,8 +10,8 @@ class UpdateSystem extends System implements Updatable {
   @:bundle
   var updateComps: Bundle<CUpdate>;
 
-  public function init(): UpdateSystem {
-    return this;
+  public function new() {
+    super();
   }
 
   public function update(dt: Float) {

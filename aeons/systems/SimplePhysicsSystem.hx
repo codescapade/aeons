@@ -95,11 +95,12 @@ class SimplePhysicsSystem extends System implements Updatable {
   var bounds: Rect;
 
   /**
-   * System setup.
+   * SimplePhysicsSystem Constructor.
    * @param options Initial setup options.
-   * @return The simple physics system.
    */
-  public function init(options: SimplePhysicsSystemOptions): SimplePhysicsSystem {
+  public function new(options: SimplePhysicsSystemOptions) {
+    super();
+
     final x = options.worldX == null ? 0 : options.worldX;
     final y = options.worldY == null ? 0 : options.worldY;
 
@@ -109,8 +110,6 @@ class SimplePhysicsSystem extends System implements Updatable {
     if (options.gravity != null) {
       gravity.set(options.gravity.x, options.gravity.y);
     }
-
-    return this;
   }
 
   /**

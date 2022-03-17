@@ -67,6 +67,8 @@ class CNapeBody extends Component {
    * @param options The values you want to set.
    */
   public function new(?options: NapeBodyOptions) {
+    super();
+
     tempOptions = options;
   }
 
