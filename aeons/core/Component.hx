@@ -36,12 +36,16 @@ class Component {
     }
   }
 
-  public function put() {}
+  public function put() {
+    entityId = -1;
+  }
 
   /**
    * Called before a component is removed.
    */
-  public function cleanup() {}
+  public function cleanup() {
+    entityId = -1;
+  }
 
   /**
    * Get another component on the same entity.

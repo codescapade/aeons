@@ -124,7 +124,7 @@ class Scene {
    * @param systemType The type of system you want to check for.
    * @return True is the system was found.
    */
-  public inline function has(systemType: Class<System>): Bool {
+  public inline function hasSystem(systemType: Class<System>): Bool {
     return Aeons.systems.has(systemType);
   }
 

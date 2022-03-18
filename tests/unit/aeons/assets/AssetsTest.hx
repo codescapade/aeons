@@ -1,11 +1,11 @@
 package aeons.assets;
 
-import aeons.utils.Blob;
-import aeons.graphics.Video;
 import aeons.assets.services.InternalAssets;
 import aeons.audio.Sound;
 import aeons.graphics.Font;
 import aeons.graphics.Image;
+import aeons.graphics.Video;
+import aeons.utils.Blob;
 
 import buddy.BuddySuite;
 

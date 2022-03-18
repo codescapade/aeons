@@ -100,7 +100,9 @@ class Entity {
    * This function gets called when an entity gets destroyed.
    * You can clean up variables here if needed.
    */
-  public function cleanup() {}
+  public function cleanup() {
+    id = -1;
+  }
 
   /**
    * Active setter. 

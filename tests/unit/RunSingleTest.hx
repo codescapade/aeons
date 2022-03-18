@@ -2,9 +2,9 @@ package;
 
 import buddy.Buddy;
 
-import aeons.assets.AssetsTest;
+import aeons.core.EntitiesTest;
 
 @colorize
 class RunSingleTest implements Buddy<[
-  AssetsTest
+  EntitiesTest
 ]> {}
