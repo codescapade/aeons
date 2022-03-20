@@ -1,4 +1,4 @@
-package aeons.tilemap;
+package aeons.tilemap.tiled;
 
 /**
  * `TiledObjectProp` is for custom properties on a tiled object.

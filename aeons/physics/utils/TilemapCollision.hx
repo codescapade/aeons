@@ -1,9 +1,9 @@
 package aeons.physics.utils;
 
-import aeons.math.Vector2;
 import aeons.components.CTilemap;
 import aeons.components.CTransform;
 import aeons.math.Rect;
+import aeons.math.Vector2;
 
 /**
  * Type for collider generation.

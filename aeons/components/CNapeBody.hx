@@ -1,5 +1,6 @@
 package aeons.components;
 
+#if use_nape
 import aeons.core.Component;
 import aeons.math.Vector2;
 
@@ -316,3 +317,4 @@ typedef NapeBodyOptions = {
    */
   var ?type: BodyType;
 }
+#end

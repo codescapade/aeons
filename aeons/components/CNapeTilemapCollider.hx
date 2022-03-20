@@ -1,5 +1,6 @@
 package aeons.components;
 
+#if use_nape
 import aeons.core.Component;
 import aeons.physics.utils.TilemapCollision;
 import aeons.tilemap.TiledObject;
@@ -175,3 +176,4 @@ class CNapeTilemapCollider extends Component {
     return [CTilemap, CTransform];
   }
 }
+#end

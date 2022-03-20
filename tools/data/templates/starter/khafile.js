@@ -3,9 +3,9 @@ let project = new Project('{{game_name}}');
 
 // Make it possible to have the same file name in different folders.
 project.addAssets('assets/**', {
-    nameBaseDir: 'assets',
-    destination: '{dir}/{name}',
-    name: '{dir}/{name}'
+  nameBaseDir: 'assets',
+  destination: '{dir}/{name}',
+  name: '{dir}/{name}'
 });
 
 // Shader folder.
@@ -13,6 +13,15 @@ project.addShaders('shaders/**');
 
 // Source folder.
 project.addSources('source');
+
+// Uncomment to enable lDtk support. Make sure you have both libraries installed with haxelib.
+// project.addDefine('use_ldtk');
+// project.addLibrary('ldtk-haxe-api');
+// project.addLibrary('deepnightLibs');
+
+// Uncomment to enable Nape support. Make sure you have nape-haxe4 installed with haxelib.
+// project.addDefine('use_nape');
+// project.addLibrary('nape-haxe4');
 
 // Add the Aeons engine.
 project.addLibrary('aeons');

@@ -1,7 +1,6 @@
 package aeons.systems;
 
-import aeons.components.CTransform;
-import aeons.core.Bundle;
+#if use_nape
 import nape.callbacks.CbEvent;
 import nape.callbacks.InteractionCallback;
 import nape.callbacks.InteractionListener;
@@ -10,6 +9,8 @@ import nape.space.Space;
 
 import aeons.components.CNapeBody;
 import aeons.components.CNapeTilemapCollider;
+import aeons.components.CTransform;
+import aeons.core.Bundle;
 import aeons.core.System;
 import aeons.core.Updatable;
 import aeons.math.Rect;
@@ -174,3 +175,4 @@ class NapePhysicsSystem extends System implements Updatable {
 typedef NapePhysicsSystemOptions = {
   var ?gravity: { x: Float, y: Float };
 }
+#end

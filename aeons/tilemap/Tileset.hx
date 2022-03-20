@@ -27,6 +27,22 @@ class Tileset {
    */
   final tiles: Array<Rect>;
 
+  #if use_ldtk
+  /**
+   * Create a tileset from a LDtk tileset.
+   * @param tileset The source tileset.
+   * @param image Optional image if it is called differently in the tileset.
+   * @return The created tileset.
+   */
+  public static function fromLdtkTileset(tileset: ldtk.Tileset, ?image: Image): Tileset {
+    if (image == null) {
+      image = Aeons.assets.getImage(tileset.identifier.toLowerCase());
+    }
+
+    return new Tileset(image, tileset.tileGridSize, tileset.tileGridSize, tileset.spacing, tileset.padding);
+  }
+  #end
+
   /**
    * Constructor.
    * @param image The image to use.

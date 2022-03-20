@@ -1,4 +1,4 @@
-package aeons.tilemap;
+package aeons.tilemap.tiled;
 
 import aeons.math.Vector2;
 

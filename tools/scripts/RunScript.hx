@@ -52,7 +52,7 @@ class RunScript {
    * @param name The library to find.
    * @return The location path.
    */
-  private static function getHaxelibPath(name: String): String {
+  static function getHaxelibPath(name: String): String {
 		final proc = new Process('haxelib', ['path', name]);
 		var result = '';
 
@@ -76,7 +76,7 @@ class RunScript {
 		return result;
 	}
 
-  private static function getVersion(): String {
+  static function getVersion(): String {
     var libPath = getHaxelibPath('aeons');
     var haxelib = Path.join([libPath, 'haxelib.json']);
     var json = Json.parse(File.getContent(haxelib));
@@ -92,7 +92,7 @@ class RunScript {
    * @param throwErrors Show this throw errors.
    * @return The command status. 0 is success.
    */
-  private static function runCommand(path: String, command: String, args: Array<String>, throwErrors = true): Int {
+  static function runCommand(path: String, command: String, args: Array<String>, throwErrors = true): Int {
     var currentPath = '';
     if (path != null && path != '') {
       currentPath = Sys.getCwd();
@@ -116,7 +116,7 @@ class RunScript {
     return result;
   }
 
-  private static function setupAeons() {
+  static function setupAeons() {
     downloadKha();
     setupAlias();
   }
@@ -124,7 +124,7 @@ class RunScript {
   /**
    * Copy aeons.bat or aeons.sh to the haxe folder so you can run the aeons command.
    */
-  private static function setupAlias() {
+  static function setupAlias() {
     final platform = Sys.systemName();
     final binPath = platform == 'Mac' ? "/usr/local/bin" : "/usr/bin";
 
@@ -157,7 +157,7 @@ class RunScript {
   /**
    * Download Kha. Overwrite the existing installation if it exists.
    */
-  private static function downloadKha() {
+  static function downloadKha() {
     final libPath = Path.join([getHaxelibPath('aeons'), 'lib']);
     final path = Path.join([libPath, 'KhaBundled']);
 
@@ -184,7 +184,7 @@ class RunScript {
    * @param projectDir The project directory. 
    * @param args Arguments for khamake. Must have at least the platform.
    */
-  private static function build(projectDir: String, args: Array<String>) {
+  static function build(projectDir: String, args: Array<String>) {
     Sys.setCwd(projectDir);
 
     final haxelibPath = getHaxelibPath('aeons');
@@ -198,7 +198,7 @@ class RunScript {
    * Generate a sprite atlas using AeonsAtlas.
    * @param projectDir The project directory.
    */
-  private static function generateAtlas(projectDir: String) {
+  static function generateAtlas(projectDir: String) {
     Sys.setCwd(projectDir);
     final platform = Sys.systemName();
 
@@ -222,7 +222,7 @@ class RunScript {
     }
   }
 
-  private static function printLogo(version: String) {
+  static function printLogo(version: String) {
     Sys.println('');
     Sys.println('   @@@@@@   @@@@@@@@   @@@@@@   @@@  @@@   @@@@@@ ');
     Sys.println('  @@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@ @@@  @@@@@@@ ');
@@ -244,7 +244,7 @@ class RunScript {
    * @param path The folder to create it in.
    * @param name The name of the project.
    */
-  private static function createProject(path: String, name: String) {
+  static function createProject(path: String, name: String) {
     final destination = Path.join([path, name]);
     Sys.println('Creating new project at ${destination}');
 
@@ -293,7 +293,7 @@ class RunScript {
    * @param source The source folder.
    * @param destination The destination folder.
    */
-  private static function copyDir(source: String, destination: String) {
+  static function copyDir(source: String, destination: String) {
     final files = FileSystem.readDirectory(source);
     for (file in files) {
       final sourcePath = Path.join([source, file]);
@@ -311,7 +311,7 @@ class RunScript {
    * Delete a folder recursive.
    * @param dir The folder to delete.
    */
-  private static function deleteDir(dir: String) {
+  static function deleteDir(dir: String) {
     final files = FileSystem.readDirectory(dir);
     for (file in files) {
       final path = Path.join([dir, file]);
@@ -334,18 +334,19 @@ class RunScript {
     }
   }
 
-  private static function setPlaceholders(path: String, placeholder: String, name: String) {
+  static function setPlaceholders(path: String, placeholder: String, name: String) {
     var content = File.getContent(path);
     content = content.replace(placeholder, name);
     File.saveContent(path, content);
   }
 
-  private static function showHelp() {
+  static function showHelp() {
     Sys.println('');
     Sys.println('The following commands are available:');
     Sys.println('- aeons setup                  Download Kha and install the aeons command line command.');
     Sys.println('- aeons create [project_name]  Create a starter project in the current directory.');
     Sys.println('- aeons build [platform]       Build the project. See Kha for all supported platforms.');
+    Sys.println('- aeons atlas                  Generate a sprite atlas in a folder with a atlas.json config file.');
     Sys.println('- aeons help                   Show this list');
   }
 }

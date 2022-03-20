@@ -1,5 +1,6 @@
 package aeons.physics.nape;
 
+#if use_nape
 import nape.constraint.PivotJoint;
 import nape.phys.BodyList;
 import nape.phys.BodyType;
@@ -180,3 +181,4 @@ class DebugDraw {
     }
   }
 }
+#end
