@@ -4,6 +4,9 @@ package aeons.components;
 import aeons.core.Component;
 import aeons.physics.utils.TilemapCollision;
 import aeons.tilemap.TiledObject;
+#if use_ldtk
+import aeons.tilemap.ldtk.LdtkLayer;
+#end
 
 import nape.callbacks.CbType;
 import nape.geom.GeomPoly;
@@ -66,6 +69,7 @@ class CNapeTilemapCollider extends Component {
     createBodiesFromColliders(colliders);
   }
 
+  #if use_ldtk
   /**
    * Generate colliders for a LDtk layer . 
    * @param layer The layer to use.
@@ -78,6 +82,7 @@ class CNapeTilemapCollider extends Component {
     final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
     createBodiesFromColliders(colliders);
   }
+  #end
 
   /**
    * Create colliders from tiled objects.

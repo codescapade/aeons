@@ -1,11 +1,13 @@
 package aeons.components;
 
-import aeons.tilemap.ldtk.LdtkLayer;
 import aeons.math.Rect;
 import aeons.core.Component;
 import aeons.physics.simple.Body;
 import aeons.physics.simple.CollisionFilter;
 import aeons.physics.utils.TilemapCollision;
+#if use_ldtk
+import aeons.tilemap.ldtk.LdtkLayer;
+#end
 
 /**
  * Tilemap collider component for simple physics.
@@ -63,6 +65,7 @@ class CSimpleTilemapCollider extends Component {
     createBodiesFromColliders(colliders);
   }
 
+  #if use_ldtk
   /**
    * Generate colliders for a LDtk layer . 
    * @param layer The layer to use.
@@ -75,6 +78,7 @@ class CSimpleTilemapCollider extends Component {
     final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
     createBodiesFromColliders(colliders);
   }
+  #end
 
   /**
    * Add a collision tag for collision listeners.
