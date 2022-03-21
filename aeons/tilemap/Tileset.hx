@@ -8,6 +8,10 @@ import aeons.math.Rect;
  */
 class Tileset {
   /**
+   * Id is used for LDtk tilesets.
+   */
+  public var id(default, null): String;
+  /**
    * The with of a tile in pixels.
    */
   public var tileWidth(default, null): Int;
@@ -39,7 +43,8 @@ class Tileset {
       image = Aeons.assets.getImage(tileset.identifier.toLowerCase());
     }
 
-    return new Tileset(image, tileset.tileGridSize, tileset.tileGridSize, tileset.spacing, tileset.padding);
+    return new Tileset(image, tileset.tileGridSize, tileset.tileGridSize, tileset.spacing, tileset.padding,
+        tileset.identifier);
   }
   #end
 
@@ -50,11 +55,15 @@ class Tileset {
    * @param tileHeight The height of a tile in pixels.
    * @param spacing The spacing between tiles in the image in pixels.
    * @param margin The margin between the edge of the image and the tiles in pixels.
+   * @param id LDtk tileset id.
    */
-  public function new(image: Image, tileWidth: Int, tileHeight: Int, spacing: Int = 0, margin: Int = 0) {
+  public function new(image: Image, tileWidth: Int, tileHeight: Int, spacing: Int = 0, margin: Int = 0, ?id: String) {
     tileImage = image;
     this.tileWidth = tileWidth;
     this.tileHeight = tileHeight;
+    if (id != null) {
+      this.id = id;
+    }
 
     final width = image.width;
     final height = image.height;
