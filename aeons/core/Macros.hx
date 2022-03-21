@@ -69,7 +69,6 @@ class Macros {
           params: [TPType(eventType)] })};
 
       final paramFields: Array<FunctionArg> = [typeParam];
-      // TODO: Make optional fields optional parameters.
       for (field in fields) {
         switch (field.kind) {
           case FVar(fType, fExpr):

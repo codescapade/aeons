@@ -1,5 +1,7 @@
 package aeons.components;
 
+import aeons.tilemap.ldtk.LdtkLayer;
+import aeons.math.Rect;
 import aeons.core.Component;
 import aeons.physics.simple.Body;
 import aeons.physics.simple.CollisionFilter;
@@ -25,16 +27,6 @@ class CSimpleTilemapCollider extends Component {
   var userData: Dynamic;
 
   /**
-   * Transform component reference.
-   */
-  var transform: CTransform;
-
-  /**
-   * Tilemap component reference.
-   */
-  var tilemap: CTilemap;
-
-  /**
    * The created tilemap physics bodies.
    */
   @:allow(aeons.systems.SimplePhysicsSystem)
@@ -54,32 +46,34 @@ class CSimpleTilemapCollider extends Component {
    */
   public override function init(entityId: Int) {
     super.init(entityId);
-
-    transform = getComponent(CTransform);
-    tilemap = getComponent(CTilemap);
     bodies = [];
     tags = [];
   }
 
   /**
-   * Generate colliders from certain tiles.
-   * @param indexes An array of indexes you want colliders on.
+   * Generate colliders for a CTilemap component. 
+   * @param tilemap The tilemap component to use.
+   * @param worldX The x position of the tilemap in world pixels.
+   * @param worldY The y position of the tilemap in world pixels.
+   * @param collisionTileIds A list of tile ids that should get collision tiles.
    */
-  public function setCollisions(indexes: Array<Int>) {
+  public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
     bodies = [];
-    final rects = TilemapCollision.generateColliders(tilemap, transform, indexes);
-    for (rect in rects) {
-      var body = new Body();
-      body.bounds.set(rect.x, rect.y, rect.width, rect.height);
-      body.type = STATIC;
-      body.group = group;
-      body.mask = mask;
-      body.userData = userData;
-      for (tag in tags) {
-        body.tags.push(tag);
-      }
-      bodies.push(body);
-    }
+    final colliders = TilemapCollision.generateCollidersFromCTilemap(tilemap, worldX, worldY, collisionTileIds);
+    createBodiesFromColliders(colliders);
+  }
+
+  /**
+   * Generate colliders for a LDtk layer . 
+   * @param layer The layer to use.
+   * @param worldX The x position of the tilemap in world pixels.
+   * @param worldY The y position of the tilemap in world pixels.
+   * @param collisionTileIds A list of tile ids that should get collision tiles.
+   */
+  public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
+    bodies = [];
+    final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
+    createBodiesFromColliders(colliders);
   }
 
   /**
@@ -171,9 +165,22 @@ class CSimpleTilemapCollider extends Component {
   }
 
   /**
-   * This component requires ad transform and a tilemap component.
+   * Create collision bodies from a list of collider rectangles.
+   * @param colliders The list of collider rectangles.
    */
-  override function get_requiredComponents():Array<Class<Component>> {
-    return [CTransform, CTilemap];
+  function createBodiesFromColliders(colliders: Array<Rect>) {
+    bodies = [];
+    for (collider in colliders) {
+      var body = new Body();
+      body.bounds.set(collider.x, collider.y, collider.width, collider.height);
+      body.type = STATIC;
+      body.group = group;
+      body.mask = mask;
+      body.userData = userData;
+      for (tag in tags) {
+        body.tags.push(tag);
+      }
+      bodies.push(body);
+    }
   }
 }

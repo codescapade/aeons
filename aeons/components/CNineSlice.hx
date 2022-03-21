@@ -39,12 +39,6 @@ class CNineSlice extends Component implements Renderable {
    */
   public var anchorY: Float;
 
-  // TODO: Implement bounds in all renderable components.
-  /**
-   * The total bounds.
-   */
-  public var bounds = new Rect();
-
   /**
    * The atlas to use.
    */

@@ -1,7 +1,7 @@
 package aeons.core.services;
 
-import aeons.math.Rect;
 import aeons.graphics.RenderTarget;
+import aeons.math.Rect;
 
 class NullSystems implements Systems {
 
@@ -35,5 +35,11 @@ class NullSystems implements Systems {
 
   public function render(target: RenderTarget, ?cameraBounds: Rect) {
     trace('render is not implemented');
+  }
+
+  public function getDebugRenderSystems(): Array<DebugRenderable> {
+    trace('getDebugRenderSystems is not implemented');
+
+    return [];
   }
 }

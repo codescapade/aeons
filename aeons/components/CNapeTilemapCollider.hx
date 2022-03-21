@@ -19,16 +19,6 @@ import nape.space.Space;
  */
 class CNapeTilemapCollider extends Component {
   /**
-   * The transform component reference.
-   */
-  var transform: CTransform;
-
-  /**
-   * The tilemap component reference.
-   */
-  var tilemap: CTilemap;
-
-  /**
    * The nape bodies created for the tilemap.
    */
   var bodies: Array<Body>;
@@ -48,8 +38,6 @@ class CNapeTilemapCollider extends Component {
 
   public override function init(entityId: Int) {
     super.init(entityId);
-    transform = getComponent(CTransform);
-    tilemap = getComponent(CTilemap);
     bodies = [];
   }
 
@@ -66,24 +54,29 @@ class CNapeTilemapCollider extends Component {
   }
 
   /**
-   * Generate colliders from certain tiles.
-   * @param indexes An array of indexes you want colliders on.
+   * Generate colliders for a CTilemap component. 
+   * @param tilemap The tilemap component to use.
+   * @param worldX The x position of the tilemap in world pixels.
+   * @param worldY The y position of the tilemap in world pixels.
+   * @param collisionTileIds A list of tile ids that should get collision tiles.
    */
-  public function setCollisions(indexes: Array<Int>) {
-    // Generate colliders.
-    final rects = TilemapCollision.generateColliders(tilemap, transform, indexes);
+  public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
     bodies = [];
+    final colliders = TilemapCollision.generateCollidersFromCTilemap(tilemap, worldX, worldY, collisionTileIds);
+    createBodiesFromColliders(colliders);
+  }
 
-    for (rect in rects) {
-      final body = new Body(BodyType.STATIC);
-      final shape = new Polygon(Polygon.rect(rect.x, rect.y, rect.width, rect.height));
-      body.shapes.add(shape);
-      if (space == null) {
-        throw 'Nape space not set';
-      }
-      body.space = space;
-      bodies.push(body);
-    }
+  /**
+   * Generate colliders for a LDtk layer . 
+   * @param layer The layer to use.
+   * @param worldX The x position of the tilemap in world pixels.
+   * @param worldY The y position of the tilemap in world pixels.
+   * @param collisionTileIds A list of tile ids that should get collision tiles.
+   */
+  public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
+    bodies = [];
+    final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
+    createBodiesFromColliders(colliders);
   }
 
   /**
@@ -166,6 +159,20 @@ class CNapeTilemapCollider extends Component {
   public inline function removeCBType(type: CbType) {
     for (body in bodies) {
       body.cbTypes.remove(type);
+    }
+  }
+
+  function createBodiesFromColliders(colliders: Array<Rect>) {
+    bodies = [];
+    for (rect in colliders) {
+      final body = new Body(BodyType.STATIC);
+      final shape = new Polygon(Polygon.rect(rect.x, rect.y, rect.width, rect.height));
+      body.shapes.add(shape);
+      if (space == null) {
+        throw 'Nape space not set';
+      }
+      body.space = space;
+      bodies.push(body);
     }
   }
 

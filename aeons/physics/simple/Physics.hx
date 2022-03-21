@@ -3,8 +3,6 @@ package aeons.physics.simple;
 /**
  * Physics calculations.
  */
-// TODO: Resolve collision using previous frame position as well to minimize getting stuck
-// on edges of colliders.
 class Physics {
   static inline final OVERLAP_PADDING = 4;
   /**

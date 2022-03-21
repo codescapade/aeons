@@ -31,7 +31,22 @@ interface Systems {
    */
   function has(systemType: Class<System>): Bool;
 
+  /**
+   * Update gets according to the update frequency. This updates all Updatable systems.
+   * @param dt The time passing since the last update in seconds.
+   */
   function update(dt: Float): Void;
 
+  /**
+   * Render gets called every frame. This renders all SysRenderable systems.
+   * @param target The target to render to.
+   * @param cameraBounds The camera bounds in local space.
+   */
   function render(target: RenderTarget, ?cameraBounds: Rect): Void;
+
+  /**
+   * Return a list of systems that need to be debug rendered.
+   * @return DebugRenderable systems.
+   */
+  function getDebugRenderSystems(): Array<DebugRenderable>;
 }

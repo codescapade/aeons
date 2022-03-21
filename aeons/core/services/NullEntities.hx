@@ -2,7 +2,7 @@ package aeons.core.services;
 
 class NullEntities implements Entities {
 
-public function new() {}
+  public function new() {}
 
   public function addEntity<T: Entity>(entityType: T): T{
     trace('addEntity is not implemented');
@@ -51,6 +51,12 @@ public function new() {}
 
     return [];
 	}
+
+  public function getDebugRenderComponents(entityId: Int): Array<DebugRenderable> {
+    trace('getDebugRenderComponents is not implemented');
+
+    return [];
+  }
 
 	public function hasComponent(entityId: Int, componentType: Class<Component>): Bool {
     trace('hasComponent is not implemented');

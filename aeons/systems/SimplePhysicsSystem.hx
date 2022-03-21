@@ -1,11 +1,12 @@
 package aeons.systems;
 
+import aeons.graphics.RenderTarget;
+import aeons.core.DebugRenderable;
 import aeons.components.CTransform;
 import aeons.core.Bundle;
 import aeons.physics.simple.Hit;
 import aeons.components.CSimpleBody;
 import aeons.components.CSimpleTilemapCollider;
-import aeons.core.Renderable;
 import aeons.core.System;
 import aeons.core.Updatable;
 import aeons.graphics.Color;
@@ -22,7 +23,12 @@ import aeons.physics.simple.Touching;
 /**
  * Simple aabb physics system.
  */
-class SimplePhysicsSystem extends System implements Updatable {
+class SimplePhysicsSystem extends System implements Updatable implements DebugRenderable {
+  /**
+   * Should this system be show in debug draw.
+   */
+  public var debugDrawEnabled = true;
+
   /**
    * The world gravity.
    */
@@ -38,7 +44,7 @@ class SimplePhysicsSystem extends System implements Updatable {
    * Tilemap collider list.
    */
   @:bundle
-  var tilemaps: Bundle<CSimpleTilemapCollider>;
+  var tilemapBundles: Bundle<CSimpleTilemapCollider>;
 
   /**
    * The entity ids currently used by the system.
@@ -118,7 +124,7 @@ class SimplePhysicsSystem extends System implements Updatable {
    */
   public function update(dt:Float) {
     tree.clear();
-    for (tilemap in tilemaps) {
+    for (tilemap in tilemapBundles) {
       final collider = tilemap.c_simple_tilemap_collider;
       if (!collider.active) {
         continue;
@@ -218,6 +224,36 @@ class SimplePhysicsSystem extends System implements Updatable {
       final interaction = interactions.pop();
       dispatchInteraction(interaction);
       interaction.put();
+    }
+  }
+
+  public function debugRender(target: RenderTarget, cameraBounds: Rect) {
+    target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, bodyColor, 2);
+
+    final quads = tree.getTreeBounds();
+
+    for (quad in quads) {
+      target.drawRect(quad.x, quad.y, quad.width, quad.height, boundsColor, 2);
+    }
+
+    for (tilemap in tilemapBundles) {
+      for (body in tilemap.c_simple_tilemap_collider.bodies) {
+        final bounds = body.bounds;
+        target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, staticBodyColor, 2);
+      }
+    }
+
+    for (bundle in bundles) {
+      if (!bundle.c_simple_body.active) {
+        continue;
+      }
+      final body = bundle.c_simple_body.body;
+      final bounds = body.bounds;
+      if (body.type == STATIC) {
+        target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, staticBodyColor, 2);
+      } else {
+        target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, bodyColor, 2);
+      }
     }
   }
 

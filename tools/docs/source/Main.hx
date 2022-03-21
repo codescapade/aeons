@@ -10,6 +10,7 @@ import aeons.audio.Sound;
 import aeons.components.CAnimation;
 import aeons.components.CBoxShape;
 import aeons.components.CCamera;
+import aeons.components.CLdtkTilemap;
 import aeons.components.CNapeBody;
 import aeons.components.CNapeTilemapCollider;
 import aeons.components.CNineSlice;
@@ -110,9 +111,13 @@ import aeons.systems.RenderSystem;
 import aeons.systems.SimplePhysicsSystem;
 import aeons.systems.UpdateSystem;
 
-import aeons.tilemap.TiledMap;
-import aeons.tilemap.TiledObject;
-import aeons.tilemap.TiledObjectProp;
+import aeons.tilemap.ldtk.LdtkLayer;
+import aeons.tilemap.ldtk.LdtkTile;
+
+import aeons.tilemap.tiled.TiledMap;
+import aeons.tilemap.tiled.TiledObject;
+import aeons.tilemap.tiled.TiledObjectProp;
+
 import aeons.tilemap.Tileset;
 
 import aeons.tween.easing.Ease;

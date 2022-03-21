@@ -14,11 +14,6 @@ import aeons.tilemap.Tileset;
  */
 class CTilemap extends Component implements Renderable {
   /**
-   * Enable / Disable debug draw for this component. Not implemented for tilemap.
-   */
-  public var debugDraw = true;
-
-  /**
    * The tileset to use for the tilemap.
    */
   public var tileset: Tileset;
@@ -63,8 +58,6 @@ class CTilemap extends Component implements Renderable {
    */
   var visibleBounds = new Rect();
 
-	public var bounds = new Rect();
-
 	public var anchorX = 0.0;
 
 	public var anchorY = 0.0;
@@ -78,7 +71,6 @@ class CTilemap extends Component implements Renderable {
     tileset = null;
     tiles = null;
     visibleBounds.set(0, 0, 0, 0);
-    bounds.set(0, 0, 0, 0);
   }
 
   /**
@@ -166,15 +158,13 @@ class CTilemap extends Component implements Renderable {
   }
 
   /**
-   * Convert a world position to tile position.
+   * Convert a local pixel position to tile position.
    * @param xPos The world x position in game pixels.
    * @param yPos The world y position in game pixels.
    */
-  public function worldToTilePosition(xPos: Float, yPos: Float): Vector2 {
-    final worldPos = transform.getWorldPosition();
-    final x = Math.floor((xPos - worldPos.x) / tileset.tileWidth);
-    final y = Math.floor((yPos - worldPos.y) / tileset.tileHeight);
-    worldPos.put();
+  public function pixelToTilePosition(xPos: Float, yPos: Float): Vector2 {
+    final x = Math.floor(xPos / tileset.tileWidth);
+    final y = Math.floor(yPos / tileset.tileHeight);
 
     return Vector2.get(x, y);
   }
@@ -184,17 +174,17 @@ class CTilemap extends Component implements Renderable {
    * @param bounds The camera bounds.
    */
   function updateVisibleTiles(bounds: Rect) {
-    var topLeft = worldToTilePosition(bounds.x, bounds.y);
+    var topLeft = Vector2.get(bounds.x, bounds.y);
     topLeft.x -= 1;
     topLeft.y -= 1;
-    topLeft.x = AeMath.clampInt(Std.int(topLeft.x) , 0, widthInTiles);
-    topLeft.y = AeMath.clampInt(Std.int(topLeft.y) , 0, heightInTiles);
+    topLeft.x = AeMath.clampInt(Std.int(bounds.x) , 0, widthInTiles);
+    topLeft.y = AeMath.clampInt(Std.int(bounds.y) , 0, heightInTiles);
 
-    var bottomRight = worldToTilePosition(bounds.x + bounds.width, bounds.y + bounds.height);
+    var bottomRight = Vector2.get(bounds.x + bounds.width, bounds.y + bounds.height);
     bottomRight.x += 2;
     bottomRight.y += 2;
-    bottomRight.x = AeMath.clampInt(Std.int(bottomRight.x) , 0, widthInTiles);
-    bottomRight.y = AeMath.clampInt(Std.int(bottomRight.y), 0, heightInTiles);
+    bottomRight.x = AeMath.clampInt(Std.int(bounds.x + bounds.width) , 0, widthInTiles);
+    bottomRight.y = AeMath.clampInt(Std.int(bounds.y + bounds.height), 0, heightInTiles);
 
     visibleBounds.set(Std.int(topLeft.x), Std.int(topLeft.y), Std.int(bottomRight.x), Std.int(bottomRight.y));
 

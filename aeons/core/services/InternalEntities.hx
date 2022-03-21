@@ -1,5 +1,6 @@
 package aeons.core.services;
 
+import aeons.components.CDebugRender;
 import aeons.components.CRender;
 import aeons.components.CUpdate;
 import aeons.events.ComponentEvent;
@@ -47,6 +48,12 @@ class InternalEntities implements Entities {
    * These are stored [entityId][List of components]
    */
   final renderComponents: Array<Array<Renderable>> = [];
+
+  /**
+   * A list of components that should be debug rendered every frame.
+   * These are stored [entityId][List of components]
+   */
+  final debugRenderComponents: Array<Array<DebugRenderable>> = [];
 
   /**
    * Entity ids that have been used but are free now.
@@ -156,6 +163,28 @@ class InternalEntities implements Entities {
       }
     }
 
+    if (Std.isOfType(component, DebugRenderable)) {
+      if (debugRenderComponents[entity.id] == null) {
+        debugRenderComponents[entity.id] = [cast component];
+
+        // Add a render component if it does not exist yet.
+        if (!hasComponent(entity.id, CDebugRender)) {
+          final renderComp = new CDebugRender();
+          final renderCompName = Type.getClassName(CDebugRender);
+          if (components[renderCompName] == null) {
+            components[renderCompName] = [];
+          }
+          components[renderCompName][entity.id] = renderComp;
+          renderComp.init(entity.id);
+
+          final renderEventType = 'aeons_${renderCompName}_added';
+          componentsToAdd.push(ComponentEvent.get(renderEventType, entity));
+        }
+      } else {
+        debugRenderComponents[entity.id].push(cast component);
+      }
+    }
+
     return component;
   }
 
@@ -196,6 +225,14 @@ class InternalEntities implements Entities {
     }
 
     return renderComponents[entityId];
+  }
+
+  public function getDebugRenderComponents(entityId: Int): Array<DebugRenderable> {
+    if (debugRenderComponents[entityId] == null) {
+      return [];
+    }
+
+    return debugRenderComponents[entityId];
   }
 
   public function hasComponent(entityId: Int, componentType: Class<Component>): Bool {
@@ -268,10 +305,18 @@ class InternalEntities implements Entities {
             updateComponents[entityInfo.entity.id] = null;
           }
         }
+
         if (Std.isOfType(component, Renderable)) {
           renderComponents[entityInfo.entity.id].remove(cast component);
           if (renderComponents[entityInfo.entity.id].length == 0) {
             renderComponents[entityInfo.entity.id] = null;
+          }
+        }
+
+        if (Std.isOfType(component, DebugRenderable)) {
+          debugRenderComponents[entityInfo.entity.id].remove(cast component);
+          if (debugRenderComponents[entityInfo.entity.id].length == 0) {
+            debugRenderComponents[entityInfo.entity.id] = null;
           }
         }
 
@@ -333,6 +378,21 @@ class InternalEntities implements Entities {
           renderComponents[update.entity.id] = null;
           final renderComp = getComponent(update.entity.id, CRender);
           final renderCompName = Type.getClassName(CRender);
+          eventType = 'aeons_${renderCompName}_removed';
+          components[renderCompName][update.entity.id] = null;
+          Aeons.events.emit(ComponentEvent.get(eventType, update.entity));
+          renderComp.cleanup();
+        }
+      }
+
+      if (Std.isOfType(update.component, DebugRenderable)) {
+        debugRenderComponents[update.entity.id].remove(cast update.component);
+
+        // Remove the debug render component if there are no more components left to render.
+        if (debugRenderComponents[update.entity.id].length == 0) {
+          debugRenderComponents[update.entity.id] = null;
+          final renderComp = getComponent(update.entity.id, CDebugRender);
+          final renderCompName = Type.getClassName(CDebugRender);
           eventType = 'aeons_${renderCompName}_removed';
           components[renderCompName][update.entity.id] = null;
           Aeons.events.emit(ComponentEvent.get(eventType, update.entity));

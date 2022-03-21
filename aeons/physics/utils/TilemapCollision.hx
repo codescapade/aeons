@@ -1,16 +1,17 @@
 package aeons.physics.utils;
 
+import aeons.tilemap.ldtk.LdtkLayer;
 import aeons.components.CTilemap;
-import aeons.components.CTransform;
 import aeons.math.Rect;
 import aeons.math.Vector2;
 
 /**
  * Type for collider generation.
  */
-private typedef Tile = {
-  index: Int,
-  checked: Bool
+@:structInit
+private class Tile {
+  public var id(default, null): Int;
+  public var checked: Bool;
 }
 
 /**
@@ -22,23 +23,56 @@ class TilemapCollision {
   /**
    * Generate colliders for certain tile indexes. Tries to make big colliders so there are less of them in the map.
    * @param tilemap The tilemap the colliders are for.
-   * @param indexes The tile indexes that should have a collider.
+   * @param worldX The x position of the tilemap in world pixels.
+   * @param worldY The y position of the tilemap in world pixels.
+   * @param collisionTileIds The list of ids that should have a collider.
+   * @return A list of rectangles that represent colliders.
    */
-  public static function generateColliders(tilemap: CTilemap, transform: CTransform, indexes: Array<Int>): Array<Rect> {
-    final tempMap: Array<Array<Tile>> = [];
-    final tileWidth = tilemap.tileset.tileWidth;
-    final tileHeight = tilemap.tileset.tileHeight;
-    final worldPos = transform.getWorldPosition();
+  public static function generateCollidersFromCTilemap(tilemap: CTilemap, worldX: Float, worldY: Float,
+      collisionTileIds: Array<Int>): Array<Rect> {
+    final tiles: Array<Array<Tile>> = [];
+    final tileSize = tilemap.tileset.tileWidth;
 
     // Get a 2d array of tile indexes with the ability to see which ones have been checked.
     for (y in 0...tilemap.heightInTiles) {
       final row: Array<Tile> = [];
       for (x in 0...tilemap.widthInTiles) {
-        final index = tilemap.getTile(x, y);
-        row.push({ index: index, checked: false });
+        final id = tilemap.getTile(x, y);
+        row.push({ id: id, checked: false });
       }
-      tempMap.push(row);
+      tiles.push(row);
     }
+
+    return generateColliders(tiles, worldX, worldY, tileSize, collisionTileIds);
+  }
+
+  /**
+   * Generate colliders for certain tile indexes. Tries to make big colliders so there are less of them in the map.
+   * @param layer The LDtk tilemap layer to use for the collider generation. 
+   * @param worldX The x position of the tilemap in world pixels.
+   * @param worldY The y position of the tilemap in world pixels.
+   * @param collisionTileIds The list of ids that should have a collider.
+   * @return A list of rectangles that represent colliders.
+   */
+  public static function generateCollidersFromLDtkLayer(layer: LdtkLayer, worldX: Float, worldY: Float,
+      collisionTileIds: Array<Int>): Array<Rect> {
+    final tiles: Array<Array<Tile>> = [];
+    final tileSize = layer.tileset.tileWidth;
+
+    for (y in 0...layer.height) {
+      final row: Array<Tile> = [];
+      for (x in 0...layer.width) {
+        final id = layer.getTile(x, y).tileId;
+        row.push({ id: id, checked: false });
+      }
+      tiles.push(row);
+    }
+
+    return generateColliders(tiles, worldX, worldY, tileSize, collisionTileIds);
+  }
+
+  static function generateColliders(tiles: Array<Array<Tile>>, worldX: Float, worldY: Float, tileSize: Int,
+      collisionTileIds: Array<Int>): Array<Rect> {
 
     final colliders: Array<Rect> = [];
     final start = Vector2.get();
@@ -47,12 +81,12 @@ class TilemapCollision {
     var foundLastY = false;
 
     // Starting at the top left go over all tiles and create colliders.
-    for (x in 0...tilemap.widthInTiles) {
-      for (y in 0...tilemap.heightInTiles) {
-        var tile = tempMap[y][x];
+    for (x in 0...tiles[0].length) {
+      for (y in 0...tiles.length) {
+        var tile = tiles[y][x];
 
         // Check if the tile should be part of a collider.
-        if (!tile.checked && indexes.indexOf(tile.index) != -1) {
+        if (!tile.checked && collisionTileIds.indexOf(tile.id) != -1) {
           tile.checked = true;
           start.set(x, y);
           current.set(x, y);
@@ -64,14 +98,14 @@ class TilemapCollision {
             // the collider can be horizontally.
             if (foundLastY) {
               current.x++;
-              if (current.x >= tilemap.widthInTiles) {
+              if (current.x >= tiles[0].length) {
                 checking = false;
                 current.x--;
                 break;
               }
-              for (i in Std.int(start.y)...Std.int(current.y) + 1) {
-                tile = tempMap[i][Std.int(current.x)];
-                if (tile.checked || indexes.indexOf(tile.index) == -1) {
+              for (i in start.yi...current.yi + 1) {
+                tile = tiles[i][current.xi];
+                if (tile.checked || collisionTileIds.indexOf(tile.id) == -1) {
                   current.x--;
                   checking = false;
                 } else {
@@ -83,18 +117,18 @@ class TilemapCollision {
                 }
               }
               if (!checking) {
-                for (i in Std.int(start.y)...Std.int(current.y) + 1) {
-                  tempMap[i][Std.int(current.x) + 1].checked = false;
+                for (i in start.yi...current.yi + 1) {
+                  tiles[i][current.xi + 1].checked = false;
                 }
               }
             } else {
               current.y++;
-              if (current.y >= tilemap.heightInTiles) {
+              if (current.y >= tiles.length) {
                 foundLastY = true;
                 current.y--;
               } else {
-                tile = tempMap[Std.int(current.y)][Std.int(current.x)];
-                if (tile.checked || indexes.indexOf(tile.index) == -1) {
+                tile = tiles[current.yi][current.xi];
+                if (tile.checked || collisionTileIds.indexOf(tile.id) == -1) {
                   current.y--;
                   foundLastY = true;
                 } else {
@@ -107,9 +141,9 @@ class TilemapCollision {
           var distY = current.y - start.y;
           distX++;
           distY++;
-          final xPos = worldPos.x + start.x * tileWidth;
-          final yPos = worldPos.y + start.y * tileHeight;
-          colliders.push(new Rect(xPos, yPos, tileWidth * distX, tileHeight * distY));
+          final xPos = worldX + start.x * tileSize;
+          final yPos = worldY + start.y * tileSize;
+          colliders.push(new Rect(xPos, yPos, tileSize * distX, tileSize * distY));
         }
       }
     }

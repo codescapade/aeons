@@ -11,11 +11,6 @@ import aeons.math.Rect;
  */
 class CBoxShape extends Component implements Renderable {
   /**
-   * Enable/disable debug draw for this component.
-   */
-  public var debugDraw = false;
-
-  /**
    * The color of the box. Defaults to white.
    */
   public var fillColor: Color;
@@ -59,11 +54,6 @@ class CBoxShape extends Component implements Renderable {
    * The stroke width in pixels.
    */
   public var strokeWidth = 1.0;
-
-  /**
-   * The bounding box to check if it is inside camera bounds.
-   */
-  public var bounds = new Rect();
 
   /**
    * Initialize the component.

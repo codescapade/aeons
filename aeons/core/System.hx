@@ -5,9 +5,7 @@ package aeons.core;
  */
 @:autoBuild(aeons.core.Macros.buildSystem())
 class System {
-  public function new() {
-    // TODO: Make it possible to add systems after entities have been added.
-  }
+  public function new() {}
 
   public function init() {}
 

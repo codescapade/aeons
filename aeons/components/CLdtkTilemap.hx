@@ -13,11 +13,6 @@ import aeons.tilemap.ldtk.LdtkTile;
  */
 class CLdtkTilemap extends Component implements Renderable {
   /**
-   * Bounds of the tilemap.
-   */
-  public var bounds = new Rect();
-
-  /**
    * Not used in this component. 
    */
   public var anchorX = 0.0;

@@ -2,7 +2,6 @@ package aeons.physics.simple;
 
 import aeons.math.Vector2;
 
-// TODO: Rethink this implementation. Maybe use a pool.
 class Hit {
   public var position(default, null): Vector2;
 

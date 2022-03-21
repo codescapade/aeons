@@ -73,6 +73,13 @@ interface Entities {
   function getRenderComponents(entityId: Int): Array<Renderable>;
 
   /**
+   * Get all debug renderable components on an entity. The order will be the order they are added in with addComponent.
+   * @param entityId The entity id
+   * @return The list of debug renderable components.
+   */
+  function getDebugRenderComponents(entityId: Int): Array<DebugRenderable>;
+
+  /**
    * Check if an entity has a component type.
    * @param entityId The entity id to check.
    * @param componentType The component type to check.

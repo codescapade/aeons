@@ -1,5 +1,6 @@
 package aeons.core.services;
 
+import aeons.core.DebugRenderable;
 import aeons.math.Rect;
 import aeons.graphics.RenderTarget;
 
@@ -19,6 +20,11 @@ class InternalSystems implements Systems {
    */
   var renderSystems: Array<SysRenderable> = [];
 
+  /**
+   * List of systems that need to debug render every frame.
+   */
+  var debugRenderSystems: Array<DebugRenderable> = [];
+
   public function new() {}
 
   public function add<T: System>(system: T): T {
@@ -34,9 +40,15 @@ class InternalSystems implements Systems {
     if (Std.isOfType(system, Updatable)) {
       updateSystems.push(cast system);
     }
+
     // Add to the render systems.
     if (Std.isOfType(system, SysRenderable)) {
       renderSystems.push(cast system);
+    }
+
+    // Add to the debug render systems.
+    if (Std.isOfType(system, DebugRenderable)) {
+      debugRenderSystems.push(cast system);
     }
 
     system.init();
@@ -61,6 +73,11 @@ class InternalSystems implements Systems {
     // Remove from the render systems.
     if (Std.isOfType(system, Renderable)) {
       renderSystems.remove(cast system);
+    }
+
+    // Remove from the debug render systems.
+    if (Std.isOfType(system, DebugRenderable)) {
+      debugRenderSystems.remove(cast system);
     }
 
     system.cleanup();
@@ -92,5 +109,9 @@ class InternalSystems implements Systems {
     for (system in renderSystems) {
       system.render(target, cameraBounds);
     }
+  }
+
+  public function getDebugRenderSystems(): Array<DebugRenderable> {
+    return debugRenderSystems;
   }
 }

@@ -52,18 +52,12 @@ class CText extends Component implements Renderable {
   public var anchorY: Float;
 
   /**
-   * The text bounds.
-   */
-  public var bounds = new Rect();
-
-  /**
    * CText constructor.
    * @param options The options for initialization.
    */
   public function new(?options: TextOptions) {
     super();
 
-    bounds = new Rect();
     if (options == null) {
       // Defautls when no options are specified.
       text = '';

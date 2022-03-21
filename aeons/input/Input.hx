@@ -36,7 +36,6 @@ class Input {
    */
   public var gamepadEnabled(default, null): Bool;
 
-  // TODO: Don't hardcode 4 gamepads.
   // Gamepad access callback for gamepad 1 to 4.
   var gpa0: (Int, Float)->Void;
   var gpa1: (Int, Float)->Void;

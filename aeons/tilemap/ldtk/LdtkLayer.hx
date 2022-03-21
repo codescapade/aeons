@@ -26,7 +26,17 @@ class LdtkLayer {
   /**
    * The tileset used for this layer.
    */
-  var tileset: Tileset;
+  public var tileset(default, null): Tileset;
+
+  /**
+   * The width of the layer in tiles.
+   */
+  public var width(get, never): Int;
+
+  /**
+   * The height of the layer in tiles.
+   */
+  public var height(get, never): Int;
 
   /**
    * The 2d array of tiles.
@@ -182,6 +192,20 @@ class LdtkLayer {
       final flipY = tile.flips & 2 != 0;
       list[y][x].set(tile.tileId, flipX, flipY);
     }
+  }
+
+  /**
+   * Layer width getter.
+   */
+  inline function get_width(): Int {
+    return tiles[0].length;
+  }
+
+  /**
+   * Layer height gettter.
+   */
+  inline function get_height(): Int {
+    return tiles.length;
   }
 }
 #end

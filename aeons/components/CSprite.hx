@@ -48,11 +48,6 @@ class CSprite extends Component implements Renderable {
   public var color = Color.White;
 
   /**
-   * The sprite bounds. Used to check if it is on screen.
-   */
-  public var bounds = new Rect();
-
-  /**
    * Current sprite frame.
    */
   var frame: Frame;

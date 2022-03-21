@@ -1,5 +1,6 @@
 package aeons.systems;
 
+import aeons.math.Vector2;
 import aeons.components.CCamera;
 import aeons.components.CRender;
 import aeons.components.CTransform;
@@ -62,7 +63,8 @@ class RenderSystem extends System implements SysRenderable {
       camera.updateMatrix();
       var camTransform = camBundle.c_transform;
       var camTarget = camera.renderTarget;
-
+      var localBounds = new Rect(0, 0, camera.bounds.width, camera.bounds.height);
+      var boundsPos = Vector2.get();
       // Render all the bundles to the current camera.
       camTarget.start();
       for (renderable in renderBundles) {
@@ -71,8 +73,14 @@ class RenderSystem extends System implements SysRenderable {
         } else {
           camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
         }
-        renderable.c_render.render(camTarget, camera.bounds);
+        boundsPos.set(camera.bounds.x, camera.bounds.y);
+        renderable.c_transform.worldToLocalPosition(boundsPos);
+        localBounds.x = boundsPos.x;
+        localBounds.y = boundsPos.y;
+
+        renderable.c_render.render(camTarget, localBounds);
       }
+      boundsPos.put();
       camTarget.present();
     }
 
