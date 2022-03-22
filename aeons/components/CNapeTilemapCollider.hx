@@ -2,8 +2,9 @@ package aeons.components;
 
 #if use_nape
 import aeons.core.Component;
+import aeons.math.Rect;
 import aeons.physics.utils.TilemapCollision;
-import aeons.tilemap.TiledObject;
+import aeons.tilemap.tiled.TiledObject;
 #if use_ldtk
 import aeons.tilemap.ldtk.LdtkLayer;
 #end
@@ -63,7 +64,8 @@ class CNapeTilemapCollider extends Component {
    * @param worldY The y position of the tilemap in world pixels.
    * @param collisionTileIds A list of tile ids that should get collision tiles.
    */
-  public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
+  public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Float, worldY: Float,
+      collisionTileIds: Array<Int>) {
     bodies = [];
     final colliders = TilemapCollision.generateCollidersFromCTilemap(tilemap, worldX, worldY, collisionTileIds);
     createBodiesFromColliders(colliders);
@@ -77,7 +79,8 @@ class CNapeTilemapCollider extends Component {
    * @param worldY The y position of the tilemap in world pixels.
    * @param collisionTileIds A list of tile ids that should get collision tiles.
    */
-  public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
+  public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Float, worldY: Float,
+      collisionTileIds: Array<Int>) {
     bodies = [];
     final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
     createBodiesFromColliders(colliders);
@@ -88,9 +91,8 @@ class CNapeTilemapCollider extends Component {
    * Create colliders from tiled objects.
    * @param objects Array of tiled object to use for collision.
    */
-  public function fromTiledObjects(objects: Array<TiledObject>) {
+  public function fromTiledObjects(objects: Array<TiledObject>, worldX: Float, worldY: Float) {
     bodies = [];
-    var worldPos = transform.getWorldPosition();
     for (obj in objects) {
       var body = new Body(BodyType.STATIC);
 
@@ -98,7 +100,7 @@ class CNapeTilemapCollider extends Component {
       if (obj.polygon.length > 0) {
         var chain: Array<Vec2> = [];
         for (p in obj.polygon) {
-          chain.push(Vec2.get(worldPos.x + obj.x + p.x, worldPos.y + obj.y + p.y));
+          chain.push(Vec2.get(worldX + obj.x + p.x, worldY + obj.y + p.y));
         }
         var shapes = new GeomPoly(chain).convexDecomposition();
         shapes.foreach((shape: GeomPoly) -> {
@@ -110,7 +112,7 @@ class CNapeTilemapCollider extends Component {
           body.shapes.push(poly);
         });
       } else {
-        var shape = new Polygon(Polygon.rect(worldPos.x + obj.x, worldPos.y + obj.y, obj.width, obj.height));
+        var shape = new Polygon(Polygon.rect(worldX + obj.x, worldY + obj.y, obj.width, obj.height));
         body.shapes.push(shape);
       }
       if (space == null) {

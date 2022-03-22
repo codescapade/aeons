@@ -1,1 +1,1 @@
-node ..\lib\KhaBundled\make node --ffmpeg tools\ffmpeg --projectfile singleUnitTest.js & cd build\node & node kha.js & cd ..\.. & rmdir /s/q "build"
+node ..\lib\Kha\make node --ffmpeg tools\ffmpeg --projectfile singleUnitTest.js & cd build\node & node kha.js & cd ..\.. & rmdir /s/q "build"

@@ -8,6 +8,10 @@ project.addAssets('assets/**', {
   name: '{dir}/{name}'
 });
 
+// This is the Aeons icon by default. The icon get scaled depending on the platform.
+// 1024px by 1024px is a good size to use.
+project.icon = 'icon.png';
+
 // Shader folder.
 project.addShaders('shaders/**');
 

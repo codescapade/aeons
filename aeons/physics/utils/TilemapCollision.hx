@@ -1,6 +1,8 @@
 package aeons.physics.utils;
 
+#if use_ldtk
 import aeons.tilemap.ldtk.LdtkLayer;
+#end
 import aeons.components.CTilemap;
 import aeons.math.Rect;
 import aeons.math.Vector2;
@@ -46,6 +48,7 @@ class TilemapCollision {
     return generateColliders(tiles, worldX, worldY, tileSize, collisionTileIds);
   }
 
+  #if use_ldtk
   /**
    * Generate colliders for certain tile indexes. Tries to make big colliders so there are less of them in the map.
    * @param layer The LDtk tilemap layer to use for the collider generation. 
@@ -70,6 +73,7 @@ class TilemapCollision {
 
     return generateColliders(tiles, worldX, worldY, tileSize, collisionTileIds);
   }
+  #end
 
   static function generateColliders(tiles: Array<Array<Tile>>, worldX: Float, worldY: Float, tileSize: Int,
       collisionTileIds: Array<Int>): Array<Rect> {

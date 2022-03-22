@@ -3,5 +3,5 @@
     "aeons",
     "tests"
   ],
-  "kha.khaPath": "lib/KhaBundled"
+  "kha.khaPath": "lib/Kha"
 }

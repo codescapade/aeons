@@ -1,1 +1,1 @@
-node ..\..\lib\KhaBundled\make html5 & haxelib run dox -i build/docs -in aeons -o ..\..\docs\api
+node ..\..\lib\Kha\make html5 & haxelib run dox -i build/docs -in "^(aeons|kha)" -o ..\..\docs\api

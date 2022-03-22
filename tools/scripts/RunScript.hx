@@ -152,6 +152,7 @@ class RunScript {
         throw 'Could not find the aeons alias script.';
       }
     }
+    Sys.println('"aeons" command has been added to path.');
   }
 
   /**
@@ -159,22 +160,23 @@ class RunScript {
    */
   static function downloadKha() {
     final libPath = Path.join([getHaxelibPath('aeons'), 'lib']);
-    final path = Path.join([libPath, 'KhaBundled']);
+    final path = Path.join([libPath, 'Kha']);
 
     if (FileSystem.exists(path)) {
       Sys.println('${path} already exists. Skipping Kha download.');
       return;
     }
 
-    Sys.println('Downloading Kha to aeons/lib/KhaBundled');
+    Sys.println('Downloading Kha to aeons/lib/Kha');
     if (!FileSystem.exists(libPath)) {
       FileSystem.createDirectory(libPath);
     }
 
     Sys.setCwd(libPath);
 
-    runCommand('', 'git', ['clone', 'https://github.com/codescapade/KhaBundled']);
-    runCommand('KhaBundled', 'git', ['checkout', '27d7302']);
+    runCommand('', 'git', ['clone', 'https://github.com/codescapade/Kha']);
+    runCommand('Kha', 'git', ['checkout', '9d9bb55']);
+    runCommand('Kha', 'git', ['submodule', 'update', '--init', '--recursive']);
 
     Sys.println('Download of Kha completed');
   }
@@ -188,7 +190,7 @@ class RunScript {
     Sys.setCwd(projectDir);
 
     final haxelibPath = getHaxelibPath('aeons');
-    final khaPath = Path.join([haxelibPath, 'lib/KhaBundled']);
+    final khaPath = Path.join([haxelibPath, 'lib/Kha']);
     final makePath = Path.join([khaPath, 'make.js']);
     args.unshift(makePath);
     return runCommand('', 'node', args);
@@ -283,7 +285,7 @@ class RunScript {
 
     // Set the kha path for vscode to the downloaded kha install.
     final settingsPath = Path.join([destination, '.vscode/settings.json']);
-    final khaPath = Path.join([aeonsPath, 'lib/KhaBundled']);
+    final khaPath = Path.join([aeonsPath, 'lib/Kha']);
     setPlaceholders(settingsPath, '{{kha_path}}', khaPath);
     Sys.println('Project creation complete.');
   }
