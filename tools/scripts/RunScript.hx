@@ -207,10 +207,11 @@ class RunScript {
     final haxelibPath = getHaxelibPath('aeons');
 
     var appPath = '';
-
-    // TODO: Add mac and linux.
+    // TODO: Add linux.
     if (platform == 'Windows') {
       appPath = Path.join([haxelibPath, 'tools/atlas/AeonsAtlas.exe']);
+    } else if (platform == 'Mac') {
+      appPath = Path.join([haxelibPath, 'tools/atlas/AeonsAtlasMac']);
     }
 
     if (appPath == '') {
