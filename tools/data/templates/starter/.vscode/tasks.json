@@ -4,7 +4,7 @@
 		{
 			"label": "Build Aeons Html5",
 			"type": "shell",
-			"command": "./aeons",
+			"command": "aeons",
 			"windows": {
 				"command": "aeons.bat"
 			},
@@ -21,7 +21,7 @@
 		{
 			"label": "Build Aeons Html5 Debug",
 			"type": "shell",
-			"command": "./aeons",
+			"command": "aeons",
 			"windows": {
 				"command": "aeons.bat"
 			},

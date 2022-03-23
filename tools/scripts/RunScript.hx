@@ -28,6 +28,10 @@ class RunScript {
     } else if (args.length == 1 && args[0] == 'atlas') {
       generateAtlas(wd);
       Sys.exit(0);
+    // aeons alias
+    } else if (args.length == 1 && args[0] == 'alias') {
+      setupAlias();
+      Sys.exit(0);
     // aeons create [project_name]
     } else if (args.length > 1 && args[0] == 'create') {
       createProject(wd, args[1]);
@@ -125,6 +129,20 @@ class RunScript {
    * Copy aeons.bat or aeons.sh to the haxe folder so you can run the aeons command.
    */
   static function setupAlias() {
+    while (true) {
+      Sys.println('');
+			Sys.println('Do you want to install the "aeons" command? [y/n]?');
+
+			return switch (Sys.stdin().readLine()) {
+				case "n", "No":
+          return;
+				case "y", "Yes":
+          break;
+
+        default:
+			}
+    }
+    
     final platform = Sys.systemName();
     final binPath = platform == 'Mac' ? "/usr/local/bin" : "/usr/bin";
 
@@ -152,7 +170,7 @@ class RunScript {
         throw 'Could not find the aeons alias script.';
       }
     }
-    Sys.println('"aeons" command has been added to path.');
+    Sys.println('The "aeons" command has been added to path.');
   }
 
   /**
