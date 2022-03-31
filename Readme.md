@@ -1,5 +1,4 @@
-# Aeons Game Engine
-
+![aeons_engine_logo](tools/data/logo/logo_640.png)
 ## This game engine is in active development and not ready for use yet.
 <br/>
 <br/>
