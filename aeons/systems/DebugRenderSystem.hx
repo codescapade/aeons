@@ -74,5 +74,13 @@ class DebugRenderSystem extends System implements SysRenderable {
       boundsPos.put();
       camTarget.present();
     }
+
+    // Render all cameras to the main target.
+    target.start(false, Color.Transparent);
+    for (camBundle in cameraBundles) {
+      final camera = camBundle.c_camera;
+      target.drawImage(camera.viewX, camera.viewY, camera.renderTarget.image, Color.White);
+    }
+    target.present();
   }
 }

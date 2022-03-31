@@ -10,7 +10,7 @@ class Body {
   /**
    * The type of body. (dynamic, kinematic, static).
    */
-  public var type: BodyType;
+  public var type: BodyType = DYNAMIC;
 
   /**
    * The bounds of the body.

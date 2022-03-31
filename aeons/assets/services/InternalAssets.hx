@@ -7,6 +7,8 @@ import aeons.graphics.Video;
 import aeons.graphics.atlas.Atlas;
 import aeons.utils.Blob;
 
+import haxe.Exception;
+
 /**
  * `InternalAssets` is the main Assets implementation.
  */
@@ -30,7 +32,13 @@ class InternalAssets implements Assets {
   }
 
   public inline function getImage(name: String): Image {
-    return kha.Assets.images.get(name);
+    try {
+      return kha.Assets.images.get(name);
+    } catch (e: Exception) {
+      trace('Image ${name} is not loaded.');
+
+      return null;
+    }
   }
 
   public inline function loadFont(name: String, complete: (Font)->Void) {
@@ -42,7 +50,13 @@ class InternalAssets implements Assets {
   }
 
   public inline function getFont(name: String): Font {
-    return kha.Assets.fonts.get(name);
+    try {
+      return kha.Assets.fonts.get(name);
+    } catch (_) {
+      trace('Font ${name} is not loaded.');
+
+      return null;
+    }
   }
 
   public inline function loadBlob(name: String, complete: (Blob)->Void) {
@@ -55,7 +69,13 @@ class InternalAssets implements Assets {
   }
 
   public inline function getBlob(name: String): Blob {
-    return kha.Assets.blobs.get(name);
+    try {
+      return kha.Assets.blobs.get(name);
+    } catch (_) {
+      trace('Blob ${name} is not loaded.');
+
+      return null;
+    }
   }
 
   public inline function loadSound(name: String, complete: (Sound)->Void) {
@@ -68,7 +88,13 @@ class InternalAssets implements Assets {
   }
 
   public inline function getSound(name: String): Sound {
-    return kha.Assets.sounds.get(name);
+    try {
+      return kha.Assets.sounds.get(name);
+    } catch (_) {
+      trace('Sound ${name} is not loaded.');
+
+      return null;
+    }
   }
 
   public inline function loadVideo(name: String, complete: (Video)->Void) {
@@ -80,11 +106,25 @@ class InternalAssets implements Assets {
   }
 
   public inline function getVideo(name: String): Video {
-    return kha.Assets.videos.get(name);
+    try {
+      return kha.Assets.videos.get(name);
+    } catch (_) {
+      trace('Video ${name} is not loaded.');
+
+      return null;
+    }
   }
 
   public function loadAtlas(name: String, complete: (Atlas)->Void) {
-    var atlas = new Atlas(getImage(name), getBlob('${name}_json').toString());
+    final image = getImage(name);
+    final data = getBlob('${name}_json');
+
+    if (image == null || data == null) {
+      trace('Unable to load atlas ${name}.');
+      complete(null);
+    }
+
+    final atlas = new Atlas(image, data.toString());
     atlasses.set(name, atlas);
 
     complete(atlas);
