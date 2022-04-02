@@ -46,4 +46,4 @@ When writing code in visual studio code you can use the [Kha Extionsion Pack](ht
 <br/>
 
 ## Running unit tests
-To run the unit tests, Aeons expects that buddy is installed with haxelib from the following urls:
+To run the unit tests, Aeons expects that buddy is installed with haxelib.
