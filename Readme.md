@@ -1,10 +1,10 @@
 ![aeons_engine_logo](tools/data/logo/logo_640.png)
-## This game engine is in active development and not ready for use yet.
+## This 2D game engine is in active development and not ready for use yet.
 <br/>
 <br/>
 
 ## About this engine
-Aeons is a game engine built using the [haxe](https://haxe.org) programming language.
+Aeons is a 2D game engine built using the [haxe](https://haxe.org) programming language.
 The underlying framework is [Kha](https://github.com/Kode/Kha).
 
 I combined all the parts that I liked from game engines I used over the years.
