@@ -111,4 +111,16 @@ class AeMath {
   public static inline function degToRad(deg: Float): Float {
     return deg * (Math.PI / 180.0);
   }
+
+  /**
+   * Calculate the distance between two points.
+   * @param x1 The x position of the first point.
+   * @param y1 The y position of the first point.
+   * @param x2 The x position of the second point.
+   * @param y2 The y position of the second point.
+   * @return The distance.
+   */
+  public static function distance(x1: Float, y1: Float, x2: Float, y2: Float): Float {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  }
 }

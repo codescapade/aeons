@@ -27,7 +27,7 @@ class CNineSlice extends Component implements Renderable {
   /**
    * The sprite tint color.
    */
-  public var color = Color.White;
+  public var color: Color;
 
   /**
    * The x axis anchor.
@@ -110,6 +110,8 @@ class CNineSlice extends Component implements Renderable {
 
     width = options.width;
     height = options.height;
+
+    color = options.color == null ? Color.White : options.color;
   }
 
   /**
@@ -287,6 +289,11 @@ typedef NineSliceOptions = {
    * The y axis anchor.
    */
   var ?anchorY: Float;
+
+  /**
+   * The tint color.
+   */
+  var ?color: Color;
 }
 
 /**

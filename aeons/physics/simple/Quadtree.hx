@@ -33,6 +33,11 @@ class Quadtree {
   var bounds: Rect;
 
   /**
+   * A list of raycastHits.
+   */
+  var hits = new HitList();
+
+  /**
    * Constructor.
    * @param x The x position of the world.
    * @param y The y position of the world.
@@ -78,16 +83,14 @@ class Quadtree {
    * Get a list of bodies that intersect with a line.
    * @param p1 The start position of the line.
    * @param p2 The end position of the line.
-   * @param out Optional list to store the result in.
+   * @param out Optional list to store the result in. This will be cleared before getting the hits.
    * @return The result.
    */
-  public function getLineHitList(p1: Vector2, p2: Vector2, ?out: Array<Hit>): Array<Hit> {
+  public function getLineHitList(p1: Vector2, p2: Vector2, ?out: HitList): HitList {
     if (out == null) {
-      final list: Array<Hit> = [];
-      root.getLineHitList(p1, p2, list);
-
-      return list;
+      out = hits;
     }
+    out.clear();
 
     root.getLineHitList(p1, p2, out);
 
@@ -121,13 +124,23 @@ class Quadtree {
 
   /**
    * Update the tree bounds.
-   * @param x The new x position.
-   * @param y The new y position.
-   * @param width The new width.
-   * @param height The new height.
+   * @param x The new x position in pixels.
+   * @param y The new y position in pixels.
+   * @param width The new width in pixels.
+   * @param height The new height in pixels.
    */
   public function updateBounds(x: Float, y: Float, width: Float, height: Float) {
     bounds.set(x, y, width, height);
+  }
+
+  /**
+   * Update the tree bounds position.
+   * @param x The new x position in pixels.
+   * @param y The new y position in pixels.
+   */
+  public function updatePosition(x: Float, y: Float) {
+    bounds.x = x;
+    bounds.y = y;
   }
 
   /**

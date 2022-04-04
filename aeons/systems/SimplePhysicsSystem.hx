@@ -4,7 +4,6 @@ import aeons.graphics.RenderTarget;
 import aeons.core.DebugRenderable;
 import aeons.components.CTransform;
 import aeons.core.Bundle;
-import aeons.physics.simple.Hit;
 import aeons.components.CSimpleBody;
 import aeons.components.CSimpleTilemapCollider;
 import aeons.core.System;
@@ -14,6 +13,7 @@ import aeons.math.AeMath;
 import aeons.math.Rect;
 import aeons.math.Vector2;
 import aeons.physics.simple.Body;
+import aeons.physics.simple.HitList;
 import aeons.physics.simple.Interaction;
 import aeons.physics.simple.InteractionType;
 import aeons.physics.simple.Physics;
@@ -33,6 +33,14 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * The world gravity.
    */
   public var gravity(default, null) = new Vector2();
+
+  public var worldX(get, set): Float;
+
+  public var worldY(get, set): Float;
+
+  public var worldWidth(get, set): Float;
+
+  public var worldHeight(get, set): Float;
 
   /**
    * The bundles that are currently used by the system.
@@ -85,6 +93,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    */
   final staticBodyColor = Color.fromBytes(0, 200, 0, 255);
 
+  final rayColor = Color.fromBytes(255, 127, 0, 255);
+
+  final rayHitColor = Color.fromBytes(255, 255, 0, 255);
+
   /**
    * Interactions that happened this update.
    */
@@ -99,6 +111,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * World bounds.
    */
   var bounds: Rect;
+
+  #if debug
+  var debugRays: Array<RayDraw> = [];
+  #end
 
   /**
    * SimplePhysicsSystem Constructor.
@@ -123,6 +139,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * @param dt The time passed since the last update in seconds.
    */
   public function update(dt:Float) {
+    #if debug
+    debugRays = [];
+    #end
+
     tree.clear();
     for (tilemap in tilemapBundles) {
       final collider = tilemap.c_simple_tilemap_collider;
@@ -255,18 +275,39 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
         target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, bodyColor, 2);
       }
     }
+
+    #if debug
+    for (ray in debugRays) {
+      if (ray.hit) {
+        target.drawLine(ray.x1, ray.y1, ray.x2, ray.y2, rayHitColor);
+      } else {
+        target.drawLine(ray.x1, ray.y1, ray.x2, ray.y2, rayColor);
+      }
+    }
+    #end
   }
 
   /**
-   * Update the tree bounds.
-   * @param x The new x position.
-   * @param y The new y position.
-   * @param width The new width.
-   * @param height The new height.
+   * Update the world bounds.
+   * @param x The new x position in pixels.
+   * @param y The new y position in pixels.
+   * @param width The new width in pixels.
+   * @param height The new height in pixels.
    */
   public function updateBounds(x: Float, y: Float, width: Float, height: Float) {
     bounds.set(x, y, width, height);
     tree.updateBounds(x, y, width, height);
+  }
+
+  /**
+   * Update the world position.
+   * @param x The new x position in pixels.
+   * @param y The new y position in pixels.
+   */
+  public function updateWorldPosition(x: Float, y: Float) {
+    bounds.x = x;
+    bounds.y = y;
+    tree.updatePosition(x, y);
   }
 
   /**
@@ -354,43 +395,29 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * Raycast to find intersecting bodies.
    * @param p1 The start of the line.
    * @param p2 The end of the line.
-   * @param tag The tag to search for.
-   * @param hits Optional list to store the result.
+   * @param tags The list of tags to search for. If null it returns all hits.
+   * @param out Optional list to store the result.
    * @return The result.
    */
-  public function raycast(p1: Vector2, p2: Vector2, ?tags: Array<String>, ?hits: Array<Hit>): Array<Hit> {
-    if (hits == null) {
-      hits = [];
-    }
-    tree.getLineHitList(p1, p2, hits);
+  public function raycast(p1: Vector2, p2: Vector2, ?tags: Array<String>, ?out: HitList): HitList {
+    out = tree.getLineHitList(p1, p2, out);
 
-    if (hits.length > 0 && tags != null) {
-      var total = hits.length - 1;
-      var i = total;
-      while (i >= 0) {
-        var hit = hits[i];
-        var found = false;
-        for (tag in tags) {
-          if (hit.body.tags.contains(tag)) {
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          hits.remove(hit);
-        }
-        i--;
-      }
+    #if debug
+    var debugRay: RayDraw = { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, hit: false };
+    #end
 
-      hits.sort((a: Hit, b: Hit) -> {
-        var dist1 = Vector2.distance(p1, a.position);
-        var dist2 = Vector2.distance(p1, b.position);
-
-        return dist1 < dist2 ? -1 : 1;
-      });
+    if (out.count > 0 && tags != null) {
+      out.filterOnTags(tags);
     }
 
-    return hits;
+    #if debug
+    if (out.count > 0) {
+      debugRay.hit = true;
+    }
+    debugRays.push(debugRay);
+    #end
+
+    return out;
   }
 
   /**
@@ -512,6 +539,74 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
       body.wasTriggeredBy.push(body.triggeredBy.pop());
     }
   }
+
+  /**
+   * World x position getter.
+   */
+  inline function get_worldX(): Float {
+    return bounds.x;
+  }
+
+  /**
+   * World x position setter.
+   */
+  inline function set_worldX(value: Float): Float {
+    bounds.x = value;
+    tree.updatePosition(bounds.x, bounds.y);
+
+    return value;
+  }
+
+  /**
+   * World y position getter.
+   */
+  inline function get_worldY(): Float {
+    return bounds.y;
+  }
+
+  /**
+   * World y position setter.
+   */
+  inline function set_worldY(value: Float): Float {
+    bounds.y = value;
+    tree.updatePosition(bounds.x, bounds.y);
+
+    return value;
+  }
+
+  /**
+   * World width  getter.
+   */
+  inline function get_worldWidth(): Float {
+    return bounds.width;
+  }
+
+  /**
+   * World width  setter.
+   */
+  inline function set_worldWidth(value: Float): Float {
+    bounds.width = value;
+    tree.updateBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+
+    return value;
+  }
+  
+  /**
+   * World height  getter.
+   */
+  inline function get_worldHeight(): Float {
+    return bounds.height;
+  }
+
+  /**
+   * World height  setter.
+   */
+  inline function set_worldHeight(value: Float): Float {
+    bounds.height = value;
+    tree.updateBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+
+    return value;
+  }
 }
 
 /**
@@ -546,3 +641,18 @@ typedef SimplePhysicsSystemOptions = {
     y: Float
   };
 }
+
+#if debug
+@:structInit
+class RayDraw {
+  public var x1: Float;
+
+  public var y1: Float;
+
+  public var x2: Float;
+
+  public var y2: Float;
+
+  public var hit: Bool;
+}
+#end

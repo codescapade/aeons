@@ -120,19 +120,19 @@ class Quad {
    * Get a list of bodies that intersect a line.
    * @param p1 The start of the line.
    * @param p2 The end o} the line.
-   * @param list List to store the result in.
+   * @param results The found hits.
    */
-  public function getLineHitList(p1: Vector2, p2: Vector2, list: Array<Hit>) {
+  public function getLineHitList(p1: Vector2, p2: Vector2, results: HitList) {
     if (nodes.length > 0) {
       getLineIndexes(p1, p2, indexList);
       for (i in indexList) {
-        nodes[i].getLineHitList(p1, p2, list);
+        nodes[i].getLineHitList(p1, p2, results);
       }
     } else {
       for (b in bodies) {
         var hitPos = Vector2.get();
         if (b.bounds.intersectsLine(p1, p2, hitPos)) {
-          list.push(new Hit(hitPos, b));
+          results.insert(hitPos.x, hitPos.y, p1.x, p1.y, b);
         }
       }
     }

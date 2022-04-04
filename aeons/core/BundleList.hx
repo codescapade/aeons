@@ -69,6 +69,15 @@ class BundleList<T: BundleBase> {
   }
 
   /**
+   * Get a bundle at a position in the list.
+   * @param index The position in the list.
+   * @return The bundle.
+   */
+  public inline function get(index: Int): T {
+    return bundles[index];
+  }
+
+  /**
    * Return the number of bundles in this list.
    * @return The number of bundles.
    */
