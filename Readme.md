@@ -40,8 +40,10 @@ For available platforms see [Kha](https://github.com/Kode/Kha)
 <br/>
 <br/>
 
-## Api Documentation
-[https://codescapade.github.io/aeons/api](https://codescapade.github.io/aeons/api)
+## Api Documentation (WIP)
+[https://codescapade.github.io/aeons/api](https://codescapade.github.io/aeons/api)  
+<br/>
+
 ## Visual studio code extension
 When writing code in visual studio code you can use the [Kha Extionsion Pack](https://marketplace.visualstudio.com/items?itemName=kodetech.kha-extension-pack) to get auto completion and debugging support.
 <br/>
