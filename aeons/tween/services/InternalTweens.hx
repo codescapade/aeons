@@ -1,8 +1,9 @@
 package aeons.tween.services;
 
 /**
-* `Tweens` is the tween manager.
+* Tweens is the tween manager.
 */
+@:dox(hide)
 class InternalTweens implements Tweens {
   /**
    * Current active tweens.

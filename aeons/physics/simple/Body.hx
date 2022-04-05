@@ -4,7 +4,7 @@ import aeons.math.Rect;
 import aeons.math.Vector2;
 
 /**
- * `Body` class for the simple physics system.
+ * Body class for the simple physics system.
  */
 class Body {
   /**

@@ -4,7 +4,7 @@ import aeons.graphics.atlas.Frame;
 import aeons.graphics.atlas.Atlas;
 
 /**
- * The `Animation` class can be used for sprite sheet animations.
+ * The Animation class can be used for sprite sheet animations.
  */
 class Animation {
   /**

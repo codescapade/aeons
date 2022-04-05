@@ -10,7 +10,7 @@ import aeons.math.Rect;
 import aeons.math.Vector2;
 
 /**
- * `CCamera` is a component that renders a view in the render system.
+ * CCamera is a component that renders a view in the render system.
  */
 class CCamera extends Component {
   /**
@@ -51,7 +51,6 @@ class CCamera extends Component {
   /**
    * The render texture for this camera.
    */
-  // TODO: Don't use a render target for each camera.
   public var renderTarget(default, null): RenderTarget;
 
   /**
@@ -75,16 +74,15 @@ class CCamera extends Component {
   var worldPosition = new Vector2();
 
   /**
-   * Temp matrix to help with multiplying translation, rotation, scale in updat3 matrix.
+   * Temp matrix to help with multiplying translation, rotation, scale in update matrix.
    */
   var tempMatrix: FastMatrix4;
 
   /**
-   * Initialize the camera.
+   * CCamera constructor.
    * @param options Initialization options.
-   * @return A reference to the camera.
    */
-  public function new (?options: CameraOptions) {
+  public function new (?options: CCameraOptions) {
     super();
 
     if (options == null) {
@@ -106,8 +104,8 @@ class CCamera extends Component {
   }
 
   /**
-   * Initialize the camera component.
-   * @param entityId The entity id this component belongs to.
+   * Init gets called after the component has been added to an entity.
+   * @param entityId The id of the entity the component got added to.
    */
   public override function init(entityId: Int) {
     super.init(entityId);
@@ -127,6 +125,15 @@ class CCamera extends Component {
     }
 
     tempMatrix = FastMatrix4.identity();
+  }
+
+  /**
+   * Cleanup when the component get removed.
+   */
+  public override function cleanup() {
+    if (main == this) {
+      main = null;
+    }
   }
 
   /**
@@ -176,7 +183,6 @@ class CCamera extends Component {
    * @return The world position.
    */
   public function screenToWorld(x: Float, y: Float, ?out: Vector2): Vector2 {
-    // TODO: Make this use invert matrix function. At the moment this doesn't work when you rotate the camera.
     final worldX = (worldPosition.x - viewWidth * 0.5 / zoom) + (x / Aeons.display.windowWidth * (viewWidth / zoom));
     final worldY = (worldPosition.y - viewHeight * 0.5 / zoom) + (y / Aeons.display.windowHeight * (viewHeight / zoom));
     if (out == null) {
@@ -204,7 +210,11 @@ class CCamera extends Component {
     return out.set(vX, vY);
   }
 
+  /**
+   * Put the component back into the object pool.
+   */
   public override function put() {
+    super.put();
     if (main == this) {
       main = null;
     }
@@ -260,9 +270,9 @@ class CCamera extends Component {
 }
 
 /**
- * The camera options you set set in the `Camera` init function.
+ * The camera options you set set in the CCamera init function.
  */
-typedef CameraOptions = {
+typedef CCameraOptions = {
   /**
    * The camera zoom.
    */

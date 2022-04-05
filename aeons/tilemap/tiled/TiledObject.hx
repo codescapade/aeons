@@ -3,7 +3,7 @@ package aeons.tilemap.tiled;
 import aeons.math.Vector2;
 
 /**
- * `TiledObject` is a class that holds all object properties from a tiled object.
+ * TiledObject is a class that holds all object properties from a tiled object.
  */
 class TiledObject {
   /**

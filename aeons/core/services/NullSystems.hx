@@ -3,6 +3,7 @@ package aeons.core.services;
 import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 
+@:dox(hide)
 class NullSystems implements Systems {
 
   public function new() {}

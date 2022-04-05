@@ -8,7 +8,7 @@ import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 
 /**
- * `CText` component to render bitmap text.
+ * CText component to render bitmap text.
  */
 class CText extends Component implements Renderable {
   /**
@@ -55,7 +55,7 @@ class CText extends Component implements Renderable {
    * CText constructor.
    * @param options The options for initialization.
    */
-  public function new(?options: TextOptions) {
+  public function new(?options: CTextOptions) {
     super();
 
     if (options == null) {
@@ -134,7 +134,7 @@ class CText extends Component implements Renderable {
 /**
  * The Text component initialization options.
  */
-typedef TextOptions = {
+typedef CTextOptions = {
   /**
    * The font to use.
    */

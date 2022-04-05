@@ -9,7 +9,7 @@ import aeons.graphics.atlas.Atlas;
 import aeons.math.Rect;
 
 /**
- * The `CSprite` component can be used to render sprite atlas frames.
+ * The CSprite component can be used to render sprite atlas frames.
  */
 class CSprite extends Component implements Renderable {
   /**
@@ -123,7 +123,7 @@ class CSprite extends Component implements Renderable {
 }
 
 /**
- * The sprite options you can set in the `CSprite` init function.
+ * The sprite options you can set in the CSprite init function.
  */
 typedef CSpriteOptions = {
   /**

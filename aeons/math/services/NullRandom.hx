@@ -1,5 +1,6 @@
 package aeons.math.services;
 
+@:dox(hide)
 class NullRandom implements Random {
 
   public function new() {}

@@ -3,7 +3,7 @@ package aeons.physics.simple;
 using aeons.utils.BitSets;
 
 /**
- * `CollisionFilter` is used for collision grouping.
+ * CollisionFilter is used for collision grouping.
  */
 enum abstract CollisionFilter(Int) from Int to Int {
   var GROUP_01 = value(0);

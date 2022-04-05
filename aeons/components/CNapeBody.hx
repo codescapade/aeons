@@ -15,7 +15,7 @@ import nape.shape.Polygon;
 import nape.space.Space;
 
 /**
- * `CNapeBody` is the body component for the nape physics system.
+ * CNapeBody is the body component for the nape physics system.
  */
 class CNapeBody extends Component {
   /**
@@ -61,18 +61,22 @@ class CNapeBody extends Component {
 
   var tempPoint = new Vec2();
 
-  var tempOptions: NapeBodyOptions;
+  var tempOptions: CNapeBodyOptions;
 
   /**
-   * Set start values.
+   * CNapeBody constructor.
    * @param options The values you want to set.
    */
-  public function new(?options: NapeBodyOptions) {
+  public function new(?options: CNapeBodyOptions) {
     super();
 
     tempOptions = options;
   }
 
+  /**
+   * Init gets called after the component has been added to the entity.
+   * @param entityId The id of the entity the component got added to.
+   */
   public override function init(entityId: Int) {
     super.init(entityId);
 
@@ -268,14 +272,24 @@ class CNapeBody extends Component {
     return value;
   }
 
+  /**
+   * Userdata getter.
+   */
   inline function get_userData(): Dynamic {
     return body.userData;
   }
 
+  /**
+   * Type getter.
+   */
   inline function get_type(): BodyType {
     return body.type;
   }
 
+  /**
+   * Type setter.
+   * @param value The new type.
+   */
   inline function set_type(value: BodyType): BodyType {
     body.type = value;
 
@@ -284,9 +298,9 @@ class CNapeBody extends Component {
 }
 
 /**
- * The values you can set in the `NapeBody` init function.
+ * The values you can set in the CNapeBody init function.
  */
-typedef NapeBodyOptions = {
+typedef CNapeBodyOptions = {
   /**
    * Is the nape body a sensor.
    */

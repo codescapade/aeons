@@ -3,7 +3,7 @@ package aeons.graphics.atlas;
 import haxe.Json;
 
 /**
- * `Atlas` is for createing a texture atlas from a texturepacker atlas.
+ * Atlas is for createing a texture atlas.
  */
 class Atlas {
   /**

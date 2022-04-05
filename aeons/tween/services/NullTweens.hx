@@ -1,5 +1,6 @@
 package aeons.tween.services;
 
+@:dox(hide)
 class NullTweens implements Tweens {
 
   public function new() {}

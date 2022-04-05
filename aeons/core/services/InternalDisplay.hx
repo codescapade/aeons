@@ -3,8 +3,9 @@ package aeons.core.services;
 import kha.System;
 
 /**
- * `InternalDisplay` is the main Display implementation.
+ * InternalDisplay is the main Display implementation.
  */
+@:dox(hide)
 class InternalDisplay implements Display {
 
   public var viewWidth(default, null): Int;

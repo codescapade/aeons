@@ -4,7 +4,7 @@ import kha.graphics4.BlendingFactor;
 import kha.graphics4.PipelineState;
 
 /**
- * The `Pipeline` class is used to store and use shaders.
+ * The Pipeline class is used to store and use shaders.
  */
 class Pipeline {
   /**

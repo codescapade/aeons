@@ -3,7 +3,7 @@ package aeons.physics.simple;
 using aeons.utils.BitSets;
 
 /**
- * `Collide` is used to set which side of a body can collide.
+ * Collide is used to set which side of a body can collide.
  */
 enum abstract Collide(Int) from Int to Int {
   var NONE = 0;

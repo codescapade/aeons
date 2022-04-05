@@ -10,8 +10,9 @@ import aeons.utils.Blob;
 import haxe.Exception;
 
 /**
- * `InternalAssets` is the main Assets implementation.
+ * InternalAssets is the main Assets implementation.
  */
+@:dox(hide)
 class InternalAssets implements Assets {
   /**
    * The added sprite atlasses.
@@ -115,19 +116,20 @@ class InternalAssets implements Assets {
     }
   }
 
-  public function loadAtlas(name: String, complete: (Atlas)->Void) {
+  public function loadAtlas(name: String): Atlas {
     final image = getImage(name);
     final data = getBlob('${name}_json');
 
     if (image == null || data == null) {
       trace('Unable to load atlas ${name}.');
-      complete(null);
+
+      return null;
     }
 
     final atlas = new Atlas(image, data.toString());
     atlasses.set(name, atlas);
 
-    complete(atlas);
+    return atlas;
   }
 
   public function unLoadAtlas(name: String) {

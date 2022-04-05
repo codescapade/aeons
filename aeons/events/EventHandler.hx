@@ -1,7 +1,7 @@
 package aeons.events;
 
 /**
- * A `EventHandler` is used to store callbacks for when the event is triggered. 
+ * A EventHandler is used to store callbacks for when the event is triggered. 
  */
 class EventHandler {
   /**

@@ -3,7 +3,7 @@ package aeons.tilemap.tiled;
 import haxe.Json;
 
 /**
- * `TiledMap` class is for loading tiled json tilemaps.
+ * TiledMap class is for loading tiled json tilemaps.
  */
 class TiledMap {
   /**

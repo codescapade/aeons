@@ -1,7 +1,7 @@
 package aeons.math;
 
 /**
- * `QuaternionEx` has static extension functions for the `Quaternion` class.
+ * QuaternionEx has static extension functions for the `Quaternion` class.
  */
 class QuaternionEx {
   /**

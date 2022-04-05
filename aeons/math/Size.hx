@@ -1,7 +1,7 @@
 package aeons.math;
 
 /**
- * `Size` is a helper class to easily represent the width and height of something using floats.
+ * Size is a helper class to easily represent the width and height of something using floats.
  */
 class Size {
   /**

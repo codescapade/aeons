@@ -1,7 +1,7 @@
 package aeons.utils;
 
 /**
- * The `Timer` class is to create timers to delay things or repeat them.
+ * The Timer class is to create timers to delay things or repeat them.
  */
 class Timer {
   /**

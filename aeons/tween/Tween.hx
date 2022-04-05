@@ -7,7 +7,7 @@ import aeons.tween.easing.Easing;
 import aeons.utils.Pool;
 
 /**
- * The `Tween` class is used to tween values over time.
+ * The Tween class is used to tween values over time.
  */
 @:allow(aeons.tween.services.InternalTweens)
 class Tween {

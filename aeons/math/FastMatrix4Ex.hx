@@ -1,7 +1,7 @@
 package aeons.math;
 
 /**
- * `FastMatrix4Ex` has static extension functions for the `FastMatrix4Ex` class.
+ * FastMatrix4Ex has static extension functions for the `FastMatrix4` class.
  */
 class FastMatrix4Ex {
 

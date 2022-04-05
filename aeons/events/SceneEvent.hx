@@ -3,7 +3,7 @@ package aeons.events;
 import aeons.core.Scene;
 
 /**
- * The `SceneEvent` event is used to switch scenes.
+ * The SceneEvent event is used to switch scenes.
  */
 class SceneEvent extends Event {
   /**

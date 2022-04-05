@@ -74,7 +74,7 @@ class CAnimation extends Component {
 
   /**
    * Play an animation. This plays from the start. If you don't include a new animation the current animation
-   * restarts
+   * restarts.
    * @param name The name of the new animation.
    */
   public function play(?name: String) {

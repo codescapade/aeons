@@ -1,16 +1,16 @@
 package aeons.components;
 
-import aeons.physics.simple.BodyType;
-import aeons.physics.simple.Touching;
 import aeons.core.Component;
 import aeons.math.Rect;
 import aeons.math.Vector2;
 import aeons.physics.simple.Body;
+import aeons.physics.simple.BodyType;
 import aeons.physics.simple.Collide;
 import aeons.physics.simple.CollisionFilter;
+import aeons.physics.simple.Touching;
 
 /**
- * `CSimpleBody` is the body component for the simple physics system.
+ * CSimpleBody is the body component for the simple physics system.
  */
 class CSimpleBody extends Component {
   /**
@@ -108,7 +108,7 @@ class CSimpleBody extends Component {
    * CSimpleBody constructor.
    * @param options The values you want to set.
    */
-  public function new (?options: SimpleBodyOptions) {
+  public function new (?options: CSimpleBodyOptions) {
     super();
 
     body = new Body();
@@ -370,9 +370,9 @@ class CSimpleBody extends Component {
 }
 
 /**
- * The values you can set in the `SimpleBody` init function.
+ * The values you can set in the SimpleBody init function.
  */
-typedef SimpleBodyOptions = {
+typedef CSimpleBodyOptions = {
   /**
    * The body type.
    */

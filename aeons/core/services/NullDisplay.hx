@@ -1,9 +1,10 @@
 package aeons.core.services;
 
 /**
- * `NullDisplay` is an empty implementation of Display to keep
+ * NullDisplay is an empty implementation of Display to keep
  * the engine from crashing when no display manager is set.
  */
+@:dox(hide)
 class NullDisplay implements Display {
 
   public var viewWidth(default, null): Int;

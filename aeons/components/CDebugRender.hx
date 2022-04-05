@@ -1,15 +1,12 @@
 package aeons.components;
 
+import aeons.core.Component;
 import aeons.core.DebugRenderable;
-import aeons.core.Component;
-
-import aeons.core.Component;
-import aeons.core.Renderable;
 import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 
 /**
- * `CDebugRender` Is a component that gets added automatically to an entity that has a component that extends
+ * CDebugRender is a component that gets added automatically to an entity that has a component that extends
  * `DebugRenderable`. This goes through all renderable components and renders them.
  */
 class CDebugRender extends Component {
@@ -18,13 +15,16 @@ class CDebugRender extends Component {
    */
   var components: Array<DebugRenderable>;
 
+  /**
+   * CDebugRender constructor.
+   */
   public function new() {
     super();
   }
 
   /**
-   * Initialize the component.
-   * @return This component.
+   * Init gets called after the component has been added to an entity.
+   * @param entityId The id of the entity the component got added to.
    */
   public override function init(entityId: Int) {
     super.init(entityId);

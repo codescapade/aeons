@@ -8,9 +8,10 @@ import aeons.graphics.atlas.Atlas;
 import aeons.utils.Blob;
 
 /**
- * `NullAssets` is an empty implementation of Assets to keep
+ * NullAssets is an empty implementation of Assets to keep
  * the engine from crashing when no asset manager is set.
  */
+@:dox(hide)
 class NullAssets implements Assets {
 
   public function new() {}
@@ -85,8 +86,10 @@ class NullAssets implements Assets {
     return null;
   }
 
-  public function loadAtlas(name: String, complete: (Atlas)->Void): Void {
+  public function loadAtlas(name: String): Atlas {
     trace('loadAtlas not implemented');
+
+    return null;
   }
 
   public function unLoadAtlas(name: String): Void {

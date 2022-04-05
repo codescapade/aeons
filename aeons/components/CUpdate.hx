@@ -4,7 +4,7 @@ import aeons.core.Component;
 import aeons.core.Updatable;
 
 /**
- * `CUpdate` Is a component that gets added automatically to an entity that has a component that extends `Updatable`.
+ * CUpdate Is a component that gets added automatically to an entity that has a component that extends `Updatable`.
  * This goes through all updatable components and updates them.
  */
 class CUpdate extends Component {
@@ -13,13 +13,16 @@ class CUpdate extends Component {
    */
   var components: Array<Updatable>;
 
+  /**
+   * CUpdate constructor.
+   */
   public function new() {
     super();
   }
 
   /**
-   * Initialize the CUpate component.
-   * @return This components.
+   * Init gets called after the component has been added to an entity.
+   * @param entityId The id of the entity the component got added to.
    */
   public override function init(entityId: Int) {
     super.init(entityId);

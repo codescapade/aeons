@@ -3,8 +3,8 @@ package aeons.utils;
 import haxe.ds.List;
 
 /**
- * `Pool` is a generic object pool class that you can use to reuse objects. Objects need to be able to be instantiated
- * without parameters.
+ * Pool is a generic object pool class that you can use to reuse objects. Objects need to be able to be instantiated
+ * one or no parameters.
  */
 class Pool<T> {
   /**

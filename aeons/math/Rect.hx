@@ -1,7 +1,7 @@
 package aeons.math;
 
 /**
- * `Rect` is a basic rectangle class using floats.
+ * Rect is a basic rectangle class using floats.
  */
  class Rect {
   /**

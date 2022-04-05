@@ -18,7 +18,7 @@ import kha.Scheduler;
 import kha.System;
 
 /**
- * The `Game` class is use to start Aeons. You create a new instance of it to start it.
+ * The Game class is use to start Aeons. You create a new instance of it to start it.
  */
 class Game {
   /**

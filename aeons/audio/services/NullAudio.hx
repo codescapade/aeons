@@ -1,9 +1,10 @@
 package aeons.audio.services;
 
 /**
- * `NullAudio` is an empty implementation of Audio to keep
+ * NullAudio is an empty implementation of Audio to keep
  * the engine from crashing when no audio manager is set.
  */
+@:dox(hide)
 class NullAudio implements Audio {
   /**
    * Constructor.

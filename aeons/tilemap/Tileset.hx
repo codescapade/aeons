@@ -4,7 +4,7 @@ import aeons.graphics.Image;
 import aeons.math.Rect;
 
 /**
- * `Tileset` is an image with indexed tile positions for the tilemap component.
+ * Tileset is an image with indexed tile positions for the tilemap component.
  */
 class Tileset {
   /**

@@ -11,7 +11,7 @@ using aeons.math.QuaternionEx;
 using aeons.math.FastMatrix4Ex;
 
 /**
- * `CTransform` component to handle position, rotation and scale of an entity.
+ * CTransform component to handle position, rotation and scale of an entity.
  */
 class CTransform extends Component {
   /**
@@ -87,7 +87,7 @@ class CTransform extends Component {
    * Initialize the component.
    * @param options The initialization options.
    */
-  public function new(?options: TransformOptions) {
+  public function new(?options: CTransformOptions) {
     super();
 
     matrix = FastMatrix4.identity();
@@ -435,7 +435,7 @@ class CTransform extends Component {
 /**
  * Transform initialization options.
  */
-typedef TransformOptions = {
+typedef CTransformOptions = {
   /**
    * The x position.
    */

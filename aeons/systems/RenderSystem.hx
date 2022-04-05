@@ -15,7 +15,7 @@ import aeons.math.Rect;
 using aeons.utils.TimSort;
 
 /**
- * The `RenderSystem` renders everything on screen.
+ * The RenderSystem renders everything on screen.
  */
 class RenderSystem extends System implements SysRenderable {
 

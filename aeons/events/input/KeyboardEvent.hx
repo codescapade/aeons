@@ -2,7 +2,7 @@ package aeons.events.input;
 
 import aeons.input.KeyCode;
 /**
- * `KeyboardEvent` for sending keyboard input events.
+ * KeyboardEvent for sending keyboard input events.
  */
 class KeyboardEvent extends Event {
   /**

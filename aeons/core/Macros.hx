@@ -384,7 +384,7 @@ class Macros {
 
         var componentClass = Context.getType('aeons.core.Component').getClass();
         if (!isSubClass(paramClass, componentClass)) {
-          throw('Class `${paramClass.name}` does not extend `aeons.core.Component`.');
+          throw('Class ${paramClass.name} does not extend "aeons.core.Component".');
         }
 
         // Make the param name snake_case

@@ -1,10 +1,10 @@
 package aeons.assets;
 
 import aeons.audio.Sound;
-import aeons.graphics.atlas.Atlas;
 import aeons.graphics.Font;
 import aeons.graphics.Image;
 import aeons.graphics.Video;
+import aeons.graphics.atlas.Atlas;
 import aeons.utils.Blob;
 
 interface Assets {
@@ -113,7 +113,7 @@ interface Assets {
    * @param name The name of this atlas.
    * @return The loaded atlas.
    */
-  function loadAtlas(name: String, complete: (Atlas)->Void): Void;
+  function loadAtlas(name: String): Atlas;
 
   /**
    * Remove an atlas from the asset manager.

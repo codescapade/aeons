@@ -3,7 +3,7 @@ package aeons.core;
 import aeons.graphics.RenderTarget;
 
 /**
- * The `Entity` class is the main container class in the game.
+ * The Entity class is the main container class in the game.
  * Components can be added to it for functionality.
  */
 class Entity {
@@ -24,7 +24,7 @@ class Entity {
 
   /**
    * Initialize variables in the entity. This gets called when the entity is added to the entity manager
-   * using `Aeons.entities.addEntity`.
+   * using ```Aeons.entities.addEntity()```.
    * @param id 
    */
   public function init(id: Int) {

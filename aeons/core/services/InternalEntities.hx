@@ -8,7 +8,7 @@ import aeons.events.EventType;
 import aeons.math.AeMath;
 
 /**
- * `Entities` is the entity manager for a scene.
+ * Entities is the entity manager for a scene.
  */
 class InternalEntities implements Entities {
   /**

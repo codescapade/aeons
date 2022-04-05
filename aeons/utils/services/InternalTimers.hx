@@ -1,8 +1,9 @@
 package aeons.utils.services;
 
 /**
- * The `Timers` class managers all timers.
+ * The Timers class managers all timers.
  */
+@:dox(hide)
 class InternalTimers implements Timers {
   /**
    * List of current timers.

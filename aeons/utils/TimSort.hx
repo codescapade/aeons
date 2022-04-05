@@ -48,7 +48,7 @@ class TimSort<T> {
    * @param hi - Last element in the range.
    */
   public static function timSort<T>(array: Array<T>, compare: T->T->Int, ?lo: Int, ?hi: Int) {
-     if (lo == null) {
+    if (lo == null) {
       lo = 0;
     }
     if (hi == null) {

@@ -7,7 +7,7 @@ import aeons.tween.services.InternalTweens;
 import aeons.utils.services.InternalTimers;
 
 /**
- * The `Scene` class is meant to be sub classes and used to initialze and run a scene in your game.
+ * The Scene class is meant to be sub classes and used to initialze and run a scene in your game.
  * Like a main menu, the game itself or a level.
  */
 class Scene {

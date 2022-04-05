@@ -7,7 +7,7 @@ import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 
 /**
- * `CBoxShape` is a component to draw single color boxes.
+ * CBoxShape is a component to draw single color boxes.
  */
 class CBoxShape extends Component implements Renderable {
   /**
@@ -56,9 +56,8 @@ class CBoxShape extends Component implements Renderable {
   public var strokeWidth = 1.0;
 
   /**
-   * Initialize the component.
-   * @param options The values you want to set.
-   * @return A reference to this component.
+   * CBoxShape constructor.
+   * @param options Initialization options.
    */
   public function new (options: CBoxShapeOptions) {
     super();
@@ -95,7 +94,7 @@ class CBoxShape extends Component implements Renderable {
 }
 
 /**
- * Values you can set in the `BoxShape` init function.
+ * Values you can set in the BoxShape init function.
  */
 typedef CBoxShapeOptions = {
   /**

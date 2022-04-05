@@ -1,8 +1,7 @@
 package aeons.audio;
 
-// TODO: Make audio nicer by keeping track of audio channels so muting and volume can be changed across sounds.
 /**
- * `Audio` is used to play sounds and vibrate a device.
+ * Audio is used to play sounds and vibrate a device.
  */
 interface Audio {
 

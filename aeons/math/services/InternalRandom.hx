@@ -1,8 +1,9 @@
 package aeons.math.services;
 
 /**
- * The `Random` class has seeded random number generation funcations.
+ * The Random class has seeded random number generation funcations.
  */
+@:dox(hide)
 class InternalRandom implements Random {
   /**
    * The initial seed.

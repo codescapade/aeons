@@ -4,6 +4,7 @@ import aeons.core.DebugRenderable;
 import aeons.math.Rect;
 import aeons.graphics.RenderTarget;
 
+@:dox(hide)
 class InternalSystems implements Systems {
   /**
    * All systems that are in the scene.

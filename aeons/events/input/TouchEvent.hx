@@ -1,7 +1,7 @@
 package aeons.events.input;
 
 /**
- * `TouchEvent` for sending touch input events.
+ * TouchEvent for sending touch input events.
  */
 class TouchEvent extends Event {
   /**

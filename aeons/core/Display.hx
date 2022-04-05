@@ -1,7 +1,7 @@
 package aeons.core;
 
 /**
- * The `Display` manager has view and window size properties.
+ * The Display manager has view and window size properties.
  */
 interface Display {
   /**

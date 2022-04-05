@@ -3,7 +3,7 @@ package aeons.physics.simple;
 import aeons.utils.Pool;
 
 /**
- * `Interaction` is used in collision and trigger callbacks.
+ * Interaction is used in collision and trigger callbacks.
  */
 class Interaction {
   /**

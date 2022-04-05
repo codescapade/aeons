@@ -3,7 +3,7 @@ package aeons.math;
 import aeons.utils.Pool;
 
 /**
- * The `Vector2` class is for 2d vector positions using floats.
+ * The Vector2 class is for 2d vector positions using floats.
  */
 class Vector2 {
   /**

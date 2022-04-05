@@ -1,5 +1,6 @@
 package aeons.events.services;
 
+@:dox(hide)
 class NullEvents implements Events {
 
   public function new() {}

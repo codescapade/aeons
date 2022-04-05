@@ -1,9 +1,7 @@
 package aeons.events.input;
 
-import aeons.input.MouseButton;
-
 /**
- * `MouseEvent` for sending mouse input events.
+ * MouseEvent for sending mouse input events.
  */
 class MouseEvent extends Event {
   /**

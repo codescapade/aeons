@@ -34,14 +34,10 @@ class CNapeTilemapCollider extends Component {
   var space: Space;
 
   /**
-   * Get the other components
+   * CNapeTilemapCollider constructor.
    */
   public function new() {
     super();
-  }
-
-  public override function init(entityId: Int) {
-    super.init(entityId);
     bodies = [];
   }
 
@@ -73,7 +69,7 @@ class CNapeTilemapCollider extends Component {
 
   #if use_ldtk
   /**
-   * Generate colliders for a LDtk layer . 
+   * Generate colliders for a LDtk layer. 
    * @param layer The layer to use.
    * @param worldX The x position of the tilemap in world pixels.
    * @param worldY The y position of the tilemap in world pixels.

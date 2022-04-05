@@ -20,7 +20,7 @@ import aeons.physics.nape.DebugDraw;
 import aeons.physics.nape.NapeInteractionType;
 
 /**
- * `NapePhysicsSystem` updates all Nape body components.
+ * NapePhysicsSystem updates all Nape body components.
  */
 class NapePhysicsSystem extends System implements Updatable {
   public var debugDraw = true;

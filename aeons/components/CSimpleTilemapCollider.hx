@@ -39,12 +39,16 @@ class CSimpleTilemapCollider extends Component {
    */
   var tags: Array<String>;
 
+  /**
+   * CSimpleTilemapCollider constructor.
+   */
   public function new() {
     super();
   }
 
   /**
-   * Called when adding the component to an entity.
+   * Init gets called after the component has been added to the entity.
+   * @param entityId The id of the entity the component got added to.
    */
   public override function init(entityId: Int) {
     super.init(entityId);

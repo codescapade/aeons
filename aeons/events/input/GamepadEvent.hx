@@ -1,7 +1,7 @@
 package aeons.events.input;
 
 /**
- * `GamepadEvent` for sending gamepad input events.
+ * GamepadEvent for sending gamepad input events.
  */
 class GamepadEvent extends Event {
   /**

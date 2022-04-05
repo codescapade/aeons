@@ -1,7 +1,7 @@
 package aeons.events;
 
 /**
- * `EventType` adds type checking for the callback functions.
+ * EventType adds type checking for the callback functions.
  */
 abstract EventType<T>(String) from String to String {
 

@@ -1,8 +1,9 @@
 package aeons.events.services;
 
 /**
- * The `EventEmitter` handles game and scene wide events.
+ * The EventEmitter handles game and scene wide events.
  */
+@:dox(hide)
 class InternalEvents implements Events {
   /**
    * Events that persist between scenes. Don't add handlers to this that are in scenes because they will be removed

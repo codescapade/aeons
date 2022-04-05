@@ -1,7 +1,7 @@
 package aeons.math;
 
 /**
- * `AeMath` has math helper variables and functions.
+ * AeMath has math helper variables and functions.
  */
 class AeMath {
   #if (flash || js || ios || blackberry)

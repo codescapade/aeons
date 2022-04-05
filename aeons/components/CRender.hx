@@ -6,7 +6,7 @@ import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 
 /**
- * `CRender` Is a component that gets added automatically to an entity that has a component that extends `Renderable`.
+ * CRender Is a component that gets added automatically to an entity that has a component that extends `Renderable`.
  * This goes through all renderable components and renders them.
  */
 class CRender extends Component {
@@ -15,13 +15,16 @@ class CRender extends Component {
    */
   var components: Array<Renderable>;
 
+  /**
+   * CRender constructor.
+   */
   public function new() {
     super();
   }
 
   /**
-   * Initialize the component.
-   * @return This component.
+   * Init gets called after the component has been added to an entity.
+   * @param entityId The id of the entity the component got added to.
    */
   public override function init(entityId: Int) {
     super.init(entityId);

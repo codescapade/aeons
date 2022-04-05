@@ -1,11 +1,9 @@
 package aeons.components;
 
-import aeons.graphics.atlas.Atlas;
 import aeons.core.Component;
 import aeons.core.Renderable;
 import aeons.math.Rect;
 import aeons.graphics.Color;
-import aeons.graphics.Image;
 import aeons.graphics.RenderTarget;
 import aeons.graphics.atlas.Atlas;
 import aeons.graphics.atlas.Frame;

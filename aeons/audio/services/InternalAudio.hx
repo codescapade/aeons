@@ -2,6 +2,7 @@ package aeons.audio.services;
 
 import kha.System;
 
+@:dox(hide)
 class InternalAudio implements Audio {
   /**
    * Constructor.

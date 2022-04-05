@@ -15,11 +15,13 @@ class CLdtkTilemap extends Component implements Renderable {
   /**
    * Not used in this component. 
    */
+  @:dox(hide)
   public var anchorX = 0.0;
 
   /**
    * Not used in this component.
    */
+  @:dox(hide)
   public var anchorY = 0.0;
 
   /**

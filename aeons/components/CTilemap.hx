@@ -10,7 +10,7 @@ import aeons.math.Vector2;
 import aeons.tilemap.Tileset;
 
 /**
- * `CTilemap` component.
+ * CTilemap component.
  */
 class CTilemap extends Component implements Renderable {
   /**
@@ -58,10 +58,21 @@ class CTilemap extends Component implements Renderable {
    */
   var visibleBounds = new Rect();
 
+	/**
+	 * The x axis anchor. Not used in this component.
+	 */
+  @:dox(hide)
 	public var anchorX = 0.0;
 
+	/**
+	 * The y axis anchor. Not used in this component.
+	 */
+  @:dox(hide)
 	public var anchorY = 0.0;
 
+  /**
+   * CTilemap constructor.
+   */
   public function new() {
     super();
 
@@ -74,7 +85,8 @@ class CTilemap extends Component implements Renderable {
   }
 
   /**
-   * Initialize the component.
+   * Init gets called after the component has been added to an entity.
+   * @param entityId The id of the entity the component got added to.
    */
   public override function init(entityId: Int) {
     super.init(entityId);

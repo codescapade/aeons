@@ -1,1 +1,1 @@
-node ..\..\lib\Kha\make html5 & haxelib run dox -i build/docs -in "^(aeons|kha)" -o ..\..\docs\api
+node ..\..\lib\Kha\make html5 & haxelib run dox -i build/docs -in "^(aeons|kha)" -o ..\..\docs\api --title "Aeons API Documentation" -D version "0.2.0" -D website "https://codescapade.github.io/aeons" -D themeColor 0x555555 -D source-path https://github.com/codescapade/aeons/blob/main/ -D logo https://raw.githubusercontent.com/aeons/tools/data/logo/api_logo.png

@@ -21,26 +21,59 @@ import aeons.utils.TimeStep;
 import aeons.utils.services.NullTimeStep;
 import aeons.utils.services.NullTimers;
 
+/**
+ * With the Aeons class you can access all major systems in the engine. This uses a service locator
+ * pattern to set the required services.
+ */
 class Aeons {
-
+  /**
+   * Asset management.
+   */
   public static var assets(get, never): Assets;
 
+  /**
+   * Audio management.
+   */
   public static var audio(get, never): Audio;
 
+  /**
+   * Display info.
+   */
   public static var display(get, never): Display;
 
+  /**
+   * Entity manager.
+   */
   public static var entities(get, never): Entities;
 
+  /**
+   * Event management.
+   */
   public static var events(get, never): Events;
 
+  /**
+   * Seeded random number generator.
+   */
   public static var random(get, never): Random;
 
+  /**
+   * ECS systems management.
+   */
   public static var systems(get, never): Systems;
 
+  /**
+   * Timer management.
+   */
   public static var timers(get, never): Timers;
 
+  /**
+   * Time step for fps and time scale.
+   */
   public static var timeStep(get, never): TimeStep;
 
+  /**
+   * Tween manager.
+   */
   public static var tweens(get, never): Tweens;
 
   static var _assets: Assets;
@@ -73,42 +106,82 @@ class Aeons {
   static var _tweens: Tweens;
   static var nullTweens = new NullTweens();
 
+  /**
+   * Set an assets provider.
+   * @param assets The new provider.
+   */
   public static function provideAssets(assets: Assets) {
     _assets = assets;
   }
 
+  /**
+   * Set an audio provider.
+   * @param audio The new provider.
+   */
   public static function provideAudio(audio: Audio) {
     _audio = audio;
   }
 
+  /**
+   * Set a display provider.
+   * @param display The new provider.
+   */
   public static function provideDisplay(display: Display) {
     _display = display;
   }
 
+  /**
+   * Set an entities provider.
+   * @param entities The new provider.
+   */
   public static function provideEntities(entities: Entities) {
     _entities = entities;
   }
 
+  /**
+   * Set an events provider.
+   * @param events The new provider.
+   */
   public static function provideEvents(events: Events) {
     _events = events;
   }
 
+  /**
+   * Set a random provider.
+   * @param random The new provider.
+   */
   public static function provideRandom(random: Random) {
     _random = random;
   }
 
+  /**
+   * Set a systems provider.
+   * @param systems The new provider.
+   */
   public static function provideSystems(systems: Systems) {
     _systems = systems;
   }
 
+  /**
+   * Set an timers provider.
+   * @param timers The new provider.
+   */
   public static function provideTimers(timers: Timers) {
     _timers = timers;
   }
 
+  /**
+   * Set an time step provider.
+   * @param timeStep The new provider.
+   */
   public static function provideTimeStep(timeStep: TimeStep) {
     _timeStep = timeStep;
   }
 
+  /**
+   * Set an tweens provider.
+   * @param tweens The new provider.
+   */
   public static function provideTweens(tweens: Tweens) {
     _tweens = tweens;
   }

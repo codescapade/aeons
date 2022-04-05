@@ -4,7 +4,7 @@ import aeons.math.Rect;
 import aeons.math.Size;
 
 /**
- * The `Frame` has the dimensions and location of a frame in an atlas.
+ * The Frame has the dimensions and location of a frame in an atlas.
  */
 class Frame {
   /**

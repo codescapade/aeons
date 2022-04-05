@@ -1,5 +1,6 @@
 package aeons.utils.services;
 
+@:dox(hide)
 class NullTimeStep implements TimeStep {
 
   public var dt(default, null): Float;

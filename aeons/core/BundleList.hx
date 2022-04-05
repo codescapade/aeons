@@ -3,7 +3,7 @@ package aeons.core;
 import haxe.iterators.ArrayIterator;
 
 /**
- * A `BundleList` holds an array of all bundles that a list of components matches.
+ * A BundleList holds an array of all bundles that a list of components matches.
  */
 class BundleList<T: BundleBase> {
   /**

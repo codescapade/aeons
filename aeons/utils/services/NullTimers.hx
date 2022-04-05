@@ -1,5 +1,6 @@
 package aeons.utils.services;
 
+@:dox(hide)
 class NullTimers implements Timers {
 
   public function new() {}

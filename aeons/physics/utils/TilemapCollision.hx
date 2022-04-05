@@ -8,16 +8,7 @@ import aeons.math.Rect;
 import aeons.math.Vector2;
 
 /**
- * Type for collider generation.
- */
-@:structInit
-private class Tile {
-  public var id(default, null): Int;
-  public var checked: Bool;
-}
-
-/**
- * `TilemapCollision` is a helper class to generate colliders for tiles in a tilemap.
+ * TilemapCollision is a helper class to generate colliders for tiles in a tilemap.
  * This is used in both Simple and Nape physics systems.
  */
 class TilemapCollision {
@@ -156,4 +147,13 @@ class TilemapCollision {
 
     return colliders;
   }
+}
+
+/**
+ * Type for collider generation.
+ */
+@:structInit
+private class Tile {
+  public var id(default, null): Int;
+  public var checked: Bool;
 }

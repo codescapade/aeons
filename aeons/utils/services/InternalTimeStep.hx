@@ -3,8 +3,9 @@ package aeons.utils.services;
 import kha.Scheduler;
 
 /**
- * `InternalTimeStep` is used to calculate delta time and fps.
+ * InternalTimeStep is used to calculate delta time and fps.
  */
+@:dox(hide)
 class InternalTimeStep implements TimeStep {
 
   public var dt(default, null): Float;
