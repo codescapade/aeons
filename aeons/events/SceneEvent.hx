@@ -29,10 +29,10 @@ class SceneEvent extends Event {
   /**
    * Data you want to send between scenes.
    */
-  var userData: Dynamic;
+  var userData: Dynamic = null;
 
   /**
    * On the replace event you can choose if you want to clear all scenes on the stack.
    */
-  var clearAll: Bool;
+  var clearAll = false;
 }

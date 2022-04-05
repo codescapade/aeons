@@ -31,15 +31,15 @@ class GamepadEvent extends Event {
   /**
    * The axis was interacted with. Only available with the gamepad axis event.
    */
-  var axis: Int;
+  var axis = -1;
 
   /**
    * The button that was interacted with. Only available with the gamepad button event.
    */
-  var button: Int;
+  var button = -1;
 
   /**
-   * The value o} the axis or button. Only available with the gamepad axis or button event.
+   * The value of the axis or button. Only available with the gamepad axis or button event.
    */
-  var value: Float;
+  var value = 0.0;
 }

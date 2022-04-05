@@ -32,35 +32,35 @@ class MouseEvent extends Event {
   /**
    * The button pressed.
    */
-  var button: Int;
+  var button = -1;
 
   /**
    * The x position of the mouse in window pixels.
    */
-  var x: Int;
+  var x = 0;
 
   /**
    * The y position of the mouse in window pixels.
    */
-  var y: Int;
+  var y = 0;
 
   /**
    * The amount moved on the x axis since the last event in window pixels.
    */
-  var deltaX: Int;
+  var deltaX = 0;
 
   /**
    * The amount moved on the y axis since the last even in window pixels.
    */
-  var deltaY: Int;
+  var deltaY = 0;
 
   /**
    * The scroll wheel direction. -1 is up. 1 is down.
    */
-  var scrollDirection: Int;
+  var scrollDirection = 0;
 
   /**
    * Has the cursor left the window.
    */
-  var leave: Bool;
+  var leave = false;
 }

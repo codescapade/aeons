@@ -1,5 +1,7 @@
 package scenes;
 
+import aeons.events.SceneEvent;
+import aeons.events.input.KeyboardEvent;
 import aeons.systems.AnimationSystem;
 import aeons.graphics.atlas.Atlas;
 import aeons.Aeons;
@@ -15,10 +17,7 @@ class RenderScene extends Scene {
   public override function init() {
     Aeons.systems.add(new RenderSystem());
 
-    var atlas: Atlas;
-    Aeons.assets.loadAtlas('atlas', (at: Atlas) -> {
-      atlas = at;
-    });
+    var atlas = Aeons.assets.loadAtlas('atlas');
 
     final eCam = Aeons.entities.addEntity(new Entity());
     eCam.addComponent(new CTransform());
@@ -27,5 +26,11 @@ class RenderScene extends Scene {
     final eSprite = Aeons.entities.addEntity(new Entity());
     eSprite.addComponent(new CTransform({ x: 100, y: 100 }));
     eSprite.addComponent(new CSprite({ atlas: atlas, frameName: 'bunny' }));
+
+    Aeons.events.on(KeyboardEvent.KEY_DOWN, keyDown);
+  }
+
+  function keyDown(event: KeyboardEvent) {
+    SceneEvent.emit(SceneEvent.REPLACE, RenderScene);
   }
 }

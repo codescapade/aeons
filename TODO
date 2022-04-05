@@ -2,7 +2,7 @@ Main todos:
   ☐ Better audio implementation. At the moment it just has a play function.
   ☐ Refactor camera implementation. Maybe not use a render target for each camera.
   ☐ Look into possibility of adding systems after entities have been added.
-  ☐ Make optional fields in events optional in the get function.
+  ✔ Make optional fields in events optional in the get function. @done(22-04-05 21:18)
   ☐ Update gamepads to not be hardcoded at 4 max.
   ✔ Refactor simple physics hit implementation to use an object pool. @done(22-04-03 14:57)
   ☐ Update simple physics collision resolution to use previous position to see where it came from so it doesn't get stuck as much.
@@ -11,3 +11,4 @@ Main todos:
 
 Bugs:
   ☐ Fix debug drawing for systems when something is parented to the camera.
+  ☐ Fix screen to world and back for rotated cameras.

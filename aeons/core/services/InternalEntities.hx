@@ -322,7 +322,7 @@ class InternalEntities implements Entities {
 
         // Send the component_removed message to all the systems that care about them so they can be updated.
         final eventType: EventType<ComponentEvent> = 'aeons_${name}_removed';
-        Aeons.events.emit(ComponentEvent.get(eventType, entityInfo.entity));
+        ComponentEvent.emit(eventType, entityInfo.entity);
 
         if (entityInfo.pool) {
           component.put();
@@ -347,7 +347,7 @@ class InternalEntities implements Entities {
       components[update.componentName][update.entity.id] = null;
 
       // Send an event to systems that listen for this component.
-      Aeons.events.emit(ComponentEvent.get(eventType, update.entity));
+      ComponentEvent.emit(eventType, update.entity);
 
       if (update.pool) {
         update.component.put();
@@ -365,7 +365,7 @@ class InternalEntities implements Entities {
           final updateCompName = Type.getClassName(CUpdate);
           eventType = 'aeons_${updateCompName}_removed';
           components[updateCompName][update.entity.id] = null;
-          Aeons.events.emit(ComponentEvent.get(eventType, update.entity));
+          ComponentEvent.emit(eventType, update.entity);
           updateComp.cleanup();
         }
       }
@@ -380,7 +380,7 @@ class InternalEntities implements Entities {
           final renderCompName = Type.getClassName(CRender);
           eventType = 'aeons_${renderCompName}_removed';
           components[renderCompName][update.entity.id] = null;
-          Aeons.events.emit(ComponentEvent.get(eventType, update.entity));
+          ComponentEvent.emit(eventType, update.entity);
           renderComp.cleanup();
         }
       }
@@ -395,7 +395,7 @@ class InternalEntities implements Entities {
           final renderCompName = Type.getClassName(CDebugRender);
           eventType = 'aeons_${renderCompName}_removed';
           components[renderCompName][update.entity.id] = null;
-          Aeons.events.emit(ComponentEvent.get(eventType, update.entity));
+          ComponentEvent.emit(eventType, update.entity);
           renderComp.cleanup();
         }
       }

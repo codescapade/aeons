@@ -70,6 +70,7 @@ class Macros {
 
       final paramFields: Array<FunctionArg> = [typeParam];
       for (field in fields) {
+
         switch (field.kind) {
           case FVar(fType, fExpr):
             if (!field.access.contains(AStatic)) {
@@ -77,13 +78,13 @@ class Macros {
               field.access = [APublic];
               field.kind = FProp('default', 'null', fType, fExpr);
               // Get the class as parameter types for the get function.
-              paramFields.push({ name: field.name, type: fType });
+              paramFields.push({ name: field.name, type: fType, value: fExpr });
             }
           case FProp(get, set, fType, fExpr):
             if (!field.access.contains(AStatic) && field.access.contains(APublic)) {
 
               // Get the class as parameter types for the get function.
-              paramFields.push({ name: field.name, type: fType });
+              paramFields.push({ name: field.name, type: fType, value: fExpr });
             }
 
           default:
@@ -94,7 +95,7 @@ class Macros {
       final assignExprs: Array<Expr> = [];
       for (param in paramFields) {
         final name = param.name;
-        assignExprs.push(macro { this.$name = $i{name}; });
+        assignExprs.push(macro { if ($i{name} != null) {this.$name = $i{name};} });
       }
 
       // Create the init function that sets the new values for the event.
@@ -129,6 +130,21 @@ class Macros {
           },
           ret: eventType
 
+        })
+      });
+
+      fields.push({
+        name: 'emit',
+        access: [APublic, AStatic],
+        pos: Context.currentPos(),
+        kind: FFun({
+          args: paramFields,
+          expr: macro {
+            var event = get($a{paramNames});
+
+            aeons.Aeons.events.emit(event);
+          },
+          ret: macro: Void
         })
       });
     }
