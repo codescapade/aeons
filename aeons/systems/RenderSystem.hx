@@ -66,7 +66,7 @@ class RenderSystem extends System implements SysRenderable {
       var localBounds = new Rect(0, 0, camera.bounds.width, camera.bounds.height);
       var boundsPos = Vector2.get();
       // Render all the bundles to the current camera.
-      camTarget.start();
+      camTarget.start(true, camera.backgroundColor);
       for (renderable in renderBundles) {
         if (renderable.c_transform.containsParent(camTransform)) {
           camTarget.transform.setFrom(renderable.c_transform.matrix);
