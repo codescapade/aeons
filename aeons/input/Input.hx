@@ -1,6 +1,5 @@
 package aeons.input;
 
-import aeons.Aeons;
 import aeons.events.input.GamepadEvent;
 import aeons.events.input.KeyboardEvent;
 import aeons.events.input.MouseEvent;

@@ -74,8 +74,6 @@ class HitList {
     return hits.iterator();
   }
 
-
-
   inline function get_count(): Int {
     return hits.length;
   }

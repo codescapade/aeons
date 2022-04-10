@@ -7,11 +7,19 @@ import kha.Scheduler;
  */
 @:dox(hide)
 class InternalTimeStep implements TimeStep {
-
+  /**
+   * The time passed since the last update in seconds.
+   */
   public var dt(default, null): Float;
 
+  /**
+   * The current amount of frames rendered per second.
+   */
   public var fps(default, null): Int;
 
+  /**
+   * The timescale can be used to speed up or slow down time with delta time.
+   */
   public var timeScale = 1.0;
 
   /**

@@ -590,7 +590,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
 
     return value;
   }
-  
+
   /**
    * World height  getter.
    */

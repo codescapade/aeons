@@ -42,5 +42,4 @@ class NullRandom implements Random {
 	public function resetSeed() {
     trace('resetSeed is not implemented');
   }
-
 }

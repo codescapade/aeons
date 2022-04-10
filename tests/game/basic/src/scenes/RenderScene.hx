@@ -2,8 +2,6 @@ package scenes;
 
 import aeons.events.SceneEvent;
 import aeons.events.input.KeyboardEvent;
-import aeons.systems.AnimationSystem;
-import aeons.graphics.atlas.Atlas;
 import aeons.Aeons;
 import aeons.components.CSprite;
 import aeons.components.CTransform;

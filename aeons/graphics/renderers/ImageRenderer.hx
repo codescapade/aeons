@@ -190,7 +190,7 @@ class ImageRenderer extends BaseRenderer {
     currentImage = image;
 
     final textureWidth = currentImage.realWidth;
-    final textureHeight = currentImage.realHeight; 
+    final textureHeight = currentImage.realHeight;
 
     // Apply the transformation matrix to the vertex positions.
     p1.mulVec3Val(transform, x, y, 0);

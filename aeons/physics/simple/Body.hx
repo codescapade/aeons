@@ -31,7 +31,7 @@ class Body {
    * The body velocity.
    */
   public var velocity(default, null) = new Vector2();
-  
+
   /**
    * The maximum velocity. Set both positive and negative maximum.
    */

@@ -63,5 +63,4 @@ class TimSortTest extends BuddySuite {
 
     return true;
   }
-
 }
