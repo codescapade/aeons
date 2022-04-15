@@ -162,7 +162,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
 
       final body = bundle.c_simple_body.body;
       updatePastInteractions(body);
-      body.wasTouching = body.touching;
+      body.touchingPrevious = body.touching;
       body.touching = Touching.NONE;
       updateBodyBounds(bundle);
 

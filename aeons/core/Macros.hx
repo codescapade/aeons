@@ -95,7 +95,7 @@ class Macros {
       final assignExprs: Array<Expr> = [];
       for (param in paramFields) {
         final name = param.name;
-        assignExprs.push(macro { if ($i{name} != null) {this.$name = $i{name};} });
+        assignExprs.push(macro { this.$name = $i{name}; });
       }
 
       // Create the init function that sets the new values for the event.

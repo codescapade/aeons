@@ -44,6 +44,16 @@ class RunScript {
         generateAtlas(wd);
       }
       Sys.exit(build(wd, args));
+    // aeons location [kha]
+    } else if (args.length >= 1 && args[0] == 'location') {
+      final haxelibPath = getHaxelibPath('aeons');
+      if (args.length > 1 && args[1] == 'kha') {
+        final khaPath = Path.join([haxelibPath, 'lib/Kha']);
+        Sys.println('kha path: ${khaPath}');
+      } else {
+        Sys.println('aeons path: ${haxelibPath}');
+      }
+      Sys.exit(0);
     }
 
     printLogo(version);
@@ -370,5 +380,6 @@ class RunScript {
     Sys.println('- aeons build [platform]       Build the project. See Kha for all supported platforms.');
     Sys.println('- aeons atlas                  Generate a sprite atlas in a folder with a atlas.json config file.');
     Sys.println('- aeons help                   Show this list');
+    Sys.println('- aeons location [kha]         Shows the aeons path. If kha is added it shows the kha path.');
   }
 }

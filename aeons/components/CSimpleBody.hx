@@ -81,7 +81,7 @@ class CSimpleBody extends Component {
   /**
    * The sides of the body that were touching another body the last update.
    */
-  public var wasTouching(get, never): Touching;
+  public var touchingPrevious(get, never): Touching;
 
   /**
    * The sides the body will collide. Useful for one way platforms. Defaults to all sides.
@@ -147,6 +147,84 @@ class CSimpleBody extends Component {
   public inline function setSize(width: Float, height: Float) {
     body.bounds.width = width;
     body.bounds.height = height;
+  }
+
+  /**
+   * Check if a side is touching.
+   * @param side The side to check.
+   * @return True if the side is touching something.
+   */
+  public inline function isTouching(side: Touching): Bool {
+    return touching.contains(side);
+  }
+
+  /**
+   * Check if all sides in a list are touching.
+   * @param side The sides to check.
+   * @return True if all sides in the list are touching something.
+   */
+  public function isTouchingAll(sides: Array<Touching>): Bool {
+    for (side in sides) {
+      if (!isTouching(side)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if any sides in a list are touching.
+   * @param side The sides to check.
+   * @return True if one or more sides in the list are touching something.
+   */
+  public function isTouchingAny(sides: Array<Touching>): Bool {
+    for (side in sides) {
+      if (isTouching(side)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if a side was touching last update.
+   * @param side The side to check.
+   * @return True if the side was touching something last update.
+   */
+  public inline function wasTouching(side: Touching): Bool {
+    return touchingPrevious.contains(side);
+  }
+
+  /**
+   * Check if all sides in a list were touching last update.
+   * @param side The sides to check.
+   * @return True if all sides in the list were touching something.
+   */
+  public function wasTouchingAll(sides: Array<Touching>): Bool {
+    for (side in sides) {
+      if (!wasTouching(side)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Check if any sides in a list were touching last update.
+   * @param side The sides to check.
+   * @return True if one or more sides in the list were touching something.
+   */
+  public function wereTouchingAny(sides: Array<Touching>): Bool {
+    for (side in sides) {
+      if (wasTouching(side)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -318,18 +396,18 @@ class CSimpleBody extends Component {
   }
 
   /**
-   * Was touching getter.
+   * TouchingPrevious getter.
    */
-  inline function get_wasTouching(): Touching {
-    return body.wasTouching;
+  inline function get_touchingPrevious(): Touching {
+    return body.touchingPrevious;
   }
 
   /**
-   * Was touching setter.
+   * TouchingPrevious setter.
    * @param value The new value.
    */
-  inline function set_wasTouching(value: Touching): Touching {
-    body.wasTouching = value;
+  inline function set_touchingPrevious(value: Touching): Touching {
+    body.touchingPrevious = value;
 
     return value;
   }

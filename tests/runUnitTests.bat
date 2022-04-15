@@ -1,1 +1,1 @@
-node ..\lib\Kha\make node --ffmpeg tools\ffmpeg --projectfile unitTests.js & cd build\node & node kha.js & cd ..\.. & rmdir /s/q "build"
+node ..\lib\Kha\make node --ffmpeg %1 --projectfile unitTests.js & cd build\node & node kha.js & cd ..\.. & rmdir /s/q "build"

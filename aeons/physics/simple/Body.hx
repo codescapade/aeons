@@ -85,7 +85,7 @@ class Body {
   /**
    * The sides that were touching another body prefious update.
    */
-  public var wasTouching = Touching.NONE;
+  public var touchingPrevious = Touching.NONE;
 
   /**
    * Userdata can store any data you want for easy access in collision callbacks.

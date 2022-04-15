@@ -17,6 +17,16 @@ class BundleList<T: BundleBase> {
   public var count(get, never): Int;
 
   /**
+   *  Callback when a bundle gets added.
+   */
+  var bundleAdded: (T)->Void;
+
+  /**
+   *  Callback when a bundle gets removed.
+   */
+  var bundleRemoved: (T)->Void;
+
+  /**
    * BundleList constructor.
    */
   public function new() {
@@ -30,6 +40,10 @@ class BundleList<T: BundleBase> {
   public function addBundle(bundle: T) {
     // Add a bundle to the start of the array.
     bundles.unshift(bundle);
+
+    if (bundleAdded != null) {
+      bundleAdded(bundle);
+    }
   }
 
   /**
@@ -40,6 +54,10 @@ class BundleList<T: BundleBase> {
     for (bundle in bundles) {
       if (bundle.entity == entity) {
         bundles.remove(bundle);
+
+        if (bundleRemoved != null) {
+          bundleRemoved(bundle);
+        }
         break;
       }
     }
@@ -75,6 +93,22 @@ class BundleList<T: BundleBase> {
    */
   public inline function get(index: Int): T {
     return bundles[index];
+  }
+
+  /**
+   * Add a callback function for when a bundle gets added.
+   * @param callback The function to call.
+   */
+  public inline function onAdded(callback: (T)->Void) {
+    bundleAdded = callback;
+  }
+
+  /**
+   * Add a callback function for when a bundle gets removed.
+   * @param callback The function to call.
+   */
+  public inline function onRemoved(callback: (T)->Void) {
+    bundleRemoved = callback;
   }
 
   /**

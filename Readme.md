@@ -22,6 +22,7 @@ The built-in components and systems use ECS for the most part, but components ha
 <br/>
 
 ## Installation
+To use Aeons you need to have Haxe installed. You can get it from [https://haxe.org](https://haxe.org)  
 To install Aeons open a terminal and run:
 `haxelib git https://github.com/codescapade/aeons`  
 
@@ -34,7 +35,9 @@ After the installation run `haxelib run aeons setup` to download Kha and setup t
 - `aeons setup` - Run the aeons setup process.
 - `aeons create [project name]` - Create a project in the current directory using the starter template.
 - `aeons atlas` Inside an Aeons project it will generate the sprite atlas from the `atlas.json` config.
-- `aeons build [platform]` - Inside an Aeons project it will build the project for the chosen platform.  
+- `aeons location [kha]` - Shows the aeons path. If kha is added it shows the kha path.
+- `aeons build [platform]` - Inside an Aeons project it will build the project for the chosen platform.
+
 for example `aeons build html5` or `eaons build windows`  
 For available platforms see [Kha](https://github.com/Kode/Kha)
 <br/>
@@ -45,9 +48,14 @@ For available platforms see [Kha](https://github.com/Kode/Kha)
 <br/>
 
 ## Visual studio code extension
-When writing code in visual studio code you can use the [Kha Extionsion Pack](https://marketplace.visualstudio.com/items?itemName=kodetech.kha-extension-pack) to get auto completion and debugging support.
+When writing code in visual studio code you can use the [Kha Extension Pack](https://marketplace.visualstudio.com/items?itemName=kodetech.kha-extension-pack) to get auto completion and debugging support.  
+
+Set the `kha.khaPath` in the vscode settings to the kha folder used by Aeons to use the version that has been tested with Aeons.  
+
+To find the location type `aeons location kha` when you have the aeons command installed. It is in the lib folder inside the Aeons library.
 <br/>
 <br/>
 
 ## Running unit tests
-To run the unit tests, Aeons expects that buddy is installed with haxelib.
+To run the unit tests, Aeons expects that buddy is installed with haxelib.  
+The `runUnitTests` and `runSingleUnitTest` commands in the tests folder require a path to an ffmpeg executable as argument to convert some of the test assets.
