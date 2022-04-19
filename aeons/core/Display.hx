@@ -45,11 +45,17 @@ interface Display {
   var windowCenterY(get, never): Int;
 
   /**
+   * When enabled everything will be rendered using nearest neighbour filtering.
+   */
+  var pixelArt: Bool;
+
+  /**
    * Initialize the display.
    * @param designWidth The resolution width the game is designed for in pixels.
    * @param designHeight The resolution height the game is designed for in pixels.
+   * @param pixelArt Enable optimized rendering for pixel art.
    */
-  function init(designWidth: Int, designHeight: Int): Void;
+  function init(designWidth: Int, designHeight: Int, pixelArt: Bool): Void;
 
   /**
    * Scale the view size to fit the window size.

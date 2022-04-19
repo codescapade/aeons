@@ -1,5 +1,6 @@
 package aeons.graphics.renderers;
 
+import kha.graphics4.TextureFilter;
 import kha.graphics4.Graphics;
 import kha.graphics4.IndexBuffer;
 import kha.graphics4.VertexBuffer;
@@ -114,7 +115,8 @@ class ImageRenderer extends BaseRenderer {
     g4.setVertexBuffer(vertexBuffer);
     g4.setIndexBuffer(indexBuffer);
     g4.setTexture(pipeline.textureLocation, currentImage);
-    g4.setTextureParameters(pipeline.textureLocation, Clamp, Clamp, LinearFilter, LinearFilter, NoMipFilter);
+    var filter: TextureFilter = Aeons.display.pixelArt ? PointFilter : LinearFilter;
+    g4.setTextureParameters(pipeline.textureLocation, Clamp, Clamp, filter, filter, NoMipFilter);
     g4.setMatrix(pipeline.projectionLocation, projection);
     g4.drawIndexedVertices(0, bufferIndex * indicesPerQuad);
     g4.setTexture(pipeline.textureLocation, null);

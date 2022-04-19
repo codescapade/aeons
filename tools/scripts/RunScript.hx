@@ -236,7 +236,7 @@ class RunScript {
 
     var appPath = '';
     if (platform == 'Windows') {
-      appPath = Path.join([haxelibPath, 'tools/atlas/AeonsAtlas.exe']);
+      appPath = Path.join([haxelibPath, 'tools/atlas/AeonsAtlasWin.exe']);
     } else if (platform == 'Mac') {
       appPath = Path.join([haxelibPath, 'tools/atlas/AeonsAtlasMac']);
     } else if (platform == 'Linux') {
@@ -312,11 +312,6 @@ class RunScript {
 
     final mainPath = Path.join([destination, 'source/Main.hx']);
     setPlaceholders(mainPath, '{{game_name}}', name);
-
-    // Set the kha path for vscode to the downloaded kha install.
-    final settingsPath = Path.join([destination, '.vscode/settings.json']);
-    final khaPath = Path.join([aeonsPath, 'lib/Kha']);
-    setPlaceholders(settingsPath, '{{kha_path}}', khaPath);
     Sys.println('Project creation complete.');
   }
 

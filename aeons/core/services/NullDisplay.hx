@@ -23,12 +23,14 @@ class NullDisplay implements Display {
 
   public var windowCenterY(get, never): Int;
 
+  public var pixelArt: Bool;
+
   /**
    * Constructor.
    */
   public function new() {}
 
-	public function init(designWidth: Int, designHeight: Int) {
+	public function init(designWidth: Int, designHeight: Int, pixelArt: Bool) {
     trace('init is not implemented');
   }
 

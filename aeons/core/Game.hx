@@ -74,9 +74,10 @@ class Game {
     updateRate = options.updateFrequency == null ? kha.Display.primary.frequency : options.updateFrequency;
     loadFinished = options.loadFinished;
     startScene = options.startScene;
+    final pixelArt = options.pixelArt == null ? false : options.pixelArt;
 
     Aeons.provideDisplay(new InternalDisplay());
-    Aeons.display.init(designWidth, designHeight);
+    Aeons.display.init(designWidth, designHeight, pixelArt);
 
     // Start Kha.
     System.start({
@@ -164,7 +165,7 @@ class Game {
     final mainBuffer = frames[0].g2;
     mainBuffer.color = White;
     mainBuffer.begin();
-    mainBuffer.imageScaleQuality = High;
+    mainBuffer.imageScaleQuality = Aeons.display.pixelArt ? Low : High;
     Scaler.scale(renderTarget.image, frames[0], System.screenRotation);
     mainBuffer.end();
   }

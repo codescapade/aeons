@@ -18,7 +18,7 @@ class TilemapCollision {
    * @param tilemap The tilemap the colliders are for.
    * @param worldX The x position of the tilemap in world pixels.
    * @param worldY The y position of the tilemap in world pixels.
-   * @param collisionTileIds The list of ids that should have a collider.
+   * @param collisionTileIds The list of ids that should have a collider. If the list is empty all ids will count as colliders.
    * @return A list of rectangles that represent colliders.
    */
   public static function generateCollidersFromCTilemap(tilemap: CTilemap, worldX: Float, worldY: Float,
@@ -45,7 +45,7 @@ class TilemapCollision {
    * @param layer The LDtk tilemap layer to use for the collider generation. 
    * @param worldX The x position of the tilemap in world pixels.
    * @param worldY The y position of the tilemap in world pixels.
-   * @param collisionTileIds The list of ids that should have a collider.
+   * @param collisionTileIds The list of ids that should have a collider. If the list is empty all ids will count as colliders.
    * @return A list of rectangles that represent colliders.
    */
   public static function generateCollidersFromLDtkLayer(layer: LdtkLayer, worldX: Float, worldY: Float,
@@ -81,7 +81,7 @@ class TilemapCollision {
         var tile = tiles[y][x];
 
         // Check if the tile should be part of a collider.
-        if (!tile.checked && collisionTileIds.indexOf(tile.id) != -1) {
+        if (!tile.checked && isColliderTile(tile.id, collisionTileIds)) {
           tile.checked = true;
           start.set(x, y);
           current.set(x, y);
@@ -100,7 +100,7 @@ class TilemapCollision {
               }
               for (i in start.yi...current.yi + 1) {
                 tile = tiles[i][current.xi];
-                if (tile.checked || collisionTileIds.indexOf(tile.id) == -1) {
+                if (tile.checked || !isColliderTile(tile.id, collisionTileIds)) {
                   current.x--;
                   checking = false;
                 } else {
@@ -123,7 +123,7 @@ class TilemapCollision {
                 current.y--;
               } else {
                 tile = tiles[current.yi][current.xi];
-                if (tile.checked || collisionTileIds.indexOf(tile.id) == -1) {
+                if (tile.checked || !isColliderTile(tile.id, collisionTileIds)) {
                   current.y--;
                   foundLastY = true;
                 } else {
@@ -146,6 +146,14 @@ class TilemapCollision {
     current.put();
 
     return colliders;
+  }
+
+  static function isColliderTile(id: Int, collisionIds: Array<Int>): Bool {
+    if (collisionIds.length == 0) {
+      return id != -1;
+    } else {
+      return collisionIds.indexOf(id) != -1;
+    }
   }
 }
 

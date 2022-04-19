@@ -61,7 +61,7 @@ class CSimpleTilemapCollider extends Component {
    * @param tilemap The tilemap component to use.
    * @param worldX The x position of the tilemap in world pixels.
    * @param worldY The y position of the tilemap in world pixels.
-   * @param collisionTileIds A list of tile ids that should get collision tiles.
+   * @param collisionTileIds A list of tile ids that should get collision tiles. If the list is empty all tiles will count as colliders.
    */
   public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
     bodies = [];
@@ -75,7 +75,7 @@ class CSimpleTilemapCollider extends Component {
    * @param layer The layer to use.
    * @param worldX The x position of the tilemap in world pixels.
    * @param worldY The y position of the tilemap in world pixels.
-   * @param collisionTileIds A list of tile ids that should get collision tiles.
+   * @param collisionTileIds A list of tile ids that should get collision tiles. If the list is empty all tiles will count as colliders.
    */
   public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
     bodies = [];

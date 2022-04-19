@@ -24,6 +24,8 @@ class InternalDisplay implements Display {
 
   public var windowCenterY(get, never): Int;
 
+  public var pixelArt: Bool;
+
   /**
    * The width the art is designed for in pixels.
    */
@@ -39,9 +41,10 @@ class InternalDisplay implements Display {
    */
   public function new() {}
 
-	public function init(designWidth:Int, designHeight:Int) {
+	public function init(designWidth: Int, designHeight: Int, pixelArt: Bool) {
     this.designWidth = designWidth;
     this.designHeight = designHeight;
+    this.pixelArt = pixelArt;
   }
 
   public function scaleToWindow() {
