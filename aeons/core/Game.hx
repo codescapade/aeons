@@ -1,14 +1,15 @@
 package aeons.core;
 
-import aeons.utils.services.InternalTimeStep;
-import aeons.math.services.InternalRandom;
-import aeons.events.services.InternalEvents;
-import aeons.core.services.InternalDisplay;
-import aeons.audio.services.InternalAudio;
 import aeons.assets.services.InternalAssets;
+import aeons.audio.services.InternalAudio;
+import aeons.core.services.InternalDisplay;
 import aeons.events.SceneEvent;
-import aeons.input.Input;
+import aeons.events.services.InternalEvents;
 import aeons.graphics.RenderTarget;
+import aeons.input.Input;
+import aeons.math.services.InternalRandom;
+import aeons.utils.services.InternalStorage;
+import aeons.utils.services.InternalTimeStep;
 
 import haxe.Timer;
 
@@ -113,6 +114,7 @@ class Game {
     Aeons.provideAudio(new InternalAudio());
     Aeons.provideEvents(new InternalEvents());
     Aeons.provideRandom(new InternalRandom());
+    Aeons.provideStorage(new InternalStorage());
     Aeons.provideTimeStep(new InternalTimeStep());
 
     #if !nodejs

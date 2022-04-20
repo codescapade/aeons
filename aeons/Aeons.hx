@@ -16,8 +16,10 @@ import aeons.math.Random;
 import aeons.math.services.NullRandom;
 import aeons.tween.Tweens;
 import aeons.tween.services.NullTweens;
+import aeons.utils.Storage;
 import aeons.utils.Timers;
 import aeons.utils.TimeStep;
+import aeons.utils.services.NullStorage;
 import aeons.utils.services.NullTimeStep;
 import aeons.utils.services.NullTimers;
 
@@ -55,6 +57,11 @@ class Aeons {
    * Seeded random number generator.
    */
   public static var random(get, never): Random;
+
+  /**
+   * Save an load data.
+   */
+  public static var storage(get, never): Storage;
 
   /**
    * ECS systems management.
@@ -106,6 +113,9 @@ class Aeons {
   static var _tweens: Tweens;
   static var nullTweens = new NullTweens();
 
+  static var _storage: Storage;
+  static var nullStorage = new NullStorage();
+
   /**
    * Set an assets provider.
    * @param assets The new provider.
@@ -152,6 +162,14 @@ class Aeons {
    */
   public static function provideRandom(random: Random) {
     _random = random;
+  }
+
+  /**
+   * Set a storage provider.
+   * @param storage The new provider.
+   */
+  public static function provideStorage(storage: Storage) {
+    _storage = storage;
   }
 
   /**
@@ -231,6 +249,14 @@ class Aeons {
     return _random == null ? nullRandom : _random;
     #else
     return _random;
+    #end
+  }
+
+  static inline function get_storage(): Storage {
+    #if debug
+    return _storage == null ? nullStorage : _storage;
+    #else
+    return _storage;
     #end
   }
 
