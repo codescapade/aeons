@@ -460,6 +460,21 @@ class Macros {
 
   static function buildPool(): Array<Field> {
     final fields = Context.getBuildFields();
+    final classMeta = Context.getLocalClass().get().meta.get();
+
+    // Only add object pools to classes with @:poolable metadata.
+    var isPoolable = false;
+    if (classMeta != null) {
+      for (tag in classMeta) {
+        if (tag.name == ':poolable') {
+          isPoolable = true;
+        }
+      }
+    }
+
+    if (!isPoolable) {
+      return fields;
+    }
 
     var constructor: Field;
     var putFunction: Field;

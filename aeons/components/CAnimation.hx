@@ -1,8 +1,8 @@
 package aeons.components;
 
 import aeons.core.Component;
-import aeons.graphics.atlas.Atlas;
 import aeons.graphics.animation.Animation;
+import aeons.graphics.atlas.Atlas;
 
 /**
  * The Animation component can play added animations.
@@ -52,13 +52,19 @@ class CAnimation extends Component {
   /**
    * CAnimation constructor.
    */
-  public function new() {
+  public function new(?options: CAnimationOptions) {
     super();
     playing = false;
     currentFrame = null;
     anim = null;
     time = 0.0;
     anims = new Map<String, Animation>();
+
+    if (options != null) {
+      for (animation in options.animations) {
+        anims[animation.name] = animation;
+      }
+    }
   }
 
   /**
@@ -104,11 +110,19 @@ class CAnimation extends Component {
 
   /**
    * Add a new animation.
-   * @param name The name of the animation. Used when you want to play.
    * @param animation The animation you want to add.
    */
-  public inline function add(name: String, animation: Animation) {
-    anims[name] = animation;
+  public inline function add(animation: Animation) {
+    anims[animation.name] = animation;
+  }
+
+  /**
+   * Get an animation that has been added.
+   * @param name The name of the animation.
+   * @return The animation.
+   */
+  public inline function getByName(name: String): Animation {
+    return anims[name];
   }
 
   /**
@@ -139,4 +153,14 @@ class CAnimation extends Component {
   inline function get_atlas(): Atlas{
     return anim == null ? null : anim.atlas;
   }
+}
+
+/**
+ * CAnimation init options.
+ */
+typedef CAnimationOptions = {
+  /**
+   * A list of animations so you don't have to add them one by one.
+   */
+  var animations: Array<Animation>;
 }

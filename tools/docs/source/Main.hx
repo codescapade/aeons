@@ -4,8 +4,8 @@ import aeons.assets.Assets;
 import aeons.assets.AssetError;
 
 import aeons.audio.Audio;
-import aeons.audio.AudioChannel;
 import aeons.audio.Sound;
+import aeons.audio.SoundChannel;
 
 import aeons.components.CAnimation;
 import aeons.components.CBoxShape;
