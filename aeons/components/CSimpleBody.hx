@@ -111,7 +111,7 @@ class CSimpleBody extends Component {
   public function new (?options: CSimpleBodyOptions) {
     super();
 
-    body = new Body();
+    body = new Body(this);
     if (options != null) {
       if (options.type != null) type = options.type;
       if (options.isTrigger != null) isTrigger = options.isTrigger;

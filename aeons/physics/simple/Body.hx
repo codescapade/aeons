@@ -1,5 +1,6 @@
 package aeons.physics.simple;
 
+import aeons.components.CSimpleBody;
 import aeons.math.Rect;
 import aeons.math.Vector2;
 
@@ -46,6 +47,11 @@ class Body {
    * The body offset from the transform position in pixels.
    */
   public var offset(default, null) = new Vector2();
+
+  /**
+   * The component this body belongs to.
+   */
+  public var component(default, null): CSimpleBody;
 
   /**
    * Collision group for this body.
@@ -129,5 +135,7 @@ class Body {
   /**
    * Constructor.
    */
-  public function new() {}
+  public function new(?component: CSimpleBody) {
+    this.component = component;
+  }
 }

@@ -79,6 +79,7 @@ class InternalEntities implements Entities {
   }
 
   public function removeEntity(entity: Entity, pool = false) {
+    entity.active = false;
     entitiesToRemove.push({ entity: entity, pool: pool });
   }
 
@@ -94,6 +95,7 @@ class InternalEntities implements Entities {
 
   public function removeEntityById(id: Int, pool = false) {
     final entity = getEntityById(id);
+    entity.active = false;
     if (entity != null) {
       entitiesToRemove.push({ entity: entity, pool: pool });
     }

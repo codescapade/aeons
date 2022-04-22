@@ -68,10 +68,7 @@ class Quadtree {
    */
   public function getBodyList(body: Body, ?out: Array<Body>): Array<Body> {
     if (out == null) {
-      final list: Array<Body> = [];
-      root.getBodyList(body, list);
-
-      return list;
+      out = [];
     }
 
     root.getBodyList(body, out);

@@ -532,6 +532,9 @@ class Macros {
           }
         });
 
+        // Activate the component.
+        body.push(macro {active = true;});
+
         // Create the reset function with the same parameters and code inside as the constructor so
         // you can use the constructor to set / reset the variables and it works for get() as well.
         fields.push({

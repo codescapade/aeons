@@ -109,7 +109,7 @@ class Quad {
       }
     } else {
       for (b in bodies) {
-        if (b != body) {
+        if (b != body && !list.contains(b)) {
           list.push(b);
         }
       }

@@ -1,14 +1,14 @@
 package aeons.systems;
 
-import aeons.graphics.RenderTarget;
-import aeons.core.DebugRenderable;
 import aeons.components.CTransform;
-import aeons.core.Bundle;
 import aeons.components.CSimpleBody;
 import aeons.components.CSimpleTilemapCollider;
+import aeons.core.Bundle;
+import aeons.core.DebugRenderable;
 import aeons.core.System;
 import aeons.core.Updatable;
 import aeons.graphics.Color;
+import aeons.graphics.RenderTarget;
 import aeons.math.AeMath;
 import aeons.math.Rect;
 import aeons.math.Vector2;
@@ -30,16 +30,33 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
   public var debugDrawEnabled = true;
 
   /**
+   * Show the quad tree in the debug draw.
+   */
+  public var showQuadTreeDebug = false;
+
+  /**
    * The world gravity.
    */
   public var gravity(default, null) = new Vector2();
 
+  /**
+   * The x position in pixels where the physics world starts.
+   */
   public var worldX(get, set): Float;
 
+  /**
+   * The y position in pixels where the physics world starts.
+   */
   public var worldY(get, set): Float;
 
+  /**
+   * The width of the physics world in pixels.
+   */
   public var worldWidth(get, set): Float;
 
+  /**
+   * The height of the physics world in pixels.
+   */
   public var worldHeight(get, set): Float;
 
   /**
@@ -93,8 +110,14 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    */
   final staticBodyColor = Color.fromBytes(0, 200, 0, 255);
 
+  /**
+   * Raycast color when it doesn't hit anything.
+   */
   final rayColor = Color.fromBytes(255, 127, 0, 255);
 
+  /**
+   * Raycast color when it hits something.
+   */
   final rayHitColor = Color.fromBytes(255, 255, 0, 255);
 
   /**
@@ -248,16 +271,21 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
   }
 
   public function debugRender(target: RenderTarget, cameraBounds: Rect) {
-    target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, bodyColor, 2);
+    if (showQuadTreeDebug) {
+      target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, bodyColor, 2);
 
-    final quads = tree.getTreeBounds();
-
-    for (quad in quads) {
-      target.drawRect(quad.x, quad.y, quad.width, quad.height, boundsColor, 2);
+      final quads = tree.getTreeBounds();
+      for (quad in quads) {
+        target.drawRect(quad.x, quad.y, quad.width, quad.height, boundsColor, 2);
+      }
     }
 
     for (tilemap in tilemapBundles) {
       for (body in tilemap.c_simple_tilemap_collider.bodies) {
+        if (!tilemap.c_simple_tilemap_collider.active) {
+          continue;
+        }
+
         final bounds = body.bounds;
         target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, staticBodyColor, 2);
       }
@@ -267,6 +295,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
       if (!bundle.c_simple_body.active) {
         continue;
       }
+
       final body = bundle.c_simple_body.body;
       final bounds = body.bounds;
       if (body.type == STATIC) {
@@ -397,7 +426,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * @param p2 The end of the line.
    * @param tags The list of tags to search for. If null it returns all hits.
    * @param out Optional list to store the result.
-   * @return The result.
+   * @return The list of hits.
    */
   public function raycast(p1: Vector2, p2: Vector2, ?tags: Array<String>, ?out: HitList): HitList {
     out = tree.getLineHitList(p1, p2, out);
@@ -443,6 +472,13 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
           interactions.push(Interaction.get(TRIGGER_STAY, body1, body2));
         }
         body1.triggeredBy.push(body2);
+      } else if (body2.isTrigger) {
+        if (body2.wasTriggeredBy.indexOf(body1) == -1) {
+          interactions.push(Interaction.get(TRIGGER_START, body1, body2));
+        } else {
+          interactions.push(Interaction.get(TRIGGER_STAY, body1, body2));
+        }
+        body2.triggeredBy.push(body1);
       }
     }
   }
