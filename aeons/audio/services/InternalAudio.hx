@@ -7,69 +7,60 @@ import kha.System;
 class InternalAudio implements Audio {
   public var masterVolume(default, set) = 1.0;
 
-  var sounds = new Map<String, SoundChannel>();
+  var channels: Array<SoundChannel> = [];
 
   /**
    * Constructor.
    */
   public function new() {}
 
-  public function addSound(name: String, sound: Sound, loop = false): SoundChannel {
+  public function addChannel(sound: Sound, volume = 1.0, loop = false): SoundChannel {
     var audioChannel = kha.audio1.Audio.play(sound, loop);
     audioChannel.stop();
-    var soundChannel = new SoundChannel(audioChannel, masterVolume);
-    sounds[name] = soundChannel;
+    var soundChannel = new SoundChannel(audioChannel, volume, masterVolume, loop);
+    channels.push(soundChannel);
 
     return soundChannel;
   }
 
-  public function removeSound(name: String) {
+  public function removeChannel(channel: SoundChannel) {
     #if debug
-    if (!sounds.exists(name)) {
-      trace('No sound with name ${name} loaded.');
+    if (!channels.contains(channel)) {
+      trace('Channel does not exist.');
     }
     #end
 
-    sounds.remove(name);
-  }
-
-  public function getSoundChannel(name: String): SoundChannel {
-    #if debug
-    if (!sounds.exists(name)) {
-      trace('No sound with name ${name} loaded.');
-    }
-    #end
-
-    return sounds[name];
+    channel.stop();
+    channels.remove(channel);
   }
 
   public function mute() {
-    for (sound in sounds) {
-      sound.updateMasterVolume(0);
+    for (channel in channels) {
+      channel.updateMasterVolume(0);
     }
   }
 
   public function unMute() {
-    for (sound in sounds) {
-      sound.updateMasterVolume(masterVolume);
+    for (channel in channels) {
+      channel.updateMasterVolume(masterVolume);
     }
   }
 
   public function pauseAll() {
-    for (sound in sounds) {
-      sound.pause();
+    for (channel in channels) {
+      channel.pause();
     }
   }
 
   public function resumeAll() {
-    for (sound in sounds) {
-      sound.play();
+    for (channel in channels) {
+      channel.play();
     }
   }
 
   public function stopAll() {
-    for (sound in sounds) {
-      sound.stop();
+    for (channel in channels) {
+      channel.stop();
     }
   }
 
@@ -79,8 +70,8 @@ class InternalAudio implements Audio {
 
   function set_masterVolume(value: Float): Float {
     masterVolume = AeMath.clamp(value, 0.0, 1.0);
-    for (sound in sounds) {
-      sound.updateMasterVolume(masterVolume);
+    for (channel in channels) {
+      channel.updateMasterVolume(masterVolume);
     }
 
     return masterVolume;

@@ -33,13 +33,15 @@ class InternalAssets implements Assets {
   }
 
   public inline function getImage(name: String): Image {
-    try {
-      return kha.Assets.images.get(name);
-    } catch (e: Exception) {
+    #if debug
+    final image = kha.Assets.images.get(name);
+    if (image == null) {
       trace('Image ${name} is not loaded.');
-
-      return null;
     }
+    return image;
+    #else
+    return kha.Assets.images.get(name);
+    #end
   }
 
   public inline function loadFont(name: String, complete: (Font)->Void) {
@@ -51,13 +53,15 @@ class InternalAssets implements Assets {
   }
 
   public inline function getFont(name: String): Font {
-    try {
-      return kha.Assets.fonts.get(name);
-    } catch (_) {
+    #if debug
+    final font = kha.Assets.fonts.get(name);
+    if (font == null) {
       trace('Font ${name} is not loaded.');
-
-      return null;
     }
+    return font;
+    #else
+    return kha.Assets.fonts.get(name);
+    #end
   }
 
   public inline function loadBlob(name: String, complete: (Blob)->Void) {
@@ -70,13 +74,15 @@ class InternalAssets implements Assets {
   }
 
   public inline function getBlob(name: String): Blob {
-    try {
-      return kha.Assets.blobs.get(name);
-    } catch (_) {
+    #if debug
+    final blob = kha.Assets.blobs.get(name);
+    if (blob == null) {
       trace('Blob ${name} is not loaded.');
-
-      return null;
     }
+    return blob;
+    #else
+    return kha.Assets.blobs.get(name);
+    #end
   }
 
   public inline function loadSound(name: String, complete: (Sound)->Void) {
@@ -89,13 +95,15 @@ class InternalAssets implements Assets {
   }
 
   public inline function getSound(name: String): Sound {
-    try {
-      return kha.Assets.sounds.get(name);
-    } catch (_) {
+    #if debug
+    final sound = kha.Assets.sounds.get(name);
+    if (sound == null) {
       trace('Sound ${name} is not loaded.');
-
-      return null;
     }
+    return sound;
+    #else
+    return kha.Assets.sounds.get(name);
+    #end
   }
 
   public inline function loadVideo(name: String, complete: (Video)->Void) {
@@ -107,13 +115,15 @@ class InternalAssets implements Assets {
   }
 
   public inline function getVideo(name: String): Video {
-    try {
-      return kha.Assets.videos.get(name);
-    } catch (_) {
+    #if debug
+    final video = kha.Assets.videos.get(name);
+    if (video == null) {
       trace('Video ${name} is not loaded.');
-
-      return null;
     }
+    return video;
+    #else
+    return kha.Assets.videos.get(name);
+    #end
   }
 
   public function loadAtlas(name: String): Atlas {
@@ -140,6 +150,11 @@ class InternalAssets implements Assets {
   }
 
   public inline function getAtlas(name: String): Atlas {
+    #if debug
+    if (!atlasses.exists(name)) {
+      trace('Atlas ${name} is not loaded.');
+    }
+    #end
     return atlasses[name];
   }
 

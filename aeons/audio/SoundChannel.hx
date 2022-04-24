@@ -5,6 +5,11 @@ package aeons.audio;
  */
 class SoundChannel {
   /**
+   * Does the sound in this channel loop.
+   */
+  public var looped(default, null): Bool;
+
+  /**
    * The volume of this channel.
    */
   public var volume(get, set): Float;
@@ -42,11 +47,15 @@ class SoundChannel {
   /**
    * Constructor
    * @param channel The kha audio channel. 
+   * @param volume The volume of the sound.
    * @param masterVolume The global master volume.
+   * @param loop Does the sound in the channel loop.
    */
-  public function new(channel: kha.audio1.AudioChannel, masterVolume: Float) {
+  public function new(channel: kha.audio1.AudioChannel, volume: Float, masterVolume: Float, loop: Bool) {
     this.channel = channel;
+    this.channel.volume = volume;
     internalMasterVolume = masterVolume;
+    looped = loop;
   }
 
   /**

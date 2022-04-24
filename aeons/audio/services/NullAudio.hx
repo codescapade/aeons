@@ -14,20 +14,14 @@ class NullAudio implements Audio {
    */
   public function new() {}
 
-  public function addSound(name: String, sound: Sound, loop: Bool = false): SoundChannel {
+  public function addChannel(sound: Sound, volume = 1.0, loop = false): SoundChannel {
     trace('addSound not implemented');
 
     return null;
   }
 
-  public function removeSound(name: String) {
+  public function removeChannel(channel: SoundChannel) {
     trace('removeSound not implemented');
-  }
-
-  public function getSoundChannel(name: String): SoundChannel {
-    trace('getSoundChannel not implemented');
-
-    return null;
   }
 
   public function mute() {

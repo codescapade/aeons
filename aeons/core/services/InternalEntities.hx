@@ -83,10 +83,10 @@ class InternalEntities implements Entities {
     entitiesToRemove.push({ entity: entity, pool: pool });
   }
 
-  public function getEntityById<T: Entity>(id: Int): T {
+  public function getEntityById(id: Int): Entity {
     for (entity in entities) {
       if (entity.id == id) {
-        return cast entity;
+        return entity;
       }
     }
 

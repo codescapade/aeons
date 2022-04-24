@@ -21,7 +21,7 @@ interface Entities {
    * @param id The id of the entity.
    * @return The entity.
    */
-  function getEntityById<T: Entity>(id: Int): T;
+  function getEntityById(id: Int): Entity;
 
   /**
    * Remove an entity by its id.

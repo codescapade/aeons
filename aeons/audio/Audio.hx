@@ -11,26 +11,19 @@ interface Audio {
   var masterVolume(default, set): Float;
 
   /**
-   * Add a sound to the audio manager.
-   * @param name The name of the sound.
-   * @param sound The sound asset.
+   * Add a sound channel to the audio manager.
+   * @param sound The sound asset for the channel.
+   * @param volume The sound volume.
    * @param loop Does the sound loop.
    * @return The created sound channel.
    */
-  function addSound(name: String, sound: Sound, loop: Bool = false): SoundChannel;
+  function addChannel(sound: Sound, volume: Float = 1.0, loop: Bool = false): SoundChannel;
 
   /**
-   * Remove a sound from the audio manager.
-   * @param name The name of the sound.
+   * Remove a channel from the audio manager.
+   * @param sound The channel to remove.
    */
-  function removeSound(name: String): Void;
-
-  /**
-   * Get a sound channel by name.
-   * @param name The name of the channel.
-   * @return The sound channel or null if it does not exist.
-   */
-  function getSoundChannel(name: String): SoundChannel;
+  function removeChannel(channel: SoundChannel): Void;
 
   /**
    * Mute all audio.

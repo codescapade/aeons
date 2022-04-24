@@ -80,7 +80,7 @@ class Scene {
    * @param id The id of the entity.
    * @return The entity.
    */
-  public inline function getEntityById<T: Entity>(id: Int): T {
+  public inline function getEntityById(id: Int): Entity {
     return Aeons.entities.getEntityById(id);
   }
 
