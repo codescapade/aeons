@@ -96,13 +96,11 @@ class CTilemap extends Component implements Renderable {
   /**
    * Render the tilemap.
    * @param target The graphics buffer to use.
-   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     if (tiles == null) {
       return;
     }
-    updateVisibleTiles(cameraBounds);
 
     for (y in visibleBounds.yi...visibleBounds.heighti) {
       for (x in visibleBounds.xi...visibleBounds.widthi) {
@@ -115,6 +113,16 @@ class CTilemap extends Component implements Renderable {
             rect.height, tileset.tileImage, color);
       }
     }
+  }
+
+  /**
+   * This updates which tiles to render based on the camera bounds.
+   * @param cameraBounds The local camera bounds.
+   * @return Always true for tilemaps
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    updateVisibleTiles(cameraBounds);
+    return true;
   }
 
   /**
@@ -186,19 +194,19 @@ class CTilemap extends Component implements Renderable {
    * @param bounds The camera bounds.
    */
   function updateVisibleTiles(bounds: Rect) {
-    var topLeft = Vector2.get(bounds.x, bounds.y);
+    var topLeft = pixelToTilePosition(bounds.x, bounds.y);
     topLeft.x -= 1;
     topLeft.y -= 1;
-    topLeft.x = AeMath.clampInt(Std.int(bounds.x) , 0, widthInTiles);
-    topLeft.y = AeMath.clampInt(Std.int(bounds.y) , 0, heightInTiles);
+    topLeft.x = AeMath.clampInt(topLeft.xi , 0, widthInTiles);
+    topLeft.y = AeMath.clampInt(topLeft.yi , 0, heightInTiles);
 
-    var bottomRight = Vector2.get(bounds.x + bounds.width, bounds.y + bounds.height);
+    var bottomRight = pixelToTilePosition(bounds.x + bounds.width, bounds.y + bounds.height);
     bottomRight.x += 2;
     bottomRight.y += 2;
-    bottomRight.x = AeMath.clampInt(Std.int(bounds.x + bounds.width) , 0, widthInTiles);
-    bottomRight.y = AeMath.clampInt(Std.int(bounds.y + bounds.height), 0, heightInTiles);
+    bottomRight.x = AeMath.clampInt(bottomRight.xi , 0, widthInTiles);
+    bottomRight.y = AeMath.clampInt(bottomRight.yi, 0, heightInTiles);
 
-    visibleBounds.set(Std.int(topLeft.x), Std.int(topLeft.y), Std.int(bottomRight.x), Std.int(bottomRight.y));
+    visibleBounds.set(topLeft.xi, topLeft.yi, bottomRight.xi, bottomRight.yi);
 
     topLeft.put();
     bottomRight.put();

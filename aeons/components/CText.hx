@@ -83,14 +83,23 @@ class CText extends Component implements Renderable {
   /**
    * Render the text.
    * @param target The renderer.
-   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     if (font == null) {
       return;
     }
 
     target.drawString(-width * anchorX, -height * anchorY, text, font, fontSize, color);
+  }
+
+  /**
+   * Check if the component is inside the camera bounds and should be rendered.
+   * @param cameraBounds Used to render only what the camera can see.
+   * The bounds are in the local space of the component.
+   * @return True if in bounds. Out of bounds will not render using the RenderSystem.
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    return true;
   }
 
   /**

@@ -270,7 +270,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     }
   }
 
-  public function debugRender(target: RenderTarget, cameraBounds: Rect) {
+  public function debugRender(target: RenderTarget) {
     if (showQuadTreeDebug) {
       target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, bodyColor, 2);
 

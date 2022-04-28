@@ -48,7 +48,7 @@ class AeMath {
    * @param min Minimum.
    * @param max Maximum.
    */
-  public static inline function clamp(value: Float, min: Float, max:Float): Float {
+  public static function clamp(value: Float, min: Float, max:Float): Float {
     if (min > max) {
       var temp = max;
       max = min;
@@ -66,7 +66,7 @@ class AeMath {
    * @param min Minimum.
    * @param max Maximum.
    */
-  public static inline function clampInt(value: Int, min: Int, max: Int): Int {
+  public static function clampInt(value: Int, min: Int, max: Int): Int {
     if (min > max) {
       var temp = max;
       max = min;

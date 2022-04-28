@@ -76,9 +76,8 @@ class CBoxShape extends Component implements Renderable {
   /**
    * Render the box.
    * @param target Used to render the box.
-   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     if (!active) {
       return;
     }
@@ -90,6 +89,17 @@ class CBoxShape extends Component implements Renderable {
     if (hasStroke) {
       target.drawRect(-(width * anchorX), -(height * anchorY), width, height, strokeColor, strokeWidth, Inside);
     }
+  }
+
+  /**
+   * Check if the component is inside the camera bounds and should be rendered.
+   * @param cameraBounds Used to render only what the camera can see.
+   * The bounds are in the local space of the component.
+   * @return True if in bounds. Out of bounds will not render using the RenderSystem.
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    return cameraBounds.x > -cameraBounds.width - width && cameraBounds.y > -cameraBounds.height - height &&
+        cameraBounds.x < width && cameraBounds.y < height;
   }
 }
 

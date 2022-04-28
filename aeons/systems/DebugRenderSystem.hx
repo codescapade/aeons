@@ -54,7 +54,7 @@ class DebugRenderSystem extends System implements SysRenderable {
       localBounds.y = boundsPos.y;
       for (system in systems) {
         if (system.debugDrawEnabled) {
-          system.debugRender(camTarget, localBounds);
+          system.debugRender(camTarget);
         }
       }
 
@@ -69,7 +69,7 @@ class DebugRenderSystem extends System implements SysRenderable {
         localBounds.x = boundsPos.x;
         localBounds.y = boundsPos.y;
 
-        renderable.c_debug_render.render(camTarget, localBounds);
+        renderable.c_debug_render.render(camTarget);
       }
       boundsPos.put();
       camTarget.present();

@@ -3,6 +3,9 @@ package aeons.tilemap.ldtk;
 #if use_ldtk
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
+import aeons.math.AeMath;
+import aeons.math.Rect;
+import aeons.math.Vector2;
 import aeons.tilemap.Tileset;
 
 import ldtk.Layer_AutoLayer;
@@ -42,6 +45,11 @@ class LdtkLayer {
    * The 2d array of tiles.
    */
   var tiles: Array<Array<LdtkTile>>;
+
+    /**
+   * The tile bounds that are visible to the camera.
+   */
+  var visibleBounds = new Rect();
 
   /**
    * Create a layer from a Tile layer.
@@ -144,8 +152,8 @@ class LdtkLayer {
    * @param target The target to render to.
    */
   public function render(target: RenderTarget) {
-    for (y in 0...tiles.length) {
-      for (x in 0...tiles[0].length) {
+    for (y in visibleBounds.yi...visibleBounds.heighti) {
+      for (x in visibleBounds.xi...visibleBounds.widthi) {
         final tile = tiles[y][x];
         if (!tile.isEmpty()) {
           final frame = tileset.getRect(tile.tileId);
@@ -156,6 +164,41 @@ class LdtkLayer {
         }
       }
     }
+  }
+
+    /**
+   * Convert a local pixel position to tile position.
+   * @param xPos The world x position in game pixels.
+   * @param yPos The world y position in game pixels.
+   */
+  public function pixelToTilePosition(xPos: Float, yPos: Float): Vector2 {
+    final x = Math.floor(xPos / tileset.tileWidth);
+    final y = Math.floor(yPos / tileset.tileHeight);
+
+    return Vector2.get(x, y);
+  }
+
+    /**
+   * Update the visible tile range.
+   * @param bounds The camera bounds.
+   */
+  public function updateVisibleTiles(bounds: Rect) {
+    var topLeft = pixelToTilePosition(bounds.x, bounds.y);
+    topLeft.x -= 1;
+    topLeft.y -= 1;
+    topLeft.x = AeMath.clampInt(topLeft.xi , 0, width);
+    topLeft.y = AeMath.clampInt(topLeft.yi , 0, height);
+
+    var bottomRight = pixelToTilePosition(bounds.x + bounds.width, bounds.y + bounds.height);
+    bottomRight.x += 2;
+    bottomRight.y += 2;
+    bottomRight.x = AeMath.clampInt(bottomRight.xi , 0, width);
+    bottomRight.y = AeMath.clampInt(bottomRight.yi, 0, height);
+
+    visibleBounds.set(topLeft.xi, topLeft.yi, bottomRight.xi, bottomRight.yi);
+
+    topLeft.put();
+    bottomRight.put();
   }
 
   /**

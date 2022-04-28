@@ -36,12 +36,29 @@ class CRender extends Component {
    * @param target The render target to render to.
    * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     for (component in components) {
       final comp: Component = cast component;
       if (comp.active) {
-        component.render(target, cameraBounds);
+        component.render(target);
       }
     }
+  }
+
+  /**
+   * Check if the component is inside the camera bounds and should be rendered.
+   * @param cameraBounds Used to render only what the camera can see.
+   * The bounds are in the local space of the component.
+   * @return True if in bounds. Out of bounds will not render using the RenderSystem.
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    var inBounds = false;
+    for (component in components) {
+      if (component.inCameraBounds(cameraBounds)) {
+        inBounds = true;
+      }
+    }
+
+    return inBounds;
   }
 }

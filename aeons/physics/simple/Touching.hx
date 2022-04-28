@@ -14,7 +14,7 @@ enum abstract Touching(Int) from Int to Int {
 
   /**
    * Bit shift value.
-   * @param index Yhe index to shift.
+   * @param index The index to shift.
    */
   static inline function value(index: Int): Int {
     return 1 << index;

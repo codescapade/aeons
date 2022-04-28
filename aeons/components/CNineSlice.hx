@@ -116,7 +116,7 @@ class CNineSlice extends Component implements Renderable {
    * Render the slices.
    * @param target The target to render to.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     // Top left.
     target.drawImageSection(-(width * anchorX) + topLeft.x, -(height * anchorY) + topLeft.y, topLeft.frameRect.x,
         topLeft.frameRect.y, topLeft.frameRect.width, topLeft.frameRect.height, atlas.image, color);
@@ -160,6 +160,16 @@ class CNineSlice extends Component implements Renderable {
     target.drawImageSection(-(width * anchorX) + bottomRight.x, -(height * anchorY) + bottomRight.y,
         bottomRight.frameRect.x, bottomRight.frameRect.y, bottomRight.frameRect.width, bottomRight.frameRect.height,
         atlas.image, color);
+  }
+  
+  /**
+   * Check if the component is inside the camera bounds and should be rendered.
+   * @param cameraBounds Used to render only what the camera can see.
+   * The bounds are in the local space of the component.
+   * @return True if in bounds. Out of bounds will not render using the RenderSystem.
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    return true;
   }
 
   /**

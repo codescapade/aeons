@@ -165,14 +165,16 @@ class CCamera extends Component {
    */
   public function updateMatrix() {
     updateBounds();
-    // World position + half width and height to move the center of the camera.
-    matrix.setFrom(FastMatrix4.translation(-worldPosition.x + viewWidth, -worldPosition.y + viewHeight, 0)
-      // Rotate around the camera center.
-      .multmat(FastMatrix4.rotationZ(AeMath.degToRad(transform.getWorldAngle())))
-      // Scale from the camera center.
-      .multmat(FastMatrix4.scale(zoom, zoom, 1))
-      // Move back to top left of camera to get the correct position.
-      .multmat(FastMatrix4.translation(-viewWidth * 0.5, -viewHeight * 0.5, 0)));
+      matrix.setFrom(
+        // Move to center.
+        FastMatrix4.translation(viewWidth * 0.5, viewHeight * 0.5, 0)
+        // Rotate around the center
+        .multmat(FastMatrix4.rotationZ(AeMath.degToRad(transform.getWorldAngle())))
+        // Scale around the center.
+        .multmat(FastMatrix4.scale(zoom, zoom, 1))
+        // Move the to correct position in the world.
+        .multmat(FastMatrix4.translation(-worldPosition.x, -worldPosition.y, 0))
+      );
   }
 
   /**

@@ -69,9 +69,8 @@ class CSprite extends Component implements Renderable {
   /**
    * Render the image.
    * @param target The target image to render to.
-   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     if (!active || atlas == null || frame == null) {
       return;
     }
@@ -80,6 +79,18 @@ class CSprite extends Component implements Renderable {
     target.drawImageSection(-(frame.sourceSize.width * anchorX) + frame.sourceRect.x,
         -(frame.sourceSize.height * anchorY) + frame.sourceRect.y, frame.frame.x, frame.frame.y, frame.frame.width,
         frame.frame.height, atlas.image, color);
+  }
+
+  /**
+   * Check if the component is inside the camera bounds and should be rendered.
+   * @param cameraBounds Used to render only what the camera can see.
+   * The bounds are in the local space of the component.
+   * @return True if in bounds. Out of bounds will not render using the RenderSystem.
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    return cameraBounds.x > -cameraBounds.width - frame.sourceSize.width * 2 &&
+        cameraBounds.y > -cameraBounds.height - frame.sourceSize.height * 2 &&
+        cameraBounds.x < frame.sourceSize.width * 2 && cameraBounds.y < frame.sourceSize.height * 2;
   }
 
   /**

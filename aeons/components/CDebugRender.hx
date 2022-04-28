@@ -34,14 +34,22 @@ class CDebugRender extends Component {
   /**
    * Render the components.
    * @param target The render target to render to.
-   * @param cameraBounds Used to render only what the camera can see.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     for (component in components) {
       final comp: Component = cast component;
       if (comp.active) {
-        component.debugRender(target, cameraBounds);
+        component.debugRender(target);
       }
     }
+  }
+
+  /**
+   * Check if the component is inside the camera bounds and should be rendered.
+   * @param cameraBounds Used to render only what the camera can see.
+   * @return True if in bounds.
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    return true;
   }
 }

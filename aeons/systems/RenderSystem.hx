@@ -68,18 +68,26 @@ class RenderSystem extends System implements SysRenderable {
       // Render all the bundles to the current camera.
       camTarget.start(true, camera.backgroundColor);
       for (renderable in renderBundles) {
+
         if (renderable.c_transform.containsParent(camTransform)) {
           camTarget.transform.setFrom(renderable.c_transform.matrix);
+          renderable.c_render.render(camTarget);
         } else {
-          camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
-        }
-        boundsPos.set(camera.bounds.x, camera.bounds.y);
-        renderable.c_transform.worldToLocalPosition(boundsPos);
-        localBounds.x = boundsPos.x;
-        localBounds.y = boundsPos.y;
+          boundsPos.set(camera.bounds.x, camera.bounds.y);
+          renderable.c_transform.worldToLocalPosition(boundsPos);
+          boundsPos.x = boundsPos.x - renderable.c_transform.x;
+          boundsPos.y = boundsPos.y - renderable.c_transform.y;
+          localBounds.x = boundsPos.x;
+          localBounds.y = boundsPos.y;
 
-        renderable.c_render.render(camTarget, localBounds);
+          // Only render components that are inside the camera bounds.
+          if (renderable.c_render.inCameraBounds(localBounds)) {
+            camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
+            renderable.c_render.render(camTarget);
+          }
+        }
       }
+
       boundsPos.put();
       camTarget.present();
     }

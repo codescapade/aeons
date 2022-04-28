@@ -46,12 +46,23 @@ class CLdtkTilemap extends Component implements Renderable {
   /**
    * Render the tilemap.
    * @param target The render target.
-   * @param cameraBounds The camera world bounds.
    */
-  public function render(target: RenderTarget, cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     for (layer in layers) {
       layer.render(target);
     }
+  }
+
+  /**
+   * This updates which tiles to render based on the camera bounds.
+   * @param cameraBounds The local camera bounds.
+   * @return Always true for tilemaps
+   */
+  public function inCameraBounds(cameraBounds: Rect): Bool {
+    for (layer in layers) {
+      layer.updateVisibleTiles(cameraBounds);
+    }
+    return true;
   }
 
   /**
