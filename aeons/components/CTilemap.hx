@@ -194,6 +194,10 @@ class CTilemap extends Component implements Renderable {
    * @param bounds The camera bounds.
    */
   function updateVisibleTiles(bounds: Rect) {
+    if (tiles == null) {
+      return;
+    }
+
     var topLeft = pixelToTilePosition(bounds.x, bounds.y);
     topLeft.x -= 1;
     topLeft.y -= 1;

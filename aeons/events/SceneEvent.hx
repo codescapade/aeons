@@ -35,4 +35,9 @@ class SceneEvent extends Event {
    * On the replace event you can choose if you want to clear all scenes on the stack.
    */
   var clearAll = false;
+
+  /**
+   * The stack index of the scene you want to replace. Usefull when you want to do transitions with a sub scene.
+   */
+  var replaceIndex = -1;
 }

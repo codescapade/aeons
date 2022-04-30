@@ -123,6 +123,14 @@ class InternalEvents implements Events {
   }
 
   /**
+   * Replace a scene list at a specific index.
+   * @param index The list index.
+   */
+  public function replaceSceneList(index: Int) {
+    sceneHandlers[index].clear();
+  }
+
+  /**
    * Reset the scene index for when replacing all scenes.
    */
   public function resetIndex() {

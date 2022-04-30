@@ -31,6 +31,10 @@ class NullEvents implements Events {
     trace('popSceneList is not implemented');
   }
 
+  public function replaceSceneList(index: Int) {
+    trace('replaceSceneList is not implemented');
+  }
+
   public function resetIndex() {
     trace('resetIndex is not implemented');
   }

@@ -7,6 +7,7 @@ import aeons.events.SceneEvent;
 import aeons.events.services.InternalEvents;
 import aeons.graphics.RenderTarget;
 import aeons.input.Input;
+import aeons.math.AeMath;
 import aeons.math.services.InternalRandom;
 import aeons.utils.services.InternalStorage;
 import aeons.utils.services.InternalTimeStep;
@@ -249,13 +250,21 @@ class Game {
 
       Aeons.events.resetIndex();
       currentSceneIndex = 0;
+      Aeons.events.pushSceneList();
+      createScene(event.sceneType, event.userData);
     } else {
-      scenes.pop().cleanup();
-      Aeons.events.popSceneList();
+      if (event.replaceIndex == -1) {
+        scenes.pop().cleanup();
+        Aeons.events.popSceneList();
+        Aeons.events.pushSceneList();
+        createScene(event.sceneType, event.userData);
+      } else {
+        final index = AeMath.clampInt(event.replaceIndex, 0, scenes.length - 1);
+        scenes[index].cleanup();
+        Aeons.events.replaceSceneList(index);
+        createScene(event.sceneType, event.userData, index);
+      }
     }
-
-    Aeons.events.pushSceneList();
-    createScene(event.sceneType, event.userData);
   }
 
   /**
@@ -263,9 +272,14 @@ class Game {
    * @param sceneType The scene type to instantiate.
    * @param userData Data to transfer between scenes.
    */
-  function createScene(sceneType: Class<Scene>, userData: Dynamic) {
+  function createScene(sceneType: Class<Scene>, userData: Dynamic, ?sceneIndex: Int) {
     final scene = Type.createInstance(sceneType, [userData]);
-    scenes.push(scene);
+    if (sceneIndex != null) {
+      scenes[sceneIndex] = scene;
+    } else {
+      scenes.push(scene);
+
+    }
     currentScene = scene;
     scene.init();
   }

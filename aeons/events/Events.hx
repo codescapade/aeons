@@ -39,5 +39,7 @@ interface Events {
 
   function popSceneList(): Void;
 
+  function replaceSceneList(index: Int): Void;
+
   function resetIndex(): Void;
 }
