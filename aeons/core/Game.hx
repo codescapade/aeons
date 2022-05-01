@@ -56,7 +56,7 @@ class Game {
   /**
    * The first scene in the game.
    */
-  final startScene: Class<Scene>;
+  final startScene: Scene;
 
   /**
    * Callback when the game has finished loading.
@@ -126,10 +126,10 @@ class Game {
 
     // Setup the scene change listeners.
     Aeons.events.on(SceneEvent.PUSH, pushScene, true, 0, true);
-    Aeons.events.on(SceneEvent.POP, pushScene, true, 0, true);
-    Aeons.events.on(SceneEvent.REPLACE, pushScene, true, 0, true);
+    Aeons.events.on(SceneEvent.POP, popScene, true, 0, true);
+    Aeons.events.on(SceneEvent.REPLACE, replaceScene, true, 0, true);
 
-    createScene(startScene, null);
+    addScene(startScene);
 
     // Setup kha callbacks.
     System.notifyOnApplicationState(toForeground, willResume, willPause, toBackground, shutdown);
@@ -219,6 +219,7 @@ class Game {
 
       currentSceneIndex--;
       currentScene = scenes[currentSceneIndex];
+      currentScene.setProviders();
       currentScene.willResume();
     }
   }
@@ -233,7 +234,7 @@ class Game {
     currentSceneIndex++;
 
     Aeons.events.pushSceneList();
-    createScene(event.sceneType, event.userData);
+    addScene(event.newScene);
   }
 
   /**
@@ -251,37 +252,46 @@ class Game {
       Aeons.events.resetIndex();
       currentSceneIndex = 0;
       Aeons.events.pushSceneList();
-      createScene(event.sceneType, event.userData);
+      addScene(event.newScene);
     } else {
-      if (event.replaceIndex == -1) {
+      if (event.below) {
+        if (scenes.length > 1) {
+          scenes[scenes.length - 2].cleanup();
+          Aeons.events.replaceSceneList(scenes.length - 2);
+          addScene(event.newScene, true);
+        }
+      } else {
         scenes.pop().cleanup();
         Aeons.events.popSceneList();
         Aeons.events.pushSceneList();
-        createScene(event.sceneType, event.userData);
-      } else {
-        final index = AeMath.clampInt(event.replaceIndex, 0, scenes.length - 1);
-        scenes[index].cleanup();
-        Aeons.events.replaceSceneList(index);
-        createScene(event.sceneType, event.userData, index);
+        addScene(event.newScene);
       }
     }
   }
 
   /**
-   * Create a new scene instance.
-   * @param sceneType The scene type to instantiate.
-   * @param userData Data to transfer between scenes.
+   * Add a scene to the stack.
+   * @param scene The new scene to add.
+   * @param below Should the new scene replace the scene below the current one.
    */
-  function createScene(sceneType: Class<Scene>, userData: Dynamic, ?sceneIndex: Int) {
-    final scene = Type.createInstance(sceneType, [userData]);
-    if (sceneIndex != null) {
-      scenes[sceneIndex] = scene;
+  function addScene(scene: Scene, below = false) {
+    if (below) {
+      scenes[scenes.length - 2] = scene;
+
+      // Set the current events so listeners get added in the correct scene event list.
+      Aeons.events.setIndex(scenes.length - 2);
     } else {
       scenes.push(scene);
-
+      currentScene = scene;
     }
-    currentScene = scene;
+
+    scene.setProviders();
     scene.init();
+    Aeons.entities.updateAddRemove();
+
+    // Set the scene event list to the top most list.
+    Aeons.events.setIndex(scenes.length - 1);
+    currentScene.setProviders();
   }
 }
 
@@ -294,7 +304,7 @@ typedef GameOptions = {
   /**
    * The first scene to load when the game starts.
    */
-  var startScene: Class<Scene>;
+  var startScene: Scene;
 
   /**
    * Should all assets be preloaded. Default is true.

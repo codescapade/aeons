@@ -35,11 +35,18 @@ interface Events {
    */
   function emit(event: Event): Void;
 
+  @:dox(hide)
   function pushSceneList(): Void;
 
+  @:dox(hide)
   function popSceneList(): Void;
 
+  @:dox(hide)
   function replaceSceneList(index: Int): Void;
 
+  @:dox(hide)
   function resetIndex(): Void;
+
+  @:dox(hide)
+  function setIndex(index: Int): Void;
 }

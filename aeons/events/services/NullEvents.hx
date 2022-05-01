@@ -38,4 +38,8 @@ class NullEvents implements Events {
   public function resetIndex() {
     trace('resetIndex is not implemented');
   }
+
+  public function setIndex(index: Int) {
+    trace('setIndex is not implemented');
+  }
 }

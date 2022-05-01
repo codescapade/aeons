@@ -1,7 +1,7 @@
 package aeons.core;
 
-import aeons.core.services.InternalSystems;
 import aeons.core.services.InternalEntities;
+import aeons.core.services.InternalSystems;
 import aeons.graphics.RenderTarget;
 import aeons.tween.services.InternalTweens;
 import aeons.utils.services.InternalTimers;
@@ -22,6 +22,24 @@ class Scene {
    */
   final userData: Dynamic;
 
+  @:noCompletion
+  final sceneProviders: SceneProviders;
+
+  /**
+   * Constructor.
+   * @param userData Any data you want to carry over between scenes.
+   */
+  public function new(?userData: Dynamic) {
+    this.userData = userData;
+    sceneProviders = {
+      entities: new InternalEntities(),
+      systems: new InternalSystems(),
+      timers: new InternalTimers(),
+      tweens: new InternalTweens()
+    };
+    setProviders();
+  }
+
   /**
    * Override this method to initalize your scene.
    */
@@ -31,11 +49,18 @@ class Scene {
    * Override this method to cleanup scene when it gets removed.
    */
   public function cleanup() {
-    Aeons.entities.cleanup();
+    sceneProviders.entities.cleanup();
     Aeons.provideEntities(null);
+    Aeons.provideSystems(null);
     Aeons.provideTimers(null);
     Aeons.provideTweens(null);
-    Aeons.provideSystems(null);
+  }
+
+  public function setProviders() {
+    Aeons.provideEntities(sceneProviders.entities);
+    Aeons.provideSystems(sceneProviders.systems);
+    Aeons.provideTimers(sceneProviders.timers);
+    Aeons.provideTweens(sceneProviders.tweens);
   }
 
   /**
@@ -43,10 +68,10 @@ class Scene {
    * @param dt The time passed since the last update.
    */
   public function update(dt: Float) {
-    Aeons.entities.updateAddRemove();
-    Aeons.tweens.update(dt);
-    Aeons.timers.update(dt);
-    Aeons.systems.update(dt);
+    sceneProviders.entities.updateAddRemove();
+    sceneProviders.tweens.update(dt);
+    sceneProviders.timers.update(dt);
+    sceneProviders.systems.update(dt);
   }
 
   /**
@@ -54,7 +79,7 @@ class Scene {
    * @param target The target to render to.
    */
   public function render(target: RenderTarget) {
-    Aeons.systems.render(target);
+    sceneProviders.systems.render(target);
   }
 
   /**
@@ -63,7 +88,7 @@ class Scene {
    * @return The id the entity got when it was added to the entities.
    */
   public inline function addEntity<T: Entity>(entity: T): T {
-    return Aeons.entities.addEntity(entity);
+    return sceneProviders.entities.addEntity(entity);
   }
 
   /**
@@ -72,7 +97,7 @@ class Scene {
    * @param pool Should the components on this entity be put back in their object pools.
    */
   public inline function removeEntity(entity: Entity, pool: Bool = false) {
-    Aeons.entities.removeEntity(entity, pool);
+    sceneProviders.entities.removeEntity(entity, pool);
   }
 
   /**
@@ -81,7 +106,7 @@ class Scene {
    * @return The entity.
    */
   public inline function getEntityById(id: Int): Entity {
-    return Aeons.entities.getEntityById(id);
+    return sceneProviders.entities.getEntityById(id);
   }
 
   /**
@@ -90,7 +115,7 @@ class Scene {
    * @param pool Should the components on this entity be put back in their object pools.
    */
   public inline function removeEntityById(id: Int, pool: Bool = false) {
-    Aeons.entities.removeEntityById(id, pool);
+    sceneProviders.entities.removeEntityById(id, pool);
   }
 
   /**
@@ -99,7 +124,7 @@ class Scene {
    * @return The newly created system
    */
   public inline function addSystem<T: System>(system: T): T {
-    return Aeons.systems.add(system);
+    return sceneProviders.systems.add(system);
   }
 
   /**
@@ -107,7 +132,7 @@ class Scene {
    * @param systemType The type of system to remove.
    */
   public inline function removeSystem(systemType: Class<System>) {
-    Aeons.systems.remove(systemType);
+    sceneProviders.systems.remove(systemType);
   }
 
   /**
@@ -116,7 +141,7 @@ class Scene {
    * @return The system if it exists. Otherwise null.
    */
   public inline function getSystem<T: System>(systemType: Class<T>): T {
-    return Aeons.systems.get(systemType);
+    return sceneProviders.systems.get(systemType);
   }
 
   /**
@@ -125,7 +150,7 @@ class Scene {
    * @return True is the system was found.
    */
   public inline function hasSystem(systemType: Class<System>): Bool {
-    return Aeons.systems.has(systemType);
+    return sceneProviders.systems.has(systemType);
   }
 
   /**
@@ -148,17 +173,14 @@ class Scene {
    */
   public function toForeground() {}
 
-  /**
-   * Creates a new scene and sets all the references.
-   * @param refs 
-   */
-  @:allow(aeons.core.Game)
-  function new(userData: Dynamic) {
-    this.userData = userData;
+}
 
-    Aeons.provideEntities(new InternalEntities());
-    Aeons.provideSystems(new InternalSystems());
-    Aeons.provideTimers(new InternalTimers());
-    Aeons.provideTweens(new InternalTweens());
-  }
+/**
+ * To keep track of the providers for this scene.
+ */
+private typedef SceneProviders = {
+  var entities: InternalEntities;
+  var systems: InternalSystems;
+  var tweens: InternalTweens;
+  var timers: InternalTimers;
 }

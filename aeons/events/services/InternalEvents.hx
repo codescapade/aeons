@@ -127,7 +127,10 @@ class InternalEvents implements Events {
    * @param index The list index.
    */
   public function replaceSceneList(index: Int) {
-    sceneHandlers[index].clear();
+    final list = sceneHandlers[index];
+    list.clear();
+    sceneHandlers.remove(list);
+    sceneHandlers.insert(index, new Map<String, Array<EventHandler>>());
   }
 
   /**
@@ -135,6 +138,10 @@ class InternalEvents implements Events {
    */
   public function resetIndex() {
     sceneIndex = -1;
+  }
+
+  public function setIndex(index: Int) {
+    sceneIndex = index;
   }
 
   function processHandlers(event: Event, handlers: Array<EventHandler>) {

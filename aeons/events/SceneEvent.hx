@@ -22,14 +22,9 @@ class SceneEvent extends Event {
   public static inline final REPLACE: EventType<SceneEvent> = 'aeons_replace_scene';
 
   /**
-   * The type for the new scene. Not used in the pop event.
+   * The new scene to start. Not used in pop.
    */
-  var sceneType: Class<Scene>;
-
-  /**
-   * Data you want to send between scenes.
-   */
-  var userData: Dynamic = null;
+  var newScene: Scene = null;
 
   /**
    * On the replace event you can choose if you want to clear all scenes on the stack.
@@ -37,7 +32,7 @@ class SceneEvent extends Event {
   var clearAll = false;
 
   /**
-   * The stack index of the scene you want to replace. Usefull when you want to do transitions with a sub scene.
+   * Should the new scene replace the scene below this one.
    */
-  var replaceIndex = -1;
+  var below = false;
 }

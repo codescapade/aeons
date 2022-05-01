@@ -136,42 +136,42 @@ class AssetsTest extends BuddySuite {
         });
       });
 
-      it('Should load a video.', (done) -> {
-        assets.loadVideo('testVideo', (video: Video) -> {
-          video.should.not.be(null);
-          assets.unloadVideo('testVideo');
-          done();
-        });
-      });
+      // it('Should load a video.', (done) -> {
+      //   assets.loadVideo('testVideo', (video: Video) -> {
+      //     video.should.not.be(null);
+      //     assets.unloadVideo('testVideo');
+      //     done();
+      //   });
+      // });
 
-      it('Should throw when a video can\'t be loaded.', () -> {
-        assets.loadVideo.bind('noVideo', (_) -> {}).should.throwAnything();
-      });
+      // it('Should throw when a video can\'t be loaded.', () -> {
+      //   assets.loadVideo.bind('noVideo', (_) -> {}).should.throwAnything();
+      // });
 
-      it('Should get a video.', (done) -> {
-        assets.loadVideo('testVideo', (_) -> {
-          final video = assets.getVideo('testVideo');
-          video.should.not.be(null);
-          assets.unloadVideo('testVideo');
-          done();
-        });
-      });
+      // it('Should get a video.', (done) -> {
+      //   assets.loadVideo('testVideo', (_) -> {
+      //     final video = assets.getVideo('testVideo');
+      //     video.should.not.be(null);
+      //     assets.unloadVideo('testVideo');
+      //     done();
+      //   });
+      // });
 
-      it('Should unload a video', (done) -> {
-        var video = assets.getVideo('testVideo');
-        video.should.be(null);
+      // it('Should unload a video', (done) -> {
+      //   var video = assets.getVideo('testVideo');
+      //   video.should.be(null);
 
-        assets.loadVideo('testVideo', (_) -> {
-          video = assets.getVideo('testVideo');
-          video.should.not.be(null);
+      //   assets.loadVideo('testVideo', (_) -> {
+      //     video = assets.getVideo('testVideo');
+      //     video.should.not.be(null);
 
-          assets.unloadVideo('testVideo');
+      //     assets.unloadVideo('testVideo');
 
-          video = assets.getVideo('testVideo');
-          video.should.be(null);
-          done();
-        });
-      });
+      //     video = assets.getVideo('testVideo');
+      //     video.should.be(null);
+      //     done();
+      //   });
+      // });
 
       it('Should load a blob.', (done) -> {
         assets.loadBlob('testSprites_json', (blob: Blob) -> {
