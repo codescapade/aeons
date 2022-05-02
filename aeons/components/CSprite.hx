@@ -110,26 +110,12 @@ class CSprite extends Component implements Renderable {
     frame = this.atlas.getFrame(frameName);
   }
 
-  /**
-   * Sprite width getter.
-   */
-  function get_width(): Int {
-    if (frame != null) {
-      return Std.int(frame.sourceSize.width);
-    }
-
-    return 0;
+  inline function get_width(): Int {
+    return frame == null ? 0 : Std.int(frame.sourceSize.width);
   }
 
-  /**
-   * Sprite height getter.
-   */
-  function get_height(): Int {
-    if (frame != null) {
-      return Std.int(frame.sourceSize.height);
-    }
-
-    return 0;
+  inline function get_height(): Int {
+    return frame == null ? 0 : Std.int(frame.sourceSize.height);
   }
 }
 

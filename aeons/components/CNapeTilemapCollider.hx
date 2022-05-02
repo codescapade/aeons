@@ -121,11 +121,11 @@ class CNapeTilemapCollider extends Component {
 
   /**
    * Create a nape material and set it to the body.
-   * @param elasticity 
-   * @param dynamicFriction 
-   * @param staticFriction 
-   * @param density 
-   * @param rollingFriction 
+   * @param elasticity Between 0 and 1.
+   * @param dynamicFriction Any number greater than 0.
+   * @param staticFriction Any number greater than 0.
+   * @param density Gram / pixel / pixel.
+   * @param rollingFriction Any number greater than 0.
    */
   public function createMaterial(elasticity: Float, dynamicFriction: Float, staticFriction: Float, density: Float,
       rollingFriction: Float): Material {
@@ -165,6 +165,10 @@ class CNapeTilemapCollider extends Component {
     }
   }
 
+  /**
+   * Create the physics bodies from the generated collider rectangles.
+   * @param colliders The list of collider rectangles.
+   */
   function createBodiesFromColliders(colliders: Array<Rect>) {
     bodies = [];
     for (rect in colliders) {

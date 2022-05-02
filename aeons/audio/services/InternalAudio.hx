@@ -3,6 +3,9 @@ package aeons.audio.services;
 import aeons.math.AeMath;
 import kha.System;
 
+/**
+ * The standard audio implementation.
+ */
 @:dox(hide)
 class InternalAudio implements Audio {
   public var masterVolume(default, set) = 1.0;

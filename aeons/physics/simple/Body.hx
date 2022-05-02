@@ -14,6 +14,16 @@ class Body {
   public var type: BodyType = DYNAMIC;
 
   /**
+   * The world x position of the center of the body in pixels.
+   */
+  public var x(get, never): Float;
+
+  /**
+   * The world y position of the center of the body in pixels.
+   */
+  public var y(get, never): Float;
+
+  /**
    * The bounds of the body.
    */
   public var bounds(default, null) = new Rect();
@@ -137,5 +147,19 @@ class Body {
    */
   public function new(?component: CSimpleBody) {
     this.component = component;
+  }
+
+  /**
+   * The x getter.
+   */
+  inline function get_x(): Float {
+    return bounds.x + bounds.width * 0.5;
+  }
+
+  /**
+   * The y getter.
+   */
+  inline function get_y(): Float {
+    return bounds.y + bounds.height * 0.5;
   }
 }

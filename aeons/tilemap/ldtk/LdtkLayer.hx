@@ -237,16 +237,10 @@ class LdtkLayer {
     }
   }
 
-  /**
-   * Layer width getter.
-   */
   inline function get_width(): Int {
     return tiles[0].length;
   }
 
-  /**
-   * Layer height gettter.
-   */
   inline function get_height(): Int {
     return tiles.length;
   }

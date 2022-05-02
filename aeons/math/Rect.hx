@@ -186,31 +186,20 @@ package aeons.math;
 
     return true;
   }
-  /**
-   * xi getter.
-   */
-  function get_xi(): Int {
+
+  inline function get_xi(): Int {
     return Std.int(x);
   }
 
-  /**
-   * yi getter.
-   */
-  function get_yi(): Int {
+  inline function get_yi(): Int {
     return Std.int(y);
   }
 
-  /**
-   * widthi getter.
-   */
-  function get_widthi(): Int {
+  inline function get_widthi(): Int {
     return Std.int(width);
   }
 
-  /**
-   * heighti getter.
-   */
-  function get_heighti(): Int {
+  inline function get_heighti(): Int {
     return Std.int(height);
   }
 }

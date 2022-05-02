@@ -108,6 +108,7 @@ class RenderTarget {
     if (clear) {
       g4.clear(color);
     }
+    transform.setFrom(FastMatrix4.identity());
   }
 
   /**

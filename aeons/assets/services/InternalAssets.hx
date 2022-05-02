@@ -7,8 +7,6 @@ import aeons.graphics.Video;
 import aeons.graphics.atlas.Atlas;
 import aeons.utils.Blob;
 
-import haxe.Exception;
-
 /**
  * InternalAssets is the main Assets implementation.
  */

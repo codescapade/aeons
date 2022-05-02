@@ -40,9 +40,8 @@ interface Systems {
   /**
    * Render gets called every frame. This renders all SysRenderable systems.
    * @param target The target to render to.
-   * @param cameraBounds The camera bounds in local space.
    */
-  function render(target: RenderTarget, ?cameraBounds: Rect): Void;
+  function render(target: RenderTarget): Void;
 
   /**
    * Return a list of systems that need to be debug rendered.

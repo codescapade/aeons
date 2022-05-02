@@ -133,23 +133,14 @@ class CAnimation extends Component {
     anims.remove(name);
   }
 
-  /**
-   * Current animation name getter.
-   */
   inline function get_current(): String {
     return anim == null ? '' : anim.name;
   }
 
-  /**
-   * Is the animation finished getter.
-   */
   inline function get_finished(): Bool {
     return anim == null ? true : anim.finished(time);
   }
 
-  /**
-   * Atlas getter.
-   */
   inline function get_atlas(): Atlas{
     return anim == null ? null : anim.atlas;
   }

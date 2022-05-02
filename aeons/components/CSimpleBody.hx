@@ -14,6 +14,16 @@ import aeons.physics.simple.Touching;
  */
 class CSimpleBody extends Component {
   /**
+   * The world x position of the center of the body in pixels.
+   */
+  public var x(get, never): Float;
+
+  /**
+   * The world y position of the center of the body in pixels.
+   */
+  public var y(get, never): Float;
+
+  /**
    * The type of body. Defaults to dynamic.
    */
   public var type(get, set): BodyType;
@@ -64,7 +74,7 @@ class CSimpleBody extends Component {
   public var mask(get, set): CollisionFilter;
 
   /**
-   * The body bounce.
+   * The body bounce. 0 is no bounce. 1 is bounce with the same speed as it touched.
    */
   public var bounce(get, set): Float;
 
@@ -227,223 +237,140 @@ class CSimpleBody extends Component {
     return false;
   }
 
-  /**
-   * Type getter.
-   */
   inline function get_type(): BodyType {
     return body.type;
   }
 
-  /**
-   * Type setter.
-   * @param value The new value.
-   */
   inline function set_type(value: BodyType): BodyType {
     body.type = value;
 
     return value;
   }
 
-  /**
-   * Is trigger getter.
-   */
   inline function get_isTrigger(): Bool {
     return body.isTrigger;
   }
 
-  /**
-   * Is trigger setter.
-   * @param value The new value.
-   */
   inline function set_isTrigger(value: Bool): Bool {
     body.isTrigger = value;
 
     return value;
   }
 
-  /**
-   * Bounds getter.
-   */
   inline function get_bounds(): Rect {
     return body.bounds;
   }
 
-  /**
-   * Drag getter.
-   */
   inline function get_drag(): Vector2 {
     return body.drag;
   }
 
-  /**
-   * Tags getter.
-   */
   inline function get_tags(): Array<String> {
     return body.tags;
   }
 
-  /**
-   * Velocity getter.
-   */
   inline function get_velocity(): Vector2 {
     return body.velocity;
   }
 
-  /**
-   * Max velocity getter.
-   */
   inline function get_maxVelocity(): Vector2 {
     return body.maxVelocity;
   }
 
-  /**
-   * Acceleration getter.
-   */
   inline function get_acceleration(): Vector2 {
     return body.acceleration;
   }
 
-  /**
-   * Offset getter
-   */
   inline function get_offset(): Vector2 {
     return body.offset;
   }
 
-  /**
-   * Group getter.
-   */
   inline function get_group(): CollisionFilter {
     return body.group;
   }
 
-  /**
-   * Group setter.
-   * @param value The new value.
-   */
   inline function set_group(value: CollisionFilter): CollisionFilter {
     body.group = value;
 
     return value;
   }
 
-  /**
-   * Mask getter.
-   */
   inline function get_mask(): CollisionFilter {
     return body.mask;
   }
 
-  /**
-   * Mask setter.
-   * @param value The new value. 
-   */
   inline function set_mask(value: CollisionFilter): CollisionFilter {
     body.mask = value;
 
     return value;
   }
 
-  /**
-   * Bounce getter.
-   */
   inline function get_bounce(): Float {
     return body.bounce;
   }
 
-  /**
-   * Bounce setter.
-   * @param value The new value.
-   */
   inline function set_bounce(value: Float): Float {
     body.bounce = value;
 
     return value;
   }
 
-  /**
-   * Use gravity getter.
-   */
   inline function get_useGravity(): Bool {
     return body.useGravity;
   }
 
-  /**
-   * Use gravity setter.
-   * @param value The new value.
-   */
   inline function set_useGravity(value: Bool): Bool {
     body.useGravity = value;
 
     return value;
   }
 
-  /**
-   * Touching getter.
-   */
   inline function get_touching(): Touching {
     return body.touching;
   }
 
-  /**
-   * Touching setter.
-   * @param value The new value.
-   */
   inline function set_touching(value: Touching): Touching {
     body.touching = value;
 
     return value;
   }
 
-  /**
-   * TouchingPrevious getter.
-   */
   inline function get_touchingPrevious(): Touching {
     return body.touchingPrevious;
   }
 
-  /**
-   * TouchingPrevious setter.
-   * @param value The new value.
-   */
   inline function set_touchingPrevious(value: Touching): Touching {
     body.touchingPrevious = value;
 
     return value;
   }
 
-  /**
-   * Can collide getter.
-   */
   inline function get_canCollide(): Collide {
     return body.canCollide;
   }
 
-  /**
-   * Can collide setter.
-   * @param value The new value.
-   */
   inline function set_canCollide(value: Collide) {
     body.canCollide = value;
 
     return body.canCollide;
   }
 
-  /**
-   * User data getter.
-   */
   inline function get_userData(): Dynamic {
     return body.userData;
   }
 
-  /**
-   * User data setter.
-   * @param value The new value.
-   */
   inline function set_userData(value: Dynamic): Dynamic {
     body.userData = value;
 
     return value;
+  }
+
+  inline function get_x(): Float {
+    return body.x;
+  }
+
+  inline function get_y(): Float {
+    return body.y;
   }
 }
 

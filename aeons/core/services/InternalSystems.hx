@@ -106,9 +106,9 @@ class InternalSystems implements Systems {
     }
   }
 
-  public function render(target: RenderTarget, ?cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     for (system in renderSystems) {
-      system.render(target, cameraBounds);
+      system.render(target);
     }
   }
 

@@ -34,7 +34,7 @@ class NullSystems implements Systems {
     trace('update is not implemented');
   }
 
-  public function render(target: RenderTarget, ?cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     trace('render is not implemented');
   }
 

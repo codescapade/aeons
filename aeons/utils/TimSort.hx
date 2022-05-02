@@ -61,8 +61,6 @@ class TimSort<T> {
       return;
     }
 
-    var l = array.length;
-
     var runLength = 0;
 
     if (remaining < DEFAULT_MIN_MERGE) {

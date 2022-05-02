@@ -250,20 +250,12 @@ class CCamera extends Component {
     bounds.height = viewHeight / zoom;
   }
 
-  /**
-   * ViewWidth setter.
-   * @param value The new view width.
-   */
   inline function set_viewWidth(value: Int): Int {
     viewWidth = value;
 
     return value;
   }
 
-  /**
-   * ViewHeight setter.
-   * @param value The new view height.
-   */
   inline function set_viewHeight(value: Int): Int {
     viewHeight = value;
 

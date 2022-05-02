@@ -161,7 +161,7 @@ class CNineSlice extends Component implements Renderable {
         bottomRight.frameRect.x, bottomRight.frameRect.y, bottomRight.frameRect.width, bottomRight.frameRect.height,
         atlas.image, color);
   }
-  
+
   /**
    * Check if the component is inside the camera bounds and should be rendered.
    * @param cameraBounds Used to render only what the camera can see.

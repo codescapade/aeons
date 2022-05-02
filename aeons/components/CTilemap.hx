@@ -223,47 +223,19 @@ class CTilemap extends Component implements Renderable {
     return [CTransform];
   }
 
-  /**
-   * Get the width of the whole map in pixels.
-   */
   inline function get_widthInPixels(): Int {
-    if (tiles == null || tileset == null) {
-      return 0;
-    }
-
-    return widthInTiles * tileset.tileWidth;
+    return tiles == null || tileset == null ? 0 : widthInTiles * tileset.tileWidth;
   }
 
-  /**
-   * Get the height of the whole map in pixels.
-   */
   inline function get_heightInPixels(): Int {
-    if (tiles == null || tileset == null) {
-      return 0;
-    }
-
-    return heightInTiles * tileset.tileHeight;
+    return tiles == null || tileset == null ? 0 : heightInTiles * tileset.tileHeight;
   }
 
-  /**
-   * Return the width of the tile array rows
-   */
   inline function get_widthInTiles(): Int {
-    if (tiles == null) {
-      return 0;
-    }
-
-    return tiles[0].length;
+    return tiles == null ? 0 : tiles[0].length;
   }
 
-  /**
-   * Return the tiles array length.
-   */
   inline function get_heightInTiles(): Int {
-    if (tiles == null) {
-      return 0;
-    }
-
-    return tiles.length;
+    return tiles == null ? 0 : tiles.length;
   }
 }

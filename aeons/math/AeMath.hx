@@ -4,7 +4,7 @@ package aeons.math;
  * AeMath has math helper variables and functions.
  */
 class AeMath {
-  #if (flash || js || ios || blackberry)
+  #if (js || ios)
   /**
    * Minimum value of a floating point number.
    */

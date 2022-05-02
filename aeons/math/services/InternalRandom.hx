@@ -112,26 +112,15 @@ class InternalRandom implements Random {
     return AeMath.clampInt(value, 1, MODULUS - 1);
   }
 
-  /**
-   * Initial seed setter.
-   * @param seed New seed.
-   */
   inline function set_initialSeed(seed: Int): Int {
     // make sure the seed is in range.
     return initialSeed = currentSeed = rangeBound(seed);
   }
 
-  /**
-   * Current seed getter.
-   */
   inline function get_currentSeed(): Int {
     return Std.int(internalSeed);
   }
 
-  /**
-   * Current seed setter.
-   * @param seed New seed.
-   */
   inline function set_currentSeed(seed: Int): Int {
     // make sure the seed is in range.
     return Std.int(internalSeed = rangeBound(seed));

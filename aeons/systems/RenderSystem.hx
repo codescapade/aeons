@@ -36,6 +36,9 @@ class RenderSystem extends System implements SysRenderable {
    */
   var sortZ: Bool = false;
 
+  /**
+   * Constructor.
+   */
   public function new() {
     super();
   }
@@ -44,7 +47,7 @@ class RenderSystem extends System implements SysRenderable {
    * Gets called every frame.
    * @param target The main render target.
    */
-  public function render(target: RenderTarget,?cameraBounds: Rect) {
+  public function render(target: RenderTarget) {
     // Sort all bundles if required.
     if (sortZ) {
       renderBundles.bundles.timSort(sort);
@@ -115,8 +118,7 @@ class RenderSystem extends System implements SysRenderable {
 
   /**
    * Sort function for render bundles.
-   * Have to use the full path for the bundles because they don't exist
-   * before the macros create them.
+   * Have to use the full path for the bundles because they don't exist before the macros create them.
    * @param a The first bundle.
    * @param b The next bundle.
    */

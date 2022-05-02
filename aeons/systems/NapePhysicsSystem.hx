@@ -23,8 +23,6 @@ import aeons.physics.nape.NapeInteractionType;
  * NapePhysicsSystem updates all Nape body components.
  */
 class NapePhysicsSystem extends System implements Updatable {
-  public var debugDraw = true;
-
   /**
    * The nape space.
    */
@@ -85,10 +83,6 @@ class NapePhysicsSystem extends System implements Updatable {
     for (bundle in bodyBundles) {
       updateTransform(bundle);
     }
-  }
-
-  public function inCameraBounds(cameraBounds: Rect): Bool {
-    return true;
   }
 
   /**

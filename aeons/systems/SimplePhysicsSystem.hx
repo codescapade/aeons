@@ -576,16 +576,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     }
   }
 
-  /**
-   * World x position getter.
-   */
   inline function get_worldX(): Float {
     return bounds.x;
   }
 
-  /**
-   * World x position setter.
-   */
   inline function set_worldX(value: Float): Float {
     bounds.x = value;
     tree.updatePosition(bounds.x, bounds.y);
@@ -593,16 +587,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     return value;
   }
 
-  /**
-   * World y position getter.
-   */
   inline function get_worldY(): Float {
     return bounds.y;
   }
 
-  /**
-   * World y position setter.
-   */
   inline function set_worldY(value: Float): Float {
     bounds.y = value;
     tree.updatePosition(bounds.x, bounds.y);
@@ -610,16 +598,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     return value;
   }
 
-  /**
-   * World width  getter.
-   */
   inline function get_worldWidth(): Float {
     return bounds.width;
   }
 
-  /**
-   * World width  setter.
-   */
   inline function set_worldWidth(value: Float): Float {
     bounds.width = value;
     tree.updateBounds(bounds.x, bounds.y, bounds.width, bounds.height);
@@ -627,16 +609,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     return value;
   }
 
-  /**
-   * World height  getter.
-   */
   inline function get_worldHeight(): Float {
     return bounds.height;
   }
 
-  /**
-   * World height  setter.
-   */
   inline function set_worldHeight(value: Float): Float {
     bounds.height = value;
     tree.updateBounds(bounds.x, bounds.y, bounds.width, bounds.height);

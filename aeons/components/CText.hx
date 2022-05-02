@@ -99,24 +99,14 @@ class CText extends Component implements Renderable {
    * @return True if in bounds. Out of bounds will not render using the RenderSystem.
    */
   public function inCameraBounds(cameraBounds: Rect): Bool {
-    return true;
+    return cameraBounds.x > -cameraBounds.width - width * 2 && cameraBounds.y > -cameraBounds.height - height * 2 &&
+        cameraBounds.x < width * 2 && cameraBounds.y < height * 2;
   }
 
-  /**
-   * Font height getter.
-   */
   inline function get_height(): Float {
-    if (font == null) {
-      return 0;
-    }
-
-    return font.height(fontSize);
+    return font == null ? 0 : font.height(fontSize);
   }
 
-  /**
-   * Text setter. Also updates the font width.
-   * @param value The new text.
-   */
   inline function set_text(value: String): String {
     text = value;
     if (font == null) {
@@ -128,10 +118,6 @@ class CText extends Component implements Renderable {
     return value;
   }
 
-  /**
-   * Font setter. Also update the font width.
-   * @param value 
-   */
   inline function set_font(value: Font): Font{
     font = value;
     width = font.width(fontSize, text);

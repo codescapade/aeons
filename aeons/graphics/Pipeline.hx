@@ -27,6 +27,16 @@ class Pipeline {
    */
   public final structure: VertexStructure;
 
+  /**
+   * Constructor.
+   * @param vertexShader The vertex shader to use. 
+   * @param fragmentShader The fragment shader to use.
+   * @param hasTexture Does this shader use a texture.
+   * @param blendSource
+   * @param blendDestination
+   * @param alphaBlendSource
+   * @param alphaBlendDestination
+   */
   public function new(vertexShader: VertexShader, fragmentShader: FragmentShader, hasTexture: Bool,
       blendSource = BlendingFactor.BlendOne, blendDestination = BlendingFactor.InverseSourceAlpha,
       alphaBlendSource = BlendingFactor.BlendOne, alphaBlendDestination = BlendingFactor.InverseSourceAlpha) {

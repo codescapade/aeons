@@ -111,10 +111,6 @@ class BundleList<T: BundleBase> {
     bundleRemoved = callback;
   }
 
-  /**
-   * Return the number of bundles in this list.
-   * @return The number of bundles.
-   */
   inline function get_count(): Int {
     return bundles.length;
   }

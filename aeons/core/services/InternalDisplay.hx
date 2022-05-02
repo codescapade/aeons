@@ -60,44 +60,26 @@ class InternalDisplay implements Display {
     }
   }
 
-  /**
-   * Window width getter.
-   */
   inline function get_windowWidth(): Int {
     return System.windowWidth();
   }
 
-  /**
-   * Window height getter.
-   */
   inline function get_windowHeight(): Int {
     return System.windowHeight();
   }
 
-  /**
-   * View center x getter.
-   */
   inline function get_viewCenterX(): Int {
     return Std.int(viewWidth * 0.5);
   }
 
-  /**
-   * View center y getter.
-   */
   inline function get_viewCenterY(): Int {
     return Std.int(viewHeight * 0.5);
   }
 
-  /**
-   * Window center x getter.
-   */
   inline function get_windowCenterX(): Int {
     return Std.int(windowWidth * 0.5);
   }
 
-  /**
-   * Window center y getter.
-   */
   inline function get_windowCenterY(): Int {
     return Std.int(windowHeight * 0.5);
   }

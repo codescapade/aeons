@@ -91,9 +91,6 @@ class SoundChannel {
     volume = internalVolume;
   }
 
-  /**
-   * Volume getter.
-   */
   inline function get_volume(): Float {
     return internalVolume;
   }
@@ -111,16 +108,10 @@ class SoundChannel {
     return value;
   }
 
-  /**
-   * Sound position getter.
-   */
   inline function get_position(): Float {
     return channel.position;
   }
 
-  /**
-   * Sound position setter.
-   */
   inline function set_position(value: Float): Float {
     channel.position = value;
 

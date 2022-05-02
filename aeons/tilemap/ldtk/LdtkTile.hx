@@ -76,30 +76,18 @@ class LdtkTile {
     }
   }
 
-  /**
-   * Render width getter. Tile size or negative tile size if flipped.
-   */
   inline function get_renderWidth(): Float {
     return flipX ? -size : size;
   }
 
-  /**
-   * Render height getter. Tile size or negative tile size if flipped.
-   */
   inline function get_renderHeight(): Float {
     return flipY ? -size : size;
   }
 
-  /**
-   * xOffset getter. Tile size if the tile is flipped because it renders from top left.
-   */
   inline function get_xOffset(): Float {
     return flipX ? size : 0;
   }
 
-  /**
-   * yOffset getter. Tile size if the tile is flipped because it renders from top left.
-   */
   inline function get_yOffset(): Float {
     return flipY ? size : 0;
   }

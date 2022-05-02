@@ -113,9 +113,6 @@ class CAudio extends Component {
     _loop = loop;
   }
 
-  /**
-   * Volume getter.
-   */
   inline function get_volume(): Float {
     #if debug
     if (channel == null) {
@@ -127,10 +124,6 @@ class CAudio extends Component {
     return channel.volume;
   }
 
-  /**
-   * Volume setter.
-   * @param value The new volume.
-   */
   inline function set_volume(value: Float): Float {
     #if debug
     if (channel == null) {
@@ -144,9 +137,6 @@ class CAudio extends Component {
     return value;
   }
 
-  /**
-   * Position getter.
-   */
   inline function get_position(): Float {
     #if debug
     if (channel == null) {
@@ -157,10 +147,6 @@ class CAudio extends Component {
     return channel.position;
   }
 
-  /**
-   * Position setter.
-   * @param value The new position.
-   */
   inline function set_position(value: Float): Float {
     #if debug
     if (channel == null) {
@@ -173,18 +159,10 @@ class CAudio extends Component {
     return position;
   }
 
-  /**
-   * Loop getter.
-   */
   inline function get_loop(): Bool {
     return _loop;
   }
 
-  /**
-   * Loop setter.
-   * @param value The new loop value. 
-   * @return Bool
-   */
   function set_loop(value: Bool): Bool {
     _loop = value;
 

@@ -12,8 +12,14 @@ import aeons.graphics.RenderTarget;
 import aeons.core.SysRenderable;
 import aeons.core.System;
 
+/**
+ * Debug render system renders `CDebugRender` components and `DebugRenderable` systems.
+ * This system should be added last so it renders on top of the other rendered images.
+ */
 class DebugRenderSystem extends System implements SysRenderable {
-
+  /**
+   * Is the system currently enabled. Can be used to toggle debug rendering.
+   */
   public var enabled = true;
 
   @:bundle
@@ -24,15 +30,25 @@ class DebugRenderSystem extends System implements SysRenderable {
 
   var systems: Array<DebugRenderable>;
 
+  /**
+   * Constructor.
+   */
   public function new() {
     super();
   }
 
+  /**
+   * Initialize the system. This gets all systems that can be rendered using this system.
+   */
   public override function init() {
     systems = Aeons.systems.getDebugRenderSystems();
   }
 
-  public function render(target:RenderTarget, ?cameraBounds: Rect) {
+  /**
+   * Render the systems and components.
+   * @param target The target to render to.
+   */
+  public function render(target: RenderTarget) {
     if (!enabled) {
       return;
     }
@@ -58,19 +74,27 @@ class DebugRenderSystem extends System implements SysRenderable {
         }
       }
 
+      // Render all components.
       for (renderable in debugRenderBundles) {
         if (renderable.c_transform.containsParent(camTransform)) {
           camTarget.transform.setFrom(renderable.c_transform.matrix);
+          renderable.c_debug_render.render(camTarget);
         } else {
-          camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
-        }
-        boundsPos.set(camera.bounds.x, camera.bounds.y);
-        renderable.c_transform.worldToLocalPosition(boundsPos);
-        localBounds.x = boundsPos.x;
-        localBounds.y = boundsPos.y;
+          boundsPos.set(camera.bounds.x, camera.bounds.y);
+          renderable.c_transform.worldToLocalPosition(boundsPos);
+          boundsPos.x = boundsPos.x - renderable.c_transform.x;
+          boundsPos.y = boundsPos.y - renderable.c_transform.y;
+          localBounds.x = boundsPos.x;
+          localBounds.y = boundsPos.y;
 
-        renderable.c_debug_render.render(camTarget);
+          // Only render components that are inside the camera bounds.
+          if (renderable.c_debug_render.inCameraBounds(localBounds)) {
+            camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
+            renderable.c_debug_render.render(camTarget);
+          }
+        }
       }
+
       boundsPos.put();
       camTarget.present();
     }

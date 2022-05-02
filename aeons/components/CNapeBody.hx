@@ -151,11 +151,11 @@ class CNapeBody extends Component {
 
   /**
    * Create a nape material and set it to the body.
-   * @param elasticity 
-   * @param dynamicFriction 
-   * @param staticFriction 
-   * @param density 
-   * @param rollingFriction 
+   * @param elasticity Between 0 and 1.
+   * @param dynamicFriction Any number greater than 0.
+   * @param staticFriction Any number greater than 0.
+   * @param density Gram / pixel / pixel.
+   * @param rollingFriction Any number greater than 0.
    */
   public inline function createMaterial(elasticity: Float, dynamicFriction: Float, staticFriction: Float,
       density: Float, rollingFriction: Float): Material {
@@ -225,10 +225,6 @@ class CNapeBody extends Component {
     return [CTransform];
   }
 
-  /**
-   * Sensor setter.
-   * @param value The new sensor value.
-   */
   inline function set_isSensor(value: Bool): Bool {
     isSensor = value;
     for (shape in body.shapes) {
@@ -238,58 +234,34 @@ class CNapeBody extends Component {
     return isSensor;
   }
 
-  /**
-   * Allow movement getter.
-   */
   inline function get_allowMovement(): Bool {
     return body.allowMovement;
   }
 
-  /**
-   * Allow movement setter.
-   * @param value The new movement value.
-   */
   inline function set_allowMovement(value: Bool): Bool {
     body.allowMovement = value;
 
     return value;
   }
 
-  /**
-   * Allow rotation getter.
-   */
   inline function get_allowRotation(): Bool {
     return body.allowRotation;
   }
 
-  /**
-   * Allow rotation setter.
-   * @param value The new allow rotation value.
-   */
   inline function set_allowRotation(value: Bool): Bool {
     body.allowRotation = value;
 
     return value;
   }
 
-  /**
-   * Userdata getter.
-   */
   inline function get_userData(): Dynamic {
     return body.userData;
   }
 
-  /**
-   * Type getter.
-   */
   inline function get_type(): BodyType {
     return body.type;
   }
 
-  /**
-   * Type setter.
-   * @param value The new type.
-   */
   inline function set_type(value: BodyType): BodyType {
     body.type = value;
 

@@ -369,10 +369,6 @@ class CTransform extends Component {
     return changed;
   }
 
-  /**
-   * x position setter.
-   * @param value The new x position value.
-   */
   inline function set_x(value: Float): Float {
     changed = true;
     x = value;
@@ -380,10 +376,6 @@ class CTransform extends Component {
     return value;
   }
 
-  /**
-   * y position setter.
-   * @param value The new y position value.
-   */
   inline function set_y(value: Float): Float {
     changed = true;
     y = value;
@@ -391,10 +383,6 @@ class CTransform extends Component {
     return value;
   }
 
-  /**
-   * angle Setter.
-   * @param value The new angle value.
-   */
   inline function set_angle(value: Float): Float {
     changed = true;
     angle = value;
@@ -402,10 +390,6 @@ class CTransform extends Component {
     return value;
   }
 
-  /**
-   * scaleX setter.
-   * @param value The new scaleX value.
-   */
   inline function set_scaleX(value: Float): Float {
     changed = true;
     scaleX = value;
@@ -413,10 +397,6 @@ class CTransform extends Component {
     return value;
   }
 
-  /**
-   * scaleY setter.
-   * @param value The new scaleY value.
-   */
   inline function set_scaleY(value: Float): Float {
     changed = true;
     scaleY = value;
