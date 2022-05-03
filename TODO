@@ -9,6 +9,7 @@ Main todos:
   ✔ Implement debug drawing in systems and components. @done(22-04-03 14:57)
   ✔ Add implementation for storage service. @done(22-04-20 16:50)
   ☐ Add debug rendering back to the nape physics system.
+  ☐ Add better and custom scaling.
 
 Bugs:
   ☐ Fix debug drawing for systems when something is parented to the camera.

@@ -465,14 +465,14 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
           interactions.push(Interaction.get(COLLISION_STAY, body1, body2));
         }
         body1.collidingWith.push(body2);
-      } else if (body1.isTrigger) {
+      } else if (body1.isTrigger && !body2.isTrigger) {
         if (body1.wasTriggeredBy.indexOf(body2) == -1) {
           interactions.push(Interaction.get(TRIGGER_START, body1, body2));
         } else {
           interactions.push(Interaction.get(TRIGGER_STAY, body1, body2));
         }
         body1.triggeredBy.push(body2);
-      } else if (body2.isTrigger) {
+      } else if (body2.isTrigger && !body1.isTrigger) {
         if (body2.wasTriggeredBy.indexOf(body1) == -1) {
           interactions.push(Interaction.get(TRIGGER_START, body1, body2));
         } else {

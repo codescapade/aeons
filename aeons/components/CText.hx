@@ -32,6 +32,16 @@ class CText extends Component implements Renderable {
   public var color: Color;
 
   /**
+   * Should the text have a colored background.
+   */
+  public var hasBackground: Bool;
+
+  /**
+   * The background color for the text.
+   */
+  public var backgroundColor: Color;
+
+  /**
    * The width of the text in pixels.
    */
   public var width(default, null): Float;
@@ -65,15 +75,15 @@ class CText extends Component implements Renderable {
       color = Color.White;
       anchorX = 0.5;
       anchorY = 0.5;
+      hasBackground = false;
+      backgroundColor = Color.Black;
     } else {
       text = options.text == null ? '' : options.text;
       if (options.font != null) font = options.font;
       if (options.fontSize != null) fontSize = options.fontSize;
-      if (options.color != null) {
-        color = options.color;
-      } else {
-        color = Color.White;
-      }
+      color = options.color == null ?  Color.White : options.color;
+      backgroundColor = options.backgroundColor == null ? Color.Black : options.backgroundColor;
+      if (options.hasBackground != null) hasBackground = options.hasBackground;
 
       anchorX = options.anchorX == null ? 0.5 : options.anchorX;
       anchorY = options.anchorY == null ? 0.5 : options.anchorY;
@@ -87,6 +97,10 @@ class CText extends Component implements Renderable {
   public function render(target: RenderTarget) {
     if (font == null) {
       return;
+    }
+
+    if (hasBackground) {
+      target.drawSolidRect(-(width) * anchorX - 2, -(height) * anchorY - 1, width + 4, height + 2, backgroundColor);
     }
 
     target.drawString(-width * anchorX, -height * anchorY, text, font, fontSize, color);
@@ -159,4 +173,14 @@ typedef CTextOptions = {
    * The y axis anchor.
    */
   var ?anchorY: Float;
+
+  /**
+   * Should there be a background color around the text.
+   */
+  var ?hasBackground: Bool;
+
+  /**
+   * The color of the background around the text.
+   */
+  var ?backgroundColor: Color;
 }

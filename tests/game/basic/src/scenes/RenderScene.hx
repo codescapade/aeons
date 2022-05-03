@@ -1,14 +1,14 @@
 package scenes;
 
-import aeons.events.SceneEvent;
-import aeons.events.input.KeyboardEvent;
 import aeons.Aeons;
+import aeons.components.CCamera;
 import aeons.components.CSprite;
 import aeons.components.CTransform;
-import aeons.components.CCamera;
 import aeons.core.Entity;
-import aeons.systems.RenderSystem;
 import aeons.core.Scene;
+import aeons.events.SceneEvent;
+import aeons.events.input.KeyboardEvent;
+import aeons.systems.RenderSystem;
 
 class RenderScene extends Scene {
 
@@ -29,6 +29,6 @@ class RenderScene extends Scene {
   }
 
   function keyDown(event: KeyboardEvent) {
-    SceneEvent.emit(SceneEvent.REPLACE, RenderScene);
+    SceneEvent.emit(SceneEvent.REPLACE, new RenderScene());
   }
 }
