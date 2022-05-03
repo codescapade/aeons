@@ -39,7 +39,7 @@ class BundleList<T: BundleBase> {
    */
   public function addBundle(bundle: T) {
     // Add a bundle to the start of the array.
-    bundles.unshift(bundle);
+    bundles.push(bundle);
 
     if (bundleAdded != null) {
       bundleAdded(bundle);

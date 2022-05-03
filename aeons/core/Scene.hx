@@ -68,7 +68,7 @@ class Scene {
    * @param dt The time passed since the last update.
    */
   public function update(dt: Float) {
-    sceneProviders.entities.updateAddRemove();
+    sceneProviders.entities.updateRemoved();
     sceneProviders.tweens.update(dt);
     sceneProviders.timers.update(dt);
     sceneProviders.systems.update(dt);

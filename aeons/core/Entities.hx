@@ -31,9 +31,9 @@ interface Entities {
   function removeEntityById(id: Int, pool: Bool = false): Void;
 
   /**
-   * Update the entities and components that have been added or removed in the last update.
+   * Update the entities and components that have been removed in the last update.
    */
-  function updateAddRemove(): Void;
+  function updateRemoved(): Void;
 
   /**
    * Add a component to an entity.

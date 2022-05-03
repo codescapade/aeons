@@ -28,11 +28,6 @@ class InternalEntities implements Entities {
   final entitiesToRemove: Array<EntityRemovedInfo> = [];
 
   /**
-   * A list of components to add at the start of the next update.
-   */
-  final componentsToAdd: Array<ComponentEvent> = [];
-
-  /**
    * A list of components to remove at the start of the next update.
    */
   final componentsToRemove: Array<ComponentRemovedInfo> = [];
@@ -119,7 +114,7 @@ class InternalEntities implements Entities {
     components[name][entity.id] = component;
     component.init(entity.id);
 
-    componentsToAdd.push(ComponentEvent.get(eventType, entity));
+    ComponentEvent.emit(eventType, entity);
 
     if (Std.isOfType(component, Updatable)) {
       if (updateComponents[entity.id] == null) {
@@ -136,7 +131,7 @@ class InternalEntities implements Entities {
           updateComp.init(entity.id);
 
           final updateEventType = 'aeons_${updateCompName}_added';
-          componentsToAdd.push(ComponentEvent.get(updateEventType, entity));
+          ComponentEvent.emit(updateEventType, entity);
         }
       } else {
         updateComponents[entity.id].push(cast component);
@@ -158,7 +153,7 @@ class InternalEntities implements Entities {
           renderComp.init(entity.id);
 
           final renderEventType = 'aeons_${renderCompName}_added';
-          componentsToAdd.push(ComponentEvent.get(renderEventType, entity));
+          ComponentEvent.emit(renderEventType, entity);
         }
       } else {
         renderComponents[entity.id].push(cast component);
@@ -180,7 +175,7 @@ class InternalEntities implements Entities {
           renderComp.init(entity.id);
 
           final renderEventType = 'aeons_${renderCompName}_added';
-          componentsToAdd.push(ComponentEvent.get(renderEventType, entity));
+          ComponentEvent.emit(renderEventType, entity);
         }
       } else {
         debugRenderComponents[entity.id].push(cast component);
@@ -287,10 +282,10 @@ class InternalEntities implements Entities {
     for (entity in entities) {
       removeEntity(entity);
     }
-    updateAddRemove();
+    updateRemoved();
   }
 
-  public function updateAddRemove() {
+  public function updateRemoved() {
     // Remove entities.
     while (entitiesToRemove.length > 0) {
       final entityInfo = entitiesToRemove.pop();
@@ -336,10 +331,10 @@ class InternalEntities implements Entities {
       entities.remove(entityInfo.entity);
     }
 
-    // Send to systems the notifications of the new components.
-    while (componentsToAdd.length > 0) {
-      Aeons.events.emit(componentsToAdd.pop());
-    }
+    // // Send to systems the notifications of the new components.
+    // while (componentsToAdd.length > 0) {
+    //   Aeons.events.emit(componentsToAdd.pop());
+    // }
 
     // Remove components.
     while (componentsToRemove.length > 0) {

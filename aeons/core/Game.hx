@@ -287,7 +287,6 @@ class Game {
 
     scene.setProviders();
     scene.init();
-    Aeons.entities.updateAddRemove();
 
     // Set the scene event list to the top most list.
     Aeons.events.setIndex(scenes.length - 1);
