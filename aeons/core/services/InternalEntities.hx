@@ -25,7 +25,7 @@ class InternalEntities implements Entities {
   /**
    * A list of entities to remove at the start of the next update.
    */
-  final entitiesToRemove: Array<EntityRemovedInfo> = [];
+  final entitiesToRemove: Array<Entity> = [];
 
   /**
    * A list of components to remove at the start of the next update.
@@ -73,9 +73,9 @@ class InternalEntities implements Entities {
     return entity;
   }
 
-  public function removeEntity(entity: Entity, pool = false) {
+  public function removeEntity(entity: Entity) {
     entity.active = false;
-    entitiesToRemove.push({ entity: entity, pool: pool });
+    entitiesToRemove.push(entity);
   }
 
   public function getEntityById(id: Int): Entity {
@@ -88,11 +88,11 @@ class InternalEntities implements Entities {
     return null;
   }
 
-  public function removeEntityById(id: Int, pool = false) {
+  public function removeEntityById(id: Int) {
     final entity = getEntityById(id);
     entity.active = false;
     if (entity != null) {
-      entitiesToRemove.push({ entity: entity, pool: pool });
+      entitiesToRemove.push(entity);
     }
   }
 
@@ -185,7 +185,7 @@ class InternalEntities implements Entities {
     return component;
   }
 
-  public function removeComponent(entity: Entity, componentType: Class<Component>, pool: Bool = false) {
+  public function removeComponent(entity: Entity, componentType: Class<Component>) {
     final name = Type.getClassName(componentType);
 
     if (components[name] == null || components[name][entity.id] == null) {
@@ -193,7 +193,7 @@ class InternalEntities implements Entities {
     }
 
     final component = components[name][entity.id];
-    componentsToRemove.push({ entity: entity, componentName: name, component: component, pool: pool });
+    componentsToRemove.push({ entity: entity, componentName: name, component: component });
   }
 
   public function getComponent<T: Component>(entityId: Int, componentType: Class<T>): T {
@@ -288,47 +288,44 @@ class InternalEntities implements Entities {
   public function updateRemoved() {
     // Remove entities.
     while (entitiesToRemove.length > 0) {
-      final entityInfo = entitiesToRemove.pop();
-      freeIds.push(entityInfo.entity.id);
+      final entity = entitiesToRemove.pop();
+      freeIds.push(entity.id);
 
       // Loop through all components and remove them.
-      final allComponents = getAllComponentsForEntity(entityInfo.entity.id);
+      final allComponents = getAllComponentsForEntity(entity.id);
       for (component in allComponents) {
         final name = Type.getClassName(Type.getClass(component));
-        components[name][entityInfo.entity.id] = null;
+        components[name][entity.id] = null;
         if (Std.isOfType(component, Updatable)) {
-          updateComponents[entityInfo.entity.id].remove(cast component);
-          if (updateComponents[entityInfo.entity.id].length == 0) {
-            updateComponents[entityInfo.entity.id] = null;
+          updateComponents[entity.id].remove(cast component);
+          if (updateComponents[entity.id].length == 0) {
+            updateComponents[entity.id] = null;
           }
         }
 
         if (Std.isOfType(component, Renderable)) {
-          renderComponents[entityInfo.entity.id].remove(cast component);
-          if (renderComponents[entityInfo.entity.id].length == 0) {
-            renderComponents[entityInfo.entity.id] = null;
+          renderComponents[entity.id].remove(cast component);
+          if (renderComponents[entity.id].length == 0) {
+            renderComponents[entity.id] = null;
           }
         }
 
         if (Std.isOfType(component, DebugRenderable)) {
-          debugRenderComponents[entityInfo.entity.id].remove(cast component);
-          if (debugRenderComponents[entityInfo.entity.id].length == 0) {
-            debugRenderComponents[entityInfo.entity.id] = null;
+          debugRenderComponents[entity.id].remove(cast component);
+          if (debugRenderComponents[entity.id].length == 0) {
+            debugRenderComponents[entity.id] = null;
           }
         }
 
         // Send the component_removed message to all the systems that care about them so they can be updated.
         final eventType: EventType<ComponentEvent> = 'aeons_${name}_removed';
-        ComponentEvent.emit(eventType, entityInfo.entity);
+        ComponentEvent.emit(eventType, entity);
 
-        if (entityInfo.pool) {
-          component.put();
-        } else {
-          component.cleanup();
-        }
+        component.cleanup();
       }
-      entityInfo.entity.cleanup();
-      entities.remove(entityInfo.entity);
+
+      entity.cleanup();
+      entities.remove(entity);
     }
 
     // // Send to systems the notifications of the new components.
@@ -346,11 +343,7 @@ class InternalEntities implements Entities {
       // Send an event to systems that listen for this component.
       ComponentEvent.emit(eventType, update.entity);
 
-      if (update.pool) {
-        update.component.put();
-      } else {
-        update.component.cleanup();
-      }
+      update.component.cleanup();
 
       if (Std.isOfType(update.component, Updatable)) {
         updateComponents[update.entity.id].remove(cast update.component);
@@ -436,22 +429,4 @@ class ComponentRemovedInfo {
    * The class name of the component as string.
    */
   public final componentName: String;
-
-  /**
-   * Should the component be put back in its object pool.
-   */
-  public final pool: Bool;
-}
-
-@:structInit
-class EntityRemovedInfo {
-  /**
-   * The entity to remove.
-   */
-  public final entity: Entity;
-
-  /**
-   * Should the components be pooled.
-   */
-  public final pool: Bool;
 }

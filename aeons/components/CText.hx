@@ -87,6 +87,7 @@ class CText extends Component implements Renderable {
 
       anchorX = options.anchorX == null ? 0.5 : options.anchorX;
       anchorY = options.anchorY == null ? 0.5 : options.anchorY;
+      width = font.width(fontSize, text);
     }
   }
 
@@ -100,7 +101,7 @@ class CText extends Component implements Renderable {
     }
 
     if (hasBackground) {
-      target.drawSolidRect(-(width) * anchorX - 2, -(height) * anchorY - 1, width + 4, height + 2, backgroundColor);
+      target.drawSolidRect(-((width) * anchorX) - 2, -(height) * anchorY - 1, width + 4, height + 2, backgroundColor);
     }
 
     target.drawString(-width * anchorX, -height * anchorY, text, font, fontSize, color);

@@ -213,16 +213,6 @@ class CCamera extends Component {
   }
 
   /**
-   * Put the component back into the object pool.
-   */
-  public override function put() {
-    super.put();
-    if (main == this) {
-      main = null;
-    }
-  }
-
-  /**
    * Clear the current main camera.
    */
   @:allow(aeons.core.Game)

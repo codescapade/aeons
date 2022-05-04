@@ -3,7 +3,6 @@ package aeons.core;
 /**
  * The component base class.
  */
-@:autoBuild(aeons.core.Macros.buildPool())
 class Component {
   /**
    * The entity this component belongs to.
@@ -34,10 +33,6 @@ class Component {
         throw 'Entity ${entityId} is missing a required ${Type.getClassName(component)} component.';
       }
     }
-  }
-
-  public function put() {
-    entityId = -1;
   }
 
   /**

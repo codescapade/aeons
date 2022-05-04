@@ -94,10 +94,9 @@ class Scene {
   /**
    * Remove an entity from the manager.
    * @param entity The entity to remove.
-   * @param pool Should the components on this entity be put back in their object pools.
    */
-  public inline function removeEntity(entity: Entity, pool: Bool = false) {
-    sceneProviders.entities.removeEntity(entity, pool);
+  public inline function removeEntity(entity: Entity) {
+    sceneProviders.entities.removeEntity(entity);
   }
 
   /**
@@ -112,10 +111,9 @@ class Scene {
   /**
    * Remove an entity by its id.
    * @param id The entity id.
-   * @param pool Should the components on this entity be put back in their object pools.
    */
-  public inline function removeEntityById(id: Int, pool: Bool = false) {
-    sceneProviders.entities.removeEntityById(id, pool);
+  public inline function removeEntityById(id: Int) {
+    sceneProviders.entities.removeEntityById(id);
   }
 
   /**

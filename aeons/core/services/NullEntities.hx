@@ -11,7 +11,7 @@ public function addEntity<T: Entity>(entityType: T): T{
     return null;
   }
 
-	public function removeEntity(entity: Entity, pool: Bool = false) {
+	public function removeEntity(entity: Entity) {
     trace('removeEntity is not implemented');
 	}
 
@@ -21,7 +21,7 @@ public function addEntity<T: Entity>(entityType: T): T{
     return null;
 	}
 
-	public function removeEntityById(id: Int, pool: Bool = false) {
+	public function removeEntityById(id: Int) {
     trace('removeEntityById is not implemented');
 }
 
@@ -31,7 +31,7 @@ public function addEntity<T: Entity>(entityType: T): T{
     return null;
 	}
 
-	public function removeComponent(entity: Entity, componentType: Class<Component>, pool: Bool = false) {
+	public function removeComponent(entity: Entity, componentType: Class<Component>) {
     trace('removeComponent is not implemented');
 	}
 

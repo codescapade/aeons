@@ -51,8 +51,9 @@ class CAnimation extends Component {
 
   /**
    * CAnimation constructor.
+   * @param animations Optional list of animations to add to the component.
    */
-  public function new(?options: CAnimationOptions) {
+  public function new(?animations: Array<Animation>) {
     super();
     playing = false;
     currentFrame = null;
@@ -60,8 +61,8 @@ class CAnimation extends Component {
     time = 0.0;
     anims = new Map<String, Animation>();
 
-    if (options != null) {
-      for (animation in options.animations) {
+    if (animations != null) {
+      for (animation in animations) {
         anims[animation.name] = animation;
       }
     }
@@ -144,14 +145,4 @@ class CAnimation extends Component {
   inline function get_atlas(): Atlas{
     return anim == null ? null : anim.atlas;
   }
-}
-
-/**
- * CAnimation init options.
- */
-typedef CAnimationOptions = {
-  /**
-   * A list of animations so you don't have to add them one by one.
-   */
-  var animations: Array<Animation>;
 }
