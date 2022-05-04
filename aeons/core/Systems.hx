@@ -1,6 +1,5 @@
 package aeons.core;
 
-import aeons.math.Rect;
 import aeons.graphics.RenderTarget;
 
 interface Systems {

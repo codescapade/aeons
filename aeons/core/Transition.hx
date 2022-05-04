@@ -1,8 +1,6 @@
 package aeons.core;
 
 import aeons.events.SceneEvent;
-import aeons.graphics.Color;
-import aeons.graphics.RenderTarget;
 
 /**
  * The transition class can be used for transition effects between scenes.

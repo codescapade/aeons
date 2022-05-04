@@ -13,7 +13,6 @@ import aeons.components.CTransform;
 import aeons.core.Bundle;
 import aeons.core.System;
 import aeons.core.Updatable;
-import aeons.math.Rect;
 import aeons.math.AeMath;
 import aeons.math.Vector2;
 import aeons.physics.nape.DebugDraw;

@@ -7,7 +7,6 @@ import aeons.events.SceneEvent;
 import aeons.events.services.InternalEvents;
 import aeons.graphics.RenderTarget;
 import aeons.input.Input;
-import aeons.math.AeMath;
 import aeons.math.services.InternalRandom;
 import aeons.utils.services.InternalStorage;
 import aeons.utils.services.InternalTimeStep;

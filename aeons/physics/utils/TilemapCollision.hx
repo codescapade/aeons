@@ -18,7 +18,8 @@ class TilemapCollision {
    * @param tilemap The tilemap the colliders are for.
    * @param worldX The x position of the tilemap in world pixels.
    * @param worldY The y position of the tilemap in world pixels.
-   * @param collisionTileIds The list of ids that should have a collider. If the list is empty all ids will count as colliders.
+   * @param collisionTileIds The list of ids that should have a collider. If the list is empty all ids will count
+   * as colliders.
    * @return A list of rectangles that represent colliders.
    */
   public static function generateCollidersFromCTilemap(tilemap: CTilemap, worldX: Float, worldY: Float,
@@ -45,7 +46,8 @@ class TilemapCollision {
    * @param layer The LDtk tilemap layer to use for the collider generation. 
    * @param worldX The x position of the tilemap in world pixels.
    * @param worldY The y position of the tilemap in world pixels.
-   * @param collisionTileIds The list of ids that should have a collider. If the list is empty all ids will count as colliders.
+   * @param collisionTileIds The list of ids that should have a collider. If the list is empty all ids will count
+   * as colliders.
    * @return A list of rectangles that represent colliders.
    */
   public static function generateCollidersFromLDtkLayer(layer: LdtkLayer, worldX: Float, worldY: Float,

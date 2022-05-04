@@ -1,7 +1,6 @@
 package aeons.core.services;
 
 import aeons.core.DebugRenderable;
-import aeons.math.Rect;
 import aeons.graphics.RenderTarget;
 
 @:dox(hide)
