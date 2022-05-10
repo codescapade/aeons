@@ -11,7 +11,6 @@ import aeons.events.input.KeyboardEvent;
 import aeons.systems.RenderSystem;
 
 class RenderScene extends Scene {
-
   public override function init() {
     Aeons.systems.add(new RenderSystem());
 

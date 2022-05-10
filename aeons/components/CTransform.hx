@@ -2,13 +2,13 @@ package aeons.components;
 
 import aeons.core.Component;
 import aeons.events.SortEvent;
-import aeons.math.FastMatrix4;
 import aeons.math.AeMath;
+import aeons.math.FastMatrix4;
 import aeons.math.Quaternion;
 import aeons.math.Vector2;
 
-using aeons.math.QuaternionEx;
 using aeons.math.FastMatrix4Ex;
+using aeons.math.QuaternionEx;
 
 /**
  * CTransform component to handle position, rotation and scale of an entity.

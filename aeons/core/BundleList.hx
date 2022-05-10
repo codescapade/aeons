@@ -5,7 +5,7 @@ import haxe.iterators.ArrayIterator;
 /**
  * A BundleList holds an array of all bundles that a list of components matches.
  */
-class BundleList<T: BundleBase> {
+class BundleList<T:BundleBase> {
   /**
    * The list of bundles.
    */

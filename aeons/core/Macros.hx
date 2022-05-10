@@ -65,12 +65,17 @@ class Macros {
     // does not exist.
     if (!hasGet) {
       // The first parameter in the get function is the type which is of EventType<EventClass>.
-      final typeParam = { name: 'type', type: TPath({ name: 'EventType', pack: ['aeons', 'events'],
-          params: [TPType(eventType)] })};
+      final typeParam = {
+        name: 'type',
+        type: TPath({
+          name: 'EventType',
+          pack: ['aeons', 'events'],
+          params: [TPType(eventType)]
+        })
+      };
 
       final paramFields: Array<FunctionArg> = [typeParam];
       for (field in fields) {
-
         switch (field.kind) {
           case FVar(fType, fExpr):
             if (!field.access.contains(AStatic)) {
@@ -82,7 +87,6 @@ class Macros {
             }
           case FProp(get, set, fType, fExpr):
             if (!field.access.contains(AStatic) && field.access.contains(APublic)) {
-
               // Get the class as parameter types for the get function.
               paramFields.push({ name: field.name, type: fType, value: fExpr });
             }
@@ -95,7 +99,7 @@ class Macros {
       final assignExprs: Array<Expr> = [];
       for (param in paramFields) {
         final name = param.name;
-        assignExprs.push(macro { this.$name = $i{name}; });
+        assignExprs.push(macro {this.$name = $i{name};});
       }
 
       // Create the init function that sets the new values for the event.
@@ -105,7 +109,7 @@ class Macros {
         pos: Context.currentPos(),
         kind: FFun({
           args: paramFields,
-          expr: macro $b{ assignExprs }
+          expr: macro $b{assignExprs}
         })
       });
 
@@ -129,7 +133,6 @@ class Macros {
             return event;
           },
           ret: eventType
-
         })
       });
 
@@ -144,7 +147,7 @@ class Macros {
 
             aeons.Aeons.events.emit(event);
           },
-          ret: macro: Void
+          ret: macro:Void
         })
       });
     }
@@ -162,13 +165,13 @@ class Macros {
             super.put();
             pool.put(this);
           },
-          ret: macro: Void
+          ret: macro:Void
         })
       });
     } else {
       switch (putFunction.kind) {
         case FFun(func):
-          final expr = macro { pool.put(this); };
+          final expr = macro {pool.put(this);};
           func.expr = macro $b{[func.expr, expr]};
 
         default:
@@ -188,9 +191,7 @@ class Macros {
       if (Context.getType(typeName) != null) {
         return true;
       }
-    } catch (error: String) {
-
-    }
+    } catch (error:String) {}
 
     return false;
   }
@@ -261,7 +262,7 @@ class Macros {
         kind: FFun({
           args: [],
           expr: macro {super.cleanup();},
-          ret: macro: Void
+          ret: macro:Void
         })
       };
       fields.push(cleanup);
@@ -285,7 +286,7 @@ class Macros {
         case FVar(fType, fExpr):
           final fieldName = field.name;
           // Set the field type to `BundleList<BundleOfType>`.
-          field.kind = FieldType.FVar(macro: aeons.core.BundleList<$fType>, fExpr);
+          field.kind = FieldType.FVar(macro:aeons.core.BundleList<$fType>, fExpr);
 
           try {
             // toType() can throw an error and break completion so wrapping it in try catch.
@@ -308,12 +309,12 @@ class Macros {
               case FFun(o):
                 final constructorExprs = [o.expr];
                 // initialize the bundleList at the end of the system constructor.
-                final initBundleExpr = macro { $i{fieldName} = new aeons.core.BundleList<$fType>(); };
+                final initBundleExpr = macro {$i{fieldName} = new aeons.core.BundleList<$fType>();};
                 constructorExprs.push(initBundleExpr);
 
                 for (component in componentClasses) {
                   final listenerExpr = macro {
-                    // Component added event listener. 
+                    // Component added event listener.
                     aeons.Aeons.events.on('aeons_' + $v{component} + '_added', (event: aeons.events.ComponentEvent) -> {
                       // Check if the entity has all required components.
                       if (event.entity.hasBundleComponents($v{componentClasses})) {
@@ -327,11 +328,11 @@ class Macros {
 
                     // Component removed event listener.
                     aeons.Aeons.events.on('aeons_' + $v{component} + '_removed',
-                        (event: aeons.events.ComponentEvent) -> {
-                      if ($i{fieldName}.hasEntity(event.entity)) {
-                        $i{fieldName}.removeBundle(event.entity);
-                      }
-                    });
+                      (event: aeons.events.ComponentEvent) -> {
+                        if ($i{fieldName}.hasEntity(event.entity)) {
+                          $i{fieldName}.removeBundle(event.entity);
+                        }
+                      });
                   }
                   constructorExprs.push(listenerExpr);
                 }
@@ -340,8 +341,7 @@ class Macros {
                 o.expr = macro $b{constructorExprs};
               default:
             }
-          } catch (e) {
-          }
+          } catch (e) {}
 
         default:
       }
@@ -356,7 +356,7 @@ class Macros {
    */
   static function buildBundle(): ComplexType {
     return switch (Context.getLocalType()) {
-      case TInst(_.get() => {name: 'Bundle'}, params):
+      case TInst(_.get() => { name: 'Bundle' }, params):
         buildBundleClass(params);
       default:
         throw false;
@@ -385,8 +385,8 @@ class Macros {
     // Only add a new class if it does not exist yet.
     if (!typeExists('aeons.bundles.$name')) {
       var pos = Context.currentPos();
-      var fields:Array<Field> = [];
-      var constructorExprs:Array<Expr> = [];
+      var fields: Array<Field> = [];
+      var constructorExprs: Array<Expr> = [];
       var regex = ~/(?<!^)([A-Z])/g;
 
       // Add an Expr to get the 'components' to the constructor
@@ -422,7 +422,9 @@ class Macros {
         });
 
         var componentPath = paramClass.pack.concat([paramClass.name]);
-        if (componentPath.length <= 1) componentPath.insert(0, paramClass.module);
+        if (componentPath.length <= 1) {
+          componentPath.insert(0, paramClass.module);
+        }
 
         // Add an expression to get the component in the Node's constructor
         constructorExprs.push(macro this.$paramName = entity.getComponent($p{componentPath}));
@@ -434,7 +436,7 @@ class Macros {
         access: [APublic],
         pos: pos,
         kind: FFun({
-          args: [{name: 'entity', type: TPath({name: 'Entity', pack: ['aeons', 'core']})}],
+          args: [{ name: 'entity', type: TPath({ name: 'Entity', pack: ['aeons', 'core'] }) }],
           expr: macro $b{constructorExprs},
           ret: macro:Void
         })
@@ -455,7 +457,7 @@ class Macros {
     }
 
     // Return the path to the new type.
-    return TPath({pack: ['aeons', 'bundles'], name: name, params: []});
+    return TPath({ pack: ['aeons', 'bundles'], name: name, params: [] });
   }
 }
 #end

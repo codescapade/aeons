@@ -2,15 +2,14 @@ package aeons.events.services;
 
 @:dox(hide)
 class NullEvents implements Events {
-
   public function new() {}
 
-  public function on<T: Event>(type: EventType<T>, callback: T -> Void, canCancel = true, priority = 0,
+  public function on<T: Event>(type: EventType<T>, callback: T->Void, canCancel = true, priority = 0,
       isGlobal = false) {
     trace('on is not implemented');
   }
 
-	public function off<T: Event>(type: EventType<T>, callback: T -> Void, isGlobal = false) {
+  public function off<T: Event>(type: EventType<T>, callback: T->Void, isGlobal = false) {
     trace('off is not implemented');
   }
 

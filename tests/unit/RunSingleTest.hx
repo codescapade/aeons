@@ -1,10 +1,8 @@
 package;
 
-import buddy.Buddy;
-
 import aeons.core.EntitiesTest;
 
+import buddy.Buddy;
+
 @colorize
-class RunSingleTest implements Buddy<[
-  EntitiesTest
-]> {}
+class RunSingleTest implements Buddy<[EntitiesTest]> {}

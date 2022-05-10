@@ -13,7 +13,6 @@ import aeons.utils.Blob;
  */
 @:dox(hide)
 class NullAssets implements Assets {
-
   public function new() {}
 
   public function loadImage(name: String, complete: (Image)->Void): Void {

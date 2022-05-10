@@ -1,8 +1,8 @@
 package aeons.components;
 
 #if use_ldtk
-import aeons.core.Renderable;
 import aeons.core.Component;
+import aeons.core.Renderable;
 import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 import aeons.tilemap.ldtk.LdtkLayer;

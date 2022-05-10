@@ -321,150 +321,150 @@ class RenderTarget {
     g4.setBool(location, value);
   }
 
-	/**
-	 * Set an integer value for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value The new value.
-	 */
-	public function setInt(location: ConstantLocation, value: Int) {
+  /**
+   * Set an integer value for the current pipeline.
+   * @param location The location in the shader.
+   * @param value The new value.
+   */
+  public function setInt(location: ConstantLocation, value: Int) {
     g4.setInt(location, value);
   }
 
-	/**
-	 * Set two integer values for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value1 The first new integer value.
-	 * @param value2 The second integer value.
-	 */
-	public function setInt2(location: ConstantLocation, value1: Int, value2: Int) {
+  /**
+   * Set two integer values for the current pipeline.
+   * @param location The location in the shader.
+   * @param value1 The first new integer value.
+   * @param value2 The second integer value.
+   */
+  public function setInt2(location: ConstantLocation, value1: Int, value2: Int) {
     g4.setInt2(location, value1, value2);
   }
 
-	/**
-	 * Set three integer values for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value1 The first new integer value.
-	 * @param value2 The second integer value.
-	 * @param value3 The third integer value.
-	 */
-	public function setInt3(location: ConstantLocation, value1: Int, value2: Int, value3: Int) {
+  /**
+   * Set three integer values for the current pipeline.
+   * @param location The location in the shader.
+   * @param value1 The first new integer value.
+   * @param value2 The second integer value.
+   * @param value3 The third integer value.
+   */
+  public function setInt3(location: ConstantLocation, value1: Int, value2: Int, value3: Int) {
     g4.setInt3(location, value1, value2, value3);
   }
 
-	/**
-	 * Set four integer values for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value1 The first new integer value.
-	 * @param value2 The second integer value.
-	 * @param value4 The fourth integer value.
-	 */
-	public function setInt4(location: ConstantLocation, value1: Int, value2: Int, value3: Int, value4: Int) {
+  /**
+   * Set four integer values for the current pipeline.
+   * @param location The location in the shader.
+   * @param value1 The first new integer value.
+   * @param value2 The second integer value.
+   * @param value4 The fourth integer value.
+   */
+  public function setInt4(location: ConstantLocation, value1: Int, value2: Int, value3: Int, value4: Int) {
     g4.setInt4(location, value1, value2, value3, value4);
   }
 
-	/**
-	 * Set an array of integer for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param values The new values.
-	 */
-	public function setInts(location: ConstantLocation, values: Int32Array) {
+  /**
+   * Set an array of integer for the current pipeline.
+   * @param location The location in the shader.
+   * @param values The new values.
+   */
+  public function setInts(location: ConstantLocation, values: Int32Array) {
     g4.setInts(location, values);
   }
 
-	/**
-	 * Set a float value for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value The new value.
-	 */
-	public function setFloat(location: ConstantLocation, value: FastFloat) {
+  /**
+   * Set a float value for the current pipeline.
+   * @param location The location in the shader.
+   * @param value The new value.
+   */
+  public function setFloat(location: ConstantLocation, value: FastFloat) {
     g4.setFloat(location, value);
   }
 
-	/**
-	 * Set two float values for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value1 The first float value.
-	 * @param value2 The second float value.
-	 */
-	public function setFloat2(location: ConstantLocation, value1: FastFloat, value2: FastFloat) {
+  /**
+   * Set two float values for the current pipeline.
+   * @param location The location in the shader.
+   * @param value1 The first float value.
+   * @param value2 The second float value.
+   */
+  public function setFloat2(location: ConstantLocation, value1: FastFloat, value2: FastFloat) {
     g4.setFloat2(location, value1, value2);
   }
 
-	/**
-	 * Set three float values for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value1 The first float value.
-	 * @param value2 The second float value.
-	 * @param value3 The third float value.
-	 */
-	public function setFloat3(location: ConstantLocation, value1: FastFloat, value2: FastFloat, value3: FastFloat) {
+  /**
+   * Set three float values for the current pipeline.
+   * @param location The location in the shader.
+   * @param value1 The first float value.
+   * @param value2 The second float value.
+   * @param value3 The third float value.
+   */
+  public function setFloat3(location: ConstantLocation, value1: FastFloat, value2: FastFloat, value3: FastFloat) {
     g4.setFloat3(location, value1, value2, value3);
   }
 
-	/**
-	 * Set four float values for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value1 The first float value.
-	 * @param value2 The second float value.
-	 * @param value3 The third float value.
-	 * @param value4 The fourth float value.
-	 */
-	public function setFloat4(location: ConstantLocation, value1: FastFloat, value2: FastFloat, value3: FastFloat,
-     value4: FastFloat) {
+  /**
+   * Set four float values for the current pipeline.
+   * @param location The location in the shader.
+   * @param value1 The first float value.
+   * @param value2 The second float value.
+   * @param value3 The third float value.
+   * @param value4 The fourth float value.
+   */
+  public function setFloat4(location: ConstantLocation, value1: FastFloat, value2: FastFloat, value3: FastFloat,
+      value4: FastFloat) {
     g4.setFloat4(location, value1, value2, value3, value4);
   }
 
-	/**
-	 * Set an array of float values for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param values The new values.
-	 */
-	public function setFloats(location: ConstantLocation, values: Float32Array) {
+  /**
+   * Set an array of float values for the current pipeline.
+   * @param location The location in the shader.
+   * @param values The new values.
+   */
+  public function setFloats(location: ConstantLocation, values: Float32Array) {
     g4.setFloats(location, values);
   }
 
-	/**
-	 * Set a vector2 value for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value The new value.
-	 */
-	public function setVector2(location: ConstantLocation, value: FastVector2) {
+  /**
+   * Set a vector2 value for the current pipeline.
+   * @param location The location in the shader.
+   * @param value The new value.
+   */
+  public function setVector2(location: ConstantLocation, value: FastVector2) {
     g4.setVector2(location, value);
   }
 
-	/**
-	 * Set a vector3 value for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value The new value.
-	 */
-	public function setVector3(location: ConstantLocation, value: FastVector3) {
+  /**
+   * Set a vector3 value for the current pipeline.
+   * @param location The location in the shader.
+   * @param value The new value.
+   */
+  public function setVector3(location: ConstantLocation, value: FastVector3) {
     g4.setVector3(location, value);
   }
 
-	/**
-	 * Set a vector4 value for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value The new value.
-	 */
-	public function setVector4(location: ConstantLocation, value: FastVector4) {
+  /**
+   * Set a vector4 value for the current pipeline.
+   * @param location The location in the shader.
+   * @param value The new value.
+   */
+  public function setVector4(location: ConstantLocation, value: FastVector4) {
     g4.setVector4(location, value);
   }
 
-	/**
-	 * Set a 4x4 matrix value for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value The new value.
-	 */
-	public function setMatrix(location: ConstantLocation, value: FastMatrix4) {
+  /**
+   * Set a 4x4 matrix value for the current pipeline.
+   * @param location The location in the shader.
+   * @param value The new value.
+   */
+  public function setMatrix(location: ConstantLocation, value: FastMatrix4) {
     g4.setMatrix(location, value);
   }
 
-	/**
-	 * Set a 3x3 matrix value for the current pipeline.
-	 * @param location The location in the shader.
-	 * @param value The new value.
-	 */
-	public function setMatrix3(location: ConstantLocation, value: FastMatrix3) {
+  /**
+   * Set a 3x3 matrix value for the current pipeline.
+   * @param location The location in the shader.
+   * @param value The new value.
+   */
+  public function setMatrix3(location: ConstantLocation, value: FastMatrix3) {
     g4.setMatrix3(location, value);
   }
 

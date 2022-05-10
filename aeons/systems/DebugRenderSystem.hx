@@ -1,16 +1,16 @@
 package aeons.systems;
 
-import aeons.graphics.Color;
-import aeons.math.Vector2;
-import aeons.components.CDebugRender;
-import aeons.core.DebugRenderable;
 import aeons.components.CCamera;
+import aeons.components.CDebugRender;
 import aeons.components.CTransform;
 import aeons.core.Bundle;
-import aeons.math.Rect;
-import aeons.graphics.RenderTarget;
+import aeons.core.DebugRenderable;
 import aeons.core.SysRenderable;
 import aeons.core.System;
+import aeons.graphics.Color;
+import aeons.graphics.RenderTarget;
+import aeons.math.Rect;
+import aeons.math.Vector2;
 
 /**
  * Debug render system renders `CDebugRender` components and `DebugRenderable` systems.

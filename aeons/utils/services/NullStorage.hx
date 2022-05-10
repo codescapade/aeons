@@ -2,7 +2,6 @@ package aeons.utils.services;
 
 @:dox(hide)
 class NullStorage implements Storage {
-
   public function new() {}
 
   public function readData(name: String): Blob {

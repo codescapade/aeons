@@ -1,8 +1,8 @@
 package aeons.systems;
 
-import aeons.components.CTransform;
 import aeons.components.CSimpleBody;
 import aeons.components.CSimpleTilemapCollider;
+import aeons.components.CTransform;
 import aeons.core.Bundle;
 import aeons.core.DebugRenderable;
 import aeons.core.System;
@@ -85,6 +85,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * Collision trigger event listeners.
    */
   final triggerStartListeners = new Map<String, Map<String, Array<Body->Body->Void>>>();
+
   final triggerStayListeners = new Map<String, Map<String, Array<Body->Body->Void>>>();
   final triggerEndListeners = new Map<String, Map<String, Array<Body->Body->Void>>>();
 
@@ -92,6 +93,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * Collision event listeners.
    */
   final collisionStartListeners = new Map<String, Map<String, Array<Body->Body->Void>>>();
+
   final collisionStayListeners = new Map<String, Map<String, Array<Body->Body->Void>>>();
   final collisionEndListeners = new Map<String, Map<String, Array<Body->Body->Void>>>();
 
@@ -161,7 +163,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * Update called 60 times per second.
    * @param dt The time passed since the last update in seconds.
    */
-  public function update(dt:Float) {
+  public function update(dt: Float) {
     #if debug
     debugRays = [];
     #end
@@ -432,7 +434,13 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     out = tree.getLineHitList(p1, p2, out);
 
     #if debug
-    var debugRay: RayDraw = { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y, hit: false };
+    var debugRay: RayDraw = {
+      x1: p1.x,
+      y1: p1.y,
+      x2: p2.x,
+      y2: p2.y,
+      hit: false
+    };
     #end
 
     if (out.count > 0 && tags != null) {
@@ -456,8 +464,8 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    */
   function checkCollision(body1: Body, body2: Body) {
     if (body1.mask.contains(body2.group) && body2.mask.contains(body1.group) && Physics.intersects(body1, body2)) {
-      if ((body1.type == DYNAMIC || (body1.type == DYNEMATIC && body2.type == STATIC)) && !body1.isTrigger &&
-          !body2.isTrigger) {
+      if ((body1.type == DYNAMIC || (body1.type == DYNEMATIC && body2.type == STATIC)) && !body1.isTrigger
+        && !body2.isTrigger) {
         Physics.separate(body1, body2);
         if (body1.wasCollidingwith.indexOf(body2) == -1) {
           interactions.push(Interaction.get(COLLISION_START, body1, body2));
@@ -543,9 +551,11 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    */
   function updateBodyTransform(bundle: aeons.bundles.BundleCSimpleBodyCTransform) {
     final body = bundle.c_simple_body.body;
-    if (body.type == STATIC) return;
+    if (body.type == STATIC) {
+      return;
+    }
     final worldPos = Vector2.get(body.bounds.x + body.bounds.width * 0.5 - body.offset.x,
-        body.bounds.y + body.bounds.height * 0.5 - body.offset.y);
+      body.bounds.y + body.bounds.height * 0.5 - body.offset.y);
     bundle.c_transform.setWorldPosition(worldPos);
     worldPos.put();
   }

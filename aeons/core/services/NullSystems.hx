@@ -4,7 +4,6 @@ import aeons.graphics.RenderTarget;
 
 @:dox(hide)
 class NullSystems implements Systems {
-
   public function new() {}
 
   public function add<T: System>(system: T): T {
@@ -17,17 +16,17 @@ class NullSystems implements Systems {
     trace('remove is not implemented');
   }
 
-	public function get<T: System>(systemType: Class<T>): T {
+  public function get<T: System>(systemType: Class<T>): T {
     trace('get is not implemented');
 
     return null;
-	}
+  }
 
-	public function has(systemType: Class<System>): Bool {
+  public function has(systemType: Class<System>): Bool {
     trace('has is not implemented');
 
     return false;
-	}
+  }
 
   public function update(dt: Float) {
     trace('update is not implemented');

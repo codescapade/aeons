@@ -46,7 +46,7 @@ class LdtkLayer {
    */
   var tiles: Array<Array<LdtkTile>>;
 
-    /**
+  /**
    * The tile bounds that are visible to the camera.
    */
   var visibleBounds = new Rect();
@@ -66,9 +66,19 @@ class LdtkLayer {
           final tile = layer.getTileStackAt(x, y)[0];
           final flipX = tile.flipBits & 1 != 0;
           final flipY = tile.flipBits & 2 != 0;
-          row.push({ flipX: flipX, flipY: flipY, tileId: tile.tileId, size: tileset.tileWidth });
+          row.push({
+            flipX: flipX,
+            flipY: flipY,
+            tileId: tile.tileId,
+            size: tileset.tileWidth
+          });
         } else {
-          row.push({ flipX: false, flipY: false, tileId: -1, size: 0 });
+          row.push({
+            flipX: false,
+            flipY: false,
+            tileId: -1,
+            size: 0
+          });
         }
       }
       layerTiles.push(row);
@@ -160,13 +170,13 @@ class LdtkLayer {
           final xPos = x * tile.size + tile.xOffset;
           final yPos = y * tile.size + tile.yOffset;
           target.drawImageSectionWithSize(xPos, yPos, tile.renderWidth, tile.renderHeight, frame.x, frame.y,
-              frame.width, frame.height, tileset.tileImage, tint);
+            frame.width, frame.height, tileset.tileImage, tint);
         }
       }
     }
   }
 
-    /**
+  /**
    * Convert a local pixel position to tile position.
    * @param xPos The world x position in game pixels.
    * @param yPos The world y position in game pixels.
@@ -178,7 +188,7 @@ class LdtkLayer {
     return Vector2.get(x, y);
   }
 
-    /**
+  /**
    * Update the visible tile range.
    * @param bounds The camera bounds.
    */
@@ -186,13 +196,13 @@ class LdtkLayer {
     var topLeft = pixelToTilePosition(bounds.x, bounds.y);
     topLeft.x -= 1;
     topLeft.y -= 1;
-    topLeft.x = AeMath.clampInt(topLeft.xi , 0, width);
-    topLeft.y = AeMath.clampInt(topLeft.yi , 0, height);
+    topLeft.x = AeMath.clampInt(topLeft.xi, 0, width);
+    topLeft.y = AeMath.clampInt(topLeft.yi, 0, height);
 
     var bottomRight = pixelToTilePosition(bounds.x + bounds.width, bounds.y + bounds.height);
     bottomRight.x += 2;
     bottomRight.y += 2;
-    bottomRight.x = AeMath.clampInt(bottomRight.xi , 0, width);
+    bottomRight.x = AeMath.clampInt(bottomRight.xi, 0, width);
     bottomRight.y = AeMath.clampInt(bottomRight.yi, 0, height);
 
     visibleBounds.set(topLeft.xi, topLeft.yi, bottomRight.xi, bottomRight.yi);
@@ -213,7 +223,12 @@ class LdtkLayer {
     for (y in 0...height) {
       final row: Array<LdtkTile> = [];
       for (x in 0...width) {
-        row.push({ flipX: false, flipY: false, tileId: -1, size: tileSize });
+        row.push({
+          flipX: false,
+          flipY: false,
+          tileId: -1,
+          size: tileSize
+        });
       }
       layerTiles.push(row);
     }

@@ -12,63 +12,63 @@ import aeons.utils.Pool;
 @:allow(aeons.tween.services.InternalTweens)
 class Tween {
   /**
-  * Is the tween complete.
-  */
+   * Is the tween complete.
+   */
   public var complete(default, null): Bool;
 
   /**
-  * The target to tween.
-  */
+   * The target to tween.
+   */
   public var target(default, null): Dynamic;
 
   /**
-  * True if the tween is currently active.
-  */
+   * True if the tween is currently active.
+   */
   public var active: Bool;
 
   /**
-  * Object pool for tween reuse.
-  */
+   * Object pool for tween reuse.
+   */
   static final pool: Pool<Tween> = new Pool(Tween);
 
   /**
-  * The time since the tween started in seconds.
-  */
+   * The time since the tween started in seconds.
+   */
   var time: Float;
 
   /**
-  * How long the tween takes to complete in seconds.
-  */
+   * How long the tween takes to complete in seconds.
+   */
   var duration: Float;
 
   /**
-  * List of properties to tween each frame.
-  */
+   * List of properties to tween each frame.
+   */
   var dataList: Array<TweenData>;
 
   /**
-  * Type of easing to use.
-  */
+   * Type of easing to use.
+   */
   var ease: Ease;
 
   /**
-  * Function to call when the tween is complete.
-  */
+   * Function to call when the tween is complete.
+   */
   var onComplete: ()->Void;
 
   /**
-  * The delay before the tween starts.
-  */
+   * The delay before the tween starts.
+   */
   var delay: Float;
 
   /**
-  * Time passed while the tween is delayed.
-  */
+   * Time passed while the tween is delayed.
+   */
   var delayTime: Float;
 
   /**
-  * True if the tween is paused.
-  */
+   * True if the tween is paused.
+   */
   var paused: Bool;
 
   /**
@@ -77,13 +77,13 @@ class Tween {
   var isColor: Bool;
 
   /**
-  * Get an instance from the pool.
-  * @param target The target to tween.
-  * @param duration How long the tween takes to complete in seconds.
-  * @param properties The properties on the target to tween.
-  * @param isColor Is the property a color. They are different from normal values.
-  * @return The initialized tween.
-  */
+   * Get an instance from the pool.
+   * @param target The target to tween.
+   * @param duration How long the tween takes to complete in seconds.
+   * @param properties The properties on the target to tween.
+   * @param isColor Is the property a color. They are different from normal values.
+   * @return The initialized tween.
+   */
   static function get(target: Dynamic, duration: Float, properties: Dynamic, isColor: Bool): Tween {
     final tween = pool.get();
     tween.reset(target, duration, properties, isColor);
@@ -92,24 +92,24 @@ class Tween {
   }
 
   /**
-  * Remove all pooled tweens.
-  */
+   * Remove all pooled tweens.
+   */
   public static function clearPool() {
     pool.clear();
   }
 
   /**
-  * private constructor. Should only be used by the pool.
-  */
+   * private constructor. Should only be used by the pool.
+   */
   function new() {}
 
   /**
-  * Reset a tween. Used for pooling.
-  * @param target The target to tween.
-  * @param duration How long the tween takes to complete in seconds.
-  * @param properties The properties on the target to tween.
-  * @param isColor Is the property a color. They are different from normal values.
-  */
+   * Reset a tween. Used for pooling.
+   * @param target The target to tween.
+   * @param duration How long the tween takes to complete in seconds.
+   * @param properties The properties on the target to tween.
+   * @param isColor Is the property a color. They are different from normal values.
+   */
   public function reset(target: Dynamic, duration: Float, properties: Dynamic, isColor: Bool) {
     this.target = target;
     this.duration = duration;
@@ -126,17 +126,17 @@ class Tween {
   }
 
   /**
-  * Put this instance back into the pool.
-  */
+   * Put this instance back into the pool.
+   */
   public function put() {
     active = false;
     pool.put(this);
   }
 
   /**
-  * Set the ease function to use.
-  * @param ease The ease function.
-  */
+   * Set the ease function to use.
+   * @param ease The ease function.
+   */
   public function setEase(ease: Ease): Tween {
     this.ease = ease;
 
@@ -144,9 +144,9 @@ class Tween {
   }
 
   /**
-  * Add a function to be called when the tween is complete.
-  * @param callback The callback function.
-  */
+   * Add a function to be called when the tween is complete.
+   * @param callback The callback function.
+   */
   public function setOnComplete(callback: ()->Void): Tween {
     this.onComplete = callback;
 
@@ -154,9 +154,9 @@ class Tween {
   }
 
   /**
-  * Set a tween start delay.
-  * @param delay Delay in seconds.
-  */
+   * Set a tween start delay.
+   * @param delay Delay in seconds.
+   */
   public function setDelay(delay: Float): Tween {
     this.delay = delay;
     delayTime = 0;
@@ -165,22 +165,22 @@ class Tween {
   }
 
   /**
-  * Pause this tween.
-  */
+   * Pause this tween.
+   */
   public function pause() {
     paused = true;
   }
 
   /**
-  * Resume this tween.
-  */
+   * Resume this tween.
+   */
   public function resume() {
     paused = false;
   }
 
   /**
-  * Run the complete function.
-  */
+   * Run the complete function.
+   */
   function runComplete() {
     if (onComplete != null) {
       onComplete();
@@ -188,9 +188,9 @@ class Tween {
   }
 
   /**
-  * Update called every frame.
-  * @param dt Time passed since the last frame in seconds.
-  */
+   * Update called every frame.
+   * @param dt Time passed since the last frame in seconds.
+   */
   function update(dt: Float) {
     if (!active || complete || paused) {
       return;
@@ -209,10 +209,10 @@ class Tween {
   }
 
   /**
-  * Create the data properties list it iterate over every frame.
-  * @param target The object to tween.
-  * @param properties The properties to tween on the object.
-  */
+   * Create the data properties list it iterate over every frame.
+   * @param target The object to tween.
+   * @param properties The properties to tween on the object.
+   */
   function createDataList(target: Dynamic, properties: Dynamic) {
     dataList = [];
 
@@ -232,9 +232,9 @@ class Tween {
   }
 
   /**
-  * Use reflection to set a target property to a new value.
-  * @param data The tween info.
-  */
+   * Use reflection to set a target property to a new value.
+   * @param data The tween info.
+   */
   function setField(data: TweenData) {
     if (isColor) {
       final factor = ease(time, 0, 1, duration);

@@ -59,7 +59,7 @@ class CBoxShape extends Component implements Renderable {
    * CBoxShape constructor.
    * @param options Initialization options.
    */
-  public function new (options: CBoxShapeOptions) {
+  public function new(options: CBoxShapeOptions) {
     super();
 
     width = options.width;
@@ -98,8 +98,10 @@ class CBoxShape extends Component implements Renderable {
    * @return True if in bounds. Out of bounds will not render using the RenderSystem.
    */
   public function inCameraBounds(cameraBounds: Rect): Bool {
-    return cameraBounds.x > -cameraBounds.width - width && cameraBounds.y > -cameraBounds.height - height &&
-        cameraBounds.x < width && cameraBounds.y < height;
+    return cameraBounds.x > -cameraBounds.width - width
+      && cameraBounds.y > -cameraBounds.height - height
+      && cameraBounds.x < width
+      && cameraBounds.y < height;
   }
 }
 

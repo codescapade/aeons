@@ -1,13 +1,12 @@
 package aeons.core;
 
 import aeons.core.services.InternalEntities;
+
 import buddy.BuddySuite;
 
 class ComponentTest extends BuddySuite {
-
   public function new() {
     describe('aeons.core.Component Tests.', {
-
       beforeEach({
         Aeons.provideEntities(new InternalEntities());
       });

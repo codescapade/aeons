@@ -2,7 +2,6 @@ package aeons.utils.services;
 
 @:dox(hide)
 class NullTimers implements Timers {
-
   public function new() {}
 
   public function create(interval: Float, callback: ()->Void, repeat: Int, startNow = false): Timer {

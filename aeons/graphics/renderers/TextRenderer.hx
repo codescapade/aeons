@@ -1,10 +1,10 @@
 package aeons.graphics.renderers;
 
+import aeons.graphics.Shaders;
 import aeons.math.FastFloat;
 import aeons.math.FastMatrix4;
 import aeons.math.FastVector3;
 import aeons.math.Vector2;
-import aeons.graphics.Shaders;
 
 import kha.graphics4.Graphics;
 import kha.graphics4.IndexBuffer;
@@ -29,6 +29,7 @@ class TextRenderer extends BaseRenderer {
    * Temp vertex positions.
    */
   final p1: FastVector3;
+
   final p2: FastVector3;
   final p3: FastVector3;
   final p4: FastVector3;
@@ -37,6 +38,7 @@ class TextRenderer extends BaseRenderer {
    * Temp texture coordinates.
    */
   final t1: Vector2;
+
   final t2: Vector2;
   final t3: Vector2;
   final t4: Vector2;
@@ -184,9 +186,9 @@ class TextRenderer extends BaseRenderer {
    * Create the default shader pipeline.
    * @return The shader pipeline.
    */
-  override function createDefaultPipeline():Pipeline {
-    final pl = new Pipeline(Shaders.painter_text_vert, Shaders.painter_text_frag, true, SourceAlpha, InverseSourceAlpha,
-        SourceAlpha, InverseSourceAlpha);
+  override function createDefaultPipeline(): Pipeline {
+    final pl = new Pipeline(Shaders.painter_text_vert, Shaders.painter_text_frag, true, SourceAlpha,
+      InverseSourceAlpha, SourceAlpha, InverseSourceAlpha);
 
     return pl;
   }
@@ -304,15 +306,15 @@ class TextRenderer extends BaseRenderer {
   function findCharIndex(charCode: Int): Int {
     var blocks = kha.Kravur.KravurImage.charBlocks;
     var offset = 0;
-		for (i in 0...Std.int(blocks.length / 2)) {
-			var start = blocks[i * 2];
-			var end = blocks[i * 2 + 1];
-			if (charCode >= start && charCode <= end) {
-				return offset + charCode - start;
+    for (i in 0...Std.int(blocks.length / 2)) {
+      var start = blocks[i * 2];
+      var end = blocks[i * 2 + 1];
+      if (charCode >= start && charCode <= end) {
+        return offset + charCode - start;
       }
 
-			offset += end - start + 1;
-		}
+      offset += end - start + 1;
+    }
 
     return 0;
   }

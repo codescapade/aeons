@@ -28,6 +28,7 @@ class GamepadEvent extends Event {
    * The controller id.
    */
   var id: Int;
+
   /**
    * The axis was interacted with. Only available with the gamepad axis event.
    */

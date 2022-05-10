@@ -1,8 +1,8 @@
 package aeons.graphics.renderers;
 
-import aeons.math.FastVector3;
-import aeons.math.FastMatrix4;
 import aeons.graphics.Shaders;
+import aeons.math.FastMatrix4;
+import aeons.math.FastVector3;
 
 import kha.graphics4.Graphics;
 import kha.graphics4.IndexBuffer;
@@ -14,7 +14,6 @@ using aeons.math.FastVector3Ex;
  * Render shapes like triangles, rectangles and circles.
  */
 class ShapeRenderer extends BaseRenderer {
-
   /**
    * The offset per triangle.
    * x, y, z positions.
@@ -27,6 +26,7 @@ class ShapeRenderer extends BaseRenderer {
    * Temp vertex positions.
    */
   final p1: FastVector3;
+
   final p2: FastVector3;
   final p3: FastVector3;
 
@@ -123,7 +123,8 @@ class ShapeRenderer extends BaseRenderer {
    * @param transform The transformation matrix.
    * @param color The line color.
    */
-  public function drawSolidRect(x: Float, y: Float, width: Float, height: Float, transform: FastMatrix4, color: Color) {
+  public function drawSolidRect(x: Float, y: Float, width: Float, height: Float, transform: FastMatrix4,
+      color: Color) {
     if (bufferIndex >= bufferSize) {
       present();
     }
@@ -198,14 +199,14 @@ class ShapeRenderer extends BaseRenderer {
         drawLine(x, y + height, x, y, lineWidth, align, transform, color);
 
       case Middle:
-         // top
+        // top
         drawLine(x - lineWidth * 0.5, y, x + width + lineWidth * 0.5, y, lineWidth, align, transform, color);
         // right
         drawLine(x + width, y - lineWidth * 0.5, x + width, y + height + lineWidth * 0.5, lineWidth, align, transform,
-            color);
+          color);
         // bottom
-        drawLine(x + width + lineWidth * 0.5, y + height, x - lineWidth * 0.5, y + height, lineWidth, align, transform,
-            color);
+        drawLine(x + width + lineWidth * 0.5, y + height, x - lineWidth * 0.5, y + height, lineWidth, align,
+          transform, color);
         // left
         drawLine(x, y + height + lineWidth * 0.5, x, y - lineWidth * 0.5, lineWidth, align, transform, color);
 
@@ -231,8 +232,8 @@ class ShapeRenderer extends BaseRenderer {
    * @param transform The transformation matrix.
    * @param color The line color.
    */
-  public function drawCircle(x: Float, y: Float, radius: Float, lineWidth: Float, segments: Int, transform: FastMatrix4,
-      color: Color) {
+  public function drawCircle(x: Float, y: Float, radius: Float, lineWidth: Float, segments: Int,
+      transform: FastMatrix4, color: Color) {
     final theta = 2 * Math.PI / segments;
     final cos = Math.cos(theta);
     final sin = Math.sin(theta);

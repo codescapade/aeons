@@ -3,7 +3,7 @@ package aeons.utils;
 /**
  * Bit Sets are used to bit sift.
  */
- class BitSets {
+class BitSets {
   /**
    * Add a bit to the mask.
    * @param bits The source bits.

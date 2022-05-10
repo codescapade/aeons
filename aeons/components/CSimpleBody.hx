@@ -118,32 +118,61 @@ class CSimpleBody extends Component {
    * CSimpleBody constructor.
    * @param options The values you want to set.
    */
-  public function new (?options: CSimpleBodyOptions) {
+  public function new(?options: CSimpleBodyOptions) {
     super();
 
     body = new Body(this);
     if (options != null) {
-      if (options.type != null) type = options.type;
-      if (options.isTrigger != null) isTrigger = options.isTrigger;
-      if (options.width != null) bounds.width = options.width;
-      if (options.height != null) bounds.height = options.height;
-      if (options.drag != null) drag.set(options.drag.x, options.drag.y);
-      if (options.velocity != null) velocity.set(options.velocity.x, options.velocity.y);
-      if (options.maxVelocity != null) maxVelocity.set(options.maxVelocity.x, options.maxVelocity.y);
-      if (options.acceleration != null) acceleration.set(options.acceleration.x, options.acceleration.y);
-      if (options.offset != null) offset.set(options.offset.x, options.offset.y);
-      if (options.group != null) group = options.group;
-      if (options.mask != null) mask = options.mask;
-      if (options.bounce != null) bounce = options.bounce;
-      if (options.useGravity != null) useGravity = options.useGravity;
-      if (options.canCollide != null) canCollide = options.canCollide;
+      if (options.type != null) {
+        type = options.type;
+      }
+      if (options.isTrigger != null) {
+        isTrigger = options.isTrigger;
+      }
+      if (options.width != null) {
+        bounds.width = options.width;
+      }
+      if (options.height != null) {
+        bounds.height = options.height;
+      }
+      if (options.drag != null) {
+        drag.set(options.drag.x, options.drag.y);
+      }
+      if (options.velocity != null) {
+        velocity.set(options.velocity.x, options.velocity.y);
+      }
+      if (options.maxVelocity != null) {
+        maxVelocity.set(options.maxVelocity.x, options.maxVelocity.y);
+      }
+      if (options.acceleration != null) {
+        acceleration.set(options.acceleration.x, options.acceleration.y);
+      }
+      if (options.offset != null) {
+        offset.set(options.offset.x, options.offset.y);
+      }
+      if (options.group != null) {
+        group = options.group;
+      }
+      if (options.mask != null) {
+        mask = options.mask;
+      }
+      if (options.bounce != null) {
+        bounce = options.bounce;
+      }
+      if (options.useGravity != null) {
+        useGravity = options.useGravity;
+      }
+      if (options.canCollide != null) {
+        canCollide = options.canCollide;
+      }
       if (options.tags != null) {
         for (tag in options.tags) {
           tags.push(tag);
         }
       }
-      if (options.userData != null) userData = options.userData;
-
+      if (options.userData != null) {
+        userData = options.userData;
+      }
     } else {
       type = DYNAMIC;
     }

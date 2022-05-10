@@ -1,15 +1,15 @@
 package aeons.audio;
 
+import aeons.assets.Assets;
+import aeons.assets.services.InternalAssets;
 import aeons.audio.Sound;
 import aeons.audio.services.InternalAudio;
-import aeons.assets.services.InternalAssets;
-import aeons.assets.Assets;
+
 import buddy.BuddySuite;
 
 using buddy.Should;
 
 class AudioTest extends BuddySuite {
-
   public function new() {
     describe('aeons.audio.Audio Tests.', {
       var assets: Assets;

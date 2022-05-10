@@ -2,10 +2,9 @@ package aeons.core.services;
 
 @:dox(hide)
 class NullEntities implements Entities {
-
   public function new() {}
 
-  public function addEntity<T: Entity>(entityType: T): T{
+  public function addEntity<T: Entity>(entityType: T): T {
     trace('addEntity is not implemented');
 
     return null;

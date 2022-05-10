@@ -11,6 +11,7 @@ class Tileset {
    * Id is used for LDtk tilesets.
    */
   public var id(default, null): String;
+
   /**
    * The with of a tile in pixels.
    */
@@ -44,7 +45,7 @@ class Tileset {
     }
 
     return new Tileset(image, tileset.tileGridSize, tileset.tileGridSize, tileset.spacing, tileset.padding,
-        tileset.identifier);
+      tileset.identifier);
   }
   #end
 

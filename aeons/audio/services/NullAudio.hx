@@ -6,7 +6,6 @@ package aeons.audio.services;
  */
 @:dox(hide)
 class NullAudio implements Audio {
-
   public var masterVolume(default, set): Float;
 
   /**

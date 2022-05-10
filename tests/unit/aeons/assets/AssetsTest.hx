@@ -4,7 +4,7 @@ import aeons.assets.services.InternalAssets;
 import aeons.audio.Sound;
 import aeons.graphics.Font;
 import aeons.graphics.Image;
-import aeons.graphics.Video;
+// import aeons.graphics.Video;
 import aeons.utils.Blob;
 
 import buddy.BuddySuite;
@@ -12,7 +12,6 @@ import buddy.BuddySuite;
 using buddy.Should;
 
 class AssetsTest extends BuddySuite {
-
   public function new() {
     describe('aeons.assets.Assets Tests.', {
       var assets: Assets;

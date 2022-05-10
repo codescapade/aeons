@@ -1,7 +1,7 @@
 package aeons.components;
 
-import aeons.math.Rect;
 import aeons.core.Component;
+import aeons.math.Rect;
 import aeons.physics.simple.Body;
 import aeons.physics.simple.CollisionFilter;
 import aeons.physics.utils.TilemapCollision;
@@ -64,7 +64,8 @@ class CSimpleTilemapCollider extends Component {
    * @param collisionTileIds A list of tile ids that should get collision tiles. If the list is empty all tiles will
    * count as colliders.
    */
-  public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
+  public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Int, worldY: Int,
+      collisionTileIds: Array<Int>) {
     bodies = [];
     final colliders = TilemapCollision.generateCollidersFromCTilemap(tilemap, worldX, worldY, collisionTileIds);
     createBodiesFromColliders(colliders);
@@ -79,7 +80,8 @@ class CSimpleTilemapCollider extends Component {
    * @param collisionTileIds A list of tile ids that should get collision tiles. If the list is empty all tiles will
    * count as colliders.
    */
-  public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Int, worldY: Int, collisionTileIds: Array<Int>) {
+  public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Int, worldY: Int,
+      collisionTileIds: Array<Int>) {
     bodies = [];
     final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
     createBodiesFromColliders(colliders);
@@ -113,9 +115,9 @@ class CSimpleTilemapCollider extends Component {
    */
   public inline function getTags(): Array<String> {
     final tags: Array<String> = [];
-      for (tag in tags) {
-        tags.push(tag);
-      }
+    for (tag in tags) {
+      tags.push(tag);
+    }
 
     return tags;
   }

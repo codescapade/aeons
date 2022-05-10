@@ -179,7 +179,7 @@ class Easing {
       return change / 2 * time * time + begin;
     }
 
-    return -change / 2 *((--time) * (time - 2) - 1) + begin;
+    return -change / 2 * ((--time) * (time - 2) - 1) + begin;
   }
 
   /**

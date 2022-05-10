@@ -3,7 +3,6 @@ package components;
 import aeons.core.Component;
 
 class CRotate extends Component {
-
   public var speed: Float;
 
   public function new(options: CRotateOptions) {

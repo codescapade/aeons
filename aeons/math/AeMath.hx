@@ -8,7 +8,7 @@ class AeMath {
   /**
    * Minimum value of a floating point number.
    */
-  public static inline final MIN_VALUE_FLOAT:Float = 0.0000000000000001;
+  public static inline final MIN_VALUE_FLOAT: Float = 0.0000000000000001;
   #else
 
   /**
@@ -48,7 +48,7 @@ class AeMath {
    * @param min Minimum.
    * @param max Maximum.
    */
-  public static function clamp(value: Float, min: Float, max:Float): Float {
+  public static function clamp(value: Float, min: Float, max: Float): Float {
     if (min > max) {
       var temp = max;
       max = min;

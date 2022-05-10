@@ -2,13 +2,12 @@ package systems;
 
 import aeons.components.CTransform;
 import aeons.core.Bundle;
-import aeons.core.Updatable;
 import aeons.core.System;
+import aeons.core.Updatable;
 
 import components.CRotate;
 
 class RotateSystem extends System implements Updatable {
-
   @:bundle
   var bundles: Bundle<CTransform, CRotate>;
 

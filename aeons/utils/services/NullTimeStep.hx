@@ -2,7 +2,6 @@ package aeons.utils.services;
 
 @:dox(hide)
 class NullTimeStep implements TimeStep {
-
   public var dt(default, null): Float;
 
   public var fps(default, null): Int;
@@ -11,7 +10,7 @@ class NullTimeStep implements TimeStep {
 
   public function new() {}
 
-	public function update() {
+  public function update() {
     trace('update is not implemented');
   }
 

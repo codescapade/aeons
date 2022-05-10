@@ -65,10 +65,9 @@ class TiledMap {
               var objectProp = new TiledObjectProp(prop.name, prop.type, prop.value);
               tiledProps.push(objectProp);
             }
-
           }
           var object = new TiledObject(obj.id, obj.x, obj.y, obj.width, obj.height, obj.name, obj.type, obj.rotation,
-              obj.visible, tiledProps, obj.polygon);
+            obj.visible, tiledProps, obj.polygon);
           objects.push(object);
         }
         objectLayers[layer.name] = objects;
@@ -78,7 +77,6 @@ class TiledMap {
     for (tileset in tilesets) {
       tilesetFirstGid[tileset.name] = tileset.firstgid;
     }
-
   }
 
   /**

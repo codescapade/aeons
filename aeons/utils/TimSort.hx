@@ -1,7 +1,6 @@
 package aeons.utils;
 
 // Haxe port of https://github.com/mziccard/node-timsort
-
 class TimSort<T> {
   /**
    * Default minimum size of a run.
@@ -120,7 +119,7 @@ class TimSort<T> {
    * @param compare Item comparison function.
    * @return The length of the run.
    */
-  static function makeAscendingRun<T>(array: Array<T>, lo: Int, hi: Int, compare:T->T->Int): Int {
+  static function makeAscendingRun<T>(array: Array<T>, lo: Int, hi: Int, compare: T->T->Int): Int {
     var runHi = lo + 1;
 
     if (runHi == hi) {
@@ -134,7 +133,7 @@ class TimSort<T> {
       }
 
       reverseRun(array, lo, runHi);
-    // Ascending
+      // Ascending
     } else {
       while (runHi < hi && compare(array[runHi], array[runHi - 1]) >= 0) {
         runHi++;
@@ -183,7 +182,7 @@ class TimSort<T> {
       lastOffset += hint;
       offset += hint;
 
-    // value <= array[start + hint]
+      // value <= array[start + hint]
     } else {
       maxOffset = hint + 1;
       while (offset < maxOffset && compare(value, array[start + hint - offset]) <= 0) {
@@ -205,11 +204,11 @@ class TimSort<T> {
     }
 
     /*
-    * Now array[start+lastOffset] < value <= array[start+offset], so value
-    * belongs somewhere in the range (start + lastOffset, start + offset]. Do a
-    * binary search, with invariant array[start + lastOffset - 1] < value <=
-    * array[start + offset].
-    */
+     * Now array[start+lastOffset] < value <= array[start+offset], so value
+     * belongs somewhere in the range (start + lastOffset, start + offset]. Do a
+     * binary search, with invariant array[start + lastOffset - 1] < value <=
+     * array[start + offset].
+     */
     lastOffset++;
     while (lastOffset < offset) {
       var m = lastOffset + (offset - lastOffset >>> 1);
@@ -263,7 +262,7 @@ class TimSort<T> {
       lastOffset = hint - offset;
       offset = hint - tmp;
 
-    // value >= array[start + hint]
+      // value >= array[start + hint]
     } else {
       maxOffset = length - hint;
 
@@ -286,11 +285,11 @@ class TimSort<T> {
     }
 
     /*
-    * Now array[start+lastOffset] < value <= array[start+offset], so value
-    * belongs somewhere in the range (start + lastOffset, start + offset]. Do a
-    * binary search, with invariant array[start + lastOffset - 1] < value <=
-    * array[start + offset].
-    */
+     * Now array[start+lastOffset] < value <= array[start+offset], so value
+     * belongs somewhere in the range (start + lastOffset, start + offset]. Do a
+     * binary search, with invariant array[start + lastOffset - 1] < value <=
+     * array[start + offset].
+     */
     lastOffset++;
 
     while (lastOffset < offset) {
@@ -333,7 +332,7 @@ class TimSort<T> {
    * @param start First element possibly out of order.
    * @param compare Item comparison function.
    */
-   static function binaryInsertionSort<T>(array: Array<T>, lo: Int, hi: Int, start: Int, compare: T->T->Int) {
+  static function binaryInsertionSort<T>(array: Array<T>, lo: Int, hi: Int, start: Int, compare: T->T->Int) {
     if (start == lo) {
       start++;
     }
@@ -406,12 +405,12 @@ class TimSort<T> {
 
     runStart = [];
     runLength = [];
-    for (i in 0... stackLength) {
+    for (i in 0...stackLength) {
       runStart.push(0);
       runLength.push(0);
     }
   }
-  
+
   /**
    * Push a new run on TimSort's stack.
    *
@@ -433,9 +432,10 @@ class TimSort<T> {
     while (stackSize > 1) {
       var n = stackSize - 2;
 
-      if (n >= 1 && runLength[n - 1] <= runLength[n] + runLength[n + 1] || n >= 2 &&
-          runLength[n - 2] <= runLength[n] + runLength[n - 1]) {
-
+      if (n >= 1
+        && runLength[n - 1] <= runLength[n] + runLength[n + 1]
+        || n >= 2
+        && runLength[n - 2] <= runLength[n] + runLength[n - 1]) {
         if (runLength[n - 1] < runLength[n + 1]) {
           n--;
         }
@@ -529,7 +529,6 @@ class TimSort<T> {
    * @param length2 Length of run2.
    */
   function mergeLow(start1: Int, length1: Int, start2: Int, length2: Int) {
-
     for (i in 0...length1) {
       tmp[i] = array[start1 + i];
     }
@@ -712,7 +711,7 @@ class TimSort<T> {
       customCursor = cursor1 + 1;
 
       var i = length - 1;
-      while ( i >= 0) {
+      while (i >= 0) {
         array[customDest + i] = array[customCursor + i];
         i--;
       }

@@ -1,15 +1,14 @@
 package aeons.utils;
 
 import buddy.BuddySuite;
+
 // import mockatoo.Mockatoo.*;
-
 using buddy.Should;
-// using mockatoo.Mockatoo;
 
+// using mockatoo.Mockatoo;
 using aeons.utils.TimSort;
 
 class TimSortTest extends BuddySuite {
-
   public function new() {
     describe('aeons.utils.TimSort', {
       var hundredSortRnd: Array<Int>;

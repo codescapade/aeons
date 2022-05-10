@@ -1,7 +1,6 @@
 package aeons.core;
 
 interface Entities {
-
   /**
    * Add a new entity to the manager.
    * @param entity The entity you want to add.

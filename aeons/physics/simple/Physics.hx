@@ -5,6 +5,7 @@ package aeons.physics.simple;
  */
 class Physics {
   static inline final OVERLAP_PADDING = 4;
+
   /**
    * Separate 2 bodies so they no longer overlap.
    * @param body1 The first body to separate.
@@ -30,8 +31,8 @@ class Physics {
     var overlap = Math.min(bounds1.x + bounds1.width, bounds2.x + bounds2.width) - Math.max(bounds1.x, bounds2.x);
 
     var ov = bounds1.x > bounds2.x ? overlap : -overlap;
-    if ((ov < 0 && bounds1.x + bounds1.width * 0.5 > bounds2.x + bounds2.width * 0.5) ||
-      (ov > 0 && bounds1.x + bounds1.width * 0.5 < bounds2.x + bounds2.width * 0.5)) {
+    if ((ov < 0 && bounds1.x + bounds1.width * 0.5 > bounds2.x + bounds2.width * 0.5)
+      || (ov > 0 && bounds1.x + bounds1.width * 0.5 < bounds2.x + bounds2.width * 0.5)) {
       return false;
     }
     var delta = Math.abs(bounds1.x - body1.lastX);
@@ -49,16 +50,14 @@ class Physics {
 
     if (overlap > 0) {
       // If the collision side should not collide do nothing and return.
-      if (body1.velocity.x > 0 || !body1.canCollide.contains(Collide.LEFT) ||
-          !body2.canCollide.contains(Collide.RIGHT)) {
+      if (body1.velocity.x > 0 || !body1.canCollide.contains(Collide.LEFT) || !body2.canCollide.contains(Collide.RIGHT)) {
         return false;
       }
       body1.touching.add(Touching.LEFT);
       body2.touching.add(Touching.RIGHT);
     } else if (overlap < 0) {
       // If the collision side should not collide do nothing and return.
-      if (body1.velocity.x < 0 || !body1.canCollide.contains(Collide.RIGHT) ||
-          !body2.canCollide.contains(Collide.LEFT)) {
+      if (body1.velocity.x < 0 || !body1.canCollide.contains(Collide.RIGHT) || !body2.canCollide.contains(Collide.LEFT)) {
         return false;
       }
       body1.touching.add(Touching.RIGHT);
@@ -98,8 +97,8 @@ class Physics {
     var overlap = Math.min(bounds1.y + bounds1.height, bounds2.y + bounds2.height) - Math.max(bounds1.y, bounds2.y);
 
     var ov = bounds1.y > bounds2.y ? overlap : -overlap;
-    if ((ov < 0 && bounds1.y + bounds1.height * 0.5 > bounds2.y + bounds2.height * 0.5) ||
-      (ov > 0 && bounds1.y + bounds1.height * 0.5 < bounds2.y + bounds2.height * 0.5)) {
+    if ((ov < 0 && bounds1.y + bounds1.height * 0.5 > bounds2.y + bounds2.height * 0.5)
+      || (ov > 0 && bounds1.y + bounds1.height * 0.5 < bounds2.y + bounds2.height * 0.5)) {
       return false;
     }
 
@@ -118,16 +117,14 @@ class Physics {
 
     if (overlap > 0) {
       // If the collision side should not collide do nothing and return.
-      if (body1.velocity.y > 0 || !body1.canCollide.contains(Collide.TOP) ||
-          !body2.canCollide.contains(Collide.BOTTOM)) {
+      if (body1.velocity.y > 0 || !body1.canCollide.contains(Collide.TOP) || !body2.canCollide.contains(Collide.BOTTOM)) {
         return false;
       }
       body1.touching.add(Touching.TOP);
       body2.touching.add(Touching.BOTTOM);
     } else {
       // If the collision side should not collide do nothing and return.
-      if (body1.velocity.y < 0 || !body1.canCollide.contains(Collide.BOTTOM) ||
-          !body2.canCollide.contains(Collide.TOP)) {
+      if (body1.velocity.y < 0 || !body1.canCollide.contains(Collide.BOTTOM) || !body2.canCollide.contains(Collide.TOP)) {
         return false;
       }
       body1.touching.add(Touching.BOTTOM);

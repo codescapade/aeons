@@ -1,6 +1,5 @@
 package aeons.systems;
 
-import aeons.math.Vector2;
 import aeons.components.CCamera;
 import aeons.components.CRender;
 import aeons.components.CTransform;
@@ -11,6 +10,7 @@ import aeons.events.SortEvent;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
+import aeons.math.Vector2;
 
 using aeons.utils.TimSort;
 
@@ -18,7 +18,6 @@ using aeons.utils.TimSort;
  * The RenderSystem renders everything on screen.
  */
 class RenderSystem extends System implements SysRenderable {
-
   /**
    * All camera bundles in the scene.
    */
@@ -71,7 +70,6 @@ class RenderSystem extends System implements SysRenderable {
       // Render all the bundles to the current camera.
       camTarget.start(true, camera.backgroundColor);
       for (renderable in renderBundles) {
-
         if (renderable.c_transform.containsParent(camTransform)) {
           camTarget.transform.setFrom(renderable.c_transform.matrix);
           renderable.c_render.render(camTarget);

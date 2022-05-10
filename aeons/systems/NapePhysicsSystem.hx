@@ -1,12 +1,6 @@
 package aeons.systems;
 
 #if use_nape
-import nape.callbacks.CbEvent;
-import nape.callbacks.InteractionCallback;
-import nape.callbacks.InteractionListener;
-import nape.phys.BodyType;
-import nape.space.Space;
-
 import aeons.components.CNapeBody;
 import aeons.components.CNapeTilemapCollider;
 import aeons.components.CTransform;
@@ -17,6 +11,12 @@ import aeons.math.AeMath;
 import aeons.math.Vector2;
 import aeons.physics.nape.DebugDraw;
 import aeons.physics.nape.NapeInteractionType;
+
+import nape.callbacks.CbEvent;
+import nape.callbacks.InteractionCallback;
+import nape.callbacks.InteractionListener;
+import nape.phys.BodyType;
+import nape.space.Space;
 
 /**
  * NapePhysicsSystem updates all Nape body components.

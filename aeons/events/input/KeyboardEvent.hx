@@ -1,6 +1,7 @@
 package aeons.events.input;
 
 import aeons.input.KeyCode;
+
 /**
  * KeyboardEvent for sending keyboard input events.
  */

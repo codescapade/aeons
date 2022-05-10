@@ -10,7 +10,7 @@ interface Events {
    * @param isGlobal Is this a global or scene event.
    */
   function on<T: Event>(type: EventType<T>, callback: (T)->Void, canCancel: Bool = true, priority: Int = 0,
-      isGlobal: Bool = false): Void;
+    isGlobal: Bool = false): Void;
 
   /**
    * Remove an event handler.

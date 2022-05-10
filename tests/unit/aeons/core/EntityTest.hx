@@ -1,15 +1,14 @@
 package aeons.core;
 
 import aeons.core.services.InternalEntities;
+
 import buddy.BuddySuite;
 
 using buddy.Should;
 
 class EntityTest extends BuddySuite {
-
   public function new() {
     describe('aeons.core.Entity Tests', {
-
       beforeEach({
         Aeons.provideEntities(new InternalEntities());
       });

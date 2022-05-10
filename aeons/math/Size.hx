@@ -19,7 +19,7 @@ class Size {
    * @param width The width for the size.
    * @param height The height for the size.
    */
-  public function new(width = 0.0, height= 0.0) {
+  public function new(width = 0.0, height = 0.0) {
     this.width = width;
     this.height = height;
   }

@@ -40,7 +40,7 @@ class Frame {
   public static function fromTexturePackerFrame(frameInfo: Dynamic): Frame {
     final frameRect = new Rect(frameInfo.frame.x, frameInfo.frame.y, frameInfo.frame.w, frameInfo.frame.h);
     final sourceRect = new Rect(frameInfo.spriteSourceSize.x, frameInfo.spriteSourceSize.y,
-        frameInfo.spriteSourceSize.w, frameInfo.spriteSourceSize.h);
+      frameInfo.spriteSourceSize.w, frameInfo.spriteSourceSize.h);
     final sourceSize = new Size(frameInfo.sourceSize.w, frameInfo.sourceSize.h);
 
     return new Frame(frameInfo.filename, frameRect, frameInfo.trimmed, sourceRect, sourceSize);

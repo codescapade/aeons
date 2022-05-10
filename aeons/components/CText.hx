@@ -79,11 +79,17 @@ class CText extends Component implements Renderable {
       backgroundColor = Color.Black;
     } else {
       text = options.text == null ? '' : options.text;
-      if (options.font != null) font = options.font;
-      if (options.fontSize != null) fontSize = options.fontSize;
-      color = options.color == null ?  Color.White : options.color;
+      if (options.font != null) {
+        font = options.font;
+      }
+      if (options.fontSize != null) {
+        fontSize = options.fontSize;
+      }
+      color = options.color == null ? Color.White : options.color;
       backgroundColor = options.backgroundColor == null ? Color.Black : options.backgroundColor;
-      if (options.hasBackground != null) hasBackground = options.hasBackground;
+      if (options.hasBackground != null) {
+        hasBackground = options.hasBackground;
+      }
 
       anchorX = options.anchorX == null ? 0.5 : options.anchorX;
       anchorY = options.anchorY == null ? 0.5 : options.anchorY;
@@ -114,8 +120,10 @@ class CText extends Component implements Renderable {
    * @return True if in bounds. Out of bounds will not render using the RenderSystem.
    */
   public function inCameraBounds(cameraBounds: Rect): Bool {
-    return cameraBounds.x > -cameraBounds.width - width * 2 && cameraBounds.y > -cameraBounds.height - height * 2 &&
-        cameraBounds.x < width * 2 && cameraBounds.y < height * 2;
+    return cameraBounds.x > -cameraBounds.width - width * 2
+      && cameraBounds.y > -cameraBounds.height - height * 2
+      && cameraBounds.x < width * 2
+      && cameraBounds.y < height * 2;
   }
 
   inline function get_height(): Float {
@@ -133,7 +141,7 @@ class CText extends Component implements Renderable {
     return value;
   }
 
-  inline function set_font(value: Font): Font{
+  inline function set_font(value: Font): Font {
     font = value;
     width = font.width(fontSize, text);
 

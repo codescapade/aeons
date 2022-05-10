@@ -6,7 +6,6 @@ package aeons.core.services;
  */
 @:dox(hide)
 class NullDisplay implements Display {
-
   public var viewWidth(default, null): Int;
 
   public var viewHeight(default, null): Int;
@@ -30,7 +29,7 @@ class NullDisplay implements Display {
    */
   public function new() {}
 
-	public function init(designWidth: Int, designHeight: Int, pixelArt: Bool) {
+  public function init(designWidth: Int, designHeight: Int, pixelArt: Bool) {
     trace('init is not implemented');
   }
 

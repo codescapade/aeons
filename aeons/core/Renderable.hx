@@ -1,7 +1,7 @@
 package aeons.core;
 
-import aeons.math.Rect;
 import aeons.graphics.RenderTarget;
+import aeons.math.Rect;
 
 /**
  * Interface for components that need to be rendered every frame.

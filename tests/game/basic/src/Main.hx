@@ -1,7 +1,8 @@
 package;
 
-import scenes.RenderScene;
 import aeons.core.Game;
+
+import scenes.RenderScene;
 
 class Main {
   static function main() {

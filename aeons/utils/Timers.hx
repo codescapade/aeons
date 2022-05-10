@@ -1,7 +1,6 @@
 package aeons.utils;
 
 interface Timers {
-
   /**
    * Create a new timer.
    * @param interval Interval to trigger the callback in seconds.

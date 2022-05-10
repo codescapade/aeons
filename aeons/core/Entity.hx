@@ -36,7 +36,7 @@ class Entity {
    * @param componentType The component type to add.
    * @return The created component.
    */
-  public inline function addComponent<T: Component>(component: T): T{
+  public inline function addComponent<T: Component>(component: T): T {
     return Aeons.entities.addComponent(this, component);
   }
 

@@ -82,7 +82,7 @@ class CCamera extends Component {
    * CCamera constructor.
    * @param options Initialization options.
    */
-  public function new (?options: CCameraOptions) {
+  public function new(?options: CCameraOptions) {
     super();
 
     if (options == null) {
@@ -98,8 +98,10 @@ class CCamera extends Component {
       zoom = options.zoom == null ? 1.0 : options.zoom;
       viewX = options.viewX == null ? 0 : options.viewX;
       viewY = options.viewY == null ? 0 : options.viewY;
-      backgroundColor =  options.backgroundColor == null ? Color.Black : options.backgroundColor;
-      if (options.isMain) main = this;
+      backgroundColor = options.backgroundColor == null ? Color.Black : options.backgroundColor;
+      if (options.isMain) {
+        main = this;
+      }
     }
   }
 
@@ -165,16 +167,11 @@ class CCamera extends Component {
    */
   public function updateMatrix() {
     updateBounds();
-      matrix.setFrom(
-        // Move to center.
-        FastMatrix4.translation(viewWidth * 0.5, viewHeight * 0.5, 0)
-        // Rotate around the center
-        .multmat(FastMatrix4.rotationZ(AeMath.degToRad(transform.getWorldAngle())))
-        // Scale around the center.
-        .multmat(FastMatrix4.scale(zoom, zoom, 1))
-        // Move the to correct position in the world.
-        .multmat(FastMatrix4.translation(-worldPosition.x, -worldPosition.y, 0))
-      );
+    matrix.setFrom(FastMatrix4.translation(viewWidth * 0.5, viewHeight * 0.5, 0) // Move to center.
+      .multmat(FastMatrix4.rotationZ(AeMath.degToRad(transform.getWorldAngle()))) // Rotate around the center
+      .multmat(FastMatrix4.scale(zoom, zoom, 1)) // Scale around the center.
+      .multmat(FastMatrix4.translation(-worldPosition.x, -worldPosition.y,
+        0))); // Move the to correct position in the world.
   }
 
   /**

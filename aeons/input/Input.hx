@@ -6,8 +6,8 @@ import aeons.events.input.MouseEvent;
 import aeons.events.input.TouchEvent;
 
 import kha.input.Gamepad;
-import kha.input.Keyboard;
 import kha.input.KeyCode;
+import kha.input.Keyboard;
 import kha.input.Mouse;
 import kha.input.Surface;
 
@@ -185,7 +185,7 @@ class Input {
    * @param y The y position in  window pixels.
    */
   inline function mouseUp(button: Int, x: Int, y: Int) {
-    MouseEvent.emit(MouseEvent.MOUSE_UP, button , x, y);
+    MouseEvent.emit(MouseEvent.MOUSE_UP, button, x, y);
   }
 
   /**

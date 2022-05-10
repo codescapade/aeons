@@ -4,8 +4,8 @@ import aeons.core.Component;
 import aeons.core.Renderable;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
-import aeons.graphics.atlas.Frame;
 import aeons.graphics.atlas.Atlas;
+import aeons.graphics.atlas.Frame;
 import aeons.math.Rect;
 
 /**
@@ -77,8 +77,8 @@ class CSprite extends Component implements Renderable {
 
     // Draw an atlas frame.
     target.drawImageSection(-(frame.sourceSize.width * anchorX) + frame.sourceRect.x,
-        -(frame.sourceSize.height * anchorY) + frame.sourceRect.y, frame.frame.x, frame.frame.y, frame.frame.width,
-        frame.frame.height, atlas.image, color);
+      -(frame.sourceSize.height * anchorY) + frame.sourceRect.y, frame.frame.x, frame.frame.y, frame.frame.width,
+      frame.frame.height, atlas.image, color);
   }
 
   /**
@@ -88,9 +88,10 @@ class CSprite extends Component implements Renderable {
    * @return True if in bounds. Out of bounds will not render using the RenderSystem.
    */
   public function inCameraBounds(cameraBounds: Rect): Bool {
-    return cameraBounds.x > -cameraBounds.width - frame.sourceSize.width * 2 &&
-        cameraBounds.y > -cameraBounds.height - frame.sourceSize.height * 2 &&
-        cameraBounds.x < frame.sourceSize.width * 2 && cameraBounds.y < frame.sourceSize.height * 2;
+    return cameraBounds.x > -cameraBounds.width - frame.sourceSize.width * 2
+      && cameraBounds.y > -cameraBounds.height - frame.sourceSize.height * 2
+      && cameraBounds.x < frame.sourceSize.width * 2
+      && cameraBounds.y < frame.sourceSize.height * 2;
   }
 
   /**

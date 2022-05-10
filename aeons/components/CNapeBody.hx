@@ -86,11 +86,21 @@ class CNapeBody extends Component {
     isSensor = false;
 
     if (tempOptions != null) {
-      if (tempOptions.isSensor != null) isSensor = tempOptions.isSensor;
-      if (tempOptions.allowMovement != null) allowMovement = tempOptions.allowMovement;
-      if (tempOptions.allowRotation != null) allowRotation = tempOptions.allowRotation;
-      if (tempOptions.material != null) setMaterial(tempOptions.material);
-      if (tempOptions.addToSpace != null && tempOptions.addToSpace) body.space = space;
+      if (tempOptions.isSensor != null) {
+        isSensor = tempOptions.isSensor;
+      }
+      if (tempOptions.allowMovement != null) {
+        allowMovement = tempOptions.allowMovement;
+      }
+      if (tempOptions.allowRotation != null) {
+        allowRotation = tempOptions.allowRotation;
+      }
+      if (tempOptions.material != null) {
+        setMaterial(tempOptions.material);
+      }
+      if (tempOptions.addToSpace != null && tempOptions.addToSpace) {
+        body.space = space;
+      }
     }
   }
 

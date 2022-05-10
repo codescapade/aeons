@@ -12,7 +12,6 @@ import aeons.math.Vector2;
  * This is used in both Simple and Nape physics systems.
  */
 class TilemapCollision {
-
   /**
    * Generate colliders for certain tile indexes. Tries to make big colliders so there are less of them in the map.
    * @param tilemap The tilemap the colliders are for.
@@ -70,7 +69,6 @@ class TilemapCollision {
 
   static function generateColliders(tiles: Array<Array<Tile>>, worldX: Float, worldY: Float, tileSize: Int,
       collisionTileIds: Array<Int>): Array<Rect> {
-
     final colliders: Array<Rect> = [];
     final start = Vector2.get();
     final current = Vector2.get();

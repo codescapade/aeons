@@ -2,11 +2,11 @@ package aeons.components;
 
 import aeons.core.Component;
 import aeons.core.Renderable;
-import aeons.math.Rect;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
 import aeons.graphics.atlas.Atlas;
 import aeons.graphics.atlas.Frame;
+import aeons.math.Rect;
 
 /**
  * Nine slice is a sprite that can scale without changing the corners.
@@ -100,8 +100,8 @@ class CNineSlice extends Component implements Renderable {
     super();
     atlas = options.atlas;
     frame = atlas.getFrame(options.frameName);
-    createFrames(frame.frame.x, frame.frame.y, frame.frame.width, frame.frame.height,
-        options.insetLeft, options.insetRight, options.insetTop, options.insetBottom);
+    createFrames(frame.frame.x, frame.frame.y, frame.frame.width, frame.frame.height, options.insetLeft,
+      options.insetRight, options.insetTop, options.insetBottom);
 
     anchorX = options.anchorX == null ? 0.5 : options.anchorX;
     anchorY = options.anchorY == null ? 0.5 : options.anchorY;
@@ -119,47 +119,46 @@ class CNineSlice extends Component implements Renderable {
   public function render(target: RenderTarget) {
     // Top left.
     target.drawImageSection(-(width * anchorX) + topLeft.x, -(height * anchorY) + topLeft.y, topLeft.frameRect.x,
-        topLeft.frameRect.y, topLeft.frameRect.width, topLeft.frameRect.height, atlas.image, color);
+      topLeft.frameRect.y, topLeft.frameRect.width, topLeft.frameRect.height, atlas.image, color);
 
     // Top.
     target.drawImageSectionWithSize(-(width * anchorX) + top.x, -(height * anchorY) + top.y,
-        top.frameRect.width * top.scaleX, top.frameRect.height, top.frameRect.x, top.frameRect.y, top.frameRect.width,
-        top.frameRect.height, atlas.image, color);
+      top.frameRect.width * top.scaleX, top.frameRect.height, top.frameRect.x, top.frameRect.y, top.frameRect.width,
+      top.frameRect.height, atlas.image, color);
 
     // Top right.
-    target.drawImageSection(-(width * anchorX) + topRight.x, -(height * anchorY) + topRight.y,
-        topRight.frameRect.x, topRight.frameRect.y,
-        topRight.frameRect.width, topRight.frameRect.height, atlas.image, color);
+    target.drawImageSection(-(width * anchorX) + topRight.x, -(height * anchorY) + topRight.y, topRight.frameRect.x,
+      topRight.frameRect.y, topRight.frameRect.width, topRight.frameRect.height, atlas.image, color);
 
     // Left.
-    target.drawImageSectionWithSize(-(width * anchorX) + left.x, -(height * anchorY) + left.y,
-        left.frameRect.width, left.frameRect.height * left.scaleY, left.frameRect.x, left.frameRect.y,
-        left.frameRect.width, left.frameRect.height, atlas.image, color);
+    target.drawImageSectionWithSize(-(width * anchorX) + left.x, -(height * anchorY) + left.y, left.frameRect.width,
+      left.frameRect.height * left.scaleY, left.frameRect.x, left.frameRect.y, left.frameRect.width,
+      left.frameRect.height, atlas.image, color);
 
     // Center.
     target.drawImageSectionWithSize(-(width * anchorX) + center.x, -(height * anchorY) + center.y,
-        center.frameRect.width * center.scaleX, center.frameRect.height * center.scaleY, center.frameRect.x,
-        center.frameRect.y, center.frameRect.width, center.frameRect.height, atlas.image, color);
+      center.frameRect.width * center.scaleX, center.frameRect.height * center.scaleY, center.frameRect.x,
+      center.frameRect.y, center.frameRect.width, center.frameRect.height, atlas.image, color);
 
     // Right.
     target.drawImageSectionWithSize(-(width * anchorX) + right.x, -(height * anchorY) + right.y,
-        right.frameRect.width, right.frameRect.height * right.scaleY, right.frameRect.x, right.frameRect.y,
-        right.frameRect.width, right.frameRect.height, atlas.image, color);
+      right.frameRect.width, right.frameRect.height * right.scaleY, right.frameRect.x, right.frameRect.y,
+      right.frameRect.width, right.frameRect.height, atlas.image, color);
 
     // Bottom left.
     target.drawImageSection(-(width * anchorX) + bottomLeft.x, -(height * anchorY) + bottomLeft.y,
-        bottomLeft.frameRect.x, bottomLeft.frameRect.y, bottomLeft.frameRect.width, bottomLeft.frameRect.height,
-        atlas.image, color);
+      bottomLeft.frameRect.x, bottomLeft.frameRect.y, bottomLeft.frameRect.width, bottomLeft.frameRect.height,
+      atlas.image, color);
 
     // Bottom.
     target.drawImageSectionWithSize(-(width * anchorX) + bottom.x, -(height * anchorY) + bottom.y,
-        bottom.frameRect.width * bottom.scaleX, bottom.frameRect.height, bottom.frameRect.x, bottom.frameRect.y,
-        bottom.frameRect.width, bottom.frameRect.height, atlas.image, color);
+      bottom.frameRect.width * bottom.scaleX, bottom.frameRect.height, bottom.frameRect.x, bottom.frameRect.y,
+      bottom.frameRect.width, bottom.frameRect.height, atlas.image, color);
 
     // Bottom right.
     target.drawImageSection(-(width * anchorX) + bottomRight.x, -(height * anchorY) + bottomRight.y,
-        bottomRight.frameRect.x, bottomRight.frameRect.y, bottomRight.frameRect.width, bottomRight.frameRect.height,
-        atlas.image, color);
+      bottomRight.frameRect.x, bottomRight.frameRect.y, bottomRight.frameRect.width, bottomRight.frameRect.height,
+      atlas.image, color);
   }
 
   /**
@@ -190,7 +189,7 @@ class CNineSlice extends Component implements Renderable {
     topRight = new Slice(frameX + width - insetRight, frameY, insetRight, insetTop);
     left = new Slice(frameX, frameY + insetTop, insetLeft, height - insetTop - insetBottom);
     center = new Slice(frameX + insetLeft, frameY + insetTop, width - insetLeft - insetRight,
-        height - insetTop - insetBottom);
+      height - insetTop - insetBottom);
     right = new Slice(frameX + width - insetRight, frameY + insetTop, insetRight, height - insetTop - insetBottom);
     bottomLeft = new Slice(frameX, frameY + height - insetBottom, insetLeft, insetBottom);
     bottom = new Slice(frameX + insetLeft, frameY + height - insetBottom, width - insetLeft - insetRight, insetBottom);

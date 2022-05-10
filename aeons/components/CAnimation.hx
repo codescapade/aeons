@@ -8,7 +8,6 @@ import aeons.graphics.atlas.Atlas;
  * The Animation component can play added animations.
  */
 class CAnimation extends Component {
-
   /**
    * Is the current animation playing.
    */
@@ -142,7 +141,7 @@ class CAnimation extends Component {
     return anim == null ? true : anim.finished(time);
   }
 
-  inline function get_atlas(): Atlas{
+  inline function get_atlas(): Atlas {
     return anim == null ? null : anim.atlas;
   }
 }

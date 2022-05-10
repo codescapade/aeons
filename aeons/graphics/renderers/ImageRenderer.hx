@@ -1,15 +1,15 @@
 package aeons.graphics.renderers;
 
-import kha.graphics4.TextureFilter;
+import aeons.graphics.Shaders;
+import aeons.math.FastFloat;
+import aeons.math.FastMatrix4;
+import aeons.math.FastVector3;
+import aeons.math.Vector2;
+
 import kha.graphics4.Graphics;
 import kha.graphics4.IndexBuffer;
+import kha.graphics4.TextureFilter;
 import kha.graphics4.VertexBuffer;
-
-import aeons.math.FastFloat;
-import aeons.math.FastVector3;
-import aeons.math.FastMatrix4;
-import aeons.math.Vector2;
-import aeons.graphics.Shaders;
 
 using aeons.math.FastVector3Ex;
 
@@ -30,6 +30,7 @@ class ImageRenderer extends BaseRenderer {
    * Temp vertex positions.
    */
   final p1: FastVector3;
+
   final p2: FastVector3;
   final p3: FastVector3;
   final p4: FastVector3;
@@ -38,6 +39,7 @@ class ImageRenderer extends BaseRenderer {
    * Temp texture coordinates.
    */
   final t1: Vector2;
+
   final t2: Vector2;
   final t3: Vector2;
   final t4: Vector2;

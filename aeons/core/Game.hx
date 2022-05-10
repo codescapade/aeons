@@ -66,7 +66,7 @@ class Game {
    * Game constructor.
    * @param options Start options.
    */
-  public function new(options:GameOptions) {
+  public function new(options: GameOptions) {
     final designWidth = options.designWidth == null ? 800 : options.designWidth;
     final designHeight = options.designHeight == null ? 600 : options.designHeight;
 
@@ -165,6 +165,7 @@ class Game {
      * Render the main renderTarget to the screen.
      */
     final mainBuffer = frames[0].g2;
+
     mainBuffer.color = White;
     mainBuffer.begin();
     mainBuffer.imageScaleQuality = Aeons.display.pixelArt ? Low : High;

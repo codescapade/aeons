@@ -170,7 +170,6 @@ class Scene {
    * Called when the game comes back from the background to the foreground.
    */
   public function toForeground() {}
-
 }
 
 /**

@@ -1,0 +1,44 @@
+{
+  "emptyLines": {
+    "importAndUsing": {
+      "betweenImportsLevel": "firstLevelPackage",
+      "betweenImports": 1,
+      "beforeType": 1,
+      "beforeUsing": 1
+    },
+    "afterPackage": 1,
+    "maxAnywhereInFile": 1
+  },
+  "indentation": {
+    "character": "  ",
+    "indentCaseLabels": true,
+    "trailingWhitespace": false
+  },
+  "lineEnds": {
+    "leftCurly": "after",
+    "emptyCurly": "noBreak"
+  },
+  "whitespace": {
+    "colonPolicy": "none",
+    "caseColonPolicy": "none",
+    "typeExtensionPolicy": "onlyAfter",
+    "typeCheckColonPolicy": "onlyAfter",
+    "typeHintColonPolicy": "onlyAfter",
+    "bracesConfig": {
+      "anonTypeBraces": {
+        "openingPolicy": "after",
+        "closingPolicy": "before"
+      },
+      "objectLiteralBraces": {
+        "openingPolicy": "after",
+        "closingPolicy": "before"
+      }
+    },
+    "arrowFunctionsPolicy": "around",
+    "functionTypeHaxe3Policy": "none",
+    "functionTypeHaxe4Policy": "none"
+  },
+  "wrapping": {
+    "maxLineLength": 120
+  }
+}

@@ -10,10 +10,10 @@ import aeons.graphics.Color;
 import aeons.systems.RenderSystem;
 
 import components.CRotate;
+
 import systems.RotateSystem;
 
 class GameScene extends Scene {
-
   public override function init() {
     addSystem(new RotateSystem({ useDeltaTime: true }));
     addSystem(new RenderSystem());
@@ -35,7 +35,6 @@ class GameScene extends Scene {
 
   function createBox(x: Float, y: Float, width: Float, height: Float, color: Color, speed: Float,
       ?parent: CTransform): Entity {
-
     final box = addEntity(new Entity());
 
     box.addComponent(new CTransform({

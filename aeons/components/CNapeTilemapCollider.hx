@@ -186,7 +186,7 @@ class CNapeTilemapCollider extends Component {
   /**
    * This component depends on a tilemap and transform component.
    */
-  override function get_requiredComponents():Array<Class<Component>> {
+  override function get_requiredComponents(): Array<Class<Component>> {
     return [CTilemap, CTransform];
   }
 }

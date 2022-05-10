@@ -1,17 +1,18 @@
 package aeons.physics.nape;
 
 #if use_nape
+import aeons.graphics.Color;
+import aeons.graphics.RenderTarget;
+import aeons.math.FastMatrix4;
+
 import nape.constraint.PivotJoint;
 import nape.phys.BodyList;
 import nape.phys.BodyType;
 import nape.shape.ShapeType;
 import nape.space.Space;
 
-import aeons.math.FastMatrix4;
-import aeons.graphics.Color;
-import aeons.graphics.RenderTarget;
-
 using aeons.math.FastMatrix4Ex;
+
 /**
  * Nape debug draw class.
  */
@@ -165,9 +166,9 @@ class DebugDraw {
           final edge2 = arbiter.referenceEdge2;
           if (edge1 != null && edge2 != null) {
             target.drawLine(edge1.worldVertex1.x, edge1.worldVertex1.y, edge1.worldVertex2.x, edge1.worldVertex2.y,
-                edgeColor, 2);
+              edgeColor, 2);
             target.drawLine(edge2.worldVertex1.x, edge2.worldVertex1.y, edge2.worldVertex2.x, edge2.worldVertex2.y,
-                edgeColor, 2);
+              edgeColor, 2);
           }
         }
 

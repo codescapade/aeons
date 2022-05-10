@@ -4,7 +4,6 @@ package aeons.events;
  * EventType adds type checking for the callback functions.
  */
 abstract EventType<T>(String) from String to String {
-
   /**
    * Compare Event types with strings.
    * @param a The event type to compare.

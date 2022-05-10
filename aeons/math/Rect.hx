@@ -3,7 +3,7 @@ package aeons.math;
 /**
  * Rect is a basic rectangle class using floats.
  */
- class Rect {
+class Rect {
   /**
    * The x position of the rectangle.
    */
@@ -123,6 +123,7 @@ package aeons.math;
 
     return intersects;
   }
+
   /**
    * String representation of the rectangle.
    * @return The string representation.
@@ -148,7 +149,7 @@ package aeons.math;
     var c = Vector2.get();
     Vector2.subVectors(b1, a1, c);
     var t = (c.x * d.y - c.y * d.x) / bDotDPerp;
-    if ( t < 0 || t > 1) {
+    if (t < 0 || t > 1) {
       b.put();
       d.put();
       c.put();

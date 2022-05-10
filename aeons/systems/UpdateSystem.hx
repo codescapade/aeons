@@ -1,12 +1,11 @@
 package aeons.systems;
 
-import aeons.core.Updatable;
 import aeons.components.CUpdate;
 import aeons.core.Bundle;
 import aeons.core.System;
+import aeons.core.Updatable;
 
 class UpdateSystem extends System implements Updatable {
-
   @:bundle
   var updateComps: Bundle<CUpdate>;
 

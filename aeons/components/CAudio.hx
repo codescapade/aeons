@@ -62,7 +62,7 @@ class CAudio extends Component {
    */
   public inline function play() {
     #if debug
-    if  (channel == null) {
+    if (channel == null) {
       trace('Cannot play CAudio. Channel not initialized');
     }
     #end
@@ -75,7 +75,7 @@ class CAudio extends Component {
    */
   public function pause() {
     #if debug
-    if  (channel == null) {
+    if (channel == null) {
       trace('Cannot pause CAudio. Channel not initialized');
     }
     #end
@@ -88,7 +88,7 @@ class CAudio extends Component {
    */
   public function stop() {
     #if debug
-    if  (channel == null) {
+    if (channel == null) {
       trace('Cannot stop CAudio. Channel not initialized');
     }
     #end

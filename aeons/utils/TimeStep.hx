@@ -7,8 +7,8 @@ interface TimeStep {
   var dt(default, null): Float;
 
   /**
-  * The frames per second.
-  */
+   * The frames per second.
+   */
   var fps(default, null): Int;
 
   /**

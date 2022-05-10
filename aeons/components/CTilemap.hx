@@ -58,17 +58,17 @@ class CTilemap extends Component implements Renderable {
    */
   var visibleBounds = new Rect();
 
-	/**
-	 * The x axis anchor. Not used in this component.
-	 */
+  /**
+   * The x axis anchor. Not used in this component.
+   */
   @:dox(hide)
-	public var anchorX = 0.0;
+  public var anchorX = 0.0;
 
-	/**
-	 * The y axis anchor. Not used in this component.
-	 */
+  /**
+   * The y axis anchor. Not used in this component.
+   */
   @:dox(hide)
-	public var anchorY = 0.0;
+  public var anchorY = 0.0;
 
   /**
    * CTilemap constructor.
@@ -110,7 +110,7 @@ class CTilemap extends Component implements Renderable {
         }
         final rect = tileset.getRect(index);
         target.drawImageSection(x * tileset.tileWidth, y * tileset.tileHeight, rect.x, rect.y, rect.width,
-            rect.height, tileset.tileImage, color);
+          rect.height, tileset.tileImage, color);
       }
     }
   }
@@ -201,13 +201,13 @@ class CTilemap extends Component implements Renderable {
     var topLeft = pixelToTilePosition(bounds.x, bounds.y);
     topLeft.x -= 1;
     topLeft.y -= 1;
-    topLeft.x = AeMath.clampInt(topLeft.xi , 0, widthInTiles);
-    topLeft.y = AeMath.clampInt(topLeft.yi , 0, heightInTiles);
+    topLeft.x = AeMath.clampInt(topLeft.xi, 0, widthInTiles);
+    topLeft.y = AeMath.clampInt(topLeft.yi, 0, heightInTiles);
 
     var bottomRight = pixelToTilePosition(bounds.x + bounds.width, bounds.y + bounds.height);
     bottomRight.x += 2;
     bottomRight.y += 2;
-    bottomRight.x = AeMath.clampInt(bottomRight.xi , 0, widthInTiles);
+    bottomRight.x = AeMath.clampInt(bottomRight.xi, 0, widthInTiles);
     bottomRight.y = AeMath.clampInt(bottomRight.yi, 0, heightInTiles);
 
     visibleBounds.set(topLeft.xi, topLeft.yi, bottomRight.xi, bottomRight.yi);
