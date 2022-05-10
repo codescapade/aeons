@@ -6,6 +6,7 @@ import aeons.components.CTransform;
 import aeons.core.Bundle;
 import aeons.core.SysRenderable;
 import aeons.core.System;
+import aeons.events.SceneEvent;
 import aeons.events.SortEvent;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
@@ -40,6 +41,7 @@ class RenderSystem extends System implements SysRenderable {
    */
   public function new() {
     super();
+    Aeons.events.on(SortEvent.SORT_Z, sortListener);
   }
 
   /**
@@ -50,6 +52,7 @@ class RenderSystem extends System implements SysRenderable {
     // Sort all bundles if required.
     if (sortZ) {
       renderBundles.bundles.timSort(sort);
+      sortZ = false;
     }
 
     /**

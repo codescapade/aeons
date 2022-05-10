@@ -7,6 +7,7 @@ import aeons.events.SceneEvent;
 import aeons.events.services.InternalEvents;
 import aeons.graphics.RenderTarget;
 import aeons.input.Input;
+import aeons.math.FastMatrix4;
 import aeons.math.services.InternalRandom;
 import aeons.utils.services.InternalStorage;
 import aeons.utils.services.InternalTimeStep;
@@ -154,6 +155,7 @@ class Game {
    */
   function render(frames: Array<Framebuffer>) {
     Aeons.timeStep.render();
+    renderTarget.transform.setFrom(FastMatrix4.identity());
 
     // Render the scene below the current scene if the current scene is a sub scene.
     if (currentScene.isSubScene && currentSceneIndex > 0) {
