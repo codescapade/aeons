@@ -369,42 +369,42 @@ class CTransform extends Component {
     return changed;
   }
 
-  inline function set_x(value: Float): Float {
+  function set_x(value: Float): Float {
     changed = true;
     x = value;
 
     return value;
   }
 
-  inline function set_y(value: Float): Float {
+  function set_y(value: Float): Float {
     changed = true;
     y = value;
 
     return value;
   }
 
-  inline function set_angle(value: Float): Float {
+  function set_angle(value: Float): Float {
     changed = true;
     angle = value;
 
     return value;
   }
 
-  inline function set_scaleX(value: Float): Float {
+  function set_scaleX(value: Float): Float {
     changed = true;
     scaleX = value;
 
     return value;
   }
 
-  inline function set_scaleY(value: Float): Float {
+  function set_scaleY(value: Float): Float {
     changed = true;
     scaleY = value;
 
     return value;
   }
 
-  inline function set_zIndex(value: Float): Float {
+  function set_zIndex(value: Float): Float {
     zIndex = value;
     SortEvent.emit(SortEvent.SORT_Z);
 
