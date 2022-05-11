@@ -202,9 +202,9 @@ class RunScript {
 
     Sys.setCwd(libPath);
 
-    runCommand('', 'git', ['clone', 'https://github.com/codescapade/Kha']);
-    runCommand('Kha', 'git', ['checkout', '9d9bb55']);
-    runCommand('Kha', 'git', ['submodule', 'update', '--init', '--recursive']);
+    runCommand('', 'git', ['clone', 'https://github.com/Kode/Kha']);
+    runCommand('Kha', 'git', ['checkout', '9602712']);
+    runCommand('Kha', 'get_dlc', []);
 
     Sys.println('Download of Kha completed');
   }
