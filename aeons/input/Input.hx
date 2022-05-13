@@ -55,6 +55,7 @@ class Input {
     #if !no_keyboard
     keyboardEnabled = true;
     Keyboard.get().notify(keyDown, keyUp);
+    Keyboard.disableSystemInterventions(Full);
     #end
 
     #if !no_mouse
