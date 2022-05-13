@@ -29,6 +29,13 @@ interface Assets {
   function getImage(name: String): Image;
 
   /**
+   * Check if an image is loaded.
+   * @param name The name of the image.
+   * @return True if the image is loaded.
+   */
+  function hasImage(name: String): Bool;
+
+  /**
    * Load a font asset.
    * @param name The name of the font.
    * @param complete The function to call when the loading is complete.
@@ -47,6 +54,13 @@ interface Assets {
    * @return The font reference.
    */
   function getFont(name: String): Font;
+
+  /**
+   * Check if a font is loaded.
+   * @param name The name of the font.
+   * @return True if the font is loaded.
+   */
+  function hasFont(name: String): Bool;
 
   /**
    * Load a blob asset.
@@ -69,6 +83,13 @@ interface Assets {
   function getBlob(name: String): Blob;
 
   /**
+   * Check if a blob is loaded.
+   * @param name The name of the blob.
+   * @return True if the blob is loaded.
+   */
+  function hasBlob(name: String): Bool;
+
+  /**
    * Load a sound asset.
    * @param name The name of the sound.
    * @param complete The function to call when the loading is complete.
@@ -87,6 +108,13 @@ interface Assets {
    * @return The sound reference.
    */
   function getSound(name: String): Sound;
+
+  /**
+   * Check if a sound is loaded.
+   * @param name The name of the sound.
+   * @return True if the sound is loaded.
+   */
+  function hasSound(name: String): Bool;
 
   /**
    * Load a video asset.
@@ -109,6 +137,13 @@ interface Assets {
   function getVideo(name: String): Video;
 
   /**
+   * Check if a video is loaded.
+   * @param name The name of the video.
+   * @return True if the video is loaded.
+   */
+  function hasVideo(name: String): Bool;
+
+  /**
    * Add an atlas to the manager.
    * @param name The name of this atlas.
    * @return The loaded atlas.
@@ -126,4 +161,12 @@ interface Assets {
    * @param name The name of the atlas.
    */
   function getAtlas(name: String): Atlas;
+
+  /**
+   * Check if a atlas is loaded.
+   * @param name The name of the atlas.
+   * @return True if the atlas is loaded.
+   */
+  function hasAtlas(name: String): Bool;
+
 }

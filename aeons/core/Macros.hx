@@ -404,14 +404,14 @@ class Macros {
         }
 
         // Make the param name snake_case
-        var paramName = '';
-        var testName = paramClass.name;
-        while (regex.match(testName)) {
-          paramName += regex.matchedLeft() + '_' + regex.matched(1);
-          testName = regex.matchedRight();
-        }
-        paramName += testName;
-        paramName = paramName.toLowerCase();
+        var paramName = paramClass.name.substr(0, 1).toLowerCase() + paramClass.name.substr(1);
+        // var testName = paramClass.name;
+        // while (regex.match(testName)) {
+        //   paramName += regex.matchedLeft() + '_' + regex.matched(1);
+        //   testName = regex.matchedRight();
+        // }
+        // paramName += testName;
+        // paramName = paramName.toLowerCase();
 
         // Add the Component to the Node's fields
         fields.push({

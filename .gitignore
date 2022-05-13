@@ -3,3 +3,4 @@ build/
 .DS_Store
 /lib/
 /tests/khafile.js
+/tools/docs/site/node_modules

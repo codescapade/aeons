@@ -170,7 +170,7 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
 
     tree.clear();
     for (tilemap in tilemapBundles) {
-      final collider = tilemap.c_simple_tilemap_collider;
+      final collider = tilemap.cSimpleTilemapCollider;
       if (!collider.active) {
         continue;
       }
@@ -181,11 +181,11 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     }
 
     for (bundle in bundles) {
-      if (!bundle.entity.active || !bundle.c_simple_body.active || !bundle.c_transform.active) {
+      if (!bundle.entity.active || !bundle.cSimpleBody.active || !bundle.cTransform.active) {
         continue;
       }
 
-      final body = bundle.c_simple_body.body;
+      final body = bundle.cSimpleBody.body;
       updatePastInteractions(body);
       body.touchingPrevious = body.touching;
       body.touching = Touching.NONE;
@@ -232,10 +232,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
 
     // Check for collisions.
     for (bundle in bundles) {
-      if (!bundle.entity.active || !bundle.c_simple_body.active || !bundle.c_transform.active) {
+      if (!bundle.entity.active || !bundle.cSimpleBody.active || !bundle.cTransform.active) {
         continue;
       }
-      final body = bundle.c_simple_body.body;
+      final body = bundle.cSimpleBody.body;
       while (treeList.length > 0) {
         treeList.pop();
       }
@@ -248,10 +248,10 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
 
     // Check if any collisions ended this update.
     for (bundle in bundles) {
-      if (!bundle.entity.active || !bundle.c_simple_body.active || !bundle.c_transform.active) {
+      if (!bundle.entity.active || !bundle.cSimpleBody.active || !bundle.cTransform.active) {
         continue;
       }
-      final body = bundle.c_simple_body.body;
+      final body = bundle.cSimpleBody.body;
       for (b in body.wasCollidingwith) {
         if (body.collidingWith.indexOf(b) == -1) {
           interactions.push(Interaction.get(COLLISION_END, body, b));
@@ -283,8 +283,8 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     }
 
     for (tilemap in tilemapBundles) {
-      for (body in tilemap.c_simple_tilemap_collider.bodies) {
-        if (!tilemap.c_simple_tilemap_collider.active) {
+      for (body in tilemap.cSimpleTilemapCollider.bodies) {
+        if (!tilemap.cSimpleTilemapCollider.active) {
           continue;
         }
 
@@ -294,11 +294,11 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     }
 
     for (bundle in bundles) {
-      if (!bundle.c_simple_body.active) {
+      if (!bundle.cSimpleBody.active) {
         continue;
       }
 
-      final body = bundle.c_simple_body.body;
+      final body = bundle.cSimpleBody.body;
       final bounds = body.bounds;
       if (body.type == STATIC) {
         target.drawRect(bounds.x, bounds.y, bounds.width, bounds.height, staticBodyColor, 2);
@@ -534,8 +534,8 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * @param bundle The bundle to update.
    */
   function updateBodyBounds(bundle: aeons.bundles.BundleCSimpleBodyCTransform) {
-    final worldPos = bundle.c_transform.getWorldPosition();
-    final body = bundle.c_simple_body.body;
+    final worldPos = bundle.cTransform.getWorldPosition();
+    final body = bundle.cSimpleBody.body;
     body.bounds.x = worldPos.x - body.bounds.width * 0.5 + body.offset.x;
     body.bounds.y = worldPos.y - body.bounds.height * 0.5 + body.offset.y;
 
@@ -550,13 +550,13 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
    * @param bundle 
    */
   function updateBodyTransform(bundle: aeons.bundles.BundleCSimpleBodyCTransform) {
-    final body = bundle.c_simple_body.body;
+    final body = bundle.cSimpleBody.body;
     if (body.type == STATIC) {
       return;
     }
     final worldPos = Vector2.get(body.bounds.x + body.bounds.width * 0.5 - body.offset.x,
       body.bounds.y + body.bounds.height * 0.5 - body.offset.y);
-    bundle.c_transform.setWorldPosition(worldPos);
+    bundle.cTransform.setWorldPosition(worldPos);
     worldPos.put();
   }
 

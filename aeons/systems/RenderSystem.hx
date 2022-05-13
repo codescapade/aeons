@@ -59,35 +59,35 @@ class RenderSystem extends System implements SysRenderable {
      * Update all transforms so the multiply further down goes correct.
      */
     for (renderable in renderBundles) {
-      renderable.c_transform.updateMatrix();
+      renderable.cTransform.updateMatrix();
     }
 
     // Loop through all cameras and render the entities.
     for (camBundle in cameraBundles) {
-      var camera = camBundle.c_camera;
+      var camera = camBundle.cCamera;
       camera.updateMatrix();
-      var camTransform = camBundle.c_transform;
+      var camTransform = camBundle.cTransform;
       var camTarget = camera.renderTarget;
       var localBounds = new Rect(0, 0, camera.bounds.width, camera.bounds.height);
       var boundsPos = Vector2.get();
       // Render all the bundles to the current camera.
       camTarget.start(true, camera.backgroundColor);
       for (renderable in renderBundles) {
-        if (renderable.c_transform.containsParent(camTransform)) {
-          camTarget.transform.setFrom(renderable.c_transform.matrix);
-          renderable.c_render.render(camTarget);
+        if (renderable.cTransform.containsParent(camTransform)) {
+          camTarget.transform.setFrom(renderable.cTransform.matrix);
+          renderable.cRender.render(camTarget);
         } else {
           boundsPos.set(camera.bounds.x, camera.bounds.y);
-          renderable.c_transform.worldToLocalPosition(boundsPos);
-          boundsPos.x = boundsPos.x - renderable.c_transform.x;
-          boundsPos.y = boundsPos.y - renderable.c_transform.y;
+          renderable.cTransform.worldToLocalPosition(boundsPos);
+          boundsPos.x = boundsPos.x - renderable.cTransform.x;
+          boundsPos.y = boundsPos.y - renderable.cTransform.y;
           localBounds.x = boundsPos.x;
           localBounds.y = boundsPos.y;
 
           // Only render components that are inside the camera bounds.
-          if (renderable.c_render.inCameraBounds(localBounds)) {
-            camTarget.transform.setFrom(camera.matrix.multmat(renderable.c_transform.matrix));
-            renderable.c_render.render(camTarget);
+          if (renderable.cRender.inCameraBounds(localBounds)) {
+            camTarget.transform.setFrom(camera.matrix.multmat(renderable.cTransform.matrix));
+            renderable.cRender.render(camTarget);
           }
         }
       }
@@ -97,13 +97,13 @@ class RenderSystem extends System implements SysRenderable {
     }
 
     for (renderable in renderBundles) {
-      renderable.c_transform.resetChanged();
+      renderable.cTransform.resetChanged();
     }
 
     // Render all cameras to the main target.
     target.start();
     for (camBundle in cameraBundles) {
-      final camera = camBundle.c_camera;
+      final camera = camBundle.cCamera;
       target.drawImage(camera.viewX, camera.viewY, camera.renderTarget.image, Color.White);
     }
     target.present();
@@ -124,9 +124,9 @@ class RenderSystem extends System implements SysRenderable {
    * @param b The next bundle.
    */
   function sort(a: aeons.bundles.BundleCRenderCTransform, b: aeons.bundles.BundleCRenderCTransform) {
-    if (a.c_transform.zIndex > b.c_transform.zIndex) {
+    if (a.cTransform.zIndex > b.cTransform.zIndex) {
       return 1;
-    } else if (a.c_transform.zIndex < b.c_transform.zIndex) {
+    } else if (a.cTransform.zIndex < b.cTransform.zIndex) {
       return -1;
     }
 

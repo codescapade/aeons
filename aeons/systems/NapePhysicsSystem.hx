@@ -137,14 +137,14 @@ class NapePhysicsSystem extends System implements Updatable {
    * @param bundle The bundle to update.
    */
   function updateBody(bundle: aeons.bundles.BundleCNapeBodyCTransform) {
-    if (bundle.c_nape_body.body.type == BodyType.STATIC) {
+    if (bundle.cNapeBody.body.type == BodyType.STATIC) {
       return;
     }
 
-    final worldPos = bundle.c_transform.getWorldPosition();
-    final worldAngle = bundle.c_transform.getWorldAngle();
-    bundle.c_nape_body.body.position.setxy(worldPos.x, worldPos.y);
-    bundle.c_nape_body.body.rotation = AeMath.degToRad(worldAngle);
+    final worldPos = bundle.cTransform.getWorldPosition();
+    final worldAngle = bundle.cTransform.getWorldAngle();
+    bundle.cNapeBody.body.position.setxy(worldPos.x, worldPos.y);
+    bundle.cNapeBody.body.rotation = AeMath.degToRad(worldAngle);
     worldPos.put();
   }
 
@@ -153,14 +153,14 @@ class NapePhysicsSystem extends System implements Updatable {
    * @param bundle The bundle to update.
    */
   function updateTransform(bundle: aeons.bundles.BundleCNapeBodyCTransform) {
-    if (bundle.c_nape_body.body.type == BodyType.STATIC) {
+    if (bundle.cNapeBody.body.type == BodyType.STATIC) {
       return;
     }
 
-    final position = bundle.c_nape_body.body.position;
+    final position = bundle.cNapeBody.body.position;
     final pos = Vector2.get(position.x, position.y);
-    bundle.c_transform.setWorldPosition(pos);
-    bundle.c_transform.setWorldAngle(AeMath.radToDeg(bundle.c_nape_body.body.rotation));
+    bundle.cTransform.setWorldPosition(pos);
+    bundle.cTransform.setWorldAngle(AeMath.radToDeg(bundle.cNapeBody.body.rotation));
     pos.put();
   }
 }

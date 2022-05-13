@@ -29,6 +29,12 @@ class NullAssets implements Assets {
     return null;
   }
 
+  public function hasImage(name: String): Bool {
+    trace('hasImage not implemented');
+
+    return false;
+  }
+
   public function loadFont(name: String, complete: (Font)->Void): Void {
     trace('loadFont not implemented');
   }
@@ -41,6 +47,12 @@ class NullAssets implements Assets {
     trace('getFont not implemented');
 
     return null;
+  }
+
+  public function hasFont(name: String): Bool {
+    trace('hasFont not implemented');
+
+    return false;
   }
 
   public function loadBlob(name: String, complete: (Blob)->Void): Void {
@@ -57,6 +69,12 @@ class NullAssets implements Assets {
     return null;
   }
 
+  public function hasBlob(name: String): Bool {
+    trace('hasBlob not implemented');
+
+    return false;
+  }
+
   public function loadSound(name: String, complete: (Sound)->Void): Void {
     trace('loadSound not implemented');
   }
@@ -69,6 +87,12 @@ class NullAssets implements Assets {
     trace('getSound not implemented');
 
     return null;
+  }
+
+  public function hasSound(name: String): Bool {
+    trace('hasSound not implemented');
+
+    return false;
   }
 
   public function loadVideo(name: String, complete: (Video)->Void): Void {
@@ -85,6 +109,12 @@ class NullAssets implements Assets {
     return null;
   }
 
+  public function hasVideo(name: String): Bool {
+    trace('hasVideo not implemented');
+
+    return false;
+  }
+
   public function loadAtlas(name: String): Atlas {
     trace('loadAtlas not implemented');
 
@@ -99,4 +129,11 @@ class NullAssets implements Assets {
     trace('getAtlas not implemented');
     return null;
   }
+
+  public function hasAtlas(name: String): Bool {
+    trace('hasAtlas not implemented');
+
+    return false;
+  }
+
 }

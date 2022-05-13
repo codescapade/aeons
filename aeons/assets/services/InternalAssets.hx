@@ -42,6 +42,10 @@ class InternalAssets implements Assets {
     #end
   }
 
+  public function hasImage(name: String): Bool {
+    return kha.Assets.images.get(name) != null;
+  }
+
   public inline function loadFont(name: String, complete: (Font)->Void) {
     kha.Assets.loadFont(name, complete, failed);
   }
@@ -60,6 +64,10 @@ class InternalAssets implements Assets {
     #else
     return kha.Assets.fonts.get(name);
     #end
+  }
+
+  public inline function hasFont(name: String): Bool {
+    return kha.Assets.fonts.get(name) != null;
   }
 
   public inline function loadBlob(name: String, complete: (Blob)->Void) {
@@ -83,6 +91,10 @@ class InternalAssets implements Assets {
     #end
   }
 
+  public inline function hasBlob(name: String): Bool {
+    return kha.Assets.blobs.get(name) != null;
+  }
+
   public inline function loadSound(name: String, complete: (Sound)->Void) {
     kha.Assets.loadSound(name, complete, failed);
   }
@@ -104,6 +116,10 @@ class InternalAssets implements Assets {
     #end
   }
 
+  public inline function hasSound(name: String): Bool {
+    return kha.Assets.sounds.get(name) != null;
+  }
+
   public inline function loadVideo(name: String, complete: (Video)->Void) {
     kha.Assets.loadVideo(name, complete, failed);
   }
@@ -122,6 +138,10 @@ class InternalAssets implements Assets {
     #else
     return kha.Assets.videos.get(name);
     #end
+  }
+
+  public inline function hasVideo(name: String): Bool {
+    return kha.Assets.videos.get(name) != null;
   }
 
   public function loadAtlas(name: String): Atlas {
@@ -154,6 +174,10 @@ class InternalAssets implements Assets {
     }
     #end
     return atlasses[name];
+  }
+
+  public inline function hasAtlas(name: String): Bool {
+    return atlasses.exists(name);
   }
 
   /**

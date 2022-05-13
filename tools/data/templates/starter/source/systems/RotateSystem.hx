@@ -21,9 +21,9 @@ class RotateSystem extends System implements Updatable {
   public function update(dt: Float) {
     for (bundle in bundles) {
       if (useDeltaTime) {
-        bundle.c_transform.angle += bundle.c_rotate.speed * dt;
+        bundle.cTransform.angle += bundle.cRotate.speed * dt;
       } else {
-        bundle.c_transform.angle += bundle.c_rotate.speed;
+        bundle.cTransform.angle += bundle.cRotate.speed;
       }
     }
   }
