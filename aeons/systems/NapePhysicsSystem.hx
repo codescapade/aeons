@@ -1,10 +1,10 @@
 package aeons.systems;
 
 #if use_nape
+import aeons.bundles.Bundle;
 import aeons.components.CNapeBody;
 import aeons.components.CNapeTilemapCollider;
 import aeons.components.CTransform;
-import aeons.core.Bundle;
 import aeons.core.System;
 import aeons.core.Updatable;
 import aeons.math.AeMath;

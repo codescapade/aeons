@@ -1,4 +1,4 @@
-package aeons.core;
+package aeons.bundles;
 
 /**
  * The Bundle class is used to generate the bundles in systems using macros.

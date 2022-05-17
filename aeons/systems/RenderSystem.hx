@@ -1,12 +1,11 @@
 package aeons.systems;
 
+import aeons.bundles.Bundle;
 import aeons.components.CCamera;
 import aeons.components.CRender;
 import aeons.components.CTransform;
-import aeons.core.Bundle;
 import aeons.core.SysRenderable;
 import aeons.core.System;
-import aeons.events.SceneEvent;
 import aeons.events.SortEvent;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;

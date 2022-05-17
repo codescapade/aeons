@@ -1,4 +1,6 @@
-package aeons.core;
+package aeons.bundles;
+
+import aeons.core.Entity;
 
 /**
  * This is the base class for the `Bundle` class.

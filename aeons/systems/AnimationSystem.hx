@@ -1,8 +1,8 @@
 package aeons.systems;
 
+import aeons.bundles.Bundle;
 import aeons.components.CAnimation;
 import aeons.components.CSprite;
-import aeons.core.Bundle;
 import aeons.core.System;
 import aeons.core.Updatable;
 

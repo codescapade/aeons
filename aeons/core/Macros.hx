@@ -387,7 +387,6 @@ class Macros {
       var pos = Context.currentPos();
       var fields: Array<Field> = [];
       var constructorExprs: Array<Expr> = [];
-      var regex = ~/(?<!^)([A-Z])/g;
 
       // Add an Expr to get the 'components' to the constructor
       constructorExprs.push(macro {
@@ -405,13 +404,6 @@ class Macros {
 
         // Make the param name snake_case
         var paramName = paramClass.name.substr(0, 1).toLowerCase() + paramClass.name.substr(1);
-        // var testName = paramClass.name;
-        // while (regex.match(testName)) {
-        //   paramName += regex.matchedLeft() + '_' + regex.matched(1);
-        //   testName = regex.matchedRight();
-        // }
-        // paramName += testName;
-        // paramName = paramName.toLowerCase();
 
         // Add the Component to the Node's fields
         fields.push({
@@ -449,7 +441,7 @@ class Macros {
         pos: pos,
         params: [],
         kind: TDClass({
-          pack: ['aeons', 'core'],
+          pack: ['aeons', 'bundles'],
           name: 'BundleBase',
         }),
         fields: fields

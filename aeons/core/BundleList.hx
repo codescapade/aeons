@@ -1,5 +1,7 @@
 package aeons.core;
 
+import aeons.bundles.BundleBase;
+
 import haxe.iterators.ArrayIterator;
 
 /**

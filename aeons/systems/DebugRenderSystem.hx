@@ -1,9 +1,9 @@
 package aeons.systems;
 
+import aeons.bundles.Bundle;
 import aeons.components.CCamera;
 import aeons.components.CDebugRender;
 import aeons.components.CTransform;
-import aeons.core.Bundle;
 import aeons.core.DebugRenderable;
 import aeons.core.SysRenderable;
 import aeons.core.System;

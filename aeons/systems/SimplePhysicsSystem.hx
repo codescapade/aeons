@@ -1,9 +1,9 @@
 package aeons.systems;
 
+import aeons.bundles.Bundle;
 import aeons.components.CSimpleBody;
 import aeons.components.CSimpleTilemapCollider;
 import aeons.components.CTransform;
-import aeons.core.Bundle;
 import aeons.core.DebugRenderable;
 import aeons.core.System;
 import aeons.core.Updatable;
