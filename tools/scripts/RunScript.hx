@@ -201,10 +201,16 @@ class RunScript {
     }
 
     Sys.setCwd(libPath);
+    final platform = Sys.systemName();
 
     runCommand('', 'git', ['clone', 'https://github.com/Kode/Kha']);
     runCommand('Kha', 'git', ['checkout', '9602712']);
-    runCommand('Kha', 'get_dlc', []);
+
+    if (platform == 'Windows') {
+      runCommand('Kha', 'get_dlc', []);
+    } else {
+      runCommand('Kha', './get_dlc', []);
+    }
 
     Sys.println('Download of Kha completed');
   }
