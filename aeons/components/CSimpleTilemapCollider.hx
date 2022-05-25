@@ -32,29 +32,12 @@ class CSimpleTilemapCollider extends Component {
    * The created tilemap physics bodies.
    */
   @:allow(aeons.systems.SimplePhysicsSystem)
-  var bodies: Array<Body>;
+  var bodies: Array<Body> = [];
 
   /**
    * The tags on this body. Tags are used for interaction listeners.
    */
-  var tags: Array<String>;
-
-  /**
-   * CSimpleTilemapCollider constructor.
-   */
-  public function new() {
-    super();
-  }
-
-  /**
-   * Init gets called after the component has been added to the entity.
-   * @param entityId The id of the entity the component got added to.
-   */
-  public override function init(entityId: Int) {
-    super.init(entityId);
-    bodies = [];
-    tags = [];
-  }
+  var tags: Array<String> = [];
 
   /**
    * Generate colliders for a CTilemap component. 

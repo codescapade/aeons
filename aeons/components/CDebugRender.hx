@@ -16,13 +16,6 @@ class CDebugRender extends Component {
   var components: Array<DebugRenderable>;
 
   /**
-   * CDebugRender constructor.
-   */
-  public function new() {
-    super();
-  }
-
-  /**
    * Init gets called after the component has been added to an entity.
    * @param entityId The id of the entity the component got added to.
    */

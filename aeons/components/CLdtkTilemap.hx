@@ -27,21 +27,12 @@ class CLdtkTilemap extends Component implements Renderable {
   /**
    * The level layers.
    */
-  var layers: Array<LdtkLayer>;
+  var layers: Array<LdtkLayer> = [];
 
   /**
    * Map of all layers to make getting and setting tiles easier.
    */
-  var layerMap: Map<String, LdtkLayer>;
-
-  /**
-   * Constructor.
-   */
-  public function new() {
-    super();
-    layers = [];
-    layerMap = new Map<String, LdtkLayer>();
-  }
+  var layerMap: Map<String, LdtkLayer> = new Map<String, LdtkLayer>();
 
   /**
    * Render the tilemap.

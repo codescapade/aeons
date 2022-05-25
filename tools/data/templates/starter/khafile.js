@@ -2,6 +2,7 @@
 let project = new Project('{{game_name}}');
 
 // Make it possible to have the same file name in different folders.
+// You load an asset from a folder by replacing the / with _
 project.addAssets('assets/**', {
   nameBaseDir: 'assets',
   destination: '{dir}/{name}',

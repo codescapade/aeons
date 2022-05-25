@@ -244,7 +244,7 @@ class Macros {
       constructor = {
         name: 'new',
         pos: Context.currentPos(),
-        access: [APrivate],
+        access: [APublic],
         kind: FFun({
           args: [],
           expr: macro {super();}
@@ -286,7 +286,7 @@ class Macros {
         case FVar(fType, fExpr):
           final fieldName = field.name;
           // Set the field type to `BundleList<BundleOfType>`.
-          field.kind = FieldType.FVar(macro:aeons.core.BundleList<$fType>, fExpr);
+          field.kind = FieldType.FVar(macro:aeons.bundles.BundleList<$fType>, fExpr);
 
           try {
             // toType() can throw an error and break completion so wrapping it in try catch.
@@ -309,7 +309,7 @@ class Macros {
               case FFun(o):
                 final constructorExprs = [o.expr];
                 // initialize the bundleList at the end of the system constructor.
-                final initBundleExpr = macro {$i{fieldName} = new aeons.core.BundleList<$fType>();};
+                final initBundleExpr = macro {$i{fieldName} = new aeons.bundles.BundleList<$fType>();};
                 constructorExprs.push(initBundleExpr);
 
                 for (component in componentClasses) {

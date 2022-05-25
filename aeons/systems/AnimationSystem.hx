@@ -14,13 +14,6 @@ class AnimationSystem extends System implements Updatable {
   var animBundles: Bundle<CAnimation, CSprite>;
 
   /**
-   * Constructor.
-   */
-  public function new() {
-    super();
-  }
-
-  /**
    * Called every update cycle.
    * @param dt The time passed since the last update in seconds.
    */

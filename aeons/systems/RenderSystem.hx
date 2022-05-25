@@ -36,10 +36,9 @@ class RenderSystem extends System implements SysRenderable {
   var sortZ: Bool = false;
 
   /**
-   * Constructor.
+   * Initializes the render system. Gets called automatically after creation.
    */
-  public function new() {
-    super();
+  public override function init() {
     Aeons.events.on(SortEvent.SORT_Z, sortListener);
   }
 

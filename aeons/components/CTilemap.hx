@@ -71,20 +71,6 @@ class CTilemap extends Component implements Renderable {
   public var anchorY = 0.0;
 
   /**
-   * CTilemap constructor.
-   */
-  public function new() {
-    super();
-
-    color = Color.White;
-    anchorX = 0.0;
-    anchorY = 0.0;
-    tileset = null;
-    tiles = null;
-    visibleBounds.set(0, 0, 0, 0);
-  }
-
-  /**
    * Init gets called after the component has been added to an entity.
    * @param entityId The id of the entity the component got added to.
    */

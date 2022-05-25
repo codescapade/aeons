@@ -25,21 +25,13 @@ class CNapeTilemapCollider extends Component {
   /**
    * The nape bodies created for the tilemap.
    */
-  var bodies: Array<Body>;
+  var bodies: Array<Body> = [];
 
   /**
    * The nape physics space reference.
    */
   @:allow(aeons.systems.NapePhysicsSystem)
   var space: Space;
-
-  /**
-   * CNapeTilemapCollider constructor.
-   */
-  public function new() {
-    super();
-    bodies = [];
-  }
 
   /**
    * Component cleanup.

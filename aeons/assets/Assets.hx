@@ -168,5 +168,4 @@ interface Assets {
    * @return True if the atlas is loaded.
    */
   function hasAtlas(name: String): Bool;
-
 }

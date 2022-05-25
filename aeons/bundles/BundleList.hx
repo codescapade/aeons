@@ -1,6 +1,6 @@
-package aeons.core;
+package aeons.bundles;
 
-import aeons.bundles.BundleBase;
+import aeons.core.Entity;
 
 import haxe.iterators.ArrayIterator;
 

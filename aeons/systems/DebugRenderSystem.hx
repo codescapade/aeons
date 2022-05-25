@@ -31,13 +31,6 @@ class DebugRenderSystem extends System implements SysRenderable {
   var systems: Array<DebugRenderable>;
 
   /**
-   * Constructor.
-   */
-  public function new() {
-    super();
-  }
-
-  /**
    * Initialize the system. This gets all systems that can be rendered using this system.
    */
   public override function init() {
