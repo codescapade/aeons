@@ -67,7 +67,8 @@ class RenderSystem extends System implements SysRenderable {
       var camTransform = camBundle.cTransform;
       var camTarget = camera.renderTarget;
       var localBounds = new Rect(0, 0, camera.bounds.width, camera.bounds.height);
-      var boundsPos = Vector2.get();
+      var tlPos = Vector2.get();
+      var brPos = Vector2.get();
       // Render all the bundles to the current camera.
       camTarget.start(true, camera.backgroundColor);
       for (renderable in renderBundles) {
@@ -75,12 +76,15 @@ class RenderSystem extends System implements SysRenderable {
           camTarget.transform.setFrom(renderable.cTransform.matrix);
           renderable.cRender.render(camTarget);
         } else {
-          boundsPos.set(camera.bounds.x, camera.bounds.y);
-          renderable.cTransform.worldToLocalPosition(boundsPos);
-          boundsPos.x = boundsPos.x - renderable.cTransform.x;
-          boundsPos.y = boundsPos.y - renderable.cTransform.y;
-          localBounds.x = boundsPos.x;
-          localBounds.y = boundsPos.y;
+          tlPos.set(camera.bounds.x, camera.bounds.y);
+          brPos.set(camera.bounds.x + camera.bounds.width, camera.bounds.y + camera.bounds.height);
+          renderable.cTransform.worldToLocalPosition(tlPos);
+          renderable.cTransform.worldToLocalPosition(brPos);
+          var x = Math.min(tlPos.x, brPos.x) - renderable.cTransform.x;
+          var y = Math.min(tlPos.y, brPos.y) - renderable.cTransform.y;
+          var width = Math.abs(tlPos.x - brPos.x);
+          var height = Math.abs(tlPos.y - brPos.y);
+          localBounds.set(x, y, width, height);
 
           // Only render components that are inside the camera bounds.
           if (renderable.cRender.inCameraBounds(localBounds)) {
@@ -90,7 +94,8 @@ class RenderSystem extends System implements SysRenderable {
         }
       }
 
-      boundsPos.put();
+      tlPos.put();
+      brPos.put();
       camTarget.present();
     }
 

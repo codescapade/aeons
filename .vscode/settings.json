@@ -3,5 +3,7 @@
     "aeons",
     "tests"
   ],
-  "kha.khaPath": "lib/Kha"
+  "kha.khaPath": "lib/Kha",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true
 }

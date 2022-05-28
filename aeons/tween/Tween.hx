@@ -29,7 +29,7 @@ class Tween {
   /**
    * Object pool for tween reuse.
    */
-  static final pool: Pool<Tween> = new Pool(Tween);
+  static final pool = new Pool(Tween);
 
   /**
    * The time since the tween started in seconds.
@@ -55,6 +55,11 @@ class Tween {
    * Function to call when the tween is complete.
    */
   var onComplete: ()->Void;
+
+  /**
+   * The function to call every update.
+   */
+  var onUpdate: (target: Dynamic)->Void;
 
   /**
    * The delay before the tween starts.
@@ -148,7 +153,13 @@ class Tween {
    * @param callback The callback function.
    */
   public function setOnComplete(callback: ()->Void): Tween {
-    this.onComplete = callback;
+    onComplete = callback;
+
+    return this;
+  }
+
+  public function setOnUpdate(callback: (target: Dynamic)->Void) {
+    onUpdate = callback;
 
     return this;
   }
@@ -204,6 +215,9 @@ class Tween {
       }
       for (data in dataList) {
         setField(data);
+      }
+      if (onUpdate != null) {
+        onUpdate(target);
       }
     }
   }

@@ -123,4 +123,37 @@ class AeMath {
   public static function distance(x1: Float, y1: Float, x2: Float, y2: Float): Float {
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
   }
+
+  /**
+   * Rotate a position around an x and a y direction. This updates the position vector.
+   * @param position The position to rotate.
+   * @param point The point to rotate around.
+   * @param angle The current angle in degrees.
+   * @return The new position.
+   */
+  public static inline function rotateAroundPoint(position: Vector2, point: Vector2, angle: Float): Vector2 {
+    return rotateAround(position, point.x, point.y, angle);
+  }
+
+  /**
+   * Rotate a position around an x and a y direction. This updates the position vector.
+   * @param position The position to rotate.
+   * @param x The x position to rotate around.
+   * @param y The y position to rotate around.
+   * @param angle The current angle in degrees.
+   * @return The new position.
+   */
+  public static function rotateAround(position: Vector2, x: Float, y: Float, angle: Float): Vector2 {
+    final rad = degToRad(angle);
+    final c = Math.cos(rad);
+    final s = Math.sin(rad);
+
+    final tx = position.x - x;
+    final ty = position.y - y;
+
+    position.x = tx * c - ty * s + x;
+    position.y = tx * s + ty * c + y;
+
+    return position;
+  }
 }
