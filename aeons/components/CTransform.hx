@@ -143,9 +143,9 @@ class CTransform extends Component {
   }
 
   /**
-   * Convert a parent position to local position.
-   * @param position The parent position.
-   * @return The local position.
+   * Convert a parent space position to local space position.
+   * @param position The parent space position.
+   * @return The local space position.
    */
   public function parentToLocalPosition(position: Vector2): Vector2 {
     if (angle == 0) {
@@ -169,9 +169,9 @@ class CTransform extends Component {
   }
 
   /**
-   * Convert a local position to parent position.
-   * @param position The parent position.
-   * @return The local position.
+   * Convert a local space position to parent space position.
+   * @param position The local space position.
+   * @return The parent space position.
    */
   public function localToParentPosition(position: Vector2): Vector2 {
     if (isCameraTransform) {
@@ -214,9 +214,9 @@ class CTransform extends Component {
   }
 
   /**
-   * Convert a world position to local position.
-   * @param position The world position.
-   * @return The local position.
+   * Convert a world space position to local space position.
+   * @param position The world space position.
+   * @return The local space position.
    */
   public function worldToLocalPosition(position: Vector2): Vector2 {
     if (parent != null) {

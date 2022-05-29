@@ -76,8 +76,9 @@ class RenderSystem extends System implements SysRenderable {
           camTarget.transform.setFrom(renderable.cTransform.matrix);
           renderable.cRender.render(camTarget);
         } else {
-          tlPos.set(camera.bounds.x, camera.bounds.y);
-          brPos.set(camera.bounds.x + camera.bounds.width, camera.bounds.y + camera.bounds.height);
+          tlPos.set(camera.visibilityBounds.x, camera.visibilityBounds.y);
+          brPos.set(camera.visibilityBounds.x + camera.visibilityBounds.width,
+            camera.visibilityBounds.y + camera.visibilityBounds.height);
           renderable.cTransform.worldToLocalPosition(tlPos);
           renderable.cTransform.worldToLocalPosition(brPos);
           var x = Math.min(tlPos.x, brPos.x) - renderable.cTransform.x;

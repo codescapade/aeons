@@ -63,6 +63,8 @@ class CCamera extends Component {
    */
   public var bounds(default, null): Rect;
 
+  public var visibilityBounds(default, null): Rect;
+
   /**
    * Transform component reference.
    */
@@ -115,6 +117,7 @@ class CCamera extends Component {
     transform = getComponent(CTransform);
     matrix = FastMatrix4.identity();
     bounds = new Rect();
+    visibilityBounds = new Rect();
     updateBuffer();
     transform.x = viewWidth * 0.5;
     transform.y = viewHeight * 0.5;
@@ -235,6 +238,12 @@ class CCamera extends Component {
     bounds.y = worldPosition.y - viewHeight * 0.5 / zoom;
     bounds.width = viewWidth / zoom;
     bounds.height = viewHeight / zoom;
+
+    final size = Math.max(viewWidth, viewHeight);
+    visibilityBounds.x = worldPosition.x - size * 0.5 / zoom;
+    visibilityBounds.y = worldPosition.y - size * 0.5 / zoom;
+    visibilityBounds.width = size / zoom;
+    visibilityBounds.height = size / zoom;
   }
 
   inline function set_viewWidth(value: Int): Int {
