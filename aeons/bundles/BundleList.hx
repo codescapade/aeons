@@ -19,6 +19,16 @@ class BundleList<T:BundleBase> {
   public var count(get, never): Int;
 
   /**
+   * Get the first bundle in the list. Returns null if there are no bundles.
+   */
+  public var first(get, never): T;
+
+  /**
+   * Get the last bundle in the list.
+   */
+  public var last(get, never): T;
+
+  /**
    *  Callback when a bundle gets added.
    */
   var bundleAdded: (T)->Void;
@@ -115,5 +125,13 @@ class BundleList<T:BundleBase> {
 
   inline function get_count(): Int {
     return bundles.length;
+  }
+
+  inline function get_first(): T {
+    return bundles[0];
+  }
+
+  inline function get_last(): T {
+    return bundles[bundles.length - 1];
   }
 }

@@ -3,6 +3,7 @@ package aeons.core;
 import aeons.assets.services.InternalAssets;
 import aeons.audio.services.InternalAudio;
 import aeons.core.services.InternalDisplay;
+import aeons.events.ApplicationEvent;
 import aeons.events.SceneEvent;
 import aeons.events.services.InternalEvents;
 import aeons.graphics.RenderTarget;
@@ -179,6 +180,7 @@ class Game {
    * Called when Kha will pause.
    */
   function willPause() {
+    ApplicationEvent.emit(ApplicationEvent.PAUSE);
     currentScene.willPause();
   }
 
@@ -186,6 +188,7 @@ class Game {
    * Called when Kha will resume.
    */
   function willResume() {
+    ApplicationEvent.emit(ApplicationEvent.RESUME);
     currentScene.willResume();
   }
 
@@ -193,6 +196,7 @@ class Game {
    * Called when Kha goes to the background.
    */
   function toBackground() {
+    ApplicationEvent.emit(ApplicationEvent.BACKGROUND);
     currentScene.toBackground();
   }
 
@@ -200,6 +204,7 @@ class Game {
    * Called when Kha goes to the foreground.
    */
   function toForeground() {
+    ApplicationEvent.emit(ApplicationEvent.FOREGROUND);
     Aeons.timeStep.reset();
     currentScene.toForeground();
   }
