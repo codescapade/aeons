@@ -122,6 +122,7 @@ class Tween {
     createDataList(target, properties);
     ease = Easing.linear;
     onComplete = null;
+    onUpdate = null;
     time = 0;
     complete = false;
     delayTime = 0;
