@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "text": "Examples",
+      "url": "https://codescapade.github.io/aeons-examples/"
+    },
+    {
+      "text": "Docs",
+      "url": "{{ '/docs/' | url }}"
+    },
+    {
+      "text": "API",
+      "url": "{{ '/api/' | url }}"
+    }
+  ]
+}

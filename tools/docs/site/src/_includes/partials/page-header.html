@@ -1,0 +1,16 @@
+<div class="header">
+  <nav>
+    <ul>
+      <li>
+        <a href="{{ '/' | url }}"><img class="logo" src="{{ '/static/aeons_logo.png' | url }}"></a>
+      </li>
+      {% for item in navigation.items %}
+      <li>
+        <a href="{{ item.url }}">
+          <span class="header-text">{{ item.text }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
