@@ -7,7 +7,6 @@ import aeons.components.CNapeTilemapCollider;
 import aeons.components.CTransform;
 import aeons.core.System;
 import aeons.core.Updatable;
-import aeons.math.AeMath;
 import aeons.math.Vector2;
 import aeons.physics.nape.DebugDraw;
 import aeons.physics.nape.NapeInteractionType;
@@ -17,6 +16,8 @@ import nape.callbacks.InteractionCallback;
 import nape.callbacks.InteractionListener;
 import nape.phys.BodyType;
 import nape.space.Space;
+
+using aeons.math.AeMath;
 
 /**
  * NapePhysicsSystem updates all Nape body components.
@@ -144,7 +145,7 @@ class NapePhysicsSystem extends System implements Updatable {
     final worldPos = bundle.cTransform.getWorldPosition();
     final worldAngle = bundle.cTransform.getWorldAngle();
     bundle.cNapeBody.body.position.setxy(worldPos.x, worldPos.y);
-    bundle.cNapeBody.body.rotation = AeMath.degToRad(worldAngle);
+    bundle.cNapeBody.body.rotation = Math.degToRad(worldAngle);
     worldPos.put();
   }
 
@@ -160,7 +161,7 @@ class NapePhysicsSystem extends System implements Updatable {
     final position = bundle.cNapeBody.body.position;
     final pos = Vector2.get(position.x, position.y);
     bundle.cTransform.setWorldPosition(pos);
-    bundle.cTransform.setWorldAngle(AeMath.radToDeg(bundle.cNapeBody.body.rotation));
+    bundle.cTransform.setWorldAngle(Math.radToDeg(bundle.cNapeBody.body.rotation));
     pos.put();
   }
 }
