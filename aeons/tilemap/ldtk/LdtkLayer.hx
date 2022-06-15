@@ -3,7 +3,6 @@ package aeons.tilemap.ldtk;
 #if use_ldtk
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
-import aeons.math.AeMath;
 import aeons.math.Rect;
 import aeons.math.Vector2;
 import aeons.tilemap.Tileset;
@@ -11,6 +10,8 @@ import aeons.tilemap.Tileset;
 import ldtk.Layer_AutoLayer;
 import ldtk.Layer_IntGrid_AutoLayer;
 import ldtk.Layer_Tiles;
+
+using aeons.math.AeMath;
 
 /**
  * A layer in a LDtk tilemap level.
@@ -196,14 +197,14 @@ class LdtkLayer {
     var topLeft = pixelToTilePosition(bounds.x, bounds.y);
     topLeft.x -= 1;
     topLeft.y -= 1;
-    topLeft.x = AeMath.clampInt(topLeft.xi, 0, width);
-    topLeft.y = AeMath.clampInt(topLeft.yi, 0, height);
+    topLeft.x = Math.clampInt(topLeft.xi, 0, width);
+    topLeft.y = Math.clampInt(topLeft.yi, 0, height);
 
     var bottomRight = pixelToTilePosition(bounds.x + bounds.width, bounds.y + bounds.height);
     bottomRight.x += 2;
     bottomRight.y += 2;
-    bottomRight.x = AeMath.clampInt(bottomRight.xi, 0, width);
-    bottomRight.y = AeMath.clampInt(bottomRight.yi, 0, height);
+    bottomRight.x = Math.clampInt(bottomRight.xi, 0, width);
+    bottomRight.y = Math.clampInt(bottomRight.yi, 0, height);
 
     visibleBounds.set(topLeft.xi, topLeft.yi, bottomRight.xi, bottomRight.yi);
 

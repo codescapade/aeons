@@ -29,11 +29,11 @@ class ImageRenderer extends BaseRenderer {
   /**
    * Temp vertex positions.
    */
-  final p1: FastVector3;
+  var p1: FastVector3;
 
-  final p2: FastVector3;
-  final p3: FastVector3;
-  final p4: FastVector3;
+  var p2: FastVector3;
+  var p3: FastVector3;
+  var p4: FastVector3;
 
   /**
    * Temp texture coordinates.
@@ -66,11 +66,6 @@ class ImageRenderer extends BaseRenderer {
    */
   public function new(g4: Graphics) {
     super(g4);
-
-    p1 = new FastVector3();
-    p2 = new FastVector3();
-    p3 = new FastVector3();
-    p4 = new FastVector3();
 
     t1 = new Vector2();
     t2 = new Vector2();
@@ -197,10 +192,10 @@ class ImageRenderer extends BaseRenderer {
     final textureHeight = currentImage.realHeight;
 
     // Apply the transformation matrix to the vertex positions.
-    p1.mulVec3Val(transform, x, y, 0);
-    p2.mulVec3Val(transform, x + width, y, 0);
-    p3.mulVec3Val(transform, x + width, y + height, 0);
-    p4.mulVec3Val(transform, x, y + height, 0);
+    p1 = FastVector3.mulVec3Val(transform, x, y, 0);
+    p2 = FastVector3.mulVec3Val(transform, x + width, y, 0);
+    p3 = FastVector3.mulVec3Val(transform, x + width, y + height, 0);
+    p4 = FastVector3.mulVec3Val(transform, x, y + height, 0);
 
     // Set the texture coordinates.
     t1.set(sx / textureWidth, sy / textureHeight);

@@ -9,7 +9,6 @@ import aeons.core.System;
 import aeons.core.Updatable;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
-import aeons.math.AeMath;
 import aeons.math.Rect;
 import aeons.math.Vector2;
 import aeons.physics.simple.Body;
@@ -19,6 +18,8 @@ import aeons.physics.simple.InteractionType;
 import aeons.physics.simple.Physics;
 import aeons.physics.simple.Quadtree;
 import aeons.physics.simple.Touching;
+
+using aeons.math.AeMath;
 
 /**
  * Simple aabb physics system.
@@ -217,11 +218,11 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
           }
 
           if (body.maxVelocity.x != 0) {
-            body.velocity.x = AeMath.clamp(body.velocity.x, -body.maxVelocity.x, body.maxVelocity.x);
+            body.velocity.x = Math.clamp(body.velocity.x, -body.maxVelocity.x, body.maxVelocity.x);
           }
 
           if (body.maxVelocity.y != 0) {
-            body.velocity.y = AeMath.clamp(body.velocity.y, -body.maxVelocity.y, body.maxVelocity.y);
+            body.velocity.y = Math.clamp(body.velocity.y, -body.maxVelocity.y, body.maxVelocity.y);
           }
         }
         body.bounds.x += body.velocity.x * dt;

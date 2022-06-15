@@ -2,11 +2,11 @@ package aeons.components;
 
 import aeons.core.Component;
 import aeons.events.SortEvent;
-import aeons.math.AeMath;
 import aeons.math.FastMatrix4;
 import aeons.math.Quaternion;
 import aeons.math.Vector2;
 
+using aeons.math.AeMath;
 using aeons.math.FastMatrix4Ex;
 using aeons.math.QuaternionEx;
 
@@ -130,9 +130,9 @@ class CTransform extends Component {
     getWorldScale(worldScale);
     worldAngle = getWorldAngle();
 
-    rotation.fromAxisAngleVal(0, 0, 1, AeMath.degToRad(worldAngle));
+    rotation = Quaternion.fromAxisAngleVal(0, 0, 1, Math.degToRad(worldAngle));
 
-    matrix.from2dRotationTranslationScale(rotation, worldPosition, worldScale);
+    matrix = FastMatrix4.from2dRotationTranslationScale(rotation, worldPosition, worldScale);
   }
 
   /**
@@ -157,8 +157,8 @@ class CTransform extends Component {
         position.y = (position.y - y) / scaleY;
       }
     } else {
-      final cos = Math.cos(AeMath.degToRad(angle));
-      final sin = Math.sin(AeMath.degToRad(angle));
+      final cos = Math.cos(Math.degToRad(angle));
+      final sin = Math.sin(Math.degToRad(angle));
       final toX = position.x - x;
       final toY = position.y - y;
       position.x = (toX * cos + toY * sin) / scaleX;
@@ -187,8 +187,8 @@ class CTransform extends Component {
         position.y = position.y * scaleY + y;
       }
     } else {
-      final cos = Math.cos(AeMath.degToRad(-angle));
-      final sin = Math.sin(AeMath.degToRad(-angle));
+      final cos = Math.cos(Math.degToRad(-angle));
+      final sin = Math.sin(Math.degToRad(-angle));
       final toX = position.x * scaleX;
       final toY = position.y * scaleY;
       position.x = (toX * cos + toY * sin) + x;

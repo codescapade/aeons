@@ -1,8 +1,8 @@
 package aeons.audio.services;
 
-import aeons.math.AeMath;
-
 import kha.System;
+
+using aeons.math.AeMath;
 
 /**
  * The standard audio implementation.
@@ -73,7 +73,7 @@ class InternalAudio implements Audio {
   }
 
   function set_masterVolume(value: Float): Float {
-    masterVolume = AeMath.clamp(value, 0.0, 1.0);
+    masterVolume = Math.clamp(value, 0.0, 1.0);
     for (channel in channels) {
       channel.updateMasterVolume(masterVolume);
     }

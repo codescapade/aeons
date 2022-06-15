@@ -1,8 +1,9 @@
 package aeons.physics.simple;
 
-import aeons.math.AeMath;
 import aeons.math.Vector2;
 import aeons.utils.Pool;
+
+using aeons.math.AeMath;
 
 class Hit {
   public var position(default, null) = new Vector2();
@@ -17,7 +18,7 @@ class Hit {
     var hit = pool.get();
     hit.position.set(x, y);
     hit.body = body;
-    hit.distance = AeMath.distance(originX, originY, x, y);
+    hit.distance = Math.distance(originX, originY, x, y);
 
     return hit;
   }

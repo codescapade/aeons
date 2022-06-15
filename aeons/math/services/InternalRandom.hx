@@ -1,5 +1,7 @@
 package aeons.math.services;
 
+using aeons.math.AeMath;
+
 /**
  * The Random class has seeded random number generation funcations.
  */
@@ -109,7 +111,7 @@ class InternalRandom implements Random {
    * @return The clamped value.
    */
   inline function rangeBound(value: Int): Int {
-    return AeMath.clampInt(value, 1, MODULUS - 1);
+    return Math.clampInt(value, 1, MODULUS - 1);
   }
 
   inline function set_initialSeed(seed: Int): Int {

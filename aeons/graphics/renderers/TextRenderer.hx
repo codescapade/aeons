@@ -28,11 +28,11 @@ class TextRenderer extends BaseRenderer {
   /**
    * Temp vertex positions.
    */
-  final p1: FastVector3;
+  var p1: FastVector3;
 
-  final p2: FastVector3;
-  final p3: FastVector3;
-  final p4: FastVector3;
+  var p2: FastVector3;
+  var p3: FastVector3;
+  var p4: FastVector3;
 
   /**
    * Temp texture coordinates.
@@ -70,11 +70,6 @@ class TextRenderer extends BaseRenderer {
    */
   public function new(g4: Graphics) {
     super(g4);
-
-    p1 = new FastVector3();
-    p2 = new FastVector3();
-    p3 = new FastVector3();
-    p4 = new FastVector3();
 
     t1 = new Vector2();
     t2 = new Vector2();
@@ -162,10 +157,10 @@ class TextRenderer extends BaseRenderer {
           present();
         }
 
-        p1.mulVec3Val(transform, quad.x0, quad.y0, 0);
-        p2.mulVec3Val(transform, quad.x1, quad.y0, 0);
-        p3.mulVec3Val(transform, quad.x1, quad.y1, 0);
-        p4.mulVec3Val(transform, quad.x0, quad.y1, 0);
+        p1 = FastVector3.mulVec3Val(transform, quad.x0, quad.y0, 0);
+        p2 = FastVector3.mulVec3Val(transform, quad.x1, quad.y0, 0);
+        p3 = FastVector3.mulVec3Val(transform, quad.x1, quad.y1, 0);
+        p4 = FastVector3.mulVec3Val(transform, quad.x0, quad.y1, 0);
 
         t1.set(quad.s0 * texture.width / texture.realWidth, quad.t0 * texture.height / texture.realHeight);
         t2.set(quad.s1 * texture.width / texture.realWidth, quad.t0 * texture.height / texture.realHeight);

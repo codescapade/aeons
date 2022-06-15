@@ -25,10 +25,10 @@ class ShapeRenderer extends BaseRenderer {
   /**
    * Temp vertex positions.
    */
-  final p1: FastVector3;
+  var p1: FastVector3;
 
-  final p2: FastVector3;
-  final p3: FastVector3;
+  var p2: FastVector3;
+  var p3: FastVector3;
 
   /**
    * The number of vertices per triangle.
@@ -41,10 +41,6 @@ class ShapeRenderer extends BaseRenderer {
    */
   public function new(g4: Graphics) {
     super(g4);
-
-    p1 = new FastVector3();
-    p2 = new FastVector3();
-    p3 = new FastVector3();
 
     vertexBuffer = new VertexBuffer(bufferSize * verticesPerTri, pipeline.structure, DynamicUsage);
     vertices = vertexBuffer.lock();
@@ -105,9 +101,9 @@ class ShapeRenderer extends BaseRenderer {
       present();
     }
 
-    p1.mulVec3Val(transform, x1, y1, 0);
-    p2.mulVec3Val(transform, x2, y2, 0);
-    p3.mulVec3Val(transform, x3, y3, 0);
+    p1 = FastVector3.mulVec3Val(transform, x1, y1, 0);
+    p2 = FastVector3.mulVec3Val(transform, x2, y2, 0);
+    p3 = FastVector3.mulVec3Val(transform, x3, y3, 0);
 
     setVertices(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
     setColor(color, color, color);

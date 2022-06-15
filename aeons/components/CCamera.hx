@@ -4,10 +4,11 @@ import aeons.Aeons;
 import aeons.core.Component;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
-import aeons.math.AeMath;
 import aeons.math.FastMatrix4;
 import aeons.math.Rect;
 import aeons.math.Vector2;
+
+using aeons.math.AeMath;
 
 /**
  * CCamera is a component that renders a view in the render system.
@@ -171,7 +172,7 @@ class CCamera extends Component {
   public function updateMatrix() {
     updateBounds();
     matrix.setFrom(FastMatrix4.translation(viewWidth * 0.5, viewHeight * 0.5, 0) // Move to center.
-      .multmat(FastMatrix4.rotationZ(AeMath.degToRad(transform.getWorldAngle()))) // Rotate around the center
+      .multmat(FastMatrix4.rotationZ(Math.degToRad(transform.getWorldAngle()))) // Rotate around the center
       .multmat(FastMatrix4.scale(zoom, zoom, 1)) // Scale around the center.
       .multmat(FastMatrix4.translation(-worldPosition.x, -worldPosition.y,
         0))); // Move the to correct position in the world.

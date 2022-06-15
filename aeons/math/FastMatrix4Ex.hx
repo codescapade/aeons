@@ -6,20 +6,18 @@ package aeons.math;
 class FastMatrix4Ex {
   /**
    * Set a FastMatrix4 from a rotation translation and scale.
-   * @param matrix The matrix to update.
    * @param rotation The rotation quaternion.
    * @param translation The x and y translation values. 
    * @param scale The x and y scale values.
    * @return The updated matrix.
    */
-  public static inline function from2dRotationTranslationScale(matrix: FastMatrix4, rotation: Quaternion,
+  public static inline function from2dRotationTranslationScale(cl: Class<FastMatrix4>, rotation: Quaternion,
       translation: Vector2, scale: Vector2): FastMatrix4 {
-    return fromRotationTranslationScaleVal(matrix, rotation, translation.x, translation.y, 0, scale.x, scale.y, 1);
+    return fromRotationTranslationScaleVal(cl, rotation, translation.x, translation.y, 0, scale.x, scale.y, 1);
   }
 
   /**
    * Set a FastMatrix4 from a rotation translation and scale.
-   * @param matrix The matrix to update.
    * @param rotation The rotation quaternion.
    * @param x The translation x.
    * @param y The translation y.
@@ -29,7 +27,7 @@ class FastMatrix4Ex {
    * @param scaleZ The scale z.
    * @return The updated matrix.
    */
-  public static function fromRotationTranslationScaleVal(matrix: FastMatrix4, rotation: Quaternion, x: FastFloat,
+  public static function fromRotationTranslationScaleVal(cl: Class<FastMatrix4>, rotation: Quaternion, x: FastFloat,
       y: FastFloat, z: FastFloat, scaleX: FastFloat, scaleY: FastFloat, scaleZ: FastFloat): FastMatrix4 {
     final rx = rotation.x;
     final ry = rotation.y;
@@ -54,23 +52,7 @@ class FastMatrix4Ex {
     final sy = scaleY;
     final sz = scaleZ;
 
-    matrix._00 = (1 - (yy + zz)) * sx;
-    matrix._10 = (xy - wz) * sy;
-    matrix._20 = (xz + wy) * sz;
-    matrix._30 = x;
-    matrix._01 = (xy + wz) * sx;
-    matrix._11 = (1 - (xx + zz)) * sy;
-    matrix._21 = (yz - wx) * sz;
-    matrix._31 = y;
-    matrix._02 = (xz - wy) * sx;
-    matrix._12 = (yz + wx) * sy;
-    matrix._22 = (1 - (xx + yy)) * sz;
-    matrix._32 = z;
-    matrix._03 = 0;
-    matrix._13 = 0;
-    matrix._23 = 0;
-    matrix._33 = 1;
-
-    return matrix;
+    return new FastMatrix4((1 - (yy + zz)) * sx, (xy - wz) * sy, (xz + wy) * sz, x, (xy + wz) * sx,
+      (1 - (xx + zz)) * sy, (yz - wx) * sz, y, (xz - wy) * sx, (yz + wx) * sy, (1 - (xx + yy)) * sz, z, 0, 0, 0, 1);
   }
 }

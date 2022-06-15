@@ -6,20 +6,17 @@ package aeons.math;
 class QuaternionEx {
   /**
    * Set a quaternion from an angle on one or more axes.
-   * @param quat The quaternion to update.
    * @param x The x axis value.
    * @param y The y axis value.
    * @param z The z axis value.
    * @param angle The angle in radians.
-   * @return The updated quaternion.
+   * @return The new quaternion.
    */
-  public static function fromAxisAngleVal(quat: Quaternion, x: Float, y: Float, z: Float, angle: Float): Quaternion {
-    quat.w = Math.cos(angle / 2.0);
-    quat.x = quat.y = quat.z = Math.sin(angle / 2.0);
-    quat.x *= x;
-    quat.y *= y;
-    quat.z *= z;
+  public static function fromAxisAngleVal(cl: Class<Quaternion>, x: Float, y: Float, z: Float,
+      angle: Float): Quaternion {
+    final cos = Math.cos(angle / 2.0);
+    final sin = Math.sin(angle / 2.0);
 
-    return quat;
+    return new Quaternion(sin * x, sin * y, sin * z, cos);
   }
 }

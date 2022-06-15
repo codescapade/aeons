@@ -38,7 +38,7 @@ class AeMath {
    * @param b End value.
    * @param position Lerp position.
    */
-  public static inline function lerp(a: Float, b: Float, position: Float): Float {
+  public static inline function lerp(cl: Class<Math>, a: Float, b: Float, position: Float): Float {
     return a + position * (b - a);
   }
 
@@ -48,7 +48,7 @@ class AeMath {
    * @param min Minimum.
    * @param max Maximum.
    */
-  public static function clamp(value: Float, min: Float, max: Float): Float {
+  public static function clamp(cl: Class<Math>, value: Float, min: Float, max: Float): Float {
     if (min > max) {
       var temp = max;
       max = min;
@@ -66,7 +66,7 @@ class AeMath {
    * @param min Minimum.
    * @param max Maximum.
    */
-  public static function clampInt(value: Int, min: Int, max: Int): Int {
+  public static function clampInt(cl: Class<Math>, value: Int, min: Int, max: Int): Int {
     if (min > max) {
       var temp = max;
       max = min;
@@ -83,7 +83,7 @@ class AeMath {
    * @param a First value.
    * @param b Second value.
    */
-  public static inline function minInt(a: Int, b: Int): Int {
+  public static inline function minInt(cl: Class<Math>, a: Int, b: Int): Int {
     return (a < b) ? a : b;
   }
 
@@ -92,7 +92,7 @@ class AeMath {
    * @param a First value.
    * @param b Second value.
    */
-  public static inline function maxInt(a: Int, b: Int): Int {
+  public static inline function maxInt(cl: Class<Math>, a: Int, b: Int): Int {
     return (a > b) ? a : b;
   }
 
@@ -100,7 +100,7 @@ class AeMath {
    * Convert radians to degrees.
    * @param rad Value to convert.
    */
-  public static inline function radToDeg(rad: Float): Float {
+  public static inline function radToDeg(cl: Class<Math>, rad: Float): Float {
     return rad * (180.0 / Math.PI);
   }
 
@@ -108,7 +108,7 @@ class AeMath {
    * Convert degrees to radians.
    * @param deg Value to convert.
    */
-  public static inline function degToRad(deg: Float): Float {
+  public static inline function degToRad(cl: Class<Math>, deg: Float): Float {
     return deg * (Math.PI / 180.0);
   }
 
@@ -120,7 +120,7 @@ class AeMath {
    * @param y2 The y position of the second point.
    * @return The distance.
    */
-  public static function distance(x1: Float, y1: Float, x2: Float, y2: Float): Float {
+  public static function distance(cl: Class<Math>, x1: Float, y1: Float, x2: Float, y2: Float): Float {
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
   }
 
@@ -131,8 +131,9 @@ class AeMath {
    * @param angle The current angle in degrees.
    * @return The new position.
    */
-  public static inline function rotateAroundPoint(position: Vector2, point: Vector2, angle: Float): Vector2 {
-    return rotateAround(position, point.x, point.y, angle);
+  public static inline function rotateAroundPoint(cl: Class<Math>, position: Vector2, point: Vector2,
+      angle: Float): Vector2 {
+    return rotateAround(cl, position, point.x, point.y, angle);
   }
 
   /**
@@ -143,8 +144,8 @@ class AeMath {
    * @param angle The current angle in degrees.
    * @return The new position.
    */
-  public static function rotateAround(position: Vector2, x: Float, y: Float, angle: Float): Vector2 {
-    final rad = degToRad(angle);
+  public static function rotateAround(cl: Class<Math>, position: Vector2, x: Float, y: Float, angle: Float): Vector2 {
+    final rad = degToRad(cl, angle);
     final c = Math.cos(rad);
     final s = Math.sin(rad);
 
