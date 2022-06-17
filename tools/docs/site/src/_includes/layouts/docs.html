@@ -1,0 +1,12 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="docs-container">
+  <div class="docs-sidebar">
+    {{ collections.all | eleventyNavigation | eleventyNavigationToHtml | safe }}
+  </div>
+  <article class="docs-content">
+    {{ content | safe }}
+  </article>
+</div>
+{% endblock %}

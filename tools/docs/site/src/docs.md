@@ -1,6 +1,6 @@
 ---
-layout: 'layouts/home.html'
+layout: 'layouts/docs.html'
 title: 'Aeons Documentation'
 ---
 
-## Docs will go here
+## Docs placeholder

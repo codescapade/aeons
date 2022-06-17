@@ -63,3 +63,18 @@ nav ul li {
 .center-text {
   text-align: center;
 }
+
+.docs-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.docs-sidebar {
+  width: 20%;
+  overflow: auto;
+}
+
+.docs-content {
+  width: 80%;
+  overflow: auto;
+}
