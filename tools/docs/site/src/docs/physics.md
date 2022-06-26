@@ -1,9 +1,10 @@
 ---
 layout: 'layouts/docs.html'
 title: 'Physics'
-eleventyNavigation:
-  key: 'Physics'
-  order: 13
+permalink: false
+# eleventyNavigation:
+#   key: 'Physics'
+#   order: 13
 ---
 
 ## Physics Class placeholder

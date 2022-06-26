@@ -3,6 +3,7 @@ package;
 import haxe.Exception;
 import haxe.Json;
 import haxe.io.Path;
+
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
@@ -10,6 +11,7 @@ import sys.io.Process;
 using StringTools;
 
 class RunScript {
+  static final testedKhaCommit = '9512661';
 
   public static function main() {
     final args = Sys.args();
@@ -21,22 +23,22 @@ class RunScript {
       printLogo(version);
       showHelp();
       Sys.exit(0);
-    // aeons setup
+      // aeons setup
     } else if (args.length == 1 && args[0] == 'setup') {
-      setupAeons();
+      setupAeons(wd);
       Sys.exit(0);
     } else if (args.length == 1 && args[0] == 'atlas') {
       generateAtlas(wd);
       Sys.exit(0);
-    // aeons alias
+      // aeons alias
     } else if (args.length == 1 && args[0] == 'alias') {
       setupAlias();
       Sys.exit(0);
-    // aeons create [project_name]
+      // aeons create [project_name]
     } else if (args.length > 1 && args[0] == 'create') {
       createProject(wd, args[1]);
       Sys.exit(0);
-    // aeons build [platform]
+      // aeons build [platform]
     } else if (args.length > 1 && args[0] == 'build') {
       args.shift();
       if (args.indexOf('--no-atlas') == -1) {
@@ -44,7 +46,7 @@ class RunScript {
         generateAtlas(wd);
       }
       Sys.exit(build(wd, args));
-    // aeons location [kha]
+      // aeons location [kha]
     } else if (args.length >= 1 && args[0] == 'location') {
       final haxelibPath = getHaxelibPath('aeons');
       if (args.length > 1 && args[1] == 'kha') {
@@ -54,6 +56,14 @@ class RunScript {
         Sys.println('aeons path: ${haxelibPath}');
       }
       Sys.exit(0);
+    } else if (args.length == 2 && args[0] == 'update') {
+      if (args[1] == 'kha') {
+        updateKha(wd);
+        Sys.exit(0);
+      } else if (args[1] == 'latest-kha') {
+        updateKha(wd, true);
+        Sys.exit(0);
+      }
     }
 
     printLogo(version);
@@ -67,28 +77,25 @@ class RunScript {
    * @return The location path.
    */
   static function getHaxelibPath(name: String): String {
-		final proc = new Process('haxelib', ['path', name]);
-		var result = '';
+    final proc = new Process('haxelib', ['path', name]);
+    var result = '';
 
-		try {
-			var previous = '';
-			while (true) {
-				final line = proc.stdout.readLine();
-				if (line.startsWith('-D $name'))
-				{
-					result = previous;
-					break;
-				}
-				previous = line;
-			}
-		} catch (e: Dynamic) {
+    try {
+      var previous = '';
+      while (true) {
+        final line = proc.stdout.readLine();
+        if (line.startsWith('-D $name')) {
+          result = previous;
+          break;
+        }
+        previous = line;
+      }
+    } catch (e:Dynamic) {}
 
-    }
+    proc.close();
 
-		proc.close();
-
-		return result;
-	}
+    return result;
+  }
 
   static function getVersion(): String {
     var libPath = getHaxelibPath('aeons');
@@ -113,7 +120,7 @@ class RunScript {
 
       try {
         Sys.setCwd(path);
-      } catch (e: Dynamic) {
+      } catch (e:Dynamic) {
         trace('cannot set current working directory to %{path}.');
       }
     }
@@ -130,8 +137,8 @@ class RunScript {
     return result;
   }
 
-  static function setupAeons() {
-    downloadKha();
+  static function setupAeons(workingDir: String) {
+    downloadKha(workingDir);
     setupAlias();
   }
 
@@ -141,18 +148,18 @@ class RunScript {
   static function setupAlias() {
     while (true) {
       Sys.println('');
-			Sys.println('Do you want to install the "aeons" command? [y/n]?');
+      Sys.println('Do you want to install the "aeons" command? [y/n]?');
 
-			return switch (Sys.stdin().readLine()) {
-				case "n", "No":
+      return switch (Sys.stdin().readLine()) {
+        case "n", "No":
           return;
-				case "y", "Yes":
+        case "y", "Yes":
           break;
 
         default:
-			}
+      }
     }
-    
+
     final platform = Sys.systemName();
     final binPath = platform == 'Mac' ? "/usr/local/bin" : "/usr/bin";
 
@@ -161,7 +168,7 @@ class RunScript {
       if (haxePath == null || haxePath == '')
         haxePath = 'C:\\HaxeToolkit\\haxe\\';
 
-      final destination = Path.join([haxePath ,'aeons.bat']);
+      final destination = Path.join([haxePath, 'aeons.bat']);
       final source = Path.join([getHaxelibPath('aeons'), 'tools/data/bin/aeons.bat']);
 
       if (FileSystem.exists(source)) {
@@ -175,8 +182,7 @@ class RunScript {
       if (FileSystem.exists(source)) {
         Sys.command("sudo", ["cp", source, binPath + "/aeons"]);
         Sys.command("sudo", ["chmod", "+x", binPath + "/aeons"]);
-      }
-      else {
+      } else {
         throw 'Could not find the aeons alias script.';
       }
     }
@@ -186,12 +192,13 @@ class RunScript {
   /**
    * Download Kha. Overwrite the existing installation if it exists.
    */
-  static function downloadKha() {
+  static function downloadKha(workingDir: String) {
     final libPath = Path.join([getHaxelibPath('aeons'), 'lib']);
     final path = Path.join([libPath, 'Kha']);
 
     if (FileSystem.exists(path)) {
-      Sys.println('${path} already exists. Skipping Kha download.');
+      Sys.println('${path} already exists. Updating Kha.');
+      updateKha(workingDir);
       return;
     }
 
@@ -204,7 +211,7 @@ class RunScript {
     final platform = Sys.systemName();
 
     runCommand('', 'git', ['clone', 'https://github.com/Kode/Kha']);
-    runCommand('Kha', 'git', ['checkout', '9602712']);
+    runCommand('Kha', 'git', ['checkout', testedKhaCommit]);
 
     if (platform == 'Windows') {
       runCommand('Kha', 'get_dlc', []);
@@ -213,6 +220,36 @@ class RunScript {
     }
 
     Sys.println('Download of Kha completed');
+  }
+
+  static function updateKha(workingDir: String, latest = false) {
+    final libPath = Path.join([getHaxelibPath('aeons'), 'lib']);
+    final path = Path.join([libPath, 'Kha']);
+
+    if (!FileSystem.exists(path)) {
+      Sys.println('${path} does not exist. Downloading Kha.');
+      downloadKha(workingDir);
+      return;
+    }
+    Sys.setCwd(path);
+    final platform = Sys.systemName();
+
+    Sys.println('pulling git');
+    runCommand('', 'git', ['pull', 'origin', 'main']);
+    if (!latest) {
+      Sys.println('pulling checking out ${testedKhaCommit}');
+      runCommand('', 'git', ['checkout', testedKhaCommit]);
+    }
+
+    Sys.println('Running get_dlc');
+    if (platform == 'Windows') {
+      runCommand('', 'get_dlc', []);
+    } else {
+      runCommand('', './get_dlc', []);
+    }
+
+    Sys.println('Kha update completed');
+    Sys.setCwd(workingDir);
   }
 
   /**
@@ -359,7 +396,7 @@ class RunScript {
         if (FileSystem.exists(path)) {
           try {
             FileSystem.deleteFile(path);
-          } catch (e: Exception) {
+          } catch (e:Exception) {
             trace(e.toString());
           }
         }
@@ -376,11 +413,13 @@ class RunScript {
   static function showHelp() {
     Sys.println('');
     Sys.println('The following commands are available:');
-    Sys.println('- aeons setup                  Download Kha and install the aeons command line command.');
+    Sys.println('- aeons setup                  Download Kha and install the \'aeons\' command line command.');
     Sys.println('- aeons create [project_name]  Create a starter project in the current directory.');
     Sys.println('- aeons build [platform]       Build the project. See Kha for all supported platforms.');
     Sys.println('- aeons atlas                  Generate a sprite atlas in a folder with a atlas.json config file.');
     Sys.println('- aeons help                   Show this list');
     Sys.println('- aeons location [kha]         Shows the aeons path. If kha is added it shows the kha path.');
+    Sys.println('- aeons update kha             Update the Kha framework to the commit tested with Aeons.');
+    Sys.println('- aeons update latest kha      Update the Kha framework to the latest version. This could break Aeons if there were Api changes in Kha.');
   }
 }

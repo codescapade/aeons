@@ -7,4 +7,6 @@ eleventyNavigation:
   order: 2
 ---
 
-## VSCode extensions placeholder
+## VSCode extensions
+
+

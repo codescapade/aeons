@@ -1,5 +1,5 @@
 ![aeons_engine_logo](tools/data/logo/logo_640.png)
-## This 2D game engine is in early development and probably not ready for use yet.
+## This Engine is currently in an alpha state and things might change frequently.
 <br/>
 <br/>
 

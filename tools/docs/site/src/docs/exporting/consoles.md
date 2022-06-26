@@ -1,10 +1,11 @@
 ---
 layout: 'layouts/docs.html'
 title: 'Consoles Export'
-eleventyNavigation:
-  key: 'Consoles*'
-  parent: 'Exporting'
-  order: 8
+permalink: false
+# eleventyNavigation:
+#   key: 'Consoles*'
+#   parent: 'Exporting'
+#   order: 8
 ---
 
 ## exporting to Consoles

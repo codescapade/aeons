@@ -6,4 +6,4 @@ eleventyNavigation:
   order: 1
 ---
 
-## Getting started placeholder
+## Getting started
