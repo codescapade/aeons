@@ -444,6 +444,14 @@ class Macros {
           pack: ['aeons', 'bundles'],
           name: 'BundleBase',
         }),
+        // Hide the type from doc generation.
+        meta: [
+          {
+            name: ':dox',
+            pos: Context.currentPos(),
+            params: [macro $i{'hide'}]
+          }
+        ],
         fields: fields
       });
     }
