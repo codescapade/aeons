@@ -2,15 +2,18 @@
   "items": [
     {
       "text": "Examples",
-      "url": "https://codescapade.github.io/aeons-examples/"
+      "url": "https://codescapade.github.io/aeons-examples/",
+      "activeUrl": "examples"
     },
     {
       "text": "Docs",
-      "url": "{{ '/docs/' | url }}"
+      "url": "{{ '/docs/' | url }}",
+      "activeUrl": "/docs/"
     },
     {
       "text": "API",
-      "url": "{{ '/api/' | url }}"
+      "url": "{{ '/api/' | url }}",
+      "activeUrl": "/api/"
     }
   ]
 }

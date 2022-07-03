@@ -1,0 +1,12 @@
+body {
+  background: rgb(225, 225, 225);
+}
+
+h3 code {
+  background: white;
+}
+
+h1 small,
+h4 small {
+  color: #656565;
+}

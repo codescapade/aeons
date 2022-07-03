@@ -1,5 +1,6 @@
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const markdownIt = require('markdown-it');
+const markdownItAttrs = require('markdown-it-attrs');
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 
 const MARKDOWN_OPTIONS = {
@@ -14,7 +15,7 @@ module.exports = (config) => {
   config.addPlugin(eleventyNavigationPlugin);
 
   config.addPassthroughCopy('src/static');
-  config.setLibrary("md", markdownLibrary);
+  config.setLibrary("md", markdownLibrary.use(markdownItAttrs));
 
 
   return {

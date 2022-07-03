@@ -6,12 +6,17 @@ eleventyNavigation:
   order: 0
 ---
 
-#### This Engine is currently in an alpha state and things might change frequently.
+___
+#### This Engine is currently in an alpha state. Some things might not work correctly yet and things might change frequently.
+The docs are a work in progress. There is still a lot of documentation missing.
+___
 ## Welcome to Aeons
 
-Aeons is a 2d game engine powered by [Kha](https://github.com/Kode/Kha) and written in [Haxe](https://haxe.org).  
+Aeons is a 2d game engine powered by [Kha](https://github.com/Kode/Kha){target="_blank" rel="noopener noreferrer"} and
+written in [Haxe](https://haxe.org){target="_blank" rel="noopener noreferrer"}.  
 Aeons doesn't have a build-in editor like some other engines. This is an engine for people who like to write code.  
-There is support for external editors like [Tiled](https://www.mapeditor.org/) and [LDtk](https://ldtk.io/).
+There is support for external editors like [Tiled](https://www.mapeditor.org/){target="_blank" rel="noopener noreferrer"}
+and [LDtk](https://ldtk.io/){target="_blank" rel="noopener noreferrer"}.
 
 ### Game Structure
 ![game structure]({{ '/static/docs/gameStructure.png' | url }})  

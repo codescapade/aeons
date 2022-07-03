@@ -420,6 +420,6 @@ class RunScript {
     Sys.println('- aeons help                   Show this list');
     Sys.println('- aeons location [kha]         Shows the aeons path. If kha is added it shows the kha path.');
     Sys.println('- aeons update kha             Update the Kha framework to the commit tested with Aeons.');
-    Sys.println('- aeons update latest kha      Update the Kha framework to the latest version. This could break Aeons if there were Api changes in Kha.');
+    Sys.println('- aeons update latest-kha      Update the Kha framework to the latest version. This could break Aeons if there were Api changes in Kha.');
   }
 }

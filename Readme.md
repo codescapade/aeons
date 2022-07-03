@@ -61,5 +61,10 @@ To find the location type `aeons location kha` when you have the aeons command i
 <br/>
 
 ## Running unit tests
-To run the unit tests, Aeons expects that buddy is installed with haxelib.  
+To run the unit tests, Aeons expects that `buddy` is installed with haxelib.  
 The `runUnitTests` and `runSingleUnitTest` commands in the tests folder require a path to an ffmpeg executable as argument to convert some of the test assets.
+
+
+## Building api docs
+The api docs are generated using `dox` that needs to be installed with haxelib.  
+The `buildApi` command in the tools/docs folder can be used the generate the api docs in the docs/api folder.

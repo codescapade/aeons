@@ -1,7 +1,17 @@
 {
   "name": "aeons",
-  "version": "0.2.1",
+  "url": "https://github.com/codescapade/aeons",
+  "version": "0.1.0",
   "license": "MIT",
-  "releasenote": "Added automatic atlas generation. Moved scripts and templates into a tools folder.",
-  "contributors": ["codescapade"]
+  "releasenote": "First alpha release of Aeons",
+  "contributors": [
+    "codescapade"
+  ],
+  "tags": [
+    "game",
+    "cross-platform",
+    "engine",
+    "kha"
+  ],
+  "description": "Aeons is a 2d game engine on top of the Kha framework"
 }

@@ -7,7 +7,7 @@
       {% for item in navigation.items %}
       <li>
         <a href="{{ item.url }}">
-          <span class="header-text">{{ item.text }}</span>
+          <span class="header-text {{ 'active' if item.activeUrl == page.url }}">{{ item.text }}</span>
         </a>
       </li>
       {% endfor %}

@@ -1,10 +1,20 @@
-body {
+body,
+html {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-  background: rgb(255, 255, 255);
+  background: rgb(225, 225, 225);
   height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+a {
+  color: rgb(0, 143, 254);
+  text-decoration: none;
+}
+
+main {
+  height: 100%;
 }
 
 nav {
@@ -25,9 +35,10 @@ nav ul li {
 }
 
 .container {
-  margin: 8px auto;
+  margin: 0px auto;
   max-width: 1200px;
-  padding: 10px;
+  padding: 0 10px;
+  height: calc(100% - (60px));
 }
 
 .header {
@@ -55,6 +66,10 @@ nav ul li {
   padding-top: 20px;
 }
 
+.active {
+  color: rgb(0, 143, 254);
+}
+
 .center-logo {
   display: block;
   margin: 10px auto;
@@ -67,14 +82,37 @@ nav ul li {
 .docs-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .docs-sidebar {
-  width: 20%;
+  width: 25%;
   overflow: auto;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
 }
 
 .docs-content {
-  width: 80%;
+  width: 75%;
   overflow: auto;
+  padding: 0 16px;
+}
+
+.docs-sidebar a {
+  text-decoration: none;
+  color: black;
+}
+
+.docs-sidebar ul {
+  list-style-type: none;
+  padding: 2px 0 2px 0;
+}
+
+.docs-sidebar li {
+  padding-left: 1em;
+  padding: 2px 0 2px 1em;
+}
+
+.docs-sidebar-active>a {
+  color: rgb(0, 143, 254);
 }

@@ -3,7 +3,16 @@
 {% block content %}
 <div class="docs-container">
   <div class="docs-sidebar">
-    {{ collections.all | eleventyNavigation | eleventyNavigationToHtml | safe }}
+    <!-- {{ collections.all | eleventyNavigation | eleventyNavigationToHtml({
+    activeListItemClass: "docs-sidebar-active",
+    listItemClass: "nav-item",
+    activeKey: "eleventyNavigation.key"
+    }) | safe }} -->
+
+    {{ collections.all | eleventyNavigation | eleventyNavigationToHtml({
+    activeListItemClass: "docs-sidebar-active",
+    activeKey: eleventyNavigation.key
+    }) | safe }}
   </div>
   <article class="docs-content">
     {{ content | safe }}
