@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap" rel="stylesheet">
+  <link href="/aeons/static/atom-dark.css" rel="stylesheet">
+  <link href="/aeons/static/styles.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/aeons/static/favicon.png">
+  <title>Installation</title>
+</head>
+
+<body>
+  <div class="header">
+  <nav>
+    <ul>
+      <li>
+        <a href="/aeons/"><img class="logo" src="/aeons/static/aeons_logo.png"></a>
+      </li>
+      
+      <li>
+        <a href="https://codescapade.github.io/aeons-examples/">
+          <span class="header-text ">Examples</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/docs/">
+          <span class="header-text ">Docs</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/api/">
+          <span class="header-text ">API</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</div>
+  <div class="container">
+    <main tabindex="-1">
+      
+<div class="docs-container">
+  <div class="docs-sidebar">
+    <!-- <ul><li class="nav-item"><a href="/aeons/docs/">Home</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li class="nav-item"><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/khafile/">khafile</a></li></ul></li>
+<li class="nav-item"><a href="/aeons/docs/exporting/">Exporting</a></li></ul> -->
+
+    <ul><li><a href="/aeons/docs/">Home</a></li>
+<li><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li class="docs-sidebar-active"><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
+<li><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
+<li><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
+<li><a href="/aeons/docs/getting_started/khafile/">khafile</a></li></ul></li>
+<li><a href="/aeons/docs/exporting/">Exporting</a></li></ul>
+  </div>
+  <article class="docs-content">
+    <h2>Installation</h2>
+<p>To use Aeons you need to have <a href="https://haxe.org" target="_blank" rel="noopener noreferrer">Haxe</a> installed.<br>
+<a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Git</a> and <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer">Node.js</a> are required for the Kha framework Aeons is built on top of.</p>
+<p>After you have installed haxe you can install Aeons by opening a terminal and run:
+<code>haxelib install aeons</code></p>
+<p>If you want to get the latest version from github that is not stable you can run:
+<code>haxelib git aeons https://github.com/codescapade/aeons</code></p>
+<p>After the installation you can run <code>haxelib run aeons setup</code> to download Kha and setup the 'aeons' command.
+<br/>
+<br/></p>
+<h4>Command line commands</h4>
+<p>If you don't setup the aeons command in the step above you have to add <code>haxelib run</code> in front of these commands.</p>
+<ul>
+<li><code>aeons help</code> - Shows the list of available commands.</li>
+<li><code>aeons setup</code> - Run the aeons setup process.</li>
+<li><code>aeons create [project name]</code> - Create a project with the chosen name in the current directory using the starter template.</li>
+<li><code>aeons build [platform]</code> - Inside an Aeons project it will build the project for the chosen platform.</li>
+<li><code>aeons atlas</code> Inside an Aeons project it will generate the sprite atlas from the <code>atlas.json</code> config.</li>
+<li><code>aeons location [kha]</code> - Shows the aeons path. If kha is added it shows the kha path.</li>
+<li><code>aeons update kha</code> - Update the Kha framework to the commit tested with Aeons.</li>
+<li><code>aeons update latest-kha</code> - Update the Kha framework to the latest version. This could break Aeons if there were api changes in Kha.</li>
+</ul>
+
+  </article>
+</div>
+
+    </main>
+  </div>
+</body>
+
+</html>

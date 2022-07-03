@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap" rel="stylesheet">
+  <link href="/aeons/static/atom-dark.css" rel="stylesheet">
+  <link href="/aeons/static/styles.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/aeons/static/favicon.png">
+  <title>Aeons Documentation</title>
+</head>
+
+<body>
+  <div class="header">
+  <nav>
+    <ul>
+      <li>
+        <a href="/aeons/"><img class="logo" src="/aeons/static/aeons_logo.png"></a>
+      </li>
+      
+      <li>
+        <a href="https://codescapade.github.io/aeons-examples/">
+          <span class="header-text ">Examples</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/docs/">
+          <span class="header-text active">Docs</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/api/">
+          <span class="header-text ">API</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</div>
+  <div class="container">
+    <main tabindex="-1">
+      
+<div class="docs-container">
+  <div class="docs-sidebar">
+    <!-- <ul><li class="nav-item"><a href="/aeons/docs/">Home</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li class="nav-item"><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/khafile/">khafile</a></li></ul></li>
+<li class="nav-item"><a href="/aeons/docs/exporting/">Exporting</a></li></ul> -->
+
+    <ul><li class="docs-sidebar-active"><a href="/aeons/docs/">Home</a></li>
+<li><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
+<li><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
+<li><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
+<li><a href="/aeons/docs/getting_started/khafile/">khafile</a></li></ul></li>
+<li><a href="/aeons/docs/exporting/">Exporting</a></li></ul>
+  </div>
+  <article class="docs-content">
+    <hr>
+<h4>This Engine is currently in an alpha state. Some things might not work correctly yet and things might change frequently.</h4>
+<p>The docs are a work in progress. There is still a lot of documentation missing.</p>
+<hr>
+<h2>Welcome to Aeons</h2>
+<p>Aeons is a 2d game engine powered by <a href="https://github.com/Kode/Kha" target="_blank" rel="noopener noreferrer">Kha</a> and
+written in <a href="https://haxe.org" target="_blank" rel="noopener noreferrer">Haxe</a>.<br>
+Aeons doesn't have a build-in editor like some other engines. This is an engine for people who like to write code.<br>
+There is support for external editors like <a href="https://www.mapeditor.org/" target="_blank" rel="noopener noreferrer">Tiled</a>
+and <a href="https://ldtk.io/" target="_blank" rel="noopener noreferrer">LDtk</a>.</p>
+<h3>Game Structure</h3>
+<p><img src="/aeons/static/docs/gameStructure.png" alt="game structure"><br>
+This is an overview of the structure of a game. A game has a scene stack where the top one is active. Inside a scene
+there are functions to initialize the scene at the start and clean it up when you change to a different scene. There is also an update and render function you can use if you don't want to use the built-in ECS.</p>
+<p>If you do want to use the ecs you can add components to entities and add them to the scene and add systems to the scene.
+The systems can have an update and/or render function depending on what you need them for. Entities and components can
+have them as well if you just want to use the &quot;System&quot; part of ECS and just update the entities in the update and render
+function of the scene.</p>
+<h3>ECS</h3>
+<p>Aeons aims to be flexible. It uses an ECS pattern for most built-in systems, but you don't have to use it if you don't
+want to.
+You can use all of the built-in systems, some of them or none at all. You can build your game however you like.</p>
+<h3>Aeons class</h3>
+<p>The Aeons class is a static class that gives you access to a lot of the engine functionality. Some of these have systems
+and components you can use like audio. Things like tweens and timers can be used from here directly.<br>
+Things you can access from the Aeons class:</p>
+<ul>
+<li><strong>assets</strong> - Loading and retrieving assets.</li>
+<li><strong>audio</strong> - Playing sounds and music.</li>
+<li><strong>display</strong> - Info about the screen and view sizes.</li>
+<li><strong>entities</strong> - Entity and component manager. <code>Scene</code> and <code>Entity</code> have helper methods that use this in the background.</li>
+<li><strong>events</strong> - The event manager. This works by adding listeners to the manager that have callbacks. You can emit events
+from the events themselves. There can be global and scene listeners.</li>
+<li><strong>random</strong> - Seeded random number generator.</li>
+<li><strong>storage</strong> - Saving and loading game data.</li>
+<li><strong>systems</strong> - The system manager for the systems in the active scene.</li>
+<li><strong>timers</strong> - A timer manager for things you want to delay and/or repeat.</li>
+<li><strong>timeStep</strong> - Get the current delta time, set the time scale and get the current fps. The update functions that have
+dt use the value from this.</li>
+<li><strong>tween</strong> - Tween manager. Create new tweens or manage current ones from here.</li>
+</ul>
+<p>All these can be replaced with your own if you want by implementing their interface and using the <code>provide</code> function.</p>
+
+  </article>
+</div>
+
+    </main>
+  </div>
+</body>
+
+</html>

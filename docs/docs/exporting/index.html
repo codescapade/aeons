@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap" rel="stylesheet">
+  <link href="/aeons/static/atom-dark.css" rel="stylesheet">
+  <link href="/aeons/static/styles.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/aeons/static/favicon.png">
+  <title>Exporting</title>
+</head>
+
+<body>
+  <div class="header">
+  <nav>
+    <ul>
+      <li>
+        <a href="/aeons/"><img class="logo" src="/aeons/static/aeons_logo.png"></a>
+      </li>
+      
+      <li>
+        <a href="https://codescapade.github.io/aeons-examples/">
+          <span class="header-text ">Examples</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/docs/">
+          <span class="header-text ">Docs</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/api/">
+          <span class="header-text ">API</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+</div>
+  <div class="container">
+    <main tabindex="-1">
+      
+<div class="docs-container">
+  <div class="docs-sidebar">
+    <!-- <ul><li class="nav-item"><a href="/aeons/docs/">Home</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li class="nav-item"><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
+<li class="nav-item"><a href="/aeons/docs/getting_started/khafile/">khafile</a></li></ul></li>
+<li class="nav-item"><a href="/aeons/docs/exporting/">Exporting</a></li></ul> -->
+
+    <ul><li><a href="/aeons/docs/">Home</a></li>
+<li><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
+<li><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
+<li><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
+<li><a href="/aeons/docs/getting_started/khafile/">khafile</a></li></ul></li>
+<li class="docs-sidebar-active"><a href="/aeons/docs/exporting/">Exporting</a></li></ul>
+  </div>
+  <article class="docs-content">
+    <h2>Exporting</h2>
+<p><code>aeons build [platform]</code> to export to that platform. <code>aeons build html5</code> or <code>aeons build windows</code> for example.<br>
+Exporting for most platforms will generate a project for that platform.<br>
+Visual Studio project for windows, Xcode project for MacOS, iOs, tvOS etc. From there you can compile it to the native
+executable.<br>
+Html5 export will create a folder with an index.html, the javascript and the assets. you can upload to a
+host or serve with a local server for testing.</p>
+<p>Cross compiling is not supported in general.</p>
+<ul>
+<li>Windows export has to be exported on windows.</li>
+<li>MacOS, iOS, tvOS export has to be exported on MacOs.</li>
+<li>Linux export has to be exported on Linux.</li>
+<li>Android and Html5 can be exported from all three main platforms.</li>
+</ul>
+<p>Available build platforms include:</p>
+<ul>
+<li>html5</li>
+<li>windows</li>
+<li>linux</li>
+<li>osx</li>
+<li>ios</li>
+<li>tvos</li>
+<li>android</li>
+</ul>
+<p>For example <code>aeons build html5</code> or <code>eaons build windows</code>.</p>
+<p>For all available platforms see <a href="https://github.com/Kode/Kha" target="_blank" rel="noopener noreferrer">Kha</a>. I haven't
+tested all of them and some are not opens source and you need to be a registered developer (consoles).</p>
+<p>The <a href="https://github.com/Kode/Kha/wiki" target="_blank" rel="noopener noreferrer">Kha wiki</a> has some more
+platform specific information.</p>
+
+  </article>
+</div>
+
+    </main>
+  </div>
+</body>
+
+</html>
