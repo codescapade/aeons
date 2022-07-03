@@ -140,7 +140,20 @@ class RunScript {
 
   static function setupAeons(workingDir: String) {
     downloadKha(workingDir);
+    setupAtlas();
     setupAlias();
+  }
+
+  static function setupAtlas() {
+    final platform = Sys.systemName();
+    final haxelibPath = getHaxelibPath('aeons');
+    if (platform == 'Mac') {
+      final path = Path.join([haxelibPath, 'tools/atlas/AeonsAtlasMac']);
+      Sys.command("chmod", ["+x", path]);
+    } else if (platform == 'Linux') {
+      final path = Path.join([haxelibPath, 'tools/atlas/AeonsAtlasLinux']);
+      Sys.command("chmod", ["+x", path]);
+    }
   }
 
   /**
