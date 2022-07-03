@@ -55,6 +55,7 @@ class RunScript {
       } else {
         Sys.println('aeons path: ${haxelibPath}');
       }
+      Sys.setCwd(wd);
       Sys.exit(0);
     } else if (args.length == 2 && args[0] == 'update') {
       if (args[1] == 'kha') {
