@@ -30,8 +30,7 @@ The built-in components and systems use ECS for the most part, but components ha
 ## Installation
 To use Aeons you need to have Haxe installed. You can get it from [https://haxe.org](https://haxe.org)  
 Nodejs is required for the build system. You can get it from [https://nodejs.org](https://nodejs.org)  
-To install Aeons open a terminal and run:
-`haxelib git https://github.com/codescapade/aeons`  
+To install Aeons open a terminal and run: `haxelib install aeons`  
 
 After the installation run `haxelib run aeons setup` to download Kha and setup the 'aeons' command.
 <br/>
