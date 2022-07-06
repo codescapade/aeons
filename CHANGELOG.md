@@ -1,4 +1,4 @@
-## v0.1.1 - 2022-07-06
+## 0.1.1 - 2022-07-06
 ---
 ### Fixed
 - Fixed aeons command in haxelib for macos and linux.
