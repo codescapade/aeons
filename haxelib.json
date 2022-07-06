@@ -1,9 +1,9 @@
 {
   "name": "aeons",
   "url": "https://github.com/codescapade/aeons",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
-  "releasenote": "First alpha release of Aeons",
+  "releasenote": "Fixed aeons command on non-windows os",
   "contributors": [
     "codescapade"
   ],
