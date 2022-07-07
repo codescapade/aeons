@@ -13,12 +13,12 @@
 </head>
 
 <body>
-  <div class="header">
-  <nav>
-    <ul>
-      <li>
-        <a href="/aeons/"><img class="logo" src="/aeons/static/aeons_logo.png"></a>
-      </li>
+  <nav class="navbar">
+  <a href="/aeons/"><img class="logo" src="/aeons/static/aeons_logo.png" /></a>
+  <ul>
+    <input type="checkbox" id="checkbox_toggle" />
+    <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+    <div class="menu">
       
       <li>
         <a href="https://codescapade.github.io/aeons-examples/">
@@ -38,15 +38,15 @@
         </a>
       </li>
       
-    </ul>
-  </nav>
-</div>
+    </div>
+  </ul>
+</nav>
   <div class="container">
     <main tabindex="-1">
       
 <article>
   <img class="center-logo" src="/aeons/static/aeons_logo_big.png"/>
-<h2 class="center-text">A cross platform 2d game engine.</h2>
+<h2 class="center-text">An open source cross platform 2d game engine.</h2>
 <h4 class="center-text">Current version 0.1.1</h4>
 <br>
 <br>
@@ -54,6 +54,7 @@
 <p>Develop cross platform 2d games using the Haxe programming language.<br>
 Check out some of the <a href="https://codescapade.github.io/aeons-examples/">examples</a> or if you want to dive right in see the
 <a href="/aeons/docs/getting_started">getting started</a> section.</p>
+<p>You can also check out the <a class="source-link button" href="https://github.com/codescapade/aeons"><img class="source-github-logo" src="/aeons/static/github_logo.png">Source</a></p>
 
 </article>
 

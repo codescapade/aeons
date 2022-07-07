@@ -1,9 +1,9 @@
-<div class="header">
-  <nav>
-    <ul>
-      <li>
-        <a href="{{ '/' | url }}"><img class="logo" src="{{ '/static/aeons_logo.png' | url }}"></a>
-      </li>
+<nav class="navbar">
+  <a href="{{ '/' | url }}"><img class="logo" src="{{ '/static/aeons_logo.png' | url }}" /></a>
+  <ul>
+    <input type="checkbox" id="checkbox_toggle" />
+    <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+    <div class="menu">
       {% for item in navigation.items %}
       <li>
         <a href="{{ item.url }}">
@@ -11,6 +11,6 @@
         </a>
       </li>
       {% endfor %}
-    </ul>
-  </nav>
-</div>
+    </div>
+  </ul>
+</nav>

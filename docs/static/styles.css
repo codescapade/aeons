@@ -13,43 +13,46 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 main {
   height: 100%;
-}
-
-nav {
-  width: 100%;
-}
-
-nav ul {
-  display: flex;
-  justify-content: space-around;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-nav ul li {
-  margin-right: auto;
 }
 
 .container {
   margin: 0px auto;
   max-width: 1200px;
   padding: 0 10px;
-  height: calc(100% - (60px));
 }
 
-.header {
-  width: 100%;
-  background-color: #181818;
-  height: 60px;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  background-color: black;
+  padding-right: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.menu {
+  display: flex;
+  gap: 1em;
+  font-size: 18px;
+}
+
+.menu li {
+  padding: 5px 14px;
 }
 
 .logo {
-  height: 60px;
-  width: auto;
   margin-left: 10px;
 }
 
@@ -57,6 +60,36 @@ nav ul li {
   height: 24px;
   width: auto;
   margin: 16px 16px;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    position: absolute;
+    background-color: black;
+    right: 0;
+    left: 0;
+    text-align: center;
+    padding-right: 20px;
+  }
+
+  input[type=checkbox]:checked~.menu {
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
 }
 
 .header-text {
@@ -79,21 +112,24 @@ nav ul li {
   text-align: center;
 }
 
+.divider {
+  border-bottom: 2px solid black;
+}
+
 .docs-container {
   display: flex;
   flex-direction: row;
-  height: 100%;
 }
 
 .docs-sidebar {
-  width: 25%;
+  flex: 1;
   overflow: auto;
   border-right: 2px solid black;
   border-left: 2px solid black;
 }
 
 .docs-content {
-  width: 75%;
+  flex: 3;
   overflow: auto;
   padding: 0 16px;
 }
@@ -115,4 +151,35 @@ nav ul li {
 
 .docs-sidebar-active>a {
   color: rgb(0, 143, 254);
+}
+
+@media (max-width: 768px) {
+  .docs-container {
+    flex-direction: column;
+  }
+}
+
+.source-link {
+  padding-top: 6px;
+}
+
+.source-github-logo {
+  height: 16px;
+  width: auto;
+  padding-right: 4px;
+}
+
+.button {
+  display: inline-flex;
+  flex-grow: 0;
+  background-color: #181818;
+  color: white;
+  padding: 5px 10px;
+  width: auto;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background-color: #444;
 }
