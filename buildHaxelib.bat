@@ -1,1 +1,1 @@
-"C:\Program Files\7-Zip\7z.exe" a -tzip aeons.zip aeons\ tools\atlas\ tools\data\bin\ tools\data\templates\ haxelib.json LICENSE Readme.md run.n
+"C:\Program Files\7-Zip\7z.exe" a -tzip aeons.zip aeons\ tools\atlas\ tools\data\bin\ tools\data\khafile tools\data\templates\ haxelib.json LICENSE Readme.md run.n
