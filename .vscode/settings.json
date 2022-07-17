@@ -4,6 +4,8 @@
     "tests"
   ],
   "kha.khaPath": "lib/Kha",
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true
+  "[haxe]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  }
 }

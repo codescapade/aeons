@@ -4,6 +4,8 @@ import haxe.Exception;
 import haxe.Json;
 import haxe.io.Path;
 
+import haxetoml.TomlParser;
+
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
@@ -41,11 +43,21 @@ class RunScript {
       // aeons build [platform]
     } else if (args.length > 1 && args[0] == 'build') {
       args.shift();
-      if (args.indexOf('--no-atlas') == -1) {
-        args.remove('--no-atlas');
-        generateAtlas(wd);
+      final config = readConfig(wd);
+      if (config == null) {
+        Sys.exit(1);
+      } else {
+        if (args.indexOf('--no-atlas') == -1) {
+          args.remove('--no-atlas');
+          generateAtlas(wd);
+        }
+        var khafileSuccess = writeKhafile(wd, config);
+        if (khafileSuccess) {
+          Sys.exit(build(wd, args));
+        } else {
+          Sys.exit(1);
+        }
       }
-      Sys.exit(build(wd, args));
       // aeons location [kha]
     } else if (args.length >= 1 && args[0] == 'location') {
       final haxelibPath = getHaxelibPath('aeons');
@@ -122,7 +134,7 @@ class RunScript {
       try {
         Sys.setCwd(path);
       } catch (e:Dynamic) {
-        trace('cannot set current working directory to %{path}.');
+        Sys.println('cannot set current working directory to %{path}.');
       }
     }
 
@@ -273,6 +285,7 @@ class RunScript {
    */
   static function build(projectDir: String, args: Array<String>) {
     Sys.setCwd(projectDir);
+    Sys.println('Starting build...');
 
     final haxelibPath = getHaxelibPath('aeons');
     final khaPath = Path.join([haxelibPath, 'lib/Kha']);
@@ -303,10 +316,10 @@ class RunScript {
     if (appPath == '') {
       Sys.println('Aeons Atlas executable not found. Skipping atlas generation.');
     } else {
-      if (FileSystem.exists('atlas.json')) {
-        runCommand('', appPath, []);
+      if (FileSystem.exists('aeons.toml')) {
+        runCommand('', appPath, ['aeons.toml']);
       } else {
-        Sys.println('No atlas.json file found. Skipping atlas generation.');
+        Sys.println('No aeons.toml file found. Cannot generate atlas.');
       }
     }
   }
@@ -364,12 +377,289 @@ class RunScript {
 
     // Update the project name place holders.
     Sys.println('Updating placeholders');
-    final khafilePath = Path.join([destination, 'khafile.js']);
-    setPlaceholders(khafilePath, '{{game_name}}', name);
+    final khafilePath = Path.join([destination, 'aeons.toml']);
+    setPlaceholders(khafilePath, 'game_name', name);
 
     final mainPath = Path.join([destination, 'source/Main.hx']);
-    setPlaceholders(mainPath, '{{game_name}}', name);
+    setPlaceholders(mainPath, 'game_name', name);
     Sys.println('Project creation complete.');
+
+    final config = readConfig(destination);
+    writeKhafile(destination, config);
+  }
+
+  /**
+   * Read a aeons.toml config file and return the config data.
+   * @param projectDir The directory with the config file.
+   * @return The loaded config file.
+   */
+  static function readConfig(projectDir: String): Config {
+    Sys.setCwd(projectDir);
+    final configPath = Path.join([projectDir, 'aeons.toml']);
+    if (FileSystem.exists(configPath)) {
+      final content = File.getContent(configPath);
+      final config: Config = TomlParser.parseString(content, {});
+
+      return config;
+    } else {
+      Sys.println('Missing aeons.toml config file');
+      return null;
+    }
+  }
+
+  /**
+   * Create a khafile from an aeons config.
+   * @param projectDir The directory the khafile should be saved in.
+   * @param config The aeons config file.
+   * @return True if the creation was successful.
+   */
+  static function writeKhafile(projectDir: String, config: Config): Bool {
+    if (config.aeons == null) {
+      Sys.println('Cannot find "[aeons]" project info in aeons.toml');
+      return false;
+    } else if (config.aeons.projectName == null) {
+      Sys.println('"projectName" is missing from aeons.toml');
+      return false;
+    }
+
+    Sys.println('Updating khafile.js');
+
+    final aeons = config.aeons;
+    final platform = Sys.systemName();
+    final lineEnd = platform == "Windows" ? "\r\n" : "\n";
+
+    final aeonsPath = getHaxelibPath('aeons');
+    final templatePath = Path.join([aeonsPath, 'tools/data/khafile/khafileTemplate.js']);
+    var template = File.getContent(templatePath);
+
+    template = setPlaceholder(template, 'project_name', aeons.projectName);
+
+    final assetsFolder = aeons.assetsFolder == null ? 'assets' : aeons.assetsFolder;
+    template = setPlaceholder(template, 'assets', assetsFolder);
+
+    final iconPath = aeons.icon == null ? 'icon.png' : aeons.icon;
+    template = setPlaceholder(template, 'icon', iconPath);
+
+    final shadersFolder = aeons.shaderFolder == null ? 'shaders' : aeons.shaderFolder;
+    template = setPlaceholder(template, 'shaders', shadersFolder);
+
+    final sourceFolder = aeons.sourceFolder == null ? 'source' : aeons.sourceFolder;
+    template = setPlaceholder(template, 'source', sourceFolder);
+
+    // Add haxe libraries.
+    var libraries = '';
+    if (aeons.libraries != null) {
+      for (library in aeons.libraries) {
+        libraries += 'project.addLibrary(\'${library}\');${lineEnd}';
+      }
+    }
+    template = setPlaceholder(template, 'libraries', libraries);
+
+    // Add haxe defines.
+    var defines = '';
+    if (aeons.defines != null) {
+      for (define in aeons.defines) {
+        defines += 'project.addDefine(\'${define}\');${lineEnd}';
+      }
+    }
+    template = setPlaceholder(template, 'defines', defines);
+
+    // Add haxe parameters.
+    var parameters = '';
+    if (aeons.parameters != null) {
+      for (parameter in aeons.parameters) {
+        parameters += 'project.addParameter(\'${parameter}\');${lineEnd}';
+      }
+    }
+    template = setPlaceholder(template, 'parameters', parameters);
+
+    var options = '';
+
+    // Add html5 specific options.
+    if (aeons.html5 != null) {
+      options += addHtml5Options(aeons.html5, lineEnd);
+    }
+
+    // Add android specific options.
+    if (aeons.android != null) {
+      options += addAndroidOptions(aeons.android, lineEnd);
+    }
+
+    // Add ios specific options.
+    if (aeons.ios != null) {
+      options += addIosOptions(aeons.ios, lineEnd);
+    }
+
+    template = setPlaceholder(template, 'options', options);
+
+    final savePath = Path.join([projectDir, 'khafile.js']);
+    File.saveContent(savePath, template);
+
+    return true;
+  }
+
+  /**
+   * Go through all html5 target specific options and add them to the khafile string.
+   * @param config The html5 part of the config.
+   * @param lineEnd Line ending is plafform specific.
+   * @return The html5 options as a string.
+   */
+  static function addHtml5Options(config: Html5, lineEnd: String): String {
+    var options = '';
+    final html5Options = 'project.targetOptions.html5.{{option}};${lineEnd}';
+    final windowOptions = 'project.windowOptions.{{option}};${lineEnd}';
+
+    if (config.disableContextMenu != null) {
+      options += html5Options;
+      options = setPlaceholder(options, 'option', 'disableContextMenu = ${config.disableContextMenu}');
+    }
+
+    if (config.canvasId != null) {
+      options += html5Options;
+      options = setPlaceholder(options, 'option', 'canvasId = \'${config.canvasId}\'');
+    }
+
+    if (config.scriptName != null) {
+      options += html5Options;
+      options = setPlaceholder(options, 'option', 'scriptName = \'${config.scriptName}\'');
+    }
+
+    if (config.width != null) {
+      options += windowOptions;
+      options = setPlaceholder(options, 'option', 'width = ${config.width}');
+    }
+
+    if (config.height != null) {
+      options += windowOptions;
+      options = setPlaceholder(options, 'option', 'height = ${config.height}');
+    }
+
+    return options;
+  }
+
+  /**
+   * Go through all android target specific options and add them to the khafile string.
+   * @param config The android part of the config.
+   * @param lineEnd Line ending is plafform specific.
+   * @return The android options as a string.
+   */
+  static function addAndroidOptions(config: Android, lineEnd: String): String {
+    var options = '';
+    final androidOptions = 'project.targetOptions.android_native.{{option}};${lineEnd}';
+
+    if (config.packageName != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'package = \'${config.packageName}\'');
+    }
+
+    if (config.versionCode != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'versionCode = ${config.versionCode}');
+    }
+
+    if (config.versionName != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'versionName = \'${config.versionName}\'');
+    }
+
+    if (config.screenOrientation != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'screenOrientation = \'${config.screenOrientation}\'');
+    }
+
+    if (config.permissions != null) {
+      var permissions = '';
+      for (permission in config.permissions) {
+        permissions += '\'${permission}\',';
+      }
+      if (permissions != '') {
+        permissions = permissions.substring(0, permissions.length - 1);
+      }
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'permissions = [${permissions}]');
+    }
+
+    if (config.installLocation != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'installLocation = \'${config.installLocation}\'');
+    }
+
+    if (config.metadata != null) {
+      var metadata = '';
+      for (data in config.metadata) {
+        metadata += '\'${data}\',';
+      }
+      if (metadata != '') {
+        metadata = metadata.substring(0, metadata.length - 1);
+      }
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'metadata = [${metadata}]');
+    }
+
+    if (config.disableStickyImmersiveMode != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'disableStickyImmersiveMode = ${config.disableStickyImmersiveMode}');
+    }
+
+    if (config.globalBuildGradlePath != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'globalBuildGradlePath = \'${config.globalBuildGradlePath}\'');
+    }
+
+    if (config.buildGradlePath != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'buildGradlePath = \'${config.buildGradlePath}\'');
+    }
+
+    if (config.proguardRulesPath != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'proguardRulesPath = \'${config.proguardRulesPath}\'');
+    }
+
+    if (config.customFilesPath != null) {
+      options += androidOptions;
+      options = setPlaceholder(options, 'option', 'customFilesPath = \'${config.customFilesPath}\'');
+    }
+
+    return options;
+  }
+
+  /**
+   * Go through all ios target specific options and add them to the khafile string.
+   * @param config The ios part of the config.
+   * @param lineEnd Line ending is plafform specific.
+   * @return The ios options as a string.
+   */
+  static function addIosOptions(config: Ios, lineEnd: String): String {
+    var options = '';
+    final iosOptions = 'project.targetOptions.ios.{{option}};${lineEnd}';
+
+    if (config.bundle != null) {
+      options += iosOptions;
+      options = setPlaceholder(options, 'option', 'bundle = \'${config.bundle}\'');
+    }
+
+    if (config.organizationName != null) {
+      options += iosOptions;
+      options = setPlaceholder(options, 'option', 'organizationName = \'${config.organizationName}\'');
+    }
+
+    if (config.developmentTeam != null) {
+      options += iosOptions;
+      options = setPlaceholder(options, 'option', 'developmentTeam = \'${config.developmentTeam}\'');
+    }
+
+    if (config.version != null) {
+      options += iosOptions;
+      options = setPlaceholder(options, 'option', 'version = \'${config.version}\'');
+    }
+
+    if (config.build != null) {
+      options += iosOptions;
+      options = setPlaceholder(options, 'option', 'build = \'${config.build}\'');
+    }
+
+    return options;
   }
 
   /**
@@ -391,37 +681,14 @@ class RunScript {
     }
   }
 
-  /**
-   * Delete a folder recursive.
-   * @param dir The folder to delete.
-   */
-  static function deleteDir(dir: String) {
-    final files = FileSystem.readDirectory(dir);
-    for (file in files) {
-      final path = Path.join([dir, file]);
-      trace(path);
-      if (FileSystem.isDirectory(path)) {
-        deleteDir(path);
-        var newFiles = FileSystem.readDirectory(path);
-        if (newFiles.length == 0) {
-          FileSystem.deleteDirectory(path);
-        }
-      } else {
-        if (FileSystem.exists(path)) {
-          try {
-            FileSystem.deleteFile(path);
-          } catch (e:Exception) {
-            trace(e.toString());
-          }
-        }
-      }
-    }
+  static function setPlaceholders(path: String, placeholder: String, replacement: String) {
+    var content = File.getContent(path);
+    content = setPlaceholder(content, placeholder, replacement);
+    File.saveContent(path, content);
   }
 
-  static function setPlaceholders(path: String, placeholder: String, name: String) {
-    var content = File.getContent(path);
-    content = content.replace(placeholder, name);
-    File.saveContent(path, content);
+  static function setPlaceholder(content: String, placeholder: String, replacement: String): String {
+    return content.replace('{{${placeholder}}}', replacement);
   }
 
   static function showHelp() {
@@ -436,4 +703,60 @@ class RunScript {
     Sys.println('- aeons update kha             Update the Kha framework to the commit tested with Aeons.');
     Sys.println('- aeons update latest-kha      Update the Kha framework to the latest version. This could break Aeons if there were Api changes in Kha.');
   }
+}
+
+typedef Config = {
+  var aeons: Project;
+}
+
+typedef Project = {
+  var projectName: String;
+  var ?assetsFolder: String;
+  var ?shaderFolder: String;
+  var ?sourceFolder: String;
+  var ?icon: String;
+  var ?libraries: Array<String>;
+  var ?defines: Array<String>;
+  var ?parameters: Array<String>;
+  var ?html5: Html5;
+  var ?android: Android;
+  var ?ios: Ios;
+}
+
+typedef Html5 = {
+  var ?disableContextMenu: Bool;
+  var ?canvasId: String;
+  var ?scriptName: String;
+  var ?width: Int;
+  var ?height: Int;
+  var ?indexFile: String;
+}
+
+typedef Android = {
+  var ?packageName: String;
+  var ?versionCode: Int;
+  var ?versionName: String;
+
+  // https://developer.android.com/guide/topics/manifest/activity-element.html#screen
+  var ?screenOrientation: String;
+  var ?permissions: Array<String>;
+  // https://developer.android.com/guide/topics/manifest/manifest-element#install
+  var ?installLocation: String;
+  // https://developer.android.com/guide/topics/manifest/meta-data-element
+  var ?metadata: Array<String>;
+  // same as <meta-data android:name="disableStickyImmersiveMode" android:value="true"/>
+  var ?disableStickyImmersiveMode: Bool;
+  var ?globalBuildGradlePath: String;
+  var ?buildGradlePath: String;
+  var ?proguardRulesPath: String;
+  // for files in Android Studio project-level dir
+  var ?customFilesPath: String;
+}
+
+typedef Ios = {
+  var ?bundle: String;
+  var ?organizationName: String;
+  var ?developmentTeam: String;
+  var ?version: String;
+  var ?build: Int;
 }

@@ -1,2 +1,4 @@
+-L haxetoml:git
+
 -main RunScript
 -neko ../../run.n

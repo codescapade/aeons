@@ -1,9 +1,9 @@
 {
   "name": "aeons",
   "url": "https://github.com/codescapade/aeons",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": "MIT",
-  "releasenote": "Fixed aeons command on non-windows os",
+  "releasenote": "Added aeons toml configuration file for project configuration",
   "contributors": [
     "codescapade"
   ],
