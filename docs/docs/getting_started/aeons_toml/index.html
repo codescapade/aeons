@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap" rel="stylesheet">
+  <link href="/aeons/static/atom-dark.css" rel="stylesheet">
+  <link href="/aeons/static/styles.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/aeons/static/favicon.png">
+  <title>Aeons.toml</title>
+</head>
+
+<body>
+  <nav class="navbar">
+  <a href="/aeons/"><img class="logo" src="/aeons/static/aeons_logo.png" /></a>
+  <ul>
+    <input type="checkbox" id="checkbox_toggle" />
+    <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+    <div class="menu">
+      
+      <li>
+        <a href="https://codescapade.github.io/aeons-examples/">
+          <span class="header-text ">Examples</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/docs/">
+          <span class="header-text ">Docs</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/aeons/api/">
+          <span class="header-text ">API</span>
+        </a>
+      </li>
+      
+    </div>
+  </ul>
+</nav>
+  <div class="container">
+    <main tabindex="-1">
+      
+<div class="docs-container">
+  <div class="docs-sidebar">
+    <ul><li><a href="/aeons/docs/">Home</a></li>
+<li><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
+<li><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
+<li><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
+<li class="docs-sidebar-active"><a href="/aeons/docs/getting_started/aeons_toml/">aeons.toml config</a></li></ul></li>
+<li><a href="/aeons/docs/exporting/">Exporting</a></li></ul>
+    <div class="divider"></div>
+  </div>
+  <article class="docs-content">
+    <h2>The aeons configuration file</h2>
+<p>The configuration file used to build your project is called <code>aeons.toml</code>. <a href="https://toml.io">TOML</a> is a bit like YAML,
+but without all the indentation. This file is used to create the sprite atlases and build your project.</p>
+<p>For more info on the atlas packing you can look in the <a href="https://github.com/codescapade/aeons-atlas">aeons atlas</a> repo.</p>
+<p>Here is an explanation of what you can configure:</p>
+<pre class="language-toml"><code class="language-toml"><span class="token punctuation">[</span><span class="token table class-name">aeons</span><span class="token punctuation">]</span> <span class="token comment"># this goes at the top so the build knows this is an aeons project.</span><br><br><span class="token comment"># The name for this project.</span><br><span class="token comment"># This will be used in the title bar or browser tab. This is the only mandatory field.</span><br><span class="token key property">projectName</span> <span class="token punctuation">=</span> <span class="token string">"aeons game"</span><br><br><span class="token comment"># The folder in your project where the shaders are.</span><br><span class="token comment"># Defaults to 'shaders' if you don't set it.</span><br><span class="token key property">shaderFolder</span> <span class="token punctuation">=</span> <span class="token string">"shaders"</span><br><br><span class="token comment"># The folder with all your haxe code.</span><br><span class="token comment"># Default to 'source' if you don't set it.</span><br><span class="token key property">sourceFolder</span> <span class="token punctuation">=</span> <span class="token string">"source"</span><br><br><span class="token comment"># The icon for you game. It gets scaled depending on the platform for app icons, favicon etc.</span><br><span class="token comment"># 1024px by 1024px is a good size to use.</span><br><span class="token key property">icon</span> <span class="token punctuation">=</span> <span class="token string">"icon.png"</span><br><br><span class="token comment"># A list of haxe libraries you are using in your project.</span><br><span class="token key property">libraries</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><br><br><span class="token comment"># A list of haxe defines for conditional compilation.</span><br><span class="token comment"># The ones used in #if #end in you haxe code.</span><br><span class="token key property">defines</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><br><br><span class="token comment"># A list of haxe parameters like -debug  -dce.</span><br><span class="token key property">parameters</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><br><br><span class="token comment"># Html5 specific settings.</span><br><span class="token punctuation">[</span><span class="token table class-name">aeons.html5</span><span class="token punctuation">]</span><br><span class="token key property">disableContextMenu</span> <span class="token punctuation">=</span> <span class="token boolean">true</span> <span class="token comment"># Disable right click menu.</span><br><span class="token key property">canvasId</span> <span class="token punctuation">=</span> <span class="token string">""</span> <span class="token comment"># The id tag on the canvas in the html file. Default is khanvas.</span><br><span class="token key property">scriptName</span> <span class="token punctuation">=</span> <span class="token string">""</span> <span class="token comment"># The name of the javascript file. Default is kha.js.</span><br><span class="token key property">width</span> <span class="token punctuation">=</span> <span class="token number">800</span> <span class="token comment"># The canvas width in pixels. Default = 800.</span><br><span class="token key property">height</span> <span class="token punctuation">=</span> <span class="token number">600</span> <span class="token comment"># The canvas height in pixels. Default = 600.</span><br><br><span class="token comment"># Android specific settings.</span><br><span class="token punctuation">[</span><span class="token table class-name">aeons.android</span><span class="token punctuation">]</span><br><span class="token key property">packageName</span> <span class="token punctuation">=</span> <span class="token string">"com.aeons.game"</span> <span class="token comment"># Android package name.</span><br><span class="token key property">versionCode</span> <span class="token punctuation">=</span> <span class="token number">1</span> <br><span class="token key property">versionName</span> <span class="token punctuation">=</span> <span class="token string">"1.0"</span><br><br><span class="token comment">#https://developer.android.com/guide/topics/manifest/activity-element.html#screen</span><br><span class="token key property">screenOrientation</span> <span class="token punctuation">=</span> <span class="token string">"portrait"</span><br><span class="token key property">permissions</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># device permissions needed.</span><br><br><span class="token comment"># https://developer.android.com/guide/topics/manifest/manifest-element#install</span><br><span class="token key property">installLocation</span> <span class="token punctuation">=</span> <span class="token string">""</span><br><br><span class="token comment"># https://developer.android.com/guide/topics/manifest/meta-data-element</span><br><span class="token key property">metadata</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><br><br><span class="token comment"># same as &lt;meta-data android:name="disableStickyImmersiveMode" android:value="true"/></span><br><span class="token key property">disableStickyImmersiveMode</span> <span class="token punctuation">=</span> <span class="token boolean">true</span><br><span class="token key property">globalBuildGradlePath</span> <span class="token punctuation">=</span> <span class="token string">"gradle-path"</span><br><span class="token key property">proguardRulesPath</span> <span class="token punctuation">=</span> <span class="token string">"rules-path"</span><br><br><span class="token comment"># for files in Android Studio project-level dir</span><br><span class="token key property">customFilesPath</span> <span class="token punctuation">=</span> <span class="token string">"custom-files-path"</span><br><br><span class="token punctuation">[</span><span class="token table class-name">aeons.ios</span><span class="token punctuation">]</span><br><span class="token key property">bundle</span> <span class="token punctuation">=</span> <span class="token string">"com.aeons.game"</span> <span class="token comment"># ios bundle identifier.</span><br><span class="token key property">organizationName</span> <span class="token punctuation">=</span> <span class="token string">"Aeons"</span> <span class="token comment"># </span><br><span class="token key property">developmentTeam</span> <span class="token punctuation">=</span> <span class="token string">""</span> <span class="token comment"># ios Development team identifier </span><br><span class="token key property">version</span> <span class="token punctuation">=</span> <span class="token string">"1.0"</span><br><span class="token key property">build</span> <span class="token punctuation">=</span> <span class="token number">1</span><br><br><span class="token comment"># Sprite atlas config. You can have multiple of these in the project</span><br><span class="token comment"># if you want to create more than one sprite atlas.</span><br><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token table class-name">atlas</span><span class="token punctuation">]</span><span class="token punctuation">]</span><br><span class="token key property">name</span> <span class="token punctuation">=</span> <span class="token string">"atlas"</span> <span class="token comment"># The name of the atlas image and data file.</span><br><span class="token key property">saveFolder</span> <span class="token punctuation">=</span> <span class="token string">"assets"</span> <span class="token comment"># The folder to save the atlas in.</span><br><span class="token key property">folders</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># A list of folders that have images for the atlas. Not recursive.</span><br><span class="token key property">files</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># A list of image files for the atlas if you don't want to use a whole folder.</span><br><span class="token key property">trimmed</span> <span class="token punctuation">=</span> <span class="token boolean">true</span> <span class="token comment"># Should the excess white space be trimmed off.</span><br><span class="token key property">extrude</span> <span class="token punctuation">=</span> <span class="token number">1</span> <span class="token comment"># Number of pixels to extrude the images. For when you get artifacts at the edges.</span><br><span class="token key property">packMethod</span> <span class="token punctuation">=</span> <span class="token string">"optimal"</span> <span class="token comment"># basic or optimal packing.</span><br></code></pre>
+
+  </article>
+</div>
+
+    </main>
+  </div>
+</body>
+
+</html>

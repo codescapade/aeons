@@ -1,12 +1,6 @@
 [aeons]
 projectName = "{{game_name}}"
 
-shaderFolder = "shaders"
-
-sourceFolder = "source"
-
-icon = "icon.png"
-
 # To enable lDtk support add "ldtk-haxe-api" and "deepnightLibs". Install them using haxelib.
 # To enable nape physics add "nape-haxe4". Install this using haxelib.
 libraries = []

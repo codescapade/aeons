@@ -5,3 +5,4 @@ build/
 /tests/khafile.js
 /tools/docs/site/node_modules
 /aeons.zip
+docs/_eleventy_redirect/

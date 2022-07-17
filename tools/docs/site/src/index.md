@@ -5,7 +5,7 @@ title: 'Aeons'
 
 <img class="center-logo" src="{{ '/static/aeons_logo_big.png' | url }}"/>
 <h2 class="center-text">An open source cross platform 2d game engine.</h2>
-<h4 class="center-text">Current version 0.1.1</h4>
+<h4 class="center-text">Current version 0.2.0</h4>
 <br>
 <br>
 

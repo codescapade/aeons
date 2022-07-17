@@ -50,7 +50,7 @@
 <li><a href="/aeons/docs/getting_started/">Getting Started</a><ul><li><a href="/aeons/docs/getting_started/installation/">Installation</a></li>
 <li class="docs-sidebar-active"><a href="/aeons/docs/getting_started/new_project/">New project setup</a></li>
 <li><a href="/aeons/docs/getting_started/vscode_extensions/">VSCode Extensions</a></li>
-<li><a href="/aeons/docs/getting_started/khafile/">khafile</a></li></ul></li>
+<li><a href="/aeons/docs/getting_started/aeons_toml/">aeons.toml config</a></li></ul></li>
 <li><a href="/aeons/docs/exporting/">Exporting</a></li></ul>
     <div class="divider"></div>
   </div>
@@ -65,8 +65,8 @@ This contains some build tasks you can run from vscode and the debugger launch c
 Here you can add all assets that are not sprite atlases. The sprite atlases will be automatically generated using Aeons
 Atlas and put in this folder when you build the project.</p>
 <p><strong>atlasImages</strong> folder<br>
-Here you can add all images that should go in sprite atlases. The <code>atlas.json</code> config file adds all files into a single
-atlas by default.</p>
+Here you can add all images that should go in sprite atlases. The atlas config in the <code>aeons.toml</code> config file adds all
+files into a single atlas by default.</p>
 <p><strong>build</strong> folder<br>
 This is where the exported game will be saved. Each platform goes in its own folder.</p>
 <p><strong>shaders</strong> folder<br>
@@ -74,16 +74,14 @@ Here you can add custom glsl shaders that can get compiled to the correct shader
 platform.</p>
 <p><strong>source</strong> folder
 Here you can add all the source code for your game.</p>
-<p><strong>atlas.json</strong>
-This is the Aeons Atlas sprite atlas configuration file. You can use this to configure how the atlases get generated.
-See the <a href="https://github.com/codescapade/aeons-atlas" target="_blank" rel="noopener noreferrer">readme</a> in the Aeons
-Atlas repo on Github to see all configuration options.</p>
+<p><strong>aeons.toml</strong> file
+This is the configuration file for your project. You can see more info about it <a href="/aeons/docs/getting_started/aeons_toml">here</a></p>
 <p><strong>icon.png</strong><br>
 This icon will be used for the favicon in html5, menu and app icon on desktop and app icon on mobile.<br>
 It will get scaled automatically. It is best to use a 1024 x 1024 icon for this.</p>
 <p><strong>khafile.js</strong><br>
-This is the configuration file for the underlying Kha Framework this engine uses as its base. See the <a href="/aeons/docs/getting_started/khafile">khafile</a>
-page for more information.</p>
+This is the configuration file for the underlying Kha Framework this engine uses as its base. This is regenerated when
+you build your project using the information from the <code>aeons.toml</code> config file.</p>
 
   </article>
 </div>
