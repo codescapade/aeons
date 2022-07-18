@@ -1,3 +1,10 @@
+## next - (TBD)
+---
+### Fixed
+- Build not working when there is no atlas entry in the aeons.toml file
+
+### Added
+- Added `customIndexFile` option in the html5 export options to allow for a custom index.html file when exporting to html5.
 ## 0.2.0 - 2022-07-17
 ---
 ### Changed

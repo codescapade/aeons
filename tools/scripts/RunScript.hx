@@ -47,11 +47,12 @@ class RunScript {
       if (config == null) {
         Sys.exit(1);
       } else {
-        if (args.indexOf('--no-atlas') == -1) {
-          args.remove('--no-atlas');
+        if (args.indexOf('--no-atlas') == -1 && config.atlas != null) {
           generateAtlas(wd);
+        } else {
+          args.remove('--no-atlas');
         }
-        var khafileSuccess = writeKhafile(wd, config);
+        var khafileSuccess = writeKhafile(wd, config, args[0].toLowerCase());
         if (khafileSuccess) {
           Sys.exit(build(wd, args));
         } else {
@@ -385,7 +386,7 @@ class RunScript {
     Sys.println('Project creation complete.');
 
     final config = readConfig(destination);
-    writeKhafile(destination, config);
+    writeKhafile(destination, config, '');
   }
 
   /**
@@ -411,9 +412,10 @@ class RunScript {
    * Create a khafile from an aeons config.
    * @param projectDir The directory the khafile should be saved in.
    * @param config The aeons config file.
+   * @param exportPlatform
    * @return True if the creation was successful.
    */
-  static function writeKhafile(projectDir: String, config: Config): Bool {
+  static function writeKhafile(projectDir: String, config: Config, exportPlatform: String): Bool {
     if (config.aeons == null) {
       Sys.println('Cannot find "[aeons]" project info in aeons.toml');
       return false;
@@ -477,7 +479,7 @@ class RunScript {
 
     // Add html5 specific options.
     if (aeons.html5 != null) {
-      options += addHtml5Options(aeons.html5, lineEnd);
+      options += addHtml5Options(aeons.html5, lineEnd, exportPlatform == 'html5', projectDir);
     }
 
     // Add android specific options.
@@ -502,9 +504,11 @@ class RunScript {
    * Go through all html5 target specific options and add them to the khafile string.
    * @param config The html5 part of the config.
    * @param lineEnd Line ending is plafform specific.
+   * @param customIndex Should the optional custom index file be exported.
+   * @param proojectDir The project directory.
    * @return The html5 options as a string.
    */
-  static function addHtml5Options(config: Html5, lineEnd: String): String {
+  static function addHtml5Options(config: Html5, lineEnd: String, customIndex: Bool, projectDir: String): String {
     var options = '';
     final html5Options = 'project.targetOptions.html5.{{option}};${lineEnd}';
     final windowOptions = 'project.windowOptions.{{option}};${lineEnd}';
@@ -532,6 +536,22 @@ class RunScript {
     if (config.height != null) {
       options += windowOptions;
       options = setPlaceholder(options, 'option', 'height = ${config.height}');
+    }
+
+    if (config.customIndexFile != null && customIndex) {
+      final indexPath = Path.join([projectDir, config.customIndexFile]);
+      var buildDir = Path.join([projectDir, 'build']);
+      if (!FileSystem.exists(buildDir)) {
+        FileSystem.createDirectory(buildDir);
+      }
+
+      buildDir = Path.join([buildDir, 'html5']);
+      if (!FileSystem.exists(buildDir)) {
+        FileSystem.createDirectory(buildDir);
+      }
+
+      final destination = Path.join([buildDir, 'index.html']);
+      File.copy(indexPath, destination);
     }
 
     return options;
@@ -707,6 +727,7 @@ class RunScript {
 
 typedef Config = {
   var aeons: Project;
+  var ?atlas: Array<Dynamic>;
 }
 
 typedef Project = {
@@ -729,7 +750,7 @@ typedef Html5 = {
   var ?scriptName: String;
   var ?width: Int;
   var ?height: Int;
-  var ?indexFile: String;
+  var ?customIndexFile: String;
 }
 
 typedef Android = {
