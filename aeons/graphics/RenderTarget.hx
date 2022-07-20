@@ -282,7 +282,7 @@ class RenderTarget {
   }
 
   /**
-   * Draw a string.
+   * Draw a string using a ttf font.
    * @param x The x position of the text in pixels.
    * @param y The y position of the text in pixels.
    * @param text The text to draw.
@@ -291,10 +291,25 @@ class RenderTarget {
    * @param transform The transformation matrix.
    * @param color The text color.
    */
-  public function drawString(x: FastFloat, y: FastFloat, text: String, font: Font, fontSize: Int, color: Color) {
+  public function drawText(x: FastFloat, y: FastFloat, text: String, font: Font, fontSize: Int, color: Color) {
     shapeRenderer.present();
     imageRenderer.present();
-    textRenderer.drawString(x, y, text, font, fontSize, transform, color);
+    textRenderer.drawText(x, y, text, font, fontSize, transform, color);
+  }
+
+  /**
+   * Draw a string using a bitmap font.
+   * @param x The x position of the text in pixels.
+   * @param y The y position of the text in pixels.
+   * @param text The text to draw.
+   * @param font The bitmap font to use.
+   * @param transform The transformation matrix.
+   * @param color The text color.
+   */
+  public function drawBitmapText(x: FastFloat, y: FastFloat, text: String, font: BitmapFont, color: Color) {
+    shapeRenderer.present();
+    textRenderer.present();
+    imageRenderer.drawBitmapText(x, y, text, font, transform, color);
   }
 
   /**

@@ -2,19 +2,19 @@ package aeons.components;
 
 import aeons.core.Component;
 import aeons.core.Renderable;
+import aeons.graphics.BitmapFont;
 import aeons.graphics.Color;
-import aeons.graphics.Font;
 import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 
 /**
  * CText component to render bitmap text.
  */
-class CText extends Component implements Renderable {
+class CBitmapText extends Component implements Renderable {
   /**
    * The font to use to render.
    */
-  public var font(default, set): Font;
+  public var font(default, set): BitmapFont;
 
   /**
    * The size of the font.
@@ -82,9 +82,6 @@ class CText extends Component implements Renderable {
       if (options.font != null) {
         font = options.font;
       }
-      if (options.fontSize != null) {
-        fontSize = options.fontSize;
-      }
       color = options.color == null ? Color.White : options.color;
       backgroundColor = options.backgroundColor == null ? Color.Black : options.backgroundColor;
       if (options.hasBackground != null) {
@@ -93,7 +90,7 @@ class CText extends Component implements Renderable {
 
       anchorX = options.anchorX == null ? 0.5 : options.anchorX;
       anchorY = options.anchorY == null ? 0.5 : options.anchorY;
-      width = font.width(fontSize, text);
+      width = font.width(text);
     }
   }
 
@@ -110,7 +107,7 @@ class CText extends Component implements Renderable {
       target.drawSolidRect(-((width) * anchorX) - 2, -(height) * anchorY - 1, width + 4, height + 2, backgroundColor);
     }
 
-    target.drawText(-width * anchorX, -height * anchorY, text, font, fontSize, color);
+    target.drawBitmapText(-width * anchorX, -height * anchorY, text, font, color);
   }
 
   /**
@@ -127,7 +124,7 @@ class CText extends Component implements Renderable {
   }
 
   inline function get_height(): Float {
-    return font == null ? 0 : font.height(fontSize);
+    return font == null ? 0 : font.height;
   }
 
   inline function set_text(value: String): String {
@@ -135,15 +132,15 @@ class CText extends Component implements Renderable {
     if (font == null) {
       width = 0;
     } else {
-      width = font.width(fontSize, value);
+      width = font.width(value);
     }
 
     return value;
   }
 
-  inline function set_font(value: Font): Font {
+  inline function set_font(value: BitmapFont): BitmapFont {
     font = value;
-    width = font.width(fontSize, text);
+    width = font.width(text);
 
     return value;
   }
@@ -156,12 +153,7 @@ typedef CTextOptions = {
   /**
    * The font to use.
    */
-  var ?font: Font;
-
-  /**
-   * the size of the font in pixels.
-   */
-  var ?fontSize: Int;
+  var ?font: BitmapFont;
 
   /**
    * The text to render.

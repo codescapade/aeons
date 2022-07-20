@@ -1,6 +1,7 @@
 package aeons.assets.services;
 
 import aeons.audio.Sound;
+import aeons.graphics.BitmapFont;
 import aeons.graphics.Font;
 import aeons.graphics.Image;
 import aeons.graphics.Video;
@@ -16,6 +17,11 @@ class InternalAssets implements Assets {
    * The added sprite atlasses.
    */
   final atlasses = new Map<String, Atlas>();
+
+  /**
+   * The added bitmap fonts.
+   */
+  final bitmapFonts = new Map<String, BitmapFont>();
 
   /**
    * PrimaryAssets constructor.
@@ -155,7 +161,7 @@ class InternalAssets implements Assets {
     }
 
     final atlas = new Atlas(image, data.toString());
-    atlasses.set(name, atlas);
+    atlasses[name] = atlas;
 
     return atlas;
   }
@@ -178,6 +184,39 @@ class InternalAssets implements Assets {
 
   public inline function hasAtlas(name: String): Bool {
     return atlasses.exists(name);
+  }
+
+  public function loadBitmapFont(name: String): BitmapFont {
+    final image = getImage(name);
+    final data = getBlob('${name}_fnt');
+
+    if (image == null || data == null) {
+      trace('Unable to load bitmap font ${name}.');
+
+      return null;
+    }
+
+    final font = new BitmapFont(image, data.toString());
+    bitmapFonts[name] = font;
+
+    return font;
+  }
+
+  public function unloadBitmapFont(name: String) {
+    bitmapFonts.remove(name);
+  }
+
+  public inline function getBitmapFont(name: String): BitmapFont {
+    #if debug
+    if (!bitmapFonts.exists(name)) {
+      trace('Bitmap font ${name} is not loaded.');
+    }
+    #end
+    return bitmapFonts[name];
+  }
+
+  public inline function hasBitmapFont(name: String): Bool {
+    return bitmapFonts.exists(name);
   }
 
   /**

@@ -1,6 +1,7 @@
 package aeons.assets.services;
 
 import aeons.audio.Sound;
+import aeons.graphics.BitmapFont;
 import aeons.graphics.Font;
 import aeons.graphics.Image;
 import aeons.graphics.Video;
@@ -127,6 +128,7 @@ class NullAssets implements Assets {
 
   public function getAtlas(name: String): Atlas {
     trace('getAtlas not implemented');
+
     return null;
   }
 
@@ -136,4 +138,23 @@ class NullAssets implements Assets {
     return false;
   }
 
+  public function loadBitmapFont(name: String): BitmapFont {
+    trace('loadBitmapFont not implemented');
+
+    return null;
+  }
+
+  public function unloadBitmapFont(name: String) {
+    trace('unloadBitmapFont not implemented');
+  }
+
+  public function getBitmapFont(name: String): BitmapFont {
+    trace('getBitmapFont not implemented');
+    return null;
+  }
+
+  public function hasBitmapFont(name: String): Bool {
+    trace('hasBitmapFont not implemented');
+    return false;
+  }
 }

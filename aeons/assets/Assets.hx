@@ -1,6 +1,7 @@
 package aeons.assets;
 
 import aeons.audio.Sound;
+import aeons.graphics.BitmapFont;
 import aeons.graphics.Font;
 import aeons.graphics.Image;
 import aeons.graphics.Video;
@@ -163,9 +164,35 @@ interface Assets {
   function getAtlas(name: String): Atlas;
 
   /**
-   * Check if a atlas is loaded.
+   * Check if an atlas is loaded.
    * @param name The name of the atlas.
    * @return True if the atlas is loaded.
    */
   function hasAtlas(name: String): Bool;
+
+  /**
+   * Add an bitmap font to the manager.
+   * @param name The name of this font.
+   * @return The loaded font.
+   */
+  function loadBitmapFont(name: String): BitmapFont;
+
+  /**
+   * Remove a bitmap font from the asset manager.
+   * @param name The name of the bitmap font to remove.
+   */
+  function unloadBitmapFont(name: String): Void;
+
+  /**
+   * Get a bitmap font.
+   * @param name The name of the font.
+   */
+  function getBitmapFont(name: String): BitmapFont;
+
+  /**
+   * Check if a bitmap font is loaded.
+   * @param name The name of the font.
+   * @return True if the font is loaded.
+   */
+  function hasBitmapFont(name: String): Bool;
 }

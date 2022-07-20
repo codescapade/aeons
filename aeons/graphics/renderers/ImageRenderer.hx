@@ -212,6 +212,73 @@ class ImageRenderer extends BaseRenderer {
   }
 
   /**
+   * Draw a string using a bitmap font.
+   * @param x The x position in pixels.
+   * @param y The y position in pixels.
+   * @param text The text to draw.
+   * @param font The bitmap font to use.
+   * @param transform The transformation matrix.
+   * @param color The tint color.
+   */
+  public function drawBitmapText(x: FastFloat, y: FastFloat, text: String, font: BitmapFont, transform: FastMatrix4,
+      color: Color) {
+    if (text == '') {
+      return;
+    }
+
+    if (bufferIndex >= bufferSize || (currentImage != null && currentImage != font.image)) {
+      present();
+    }
+
+    currentImage = font.image;
+
+    final textData = font.getTextData(text);
+    var xOffset = 0;
+
+    var index = 0;
+    var char = textData[index];
+
+    // Draw each character until a null in found.
+    while (char != null) {
+      if (bufferIndex >= bufferSize) {
+        present();
+      }
+
+      var kerning = 0;
+      if (index > 0) {
+        var prevChar = textData[index - 1];
+        kerning = font.getKerning(prevChar.id, char.id);
+      }
+
+      xOffset += kerning;
+
+      // Apply the transformation matrix to the vertex positions.
+      p1 = FastVector3.mulVec3Val(transform, x + xOffset + char.xOffset, y + char.yOffset, 0);
+      p2 = FastVector3.mulVec3Val(transform, x + xOffset + char.xOffset + char.width, y + char.yOffset, 0);
+      p3 = FastVector3.mulVec3Val(transform, x + xOffset + char.xOffset + char.width, y + char.yOffset + char.height,
+        0);
+      p4 = FastVector3.mulVec3Val(transform, x + xOffset + char.xOffset, y + char.yOffset + char.height, 0);
+
+      // Set the texture coordinates.
+      t1.set(char.x / font.image.width, char.y / font.image.height);
+      t2.set((char.x + char.width) / font.image.width, char.y / font.image.height);
+      t3.set((char.x + char.width) / font.image.width, (char.y + char.height) / font.image.height);
+      t4.set(char.x / font.image.width, (char.y + char.height) / font.image.height);
+
+      // fill the current buffer.
+      setVertices(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
+      setTextureCoords(t1.x, t1.y, t2.x, t2.y, t3.x, t3.y, t4.x, t4.y);
+      setColor(color);
+
+      xOffset += char.xAdvance;
+      index++;
+      char = textData[index];
+
+      bufferIndex++;
+    }
+  }
+
+  /**
    * Create the default shader pipeline.
    * @return The shader pipeline.
    */

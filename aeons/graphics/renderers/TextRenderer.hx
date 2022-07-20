@@ -139,7 +139,7 @@ class TextRenderer extends BaseRenderer {
    * @param transform The transformation matrix.
    * @param color The text color.
    */
-  public function drawString(x: FastFloat, y: FastFloat, text: String, font: Font, fontSize: Int,
+  public function drawText(x: FastFloat, y: FastFloat, text: String, font: Font, fontSize: Int,
       transform: FastMatrix4, color: Color) {
     final fontImage = cast(font, kha.Kravur)._get(fontSize);
     final texture = fontImage.getTexture();
