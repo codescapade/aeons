@@ -1,6 +1,7 @@
 package aeons.core;
 
 import aeons.core.services.InternalEntities;
+import aeons.events.services.InternalEvents;
 
 import buddy.BuddySuite;
 
@@ -11,10 +12,14 @@ class EntitiesTest extends BuddySuite {
     describe('aeons.core.Entities Tests', {
       beforeEach({
         Aeons.provideEntities(new InternalEntities());
+        Aeons.provideEvents(new InternalEvents());
+        Aeons.events.pushSceneList();
       });
 
       it('Should add an entity.', {
         final entity = Aeons.entities.addEntity(new Entity());
+        entity.should.not.be(null);
+        entity.should.beType(Entity);
         entity.id.should.be(0);
       });
 
@@ -41,7 +46,7 @@ class EntitiesTest extends BuddySuite {
         entity.should.be(e);
 
         Aeons.entities.removeEntity(entity);
-        Aeons.entities.updateAddRemove();
+        Aeons.entities.updateRemoved();
         e = Aeons.entities.getEntityById(id);
         e.should.be(null);
         entity.id.should.be(-1);
@@ -49,15 +54,21 @@ class EntitiesTest extends BuddySuite {
 
       it('Should add a component to an entity.', {
         var entity = Aeons.entities.addEntity(new Entity());
-        var comp = Aeons.entities.addComponent(entity, new TestComponent(2));
-        Aeons.entities.updateAddRemove();
+        var comp = entity.addComponent(new TestComponent(2));
 
         comp.entityId.should.be(entity.id);
         comp.test.should.be(2);
         comp.test2.should.be(5);
       });
 
-      it('Should get a component.');
+      it('Should get a component.', {
+        var entity = Aeons.entities.addEntity(new Entity());
+        var comp = entity.addComponent(new TestComponent(2));
+
+        var getComp = entity.getComponent(TestComponent);
+        getComp.should.be(comp);
+      });
+      
       it('Should remove a component from an entity.');
       it('Should reuse a component.');
       it('Should automatically add an update component.');

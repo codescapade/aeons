@@ -1,8 +1,8 @@
 package;
 
-import aeons.core.EntitiesTest;
+import aeons.core.SystemsTest;
 
 import buddy.Buddy;
 
 @colorize
-class RunSingleTest implements Buddy<[EntitiesTest]> {}
+class RunSingleTest implements Buddy<[SystemsTest]> {}

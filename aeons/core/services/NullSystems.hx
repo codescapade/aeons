@@ -6,7 +6,7 @@ import aeons.graphics.RenderTarget;
 class NullSystems implements Systems {
   public function new() {}
 
-  public function add<T: System>(system: T): T {
+  public function add<T: System>(system: T, priority = 0): T {
     trace('add is not implemented');
 
     return null;
@@ -40,5 +40,9 @@ class NullSystems implements Systems {
     trace('getDebugRenderSystems is not implemented');
 
     return [];
+  }
+
+  public function sort() {
+    trace('sort is not implemented');
   }
 }
