@@ -6,9 +6,10 @@ interface Systems {
   /**
    * Add a system to the scene. Throws an error if the system type has already been added.
    * @param systemType The type of system to add.
+   * @param priority The priority for render / update systems. Higher gets called first.
    * @return The newly created system
    */
-  function add<T: System>(system: T): T;
+  function add<T: System>(system: T, priority: Int = 0): T;
 
   /**
    * Remove a system from the scene.
@@ -47,4 +48,9 @@ interface Systems {
    * @return DebugRenderable systems.
    */
   function getDebugRenderSystems(): Array<DebugRenderable>;
+
+  /**
+   * Sort all systems by priority.
+   */
+  function sort(): Void;
 }

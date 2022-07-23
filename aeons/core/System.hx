@@ -5,22 +5,31 @@ package aeons.core;
  */
 @:autoBuild(aeons.core.Macros.buildSystem())
 class System {
+  /**
+   * Call priority for render and update systems. Higher gets called first.
+   */
+  public var priority(default, set): Int;
+
   public function new() {}
 
+  /**
+   * Here you can initialize the system.
+   */
   public function init() {}
 
   /**
-   * Clean up variables after the scene gets removed.
+   * Clean up variables when the system gets removed.
    */
   public function cleanup() {}
 
   /**
    * Add a system to the scene. Throws an error if the system type has already been added.
    * @param systemType The type of system to add.
+   * @param priority The priority for render / update systems. Higher gets called first.
    * @return The newly created system
    */
-  public inline function addSystem<T: System>(system: T): T {
-    return Aeons.systems.add(system);
+  public inline function addSystem<T: System>(system: T, priority = 0): T {
+    return Aeons.systems.add(system, priority);
   }
 
   /**
@@ -47,5 +56,12 @@ class System {
    */
   public inline function hasSystem(systemType: Class<System>): Bool {
     return Aeons.systems.has(systemType);
+  }
+
+  function set_priority(value: Int): Int {
+    priority = value;
+    Aeons.systems.sort();
+
+    return value;
   }
 }

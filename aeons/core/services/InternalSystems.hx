@@ -27,7 +27,7 @@ class InternalSystems implements Systems {
 
   public function new() {}
 
-  public function add<T: System>(system: T): T {
+  public function add<T: System>(system: T, priority = 0): T {
     final systemClass = Type.getClass(system);
     final name = Type.getClassName(systemClass);
     if (systemMap[name] != null) {
@@ -50,6 +50,7 @@ class InternalSystems implements Systems {
     if (Std.isOfType(system, DebugRenderable)) {
       debugRenderSystems.push(cast system);
     }
+    system.priority = priority;
 
     system.init();
 
@@ -113,5 +114,46 @@ class InternalSystems implements Systems {
 
   public function getDebugRenderSystems(): Array<DebugRenderable> {
     return debugRenderSystems;
+  }
+
+  public function sort() {
+    updateSystems.sort((a: Updatable, b: Updatable) -> {
+      final systemA: System = cast a;
+      final systemB: System = cast b;
+
+      if (systemA.priority > systemB.priority) {
+        return -1;
+      } else if (systemA.priority < systemB.priority) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    renderSystems.sort((a: SysRenderable, b: SysRenderable) -> {
+      var systemA: System = cast a;
+      var systemB: System = cast b;
+
+      if (systemA.priority > systemB.priority) {
+        return -1;
+      } else if (systemA.priority < systemB.priority) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    debugRenderSystems.sort((a: DebugRenderable, b: DebugRenderable) -> {
+      var systemA: System = cast a;
+      var systemB: System = cast b;
+
+      if (systemA.priority > systemB.priority) {
+        return -1;
+      } else if (systemA.priority < systemB.priority) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 }
