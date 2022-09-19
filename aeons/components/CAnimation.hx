@@ -86,7 +86,7 @@ class CAnimation extends Component {
   public function play(?name: String) {
     time = 0;
     if (name != null) {
-      if (anims.exists(name)) {
+      if (anims.exists(name) && current != name) {
         anim = anims[name];
       }
     }

@@ -39,6 +39,18 @@ class CSimpleTilemapCollider extends Component {
    */
   var tags: Array<String> = [];
 
+  var tilemap: CTilemap;
+
+  #if use_ldtk
+  var layer: LdtkLayer;
+  #end
+
+  var collisionTileIds: Array<Int> = [];
+
+  var worldX: Int;
+
+  var worldY: Int;
+
   /**
    * Generate colliders for a CTilemap component. 
    * @param tilemap The tilemap component to use.
@@ -49,9 +61,11 @@ class CSimpleTilemapCollider extends Component {
    */
   public function setCollisionsFromCTilemap(tilemap: CTilemap, worldX: Int, worldY: Int,
       collisionTileIds: Array<Int>) {
-    bodies = [];
-    final colliders = TilemapCollision.generateCollidersFromCTilemap(tilemap, worldX, worldY, collisionTileIds);
-    createBodiesFromColliders(colliders);
+    this.tilemap = tilemap;
+    this.worldX = worldX;
+    this.worldY = worldY;
+    this.collisionTileIds = collisionTileIds;
+    updateColliders();
   }
 
   #if use_ldtk
@@ -65,11 +79,26 @@ class CSimpleTilemapCollider extends Component {
    */
   public function setCollisionsFromLdtkLayer(layer: LdtkLayer, worldX: Int, worldY: Int,
       collisionTileIds: Array<Int>) {
-    bodies = [];
-    final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
-    createBodiesFromColliders(colliders);
+    this.layer = layer;
+    this.worldX = worldX;
+    this.worldY = worldY;
+    this.collisionTileIds = collisionTileIds;
+    updateColliders();
   }
   #end
+
+  /**
+   * Update the exisitng colliders. Can be used if you add / remove tiles from a tilemap.
+   */
+  public function updateColliders() {
+    #if use_ldtk
+    final colliders = TilemapCollision.generateCollidersFromLDtkLayer(layer, worldX, worldY, collisionTileIds);
+    createBodiesFromColliders(colliders);
+    #else
+    final colliders = TilemapCollision.generateCollidersFromCTilemap(tilemap, worldX, worldY, collisionTileIds);
+    createBodiesFromColliders(colliders);
+    #end
+  }
 
   /**
    * Add a collision tag for collision listeners.

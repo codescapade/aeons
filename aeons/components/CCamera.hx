@@ -3,6 +3,7 @@ package aeons.components;
 import aeons.Aeons;
 import aeons.core.Component;
 import aeons.graphics.Color;
+import aeons.graphics.Pipeline;
 import aeons.graphics.RenderTarget;
 import aeons.math.FastMatrix4;
 import aeons.math.Rect;
@@ -64,6 +65,19 @@ class CCamera extends Component {
    */
   public var bounds(default, null): Rect;
 
+  /**
+   * Shader pipeline to use for this camera.
+   */
+  public var pipeline: Pipeline;
+
+  /**
+   * Here you can set the pipeline uniforms if needed.
+   */
+  public var pipelineCallback: (target: RenderTarget)->Void;
+
+  /**
+   * The bounds that check what is inside the camera's view.
+   */
   public var visibilityBounds(default, null): Rect;
 
   /**
@@ -298,4 +312,9 @@ typedef CCameraOptions = {
    * Set as the main camera in the scene.
    */
   var ?isMain: Bool;
+
+  /**
+   * Shader pipeline to use for this camera.
+   */
+  var ?pipeline: Pipeline;
 }

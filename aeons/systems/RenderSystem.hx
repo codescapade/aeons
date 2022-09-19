@@ -108,9 +108,16 @@ class RenderSystem extends System implements SysRenderable {
     target.start();
     for (camBundle in cameraBundles) {
       final camera = camBundle.cCamera;
+      if (camera.pipeline != null) {
+        target.setPipeline(camera.pipeline);
+        if (camera.pipelineCallback != null) {
+          camera.pipelineCallback(target);
+        }
+      }
       target.drawImage(camera.viewX, camera.viewY, camera.renderTarget.image, Color.White);
+      target.present();
+      target.setPipeline(null);
     }
-    target.present();
   }
 
   /**

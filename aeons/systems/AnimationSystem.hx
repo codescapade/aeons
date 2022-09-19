@@ -20,6 +20,9 @@ class AnimationSystem extends System implements Updatable {
   public function update(dt: Float) {
     // Update the sprite components with the new frame from the animation components.
     for (bundle in animBundles) {
+      if (!bundle.cAnimation.active) {
+        continue;
+      }
       final anim = bundle.cAnimation;
       anim.updateAnim(dt);
       if (anim.currentFrame != null) {
