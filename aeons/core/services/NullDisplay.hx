@@ -6,6 +6,10 @@ package aeons.core.services;
  */
 @:dox(hide)
 class NullDisplay implements Display {
+  public var designWidth(default, null): Int;
+
+  public var designHeight(default, null): Int;
+
   public var viewWidth(default, null): Int;
 
   public var viewHeight(default, null): Int;

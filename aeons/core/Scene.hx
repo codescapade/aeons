@@ -170,6 +170,13 @@ class Scene {
    * Called when the game comes back from the background to the foreground.
    */
   public function toForeground() {}
+
+  /**
+   * Called when the game window resizes.
+   * @param newWidth The new window width in pixels.
+   * @param newHeight The new window height in pixels.
+   */
+  public function resize(newWidth: Int, newHeight: Int) {}
 }
 
 /**

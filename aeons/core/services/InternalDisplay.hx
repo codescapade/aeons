@@ -7,6 +7,10 @@ import kha.System;
  */
 @:dox(hide)
 class InternalDisplay implements Display {
+  public var designWidth(default, null): Int;
+
+  public var designHeight(default, null): Int;
+
   public var viewWidth(default, null): Int;
 
   public var viewHeight(default, null): Int;
@@ -24,16 +28,6 @@ class InternalDisplay implements Display {
   public var windowCenterY(get, never): Int;
 
   public var pixelArt: Bool;
-
-  /**
-   * The width the art is designed for in pixels.
-   */
-  var designWidth: Int;
-
-  /**
-   * The height the art is designed for in pixels.
-   */
-  var designHeight: Int;
 
   /**
    * Constructor.

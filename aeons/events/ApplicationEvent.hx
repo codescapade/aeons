@@ -23,4 +23,19 @@ class ApplicationEvent extends Event {
    * The game is moving back to the foreground.
    */
   public static inline final FOREGROUND: EventType<ApplicationEvent> = 'aeons_application_foreground';
+
+  /**
+   * The game window is getting resized.
+   */
+  public static inline final RESIZE: EventType<ApplicationEvent> = 'aeons_application_resize';
+
+  /**
+   * Used in the resize event for the new width in pixels.
+   */
+  var newWidth = 0;
+
+  /**
+   * Used in the resize event for the new height in pixels.
+   */
+  var newHeight = 0;
 }

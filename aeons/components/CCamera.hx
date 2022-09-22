@@ -96,6 +96,11 @@ class CCamera extends Component {
   var tempMatrix: FastMatrix4;
 
   /**
+   * Is the camera the size of the full game window.
+   */
+  var fullView: Bool;
+
+  /**
    * CCamera constructor.
    * @param options Initialization options.
    */
@@ -109,6 +114,7 @@ class CCamera extends Component {
       viewHeight = Aeons.display.viewHeight;
       zoom = 1.0;
       backgroundColor = Color.Black;
+      fullView = true;
     } else {
       viewWidth = options.viewWidth == null ? Aeons.display.viewWidth : options.viewWidth;
       viewHeight = options.viewHeight == null ? Aeons.display.viewHeight : options.viewHeight;
@@ -118,6 +124,9 @@ class CCamera extends Component {
       backgroundColor = options.backgroundColor == null ? Color.Black : options.backgroundColor;
       if (options.isMain) {
         main = this;
+      }
+      if (options.viewWidth == null && options.viewHeight == null) {
+        fullView = true;
       }
     }
   }
@@ -248,6 +257,11 @@ class CCamera extends Component {
    * Update the camera bounds.
    */
   function updateBounds() {
+    if (fullView && (viewWidth != Aeons.display.viewWidth || viewHeight != Aeons.display.viewHeight)) {
+      viewWidth = Aeons.display.viewWidth;
+      viewHeight = Aeons.display.viewHeight;
+      updateBuffer();
+    }
     transform.getWorldPosition(worldPosition);
     bounds.x = worldPosition.x - viewWidth * 0.5 / zoom;
     bounds.y = worldPosition.y - viewHeight * 0.5 / zoom;

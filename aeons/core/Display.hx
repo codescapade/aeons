@@ -5,6 +5,16 @@ package aeons.core;
  */
 interface Display {
   /**
+   * The width the game is designed for in pixels.
+   */
+  var designWidth(default, null): Int;
+
+  /**
+   * The height the game is designed for in pixels.
+   */
+  var designHeight(default, null): Int;
+
+  /**
    * The game view width in pixels.
    */
   var viewWidth(default, null): Int;

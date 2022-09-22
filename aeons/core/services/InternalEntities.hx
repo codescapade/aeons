@@ -90,8 +90,8 @@ class InternalEntities implements Entities {
 
   public function removeEntityById(id: Int) {
     final entity = getEntityById(id);
-    entity.active = false;
     if (entity != null) {
+      entity.active = false;
       entitiesToRemove.push(entity);
     }
   }

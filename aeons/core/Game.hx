@@ -19,6 +19,7 @@ import kha.Framebuffer;
 import kha.Scaler;
 import kha.Scheduler;
 import kha.System;
+import kha.Window;
 
 /**
  * The Game class is use to start Aeons. You create a new instance of it to start it.
@@ -136,7 +137,7 @@ class Game {
     System.notifyOnApplicationState(toForeground, willResume, willPause, toBackground, shutdown);
     Scheduler.addTimeTask(update, 0, 1.0 / updateRate);
     System.notifyOnFrames(render);
-
+    Window.get(0).notifyOnResize(resize);
     if (loadFinished != null) {
       loadFinished();
     }
@@ -207,6 +208,18 @@ class Game {
     ApplicationEvent.emit(ApplicationEvent.FOREGROUND);
     Aeons.timeStep.reset();
     currentScene.toForeground();
+  }
+
+  /**
+   * Called when the Kha window resizes.
+   * @param newWidth The new width in pixels.
+   * @param newHeight The new height in pixels.
+   */
+  function resize(newWidth: Int, newHeight: Int) {
+    ApplicationEvent.emit(ApplicationEvent.RESIZE, newWidth, newHeight);
+    Aeons.display.scaleToWindow();
+    renderTarget = new RenderTarget(Aeons.display.viewWidth, Aeons.display.viewHeight);
+    currentScene.resize(newWidth, newHeight);
   }
 
   /**
