@@ -445,8 +445,12 @@ class RunScript {
     final shadersFolder = aeons.shaderFolder == null ? 'shaders' : aeons.shaderFolder;
     template = setPlaceholder(template, 'shaders', shadersFolder);
 
-    final sourceFolder = aeons.sourceFolder == null ? 'source' : aeons.sourceFolder;
-    template = setPlaceholder(template, 'source', sourceFolder);
+    final sourceFolders = aeons.sourceFolder == null ? ['source'] : aeons.sourceFolder;
+    var source = '';
+    for (folder in sourceFolders) {
+      source += 'project.addSources(\'${folder}\');\n';
+    }
+    template = setPlaceholder(template, 'source', source);
 
     // Add haxe libraries.
     var libraries = '';
@@ -734,7 +738,7 @@ typedef Project = {
   var projectName: String;
   var ?assetsFolder: String;
   var ?shaderFolder: String;
-  var ?sourceFolder: String;
+  var ?sourceFolder: Array<String>;
   var ?icon: String;
   var ?libraries: Array<String>;
   var ?defines: Array<String>;

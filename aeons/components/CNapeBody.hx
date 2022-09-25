@@ -56,52 +56,41 @@ class CNapeBody extends Component {
   /**
    * The nape space reference.
    */
-  @:allow(aeons.systems.NapePhysicsSystem)
+  @:allow(aeons.systems.SNapePhysics)
   var space: Space;
 
   var tempPoint = new Vec2();
 
-  var tempOptions: CNapeBodyOptions;
-
   /**
-   * CNapeBody constructor.
+   * Initialize the component.
    * @param options The values you want to set.
+   * @return This component.
    */
-  public function new(?options: CNapeBodyOptions) {
-    super();
-
-    tempOptions = options;
-  }
-
-  /**
-   * Init gets called after the component has been added to the entity.
-   * @param entityId The id of the entity the component got added to.
-   */
-  public override function init(entityId: Int) {
-    super.init(entityId);
-
+  public function create(?options: CNapeBodyOptions): CNapeBody {
     transform = getComponent(CTransform);
-    var type = tempOptions != null && tempOptions.type != null ? tempOptions.type : BodyType.DYNAMIC;
+    var type = options != null && options.type != null ? options.type : BodyType.DYNAMIC;
     body = new Body(type, Vec2.weak(transform.x, transform.y));
     isSensor = false;
 
-    if (tempOptions != null) {
-      if (tempOptions.isSensor != null) {
-        isSensor = tempOptions.isSensor;
+    if (options != null) {
+      if (options.isSensor != null) {
+        isSensor = options.isSensor;
       }
-      if (tempOptions.allowMovement != null) {
-        allowMovement = tempOptions.allowMovement;
+      if (options.allowMovement != null) {
+        allowMovement = options.allowMovement;
       }
-      if (tempOptions.allowRotation != null) {
-        allowRotation = tempOptions.allowRotation;
+      if (options.allowRotation != null) {
+        allowRotation = options.allowRotation;
       }
-      if (tempOptions.material != null) {
-        setMaterial(tempOptions.material);
+      if (options.material != null) {
+        setMaterial(options.material);
       }
-      if (tempOptions.addToSpace != null && tempOptions.addToSpace) {
+      if (options.addToSpace != null && options.addToSpace) {
         body.space = space;
       }
     }
+
+    return this;
   }
 
   /**

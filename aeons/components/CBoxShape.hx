@@ -56,12 +56,11 @@ class CBoxShape extends Component implements Renderable {
   public var strokeWidth = 1.0;
 
   /**
-   * CBoxShape constructor.
+   * Initialize the component.
    * @param options Initialization options.
+   * @return This component.
    */
-  public function new(options: CBoxShapeOptions) {
-    super();
-
+  public function create(options: CBoxShapeOptions): CBoxShape {
     width = options.width;
     height = options.height;
     hasStroke = options.hasStroke == null ? true : options.hasStroke;
@@ -71,6 +70,8 @@ class CBoxShape extends Component implements Renderable {
     fillColor = options.fillColor == null ? Color.White : options.fillColor;
     anchorX = options.anchorX == null ? 0.5 : options.anchorX;
     anchorY = options.anchorY == null ? 0.5 : options.anchorY;
+
+    return this;
   }
 
   /**

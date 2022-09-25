@@ -16,7 +16,7 @@ import aeons.math.Vector2;
  * Debug render system renders `CDebugRender` components and `DebugRenderable` systems.
  * This system should be added last so it renders on top of the other rendered images.
  */
-class DebugRenderSystem extends System implements SysRenderable {
+class SDebugRender extends System implements SysRenderable {
   /**
    * Is the system currently enabled. Can be used to toggle debug rendering.
    */
@@ -32,9 +32,12 @@ class DebugRenderSystem extends System implements SysRenderable {
 
   /**
    * Initialize the system. This gets all systems that can be rendered using this system.
+   * @return This system.
    */
-  public override function init() {
+  public function create(): SDebugRender {
     systems = Aeons.systems.getDebugRenderSystems();
+
+    return this;
   }
 
   /**

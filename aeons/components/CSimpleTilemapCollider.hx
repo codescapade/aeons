@@ -31,7 +31,7 @@ class CSimpleTilemapCollider extends Component {
   /**
    * The created tilemap physics bodies.
    */
-  @:allow(aeons.systems.SimplePhysicsSystem)
+  @:allow(aeons.systems.SSimplePhysics)
   var bodies: Array<Body> = [];
 
   /**

@@ -20,9 +20,9 @@ import nape.space.Space;
 using aeons.math.AeMath;
 
 /**
- * NapePhysicsSystem updates all Nape body components.
+ * SNapePhysicsSystem updates all Nape body components.
  */
-class NapePhysicsSystem extends System implements Updatable {
+class SNapePhysicsSystem extends System implements Updatable {
   /**
    * The nape space.
    */
@@ -51,12 +51,11 @@ class NapePhysicsSystem extends System implements Updatable {
   var ids: Array<Int> = [];
 
   /**
-   * Constructor.
+   * Initialize the system.
    * @param options The setup options.
+   * @return This system.
    */
-  public function new(?options: NapePhysicsSystemOptions) {
-    super();
-
+  public function create(?options: NapePhysicsSystemOptions): SNapePhysics {
     space = new Space();
     napeDebug = new DebugDraw(space);
 
@@ -65,6 +64,8 @@ class NapePhysicsSystem extends System implements Updatable {
         setGravity(options.gravity.x, options.gravity.y);
       }
     }
+
+    return this;
   }
 
   /**

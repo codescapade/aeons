@@ -8,9 +8,17 @@ import aeons.core.Updatable;
 /**
  * This system updates all components that implement updatable.
  */
-class UpdateSystem extends System implements Updatable {
+class SUpdate extends System implements Updatable {
   @:bundle
   var updateComps: Bundle<CUpdate>;
+
+  /**
+   * Initialize the system.
+   * @return This system.
+   */
+  public function create(): SUpdate {
+    return this;
+  }
 
   /**
    * Update all the components.

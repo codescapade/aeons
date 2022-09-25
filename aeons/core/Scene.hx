@@ -26,24 +26,9 @@ class Scene {
   final sceneProviders: SceneProviders;
 
   /**
-   * Constructor.
-   * @param userData Any data you want to carry over between scenes.
-   */
-  public function new(?userData: Dynamic) {
-    this.userData = userData;
-    sceneProviders = {
-      entities: new InternalEntities(),
-      systems: new InternalSystems(),
-      timers: new InternalTimers(),
-      tweens: new InternalTweens()
-    };
-    setProviders();
-  }
-
-  /**
    * Override this method to initalize your scene.
    */
-  public function init() {}
+  public function create() {}
 
   /**
    * Override this method to cleanup scene when it gets removed.
@@ -83,12 +68,12 @@ class Scene {
   }
 
   /**
-   * Add a new entity to the manager.
-   * @param entity The entity you want to add.
-   * @return The id the entity got when it was added to the entities.
+   * Add a new entity to the scene.
+   * @param entityType The entity you want to add.
+   * @return The created entity.
    */
-  public inline function addEntity<T: Entity>(entity: T): T {
-    return sceneProviders.entities.addEntity(entity);
+  public inline function addEntity<T: Entity>(entityType: Class<T>): T {
+    return sceneProviders.entities.addEntity(entityType);
   }
 
   /**
@@ -121,8 +106,8 @@ class Scene {
    * @param systemType The type of system to add.
    * @return The newly created system
    */
-  public inline function addSystem<T: System>(system: T): T {
-    return sceneProviders.systems.add(system);
+  public inline function addSystem<T: System>(systemType: Class<T>): T {
+    return sceneProviders.systems.add(systemType);
   }
 
   /**
@@ -177,6 +162,21 @@ class Scene {
    * @param newHeight The new window height in pixels.
    */
   public function resize(newWidth: Int, newHeight: Int) {}
+
+  /**
+   * Constructor.
+   * @param userData Any data you want to carry over between scenes.
+   */
+  function new(userData: Dynamic) {
+    this.userData = userData;
+    sceneProviders = {
+      entities: new InternalEntities(),
+      systems: new InternalSystems(),
+      timers: new InternalTimers(),
+      tweens: new InternalTweens()
+    };
+    setProviders();
+  }
 }
 
 /**

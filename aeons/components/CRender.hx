@@ -16,12 +16,13 @@ class CRender extends Component {
   var components: Array<Renderable>;
 
   /**
-   * Init gets called after the component has been added to an entity.
-   * @param entityId The id of the entity the component got added to.
+   * Initialize the component.
+   * @return This component.
    */
-  public override function init(entityId: Int) {
-    super.init(entityId);
+  public function create(): CRender {
     components = Aeons.entities.getRenderComponents(entityId);
+
+    return this;
   }
 
   /**

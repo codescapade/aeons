@@ -21,21 +21,6 @@ class Component {
   var requiredComponents(get, never): Array<Class<Component>>;
 
   /**
-   * Component constructor.
-   */
-  public function new() {}
-
-  public function init(entityId: Int) {
-    this.entityId = entityId;
-
-    for (component in requiredComponents) {
-      if (!hasComponent(component)) {
-        throw 'Entity ${entityId} is missing a required ${Type.getClassName(component)} component.';
-      }
-    }
-  }
-
-  /**
    * Called before a component is removed.
    */
   public function cleanup() {
@@ -67,6 +52,19 @@ class Component {
    */
   public inline function hasComponents(componentTypes: Array<Class<Component>>): Bool {
     return Aeons.entities.hasComponents(entityId, componentTypes);
+  }
+
+  /**
+   * Component constructor.
+   */
+  function new(entityId: Int) {
+    this.entityId = entityId;
+
+    for (component in requiredComponents) {
+      if (!hasComponent(component)) {
+        throw 'Entity ${entityId} is missing a required ${Type.getClassName(component)} component.';
+      }
+    }
   }
 
   /**

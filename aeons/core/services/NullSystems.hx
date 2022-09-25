@@ -6,7 +6,7 @@ import aeons.graphics.RenderTarget;
 class NullSystems implements Systems {
   public function new() {}
 
-  public function add<T: System>(system: T, priority = 0): T {
+  public function add<T: System>(systemType: Class<T>, priority = 0): T {
     trace('add is not implemented');
 
     return null;

@@ -1,0 +1,18 @@
+[aeons]
+projectName = "Basic"
+
+# To enable lDtk support add "ldtk-haxe-api" and "deepnightLibs". Install them using haxelib.
+# To enable nape physics add "nape-haxe4". Install this using haxelib.
+libraries = ["ldtk-haxe-api", "deepnightLibs"]
+
+# To enable lDtk add "use_ldtk".
+# To enable nape add "use_nape"
+defines = ["use_ldtk"]
+
+[[atlas]]
+name = "atlas"
+saveFolder = "assets"
+folders = ["atlasImages"]
+trimmed = true
+extrude = 1
+packMethod = "optimal"

@@ -93,11 +93,11 @@ class CNineSlice extends Component implements Renderable {
   var bottomRight: Slice;
 
   /**
-   * CNineSlice constructor.
+   * Initialize the component.
    * @param options The init options.
+   * @return This component.
    */
-  public function new(options: NineSliceOptions) {
-    super();
+  public function create(options: NineSliceOptions): CNineSlice {
     atlas = options.atlas;
     frame = atlas.getFrame(options.frameName);
     createFrames(frame.frame.x, frame.frame.y, frame.frame.width, frame.frame.height, options.insetLeft,
@@ -110,6 +110,8 @@ class CNineSlice extends Component implements Renderable {
     height = options.height;
 
     color = options.color == null ? Color.White : options.color;
+
+    return this;
   }
 
   /**

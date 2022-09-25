@@ -15,9 +15,9 @@ import aeons.math.Vector2;
 using aeons.utils.TimSort;
 
 /**
- * The RenderSystem renders everything on screen.
+ * The SRender system renders everything on screen.
  */
-class RenderSystem extends System implements SysRenderable {
+class SRender extends System implements SysRenderable {
   /**
    * All camera bundles in the scene.
    */
@@ -36,10 +36,13 @@ class RenderSystem extends System implements SysRenderable {
   var sortZ: Bool = false;
 
   /**
-   * Initializes the render system. Gets called automatically after creation.
+   * Initializes the render system.
+   * @return This system.
    */
-  public override function init() {
+  public function create(): SRender {
     Aeons.events.on(SortEvent.SORT_Z, sortListener);
+
+    return this;
   }
 
   /**

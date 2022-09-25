@@ -9,7 +9,7 @@ interface Systems {
    * @param priority The priority for render / update systems. Higher gets called first.
    * @return The newly created system
    */
-  function add<T: System>(system: T, priority: Int = 0): T;
+  function add<T: System>(systemType: Class<T>, priority: Int = 0): T;
 
   /**
    * Remove a system from the scene.

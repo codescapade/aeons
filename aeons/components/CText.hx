@@ -62,12 +62,11 @@ class CText extends Component implements Renderable {
   public var anchorY: Float;
 
   /**
-   * CText constructor.
+   * Initialize the component.
    * @param options The options for initialization.
+   * @return This component.
    */
-  public function new(?options: CTextOptions) {
-    super();
-
+  public function create(?options: CTextOptions): CText {
     if (options == null) {
       // Defautls when no options are specified.
       text = '';
@@ -95,6 +94,8 @@ class CText extends Component implements Renderable {
       anchorY = options.anchorY == null ? 0.5 : options.anchorY;
       width = font.width(fontSize, text);
     }
+
+    return this;
   }
 
   /**

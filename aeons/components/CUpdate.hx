@@ -14,12 +14,13 @@ class CUpdate extends Component {
   var components: Array<Updatable>;
 
   /**
-   * Init gets called after the component has been added to an entity.
-   * @param entityId The id of the entity the component got added to.
+   * Initialize the components.
+   * @return This component.
    */
-  public override function init(entityId: Int) {
-    super.init(entityId);
+  public function create(): CUpdate {
     components = Aeons.entities.getUpdateComponents(entityId);
+
+    return this;
   }
 
   /**

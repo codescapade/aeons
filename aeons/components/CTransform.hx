@@ -86,10 +86,9 @@ class CTransform extends Component {
   /**
    * Initialize the component.
    * @param options The initialization options.
+   * @return This component.
    */
-  public function new(?options: CTransformOptions) {
-    super();
-
+  public function create(?options: CTransformOptions): CTransform {
     matrix = FastMatrix4.identity();
     rotation = new Quaternion();
     worldPosition = new Vector2();
@@ -116,6 +115,8 @@ class CTransform extends Component {
     }
 
     changed = true;
+
+    return this;
   }
 
   /**

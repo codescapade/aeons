@@ -111,16 +111,15 @@ class CSimpleBody extends Component {
   /**
    * The actual physics body.
    */
-  @:allow(aeons.systems.SimplePhysicsSystem)
+  @:allow(aeons.systems.SSimplePhysics)
   var body: Body;
 
   /**
-   * CSimpleBody constructor.
+   * Initialize the component.
    * @param options The values you want to set.
+   * @return This component.
    */
-  public function new(?options: CSimpleBodyOptions) {
-    super();
-
+  public function create(?options: CSimpleBodyOptions) {
     body = new Body(this);
     if (options != null) {
       if (options.type != null) {
@@ -176,6 +175,8 @@ class CSimpleBody extends Component {
     } else {
       type = DYNAMIC;
     }
+
+    return this;
   }
 
   /**

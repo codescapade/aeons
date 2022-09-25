@@ -16,12 +16,13 @@ class CDebugRender extends Component {
   var components: Array<DebugRenderable>;
 
   /**
-   * Init gets called after the component has been added to an entity.
-   * @param entityId The id of the entity the component got added to.
+   * Initialize the component.
+   * @return This component.
    */
-  public override function init(entityId: Int) {
-    super.init(entityId);
+  public function create(): CDebugRender {
     components = Aeons.entities.getDebugRenderComponents(entityId);
+
+    return this;
   }
 
   /**

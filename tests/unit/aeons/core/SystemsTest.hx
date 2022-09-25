@@ -14,7 +14,7 @@ class SystemsTest extends BuddySuite {
       });
 
       it('Should add a System.', {
-        final system = Aeons.systems.add(new TestSystem(8));
+        final system = Aeons.systems.add(TestSystem).create(8);
         system.should.not.be(null);
         system.testValue.should.be(8);
       });
@@ -22,8 +22,8 @@ class SystemsTest extends BuddySuite {
       it('Should order update systems as added without priority', {
         var compareList = [1, 2];
         var list: Array<Int> = [];
-        Aeons.systems.add(new TestSystemOne(list));
-        Aeons.systems.add(new TestSystemTwo(list));
+        Aeons.systems.add(TestSystemOne).create(list);
+        Aeons.systems.add(TestSystemTwo).create(list);
         Aeons.systems.update(0);
         compareArrays(list, compareList).should.be(true);
       });
@@ -31,8 +31,8 @@ class SystemsTest extends BuddySuite {
       it('Should order update systems with priority', {
         var compareList = [2, 1];
         var list: Array<Int> = [];
-        Aeons.systems.add(new TestSystemOne(list));
-        Aeons.systems.add(new TestSystemTwo(list), 1);
+        Aeons.systems.add(TestSystemOne).create(list);
+        Aeons.systems.add(TestSystemTwo, 1).create(list);
         Aeons.systems.update(0);
         compareArrays(list, compareList).should.be(true);
       });
@@ -40,8 +40,8 @@ class SystemsTest extends BuddySuite {
       it('Should order render systems as added without priority', {
         var compareList = [1, 2];
         var list: Array<Int> = [];
-        Aeons.systems.add(new TestSystemOne(list));
-        Aeons.systems.add(new TestSystemTwo(list));
+        Aeons.systems.add(TestSystemOne).create(list);
+        Aeons.systems.add(TestSystemTwo).create(list);
         Aeons.systems.render(null);
         compareArrays(list, compareList).should.be(true);
       });
@@ -49,8 +49,8 @@ class SystemsTest extends BuddySuite {
       it('Should order render systems with priority', {
         var compareList = [2, 1];
         var list: Array<Int> = [];
-        Aeons.systems.add(new TestSystemOne(list));
-        Aeons.systems.add(new TestSystemTwo(list), 1);
+        Aeons.systems.add(TestSystemOne).create(list);
+        Aeons.systems.add(TestSystemTwo, 1).create(list);
         Aeons.systems.render(null);
         compareArrays(list, compareList).should.be(true);
       });
@@ -58,8 +58,8 @@ class SystemsTest extends BuddySuite {
       it('Should order debug render systems as added without priority', {
         var compareList = [1, 2];
         var list: Array<Int> = [];
-        Aeons.systems.add(new TestSystemOne(list));
-        Aeons.systems.add(new TestSystemTwo(list));
+        Aeons.systems.add(TestSystemOne).create(list);
+        Aeons.systems.add(TestSystemTwo).create(list);
 
         var dbrSystems = Aeons.systems.getDebugRenderSystems();
         for (sys in dbrSystems) {
@@ -71,8 +71,8 @@ class SystemsTest extends BuddySuite {
       it('Should order debug render systems with priority', {
         var compareList = [2, 1];
         var list: Array<Int> = [];
-        Aeons.systems.add(new TestSystemOne(list));
-        Aeons.systems.add(new TestSystemTwo(list), 1);
+        Aeons.systems.add(TestSystemOne).create(list);
+        Aeons.systems.add(TestSystemTwo, 1).create(list);
 
         var dbrSystems = Aeons.systems.getDebugRenderSystems();
         for (sys in dbrSystems) {
@@ -102,9 +102,10 @@ class SystemsTest extends BuddySuite {
 class TestSystem extends System {
   public var testValue: Int;
 
-  public function new(value: Int) {
-    super();
+  public function create(value: Int): TestSystem {
     testValue = value;
+
+    return this;
   }
 }
 
@@ -112,9 +113,10 @@ class TestSystemOne extends System implements Updatable implements SysRenderable
   public var debugDrawEnabled = false;
 
   var updateList: Array<Int>;
-  public function new(updateList: Array<Int>) {
-    super();
+  public function create(updateList: Array<Int>): TestSystemOne {
     this.updateList = updateList;
+
+    return this;
   }
 
   public function update(dt: Float) {
@@ -134,9 +136,10 @@ class TestSystemTwo extends System implements Updatable implements SysRenderable
   public var debugDrawEnabled = false;
 
   var updateList: Array<Int>;
-  public function new(updateList: Array<Int>) {
-    super();
+  public function create(updateList: Array<Int>): TestSystemTwo {
     this.updateList = updateList;
+
+    return this;
   }
 
   public function update(dt: Float) {

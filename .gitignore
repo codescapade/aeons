@@ -6,3 +6,4 @@ build/
 /tools/docs/site/node_modules
 /aeons.zip
 docs/_eleventy_redirect/
+/aeons.toml

@@ -244,7 +244,7 @@ class Macros {
       constructor = {
         name: 'new',
         pos: Context.currentPos(),
-        access: [APublic],
+        access: [APrivate],
         kind: FFun({
           args: [],
           expr: macro {super();}

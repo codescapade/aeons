@@ -27,13 +27,13 @@ class InternalSystems implements Systems {
 
   public function new() {}
 
-  public function add<T: System>(system: T, priority = 0): T {
-    final systemClass = Type.getClass(system);
-    final name = Type.getClassName(systemClass);
+  public function add<T: System>(systemType: Class<T>, priority = 0): T {
+    final name = Type.getClassName(systemType);
     if (systemMap[name] != null) {
       throw 'System $name already exists.';
     }
 
+    final system = Type.createInstance(systemType, []);
     systemMap[name] = system;
 
     // Add to the update systems.
@@ -51,8 +51,6 @@ class InternalSystems implements Systems {
       debugRenderSystems.push(cast system);
     }
     system.priority = priority;
-
-    system.init();
 
     return system;
   }

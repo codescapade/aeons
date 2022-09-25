@@ -58,7 +58,7 @@ class Game {
   /**
    * The first scene in the game.
    */
-  final startScene: Scene;
+  final startScene: Class<Scene>;
 
   /**
    * Callback when the game has finished loading.
@@ -131,7 +131,7 @@ class Game {
     Aeons.events.on(SceneEvent.POP, popScene, true, 0, true);
     Aeons.events.on(SceneEvent.REPLACE, replaceScene, true, 0, true);
 
-    addScene(startScene);
+    addScene(startScene, null);
 
     // Setup kha callbacks.
     System.notifyOnApplicationState(toForeground, willResume, willPause, toBackground, shutdown);
@@ -254,7 +254,7 @@ class Game {
     currentSceneIndex++;
 
     Aeons.events.pushSceneList();
-    addScene(event.newScene);
+    addScene(event.newScene, event.userData);
   }
 
   /**
@@ -272,29 +272,30 @@ class Game {
       Aeons.events.resetIndex();
       currentSceneIndex = 0;
       Aeons.events.pushSceneList();
-      addScene(event.newScene);
+      addScene(event.newScene, event.userData);
     } else {
       if (event.below) {
         if (scenes.length > 1) {
           scenes[scenes.length - 2].cleanup();
           Aeons.events.replaceSceneList(scenes.length - 2);
-          addScene(event.newScene, true);
+          addScene(event.newScene, event.userData, true);
         }
       } else {
         scenes.pop().cleanup();
         Aeons.events.popSceneList();
         Aeons.events.pushSceneList();
-        addScene(event.newScene);
+        addScene(event.newScene, event.userData);
       }
     }
   }
 
   /**
    * Add a scene to the stack.
-   * @param scene The new scene to add.
+   * @param sceneType The new scene type to add.
    * @param below Should the new scene replace the scene below the current one.
    */
-  function addScene(scene: Scene, below = false) {
+  function addScene(sceneType: Class<Scene>, userData: Dynamic, below = false) {
+    final scene = Type.createInstance(sceneType, [userData]);
     if (below) {
       scenes[scenes.length - 2] = scene;
 
@@ -306,7 +307,7 @@ class Game {
     }
 
     scene.setProviders();
-    scene.init();
+    scene.create();
 
     // Set the scene event list to the top most list.
     Aeons.events.setIndex(scenes.length - 1);
@@ -323,7 +324,7 @@ typedef GameOptions = {
   /**
    * The first scene to load when the game starts.
    */
-  var startScene: Scene;
+  var startScene: Class<Scene>;
 
   /**
    * Should all assets be preloaded. Default is true.

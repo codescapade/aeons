@@ -72,12 +72,13 @@ class CTilemap extends Component implements Renderable {
   public var anchorY = 0.0;
 
   /**
-   * Init gets called after the component has been added to an entity.
-   * @param entityId The id of the entity the component got added to.
+   * Initialize the component.
+   * @return This component.
    */
-  public override function init(entityId: Int) {
-    super.init(entityId);
+  public function create(): CTilemap {
     transform = getComponent(CTransform);
+
+    return this;
   }
 
   /**

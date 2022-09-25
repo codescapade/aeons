@@ -30,7 +30,7 @@ class CNapeTilemapCollider extends Component {
   /**
    * The nape physics space reference.
    */
-  @:allow(aeons.systems.NapePhysicsSystem)
+  @:allow(aeons.systems.SNapePhysics)
   var space: Space;
 
   /**

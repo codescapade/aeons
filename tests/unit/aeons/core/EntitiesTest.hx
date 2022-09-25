@@ -17,29 +17,29 @@ class EntitiesTest extends BuddySuite {
       });
 
       it('Should add an entity.', {
-        final entity = Aeons.entities.addEntity(new Entity());
+        final entity = Aeons.entities.addEntity(Entity);
         entity.should.not.be(null);
         entity.should.beType(Entity);
         entity.id.should.be(0);
       });
 
       it('Should get an entity.', {
-        final entity = Aeons.entities.addEntity(new Entity());
+        final entity = Aeons.entities.addEntity(Entity);
 
         final e: Entity = Aeons.entities.getEntityById(entity.id);
         e.should.be(entity);
       });
 
       it('Shound get an entity by id.', {
-        Aeons.entities.addEntity(new Entity());
-        final entity = Aeons.entities.addEntity(new Entity());
+        Aeons.entities.addEntity(Entity);
+        final entity = Aeons.entities.addEntity(Entity);
         entity.id.should.be(1);
         final e: Entity = Aeons.entities.getEntityById(1);
         e.should.be(entity);
       });
 
       it('Should remove an entity.', {
-        final entity = Aeons.entities.addEntity(new Entity());
+        final entity = Aeons.entities.addEntity(Entity);
         final id = entity.id;
 
         var e: Entity = Aeons.entities.getEntityById(id);
@@ -53,8 +53,8 @@ class EntitiesTest extends BuddySuite {
       });
 
       it('Should add a component to an entity.', {
-        var entity = Aeons.entities.addEntity(new Entity());
-        var comp = entity.addComponent(new TestComponent(2));
+        var entity = Aeons.entities.addEntity(Entity);
+        var comp = entity.addComponent(TestComponent).create(2);
 
         comp.entityId.should.be(entity.id);
         comp.test.should.be(2);
@@ -62,13 +62,13 @@ class EntitiesTest extends BuddySuite {
       });
 
       it('Should get a component.', {
-        var entity = Aeons.entities.addEntity(new Entity());
-        var comp = entity.addComponent(new TestComponent(2));
+        var entity = Aeons.entities.addEntity(Entity);
+        var comp = entity.addComponent(TestComponent).create(2);
 
         var getComp = entity.getComponent(TestComponent);
         getComp.should.be(comp);
       });
-      
+
       it('Should remove a component from an entity.');
       it('Should reuse a component.');
       it('Should automatically add an update component.');
@@ -90,14 +90,11 @@ class TestComponent extends Component {
 
   public var cleaned = false;
 
-  public function new(test: Int) {
-    super();
+  public function create(test: Int): TestComponent {
     this.test = test;
-  }
-
-  public override function init(entityId: Int) {
-    super.init(entityId);
     test2 = 5;
+
+    return this;
   }
 
   public override function cleanup() {

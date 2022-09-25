@@ -11,7 +11,7 @@ project.icon = '{{icon}}';
 
 project.addShaders('{{shaders}}/**');
 
-project.addSources('{{source}}');
+{{source}}
 
 project.addLibrary('aeons');
 {{libraries}}

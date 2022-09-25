@@ -4,7 +4,7 @@ package aeons.core.services;
 class NullEntities implements Entities {
   public function new() {}
 
-  public function addEntity<T: Entity>(entityType: T): T {
+  public function addEntity<T: Entity>(entityType: Class<T>): T {
     trace('addEntity is not implemented');
 
     return null;
@@ -24,7 +24,7 @@ class NullEntities implements Entities {
     trace('removeEntityById is not implemented');
   }
 
-  public function addComponent<T: Component>(entity: Entity, component: T): T {
+  public function addComponent<T: Component>(entity: Entity, componentType: Class<T>): T {
     trace('addComponent is not implemented');
 
     return null;

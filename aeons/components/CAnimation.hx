@@ -49,11 +49,11 @@ class CAnimation extends Component {
   var anims: Map<String, Animation>;
 
   /**
-   * CAnimation constructor.
+   * Initialize the CAnimation component.
    * @param animations Optional list of animations to add to the component.
+   * @return This component.
    */
-  public function new(?animations: Array<Animation>) {
-    super();
+  public function create(?animations: Array<Animation>): CAnimation {
     playing = false;
     currentFrame = null;
     anim = null;
@@ -65,6 +65,8 @@ class CAnimation extends Component {
         anims[animation.name] = animation;
       }
     }
+
+    return this;
   }
 
   /**

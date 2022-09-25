@@ -24,7 +24,12 @@ class SceneEvent extends Event {
   /**
    * The new scene to start. Not used in pop.
    */
-  var newScene: Scene = null;
+  var newScene: Class<Scene> = null;
+
+  /**
+   * Any data you want to pass to the new scene.
+   */
+  var userData: Dynamic = null;
 
   /**
    * On the replace event you can choose if you want to clear all scenes on the stack.

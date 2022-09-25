@@ -24,7 +24,7 @@ using aeons.math.AeMath;
 /**
  * Simple aabb physics system.
  */
-class SimplePhysicsSystem extends System implements Updatable implements DebugRenderable {
+class SSimplePhysics extends System implements Updatable implements DebugRenderable {
   /**
    * Should this system be show in debug draw.
    */
@@ -143,12 +143,11 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
   #end
 
   /**
-   * SimplePhysicsSystem Constructor.
+   * Initialize the component.
    * @param options Initial setup options.
+   * @return This component.
    */
-  public function new(options: SimplePhysicsSystemOptions) {
-    super();
-
+  public function create(options: SimplePhysicsSystemOptions): SSimplePhysics {
     final x = options.worldX == null ? 0 : options.worldX;
     final y = options.worldY == null ? 0 : options.worldY;
 
@@ -158,6 +157,8 @@ class SimplePhysicsSystem extends System implements Updatable implements DebugRe
     if (options.gravity != null) {
       gravity.set(options.gravity.x, options.gravity.y);
     }
+
+    return this;
   }
 
   /**

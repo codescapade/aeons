@@ -101,12 +101,11 @@ class CCamera extends Component {
   var fullView: Bool;
 
   /**
-   * CCamera constructor.
+   * Initialize the component.
    * @param options Initialization options.
+   * @return This component.
    */
-  public function new(?options: CCameraOptions) {
-    super();
-
+  public function create(?options: CCameraOptions): CCamera {
     if (options == null) {
       viewX = 0;
       viewY = 0;
@@ -129,14 +128,6 @@ class CCamera extends Component {
         fullView = true;
       }
     }
-  }
-
-  /**
-   * Init gets called after the component has been added to an entity.
-   * @param entityId The id of the entity the component got added to.
-   */
-  public override function init(entityId: Int) {
-    super.init(entityId);
 
     transform = getComponent(CTransform);
     matrix = FastMatrix4.identity();
@@ -154,6 +145,8 @@ class CCamera extends Component {
     }
 
     tempMatrix = FastMatrix4.identity();
+
+    return this;
   }
 
   /**

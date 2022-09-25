@@ -18,26 +18,12 @@ class Entity {
   public var active(default, set) = true;
 
   /**
-   * Entity constructor.
-   */
-  public function new() {}
-
-  /**
-   * Initialize variables in the entity. This gets called when the entity is added to the entity manager
-   * using ```Aeons.entities.addEntity()```.
-   * @param id 
-   */
-  public function init(id: Int) {
-    this.id = id;
-  }
-
-  /**
    * Add a component to this entity.
    * @param componentType The component type to add.
    * @return The created component.
    */
-  public inline function addComponent<T: Component>(component: T): T {
-    return Aeons.entities.addComponent(this, component);
+  public inline function addComponent<T: Component>(componentType: Class<T>): T {
+    return Aeons.entities.addComponent(this, componentType);
   }
 
   /**
@@ -102,6 +88,13 @@ class Entity {
    */
   public function cleanup() {
     id = -1;
+  }
+
+  /**
+   * Entity constructor.
+   */
+  function new(id: Int) {
+    this.id = id;
   }
 
   /**

@@ -121,25 +121,25 @@ class Body {
   /**
    * Bodies that this body is colliding with this update.
    */
-  @:allow(aeons.systems.SimplePhysicsSystem)
+  @:allow(aeons.systems.SSimplePhysics)
   var collidingWith: Array<Body> = [];
 
   /**
    * Bodies that this body was colliding with last update.
    */
-  @:allow(aeons.systems.SimplePhysicsSystem)
+  @:allow(aeons.systems.SSimplePhysics)
   var wasCollidingwith: Array<Body> = [];
 
   /**
    * Bodies that this body is triggered by this update.
    */
-  @:allow(aeons.systems.SimplePhysicsSystem)
+  @:allow(aeons.systems.SSimplePhysics)
   var triggeredBy: Array<Body> = [];
 
   /**
    * Bodies that this body was triggered by last update.
    */
-  @:allow(aeons.systems.SimplePhysicsSystem)
+  @:allow(aeons.systems.SSimplePhysics)
   var wasTriggeredBy: Array<Body> = [];
 
   /**

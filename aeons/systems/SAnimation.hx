@@ -9,9 +9,17 @@ import aeons.core.Updatable;
 /**
  * Handles updating of the `CAnimation` components.
  */
-class AnimationSystem extends System implements Updatable {
+class SAnimation extends System implements Updatable {
   @:bundle
   var animBundles: Bundle<CAnimation, CSprite>;
+
+  /**
+   * Initialize the system.
+   * @return This system.
+   */
+  public function create(): SAnimation {
+    return this;
+  }
 
   /**
    * Called every update cycle.

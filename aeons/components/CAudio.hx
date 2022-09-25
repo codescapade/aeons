@@ -39,13 +39,17 @@ class CAudio extends Component {
   var _loop = false;
 
   /**
-   * Constructor.
-   * @param sound The sound for this component.
-   * @param loop Should the sound loop.
+   * Initialize the component.
+   * @param options The options for initialization.
+   * @return This component.
    */
-  public function new(sound: Sound, loop = false) {
-    super();
-    setSound(sound, loop);
+  public function create(options: CAudioOptions): CAudio {
+    if (options.loop == null) {
+      options.loop = false;
+    }
+    setSound(options.sound, options.loop);
+
+    return this;
   }
 
   /**
@@ -173,4 +177,19 @@ class CAudio extends Component {
 
     return value;
   }
+}
+
+/**
+ * CAudio component init options.
+ */
+typedef CAudioOptions = {
+  /**
+   * The sound to play.
+   */
+  var sound: Sound;
+
+  /**
+   * Should the sound loop.
+   */
+  var ?loop: Bool;
 }
