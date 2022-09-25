@@ -35,6 +35,14 @@ class CLdtkTilemap extends Component implements Renderable {
   var layerMap: Map<String, LdtkLayer> = new Map<String, LdtkLayer>();
 
   /**
+   * Initialize the component.
+   * @return This component.
+   */
+  public function create(): CLdtkTilemap {
+    return this;
+  }
+
+  /**
    * Render the tilemap.
    * @param target The render target.
    */

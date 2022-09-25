@@ -52,6 +52,14 @@ class CSimpleTilemapCollider extends Component {
   var worldY: Int;
 
   /**
+   * Initialize the component.
+   * @return This component.
+   */
+  public function create(): CSimpleTilemapCollider {
+    return this;
+  }
+
+  /**
    * Generate colliders for a CTilemap component. 
    * @param tilemap The tilemap component to use.
    * @param worldX The x position of the tilemap in world pixels.

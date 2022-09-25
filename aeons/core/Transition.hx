@@ -8,34 +8,17 @@ import aeons.events.SceneEvent;
  */
 class Transition extends Scene {
   /**
-   * The scene to transition to.
-   */
-  var nextScene: Scene;
-
-  /**
-   * How long the transition takes.
+   * Initialize the scene.
    */
   var duration: Float;
 
-  /**
-   * Constructor.
-   * @param nextScene The scene to transition to. 
-   * @param duration The length of the total transition in seconds. Half to transition out and half for in.
-   */
-  public function new(nextScene: Scene, duration: Float) {
-    super(null);
+  public override function create() {
     isSubScene = true;
-    this.nextScene = nextScene;
-    this.duration = duration / 2.0;
-  }
+    duration = userData.duration / 2.0;
 
-  /**
-   * Initialize the scene.
-   */
-  public override function init() {
     transitionFromOld();
     Aeons.timers.create(duration, () -> {
-      SceneEvent.emit(SceneEvent.REPLACE, nextScene, false, true);
+      SceneEvent.emit(SceneEvent.REPLACE, userData.nextScene, userData.data, false, true);
       transitionToNew();
       Aeons.timers.create(duration, () -> {
         SceneEvent.emit(SceneEvent.POP);
@@ -52,4 +35,10 @@ class Transition extends Scene {
    * The transition to the next scene.
    */
   public function transitionToNew() {}
+}
+
+typedef TransitionData = {
+  var ?data: Dynamic;
+  var nextScene: Class<Scene>;
+  var duration: Float;
 }
