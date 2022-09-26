@@ -20,9 +20,9 @@ import nape.space.Space;
 using aeons.math.AeMath;
 
 /**
- * SNapePhysicsSystem updates all Nape body components.
+ * SNapePhysics updates all Nape body components.
  */
-class SNapePhysicsSystem extends System implements Updatable {
+class SNapePhysics extends System implements Updatable {
   /**
    * The nape space.
    */

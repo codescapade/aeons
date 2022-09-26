@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><!-- use theme color or fallback -->
+<!--use textcolor from settings, otherwise create a contrasting color to theme color-->
+<head><meta charset="utf-8"/><link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" rel="stylesheet" type="text/css"/><link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css"/><script src="../../jquery-1.9.1.min.js"></script><script src="../../bootstrap/js/bootstrap.min.js"></script><script src="../../bootstrap/js/bootstrap-select.min.js"></script><link href="../../styles.css" rel="stylesheet"/><link href="../../extra-styles.css" rel="stylesheet"/><link href="../../haxe-nav.css" rel="stylesheet"/><link href="../../dark-mode.css" rel="stylesheet"/><script>var dox = {rootPath: "../../",platforms: ["docs"]};</script><script src="../../nav.js"></script><script src="../../index.js"></script><link rel="icon" href="../../favicon.ico" type="image/x-icon"/><title>aeons.systems.SAnimation - Aeons API Documentation</title><meta name="description" content="Handles updating of the &lt;code&gt;&lt;a href=&quot;../../aeons/components/CAnimation.html#CAnimation&quot;&gt;CAnimation&lt;/a&gt;&lt;/code&gt; components."/></head><body><script>/* Here to prevent flash of unstyled content */  /*let systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;if ((!localStorage.theme && systemDarkMode) || localStorage.theme == "dark") {document.body.style.backgroundColor = "#111";document.body.style.opacity = "0";document.addEventListener("DOMContentLoaded", function(event) {toggleTheme();document.body.style.backgroundColor = "";document.body.style.opacity = "";});} */</script><style>
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  background-color: black;
+  padding-right: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.menu {
+  display: flex;
+  gap: 1em;
+  font-size: 18px;
+}
+
+.menu li {
+  padding: 5px 14px;
+}
+
+.logo {
+  margin-left: 10px;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    position: absolute;
+    background-color: black;
+    right: 0;
+    left: 0;
+    text-align: center;
+    padding-right: 20px;
+  }
+
+  input[type=checkbox]:checked~.menu {
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+.header-text {
+  display: inline-block;
+  color: white;
+  font-size: x-large;
+  padding-top: 20px;
+}
+
+.active {
+  color: rgb(0, 143, 254);
+}
+</style>    <nav class="navbar">    <a href="/aeons/"><img class="logo" src="/aeons/static/aeons_logo.png"/></a>    <ul>      <input type="checkbox" id="checkbox_toggle"/>      <label for="checkbox_toggle" class="hamburger">&#9776;</label>      <div class="menu">        <li>          <a href="https://codescapade.github.io/aeons-examples/">            <span class="header-text ">Examples</span>          </a>        </li>        <li>          <a href="/aeons/docs/">            <span class="header-text ">Docs</span>          </a>        </li>        <li>          <a href="/aeons/api/">            <span class="header-text active">API</span>          </a>        </li>      </div>    </ul>  </nav><div class="container main-content"><div class="row-fluid"><div class="span3"><div class="well sidebar-nav"><form class="form-search" id="searchForm"><div class="input-prepend input-block-level"><span class="add-on"><i class="fa fa-search"></i></span><input id="search" type="text" placeholder="Filter (Ctrl+P)" autocomplete="off"/></div></form></div><div class="well sidebar-nav" id="explorer"><div id="nav"></div></div></div><div class="span9"><div class="page-header"><span class="viewsource"><a href="https://github.com/codescapade/aeons/blob/main/aeons/systems/SAnimation.hx" class="btn btn-medium"><i class="fa fa-eye"></i> View source</a></span><h1><small>class</small> SAnimation</h1><h4><small>package <a href="../../aeons/systems/index.html">aeons.systems</a></small></h4><h4><small>extends <a class="type" title="aeons.core.System - The system base class for ECS." href="../../aeons/core/System.html">System</a></small></h4>    <h4><small>implements <a class="type" title="aeons.core.Updatable - Interface for components and systems that need to be updated when the scene updates." href="../../aeons/core/Updatable.html">Updatable</a></small></h4><span class="label label-meta label-meta-build" title="Builds a class or enum from a macro.">@:build(aeons.core.Macros.buildSystem())</span><span class="label label-meta label-meta-autoBuild" title="Extends `@:build` metadata to all extending and implementing classes.">@:autoBuild(aeons.core.Macros.buildSystem())</span></div><div class="body"><div class="doc doc-main"><p>Handles updating of the <code><a href="../../aeons/components/CAnimation.html#CAnimation">CAnimation</a></code> components.</p></div><h3 class="section">Methods</h3><div class="fields"><div class="field "><a name="create"></a><h3 class="anchor"><code><a href="#create"><span class="identifier">create</span></a>():<a class="type" title="aeons.systems.SAnimation - Handles updating of the CAnimation components." href="../../aeons/systems/SAnimation.html">SAnimation</a></code></h3><div class="doc"><p>Initialize the system.</p><p class="javadoc">Returns:</p><div class="indent inline-content"><p>This system.</p></div></div></div><div class="field "><a name="update"></a><h3 class="anchor"><code><a href="#update"><span class="identifier">update</span></a>(<span style="white-space:nowrap">dt:<span class="type">Float</span></span>):<span class="type">Void</span></code></h3><div class="doc"><p>Called every update cycle.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>dt</code></th><td><p>The time passed since the last update in seconds.</p></td></tr></table></div></div></div>  <div class="inherited-fields well"><h3 class="section">Inherited Variables</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="aeons.core.System - The system base class for ECS." href="../../aeons/core/System.html">System</a></h4><div style="display:none"><div class="field "><a name="priority"></a><h3 class="anchor"><code><a href="#priority"><span class="identifier">priority</span></a>:<span class="type">Int</span></code></h3><div class="doc"><p>Call priority for render and update systems. Higher gets called first.</p></div></div></div></div><h3 class="section">Inherited Methods</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="aeons.core.System - The system base class for ECS." href="../../aeons/core/System.html">System</a></h4><div style="display:none"><div class="field "><a name="addSystem"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ priority : 0 })</span><span class="label label-inline">inline</span><a href="#addSystem"><span class="identifier">addSystem</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">systemType:<span class="type">Class</span>&lt;<span class="type">T</span>&gt;,</span> <span style="white-space:nowrap">priority:<span class="type">Int</span> = 0</span>):<span class="type">T</span></code></h3><div class="doc"><p>Add a system to the scene. Throws an error if the system type has already been added.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>systemType</code></th><td><p>The type of system to add.</p></td></tr><tr><th style="width:25%;"><code>priority</code></th><td><p>The priority for render / update systems. Higher gets called first.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>The newly created system</p></div></div></div><div class="field "><a name="getSystem"></a><h3 class="anchor"><code><span class="label label-inline">inline</span><a href="#getSystem"><span class="identifier">getSystem</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">systemType:<span class="type">Class</span>&lt;<span class="type">T</span>&gt;</span>):<span class="type">T</span></code></h3><div class="doc"><p>Get a system using its type.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>systemType</code></th><td><p>The type of system you want to get a reference from.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>The system if it exists. Otherwise null.</p></div></div></div><div class="field "><a name="hasSystem"></a><h3 class="anchor"><code><span class="label label-inline">inline</span><a href="#hasSystem"><span class="identifier">hasSystem</span></a>(<span style="white-space:nowrap">systemType:<span class="type">Class</span>&lt;<a class="type" title="aeons.core.System - The system base class for ECS." href="../../aeons/core/System.html">System</a>&gt;</span>):<span class="type">Bool</span></code></h3><div class="doc"><p>Check if a system has been added.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>systemType</code></th><td><p>The type of system you want to check for.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>True is the system was found.</p></div></div></div><div class="field "><a name="removeSystem"></a><h3 class="anchor"><code><span class="label label-inline">inline</span><a href="#removeSystem"><span class="identifier">removeSystem</span></a>(<span style="white-space:nowrap">systemType:<span class="type">Class</span>&lt;<a class="type" title="aeons.core.System - The system base class for ECS." href="../../aeons/core/System.html">System</a>&gt;</span>):<span class="type">Void</span></code></h3><div class="doc"><p>Remove a system from the scene.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>systemType</code></th><td><p>The type of system to remove.</p></td></tr></table></div></div></div></div></div></div></div></div></div><footer class="section site-footer"><div class="container"><div class="copyright"><p style="color:#000000">This documentation is generated for version 0.3.0</p><p style="color:#000000">&copy; 2022 &nbsp;<a style="color:#000000" href="https://codescapade.github.io/aeons">https://codescapade.github.io/aeons</a></p></div></div></footer><script src="../..//highlighter.js"></script><link href="../../highlighter.css" rel="stylesheet"/></body></html>

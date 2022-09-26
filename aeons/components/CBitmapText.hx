@@ -66,7 +66,7 @@ class CBitmapText extends Component implements Renderable {
    * @param options The options for initialization.
    * @return This component.
    */
-  public function create(?options: CTextOptions): CBitmapText {
+  public function create(?options: CBitmapTextOptions): CBitmapText {
     if (options == null) {
       // Defautls when no options are specified.
       text = '';
@@ -150,7 +150,7 @@ class CBitmapText extends Component implements Renderable {
 /**
  * The Text component initialization options.
  */
-typedef CTextOptions = {
+typedef CBitmapTextOptions = {
   /**
    * The font to use.
    */

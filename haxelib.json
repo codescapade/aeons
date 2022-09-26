@@ -1,9 +1,9 @@
 {
   "name": "aeons",
   "url": "https://github.com/codescapade/aeons",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
-  "releasenote": "Added aeons toml configuration file for project configuration",
+  "releasenote": "Bitmap font support, resize callbacks, ecs initialization refactor, camera shader support",
   "contributors": [
     "codescapade"
   ],
