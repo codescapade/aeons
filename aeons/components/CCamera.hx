@@ -134,8 +134,13 @@ class CCamera extends Component {
     bounds = new Rect();
     visibilityBounds = new Rect();
     updateBuffer();
-    transform.x = viewWidth * 0.5;
-    transform.y = viewHeight * 0.5;
+
+    // Don't update the camera start position if the transform already has a different position.
+    if (transform.x == 0 && transform.y == 0) {
+      transform.x = viewWidth * 0.5;
+      transform.y = viewHeight * 0.5;
+    }
+
     transform.isCameraTransform = true;
     updateBounds();
 

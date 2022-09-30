@@ -13,11 +13,11 @@ class CRotate extends Component implements Updatable {
 
   final speed = 40;
 
-  public override function init(entityId: Int) {
-    super.init(entityId);
-
+  public function create(): CRotate {
     // Get the transform component reference so we can update the angle in the update function.
     transform = getComponent(CTransform);
+
+    return this;
   }
 
   public function update(dt: Float) {

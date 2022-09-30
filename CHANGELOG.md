@@ -1,3 +1,9 @@
+## 0.3.1 - 2022-09-30
+---
+### Fixed
+- Starter template for aeons create updated to work with 0.3 versions.
+- Fixed camera component resetting transform if it was changed before the camera was added.
+
 ## 0.3.0 - 2022-09-26
 ---
 ### Fixed

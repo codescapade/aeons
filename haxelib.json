@@ -1,9 +1,9 @@
 {
   "name": "aeons",
   "url": "https://github.com/codescapade/aeons",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
-  "releasenote": "Bitmap font support, resize callbacks, ecs initialization refactor, camera shader support",
+  "releasenote": "Starter template updated to work with 0.3 versions",
   "contributors": [
     "codescapade"
   ],
