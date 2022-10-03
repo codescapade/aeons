@@ -110,6 +110,7 @@ class CSprite extends Component implements Renderable {
     }
 
     frame = this.atlas.getFrame(frameName);
+    this.frameName = frameName;
   }
 
   inline function get_width(): Int {

@@ -329,6 +329,14 @@ class Vector2 {
   }
 
   /**
+   * Get the magnitude of the vector.
+   * @return The magnitude.
+   */
+  public inline function magnitude(): Float {
+    return Math.sqrt(x * x + y * y);
+  }
+
+  /**
    * Get the length of this vector.
    */
   inline function get_length(): Float {

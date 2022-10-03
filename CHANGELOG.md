@@ -1,8 +1,22 @@
+## TBD
+---
+### Fixed
+- Fixed `frameName` not being set in the `CSprite` component.
+
+### Added
+- Added `magnitude()` function to `Vector2`.
+
+---
+<br>
+
 ## 0.3.1 - 2022-09-30
 ---
 ### Fixed
 - Starter template for aeons create updated to work with 0.3 versions.
 - Fixed camera component resetting transform if it was changed before the camera was added.
+
+---
+<br>
 
 ## 0.3.0 - 2022-09-26
 ---
@@ -20,16 +34,28 @@
 - Changed how you initialize Scenes, Entities, Components and Systems. They now take a Class instead of an instance and use a `create` function for initialization.
 - Updated Kha to commit 2de99e5.
 
+---
+<br>
+
 ## 0.2.0 - 2022-07-17
 ---
 ### Changed
 - Moved project configuration to a aeons.toml file. On build this will be used to generate the sprite atlases and the
   khafile before building the project with kha.
+
+---
+<br>
+
 ## 0.1.1 - 2022-07-06
 ---
 ### Fixed
-- Fixed aeons command in haxelib for macos and linux.
+- Fixed `aeons` command in haxelib for macos and linux.
+
+---
+<br>
 
 ## 0.1.0 - 2022-07-03
 ---
 First Haxelib release.
+
+---
