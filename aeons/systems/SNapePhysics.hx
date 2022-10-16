@@ -22,7 +22,12 @@ using aeons.math.AeMath;
 /**
  * SNapePhysics updates all Nape body components.
  */
-class SNapePhysics extends System implements Updatable {
+class SNapePhysics extends System implements Updatable implements DebugRenderable {
+  /**
+   * Should this system be show in debug draw.
+   */
+  public var debugDrawEnabled = true;
+
   /**
    * The nape space.
    */
@@ -64,6 +69,9 @@ class SNapePhysics extends System implements Updatable {
         setGravity(options.gravity.x, options.gravity.y);
       }
     }
+
+    bodyBundles.onAdded(bodyBundleAdded);
+    tilemaps.onAdded(tilemapAdded);
 
     return this;
   }
@@ -135,6 +143,16 @@ class SNapePhysics extends System implements Updatable {
   }
 
   /**
+   * Render physics bodies.
+   * @param target Target to render to.
+   */
+  public function debugRender(target: RenderTarget) {
+    if (debugDrawEnabled) {
+      napeDebug.render(target);
+    }
+  }
+
+  /**
    * Update the dynamic and kinematic bodies that have changed positions.
    * @param bundle The bundle to update.
    */
@@ -164,6 +182,22 @@ class SNapePhysics extends System implements Updatable {
     bundle.cTransform.setWorldPosition(pos);
     bundle.cTransform.setWorldAngle(Math.radToDeg(bundle.cNapeBody.body.rotation));
     pos.put();
+  }
+
+  /**
+   * Called when a body bundle gets added to the system.
+   * @param bundle The new bundle.
+   */
+  function bodyBundleAdded(bundle: Bundle<CNapeBody, CTransform>) {
+    bundle.cNapeBody.space = space;
+  }
+
+  /**
+   * Called when a tilemap bundle gets added to the system.
+   * @param bundle The new bundle.
+   */
+  function tilemapAdded(bundle: Bundle<CNapeTilemapCollider>) {
+    bundle.cNapeTilemapCollider.space = space;
   }
 }
 

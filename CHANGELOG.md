@@ -2,6 +2,7 @@
 ---
 ### Fixed
 - Fixed `frameName` not being set in the `CSprite` component.
+- Fixed `SNapePhysics` system and added debug drawing to it.
 
 ### Added
 - Added `magnitude()` function to `Vector2`.
