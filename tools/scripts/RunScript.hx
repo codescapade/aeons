@@ -13,7 +13,7 @@ import sys.io.Process;
 using StringTools;
 
 class RunScript {
-  static final testedKhaCommit = '2de99e5';
+  static final testedKhaCommit = '96354a9';
 
   public static function main() {
     final args = Sys.args();

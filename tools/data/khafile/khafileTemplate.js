@@ -1,4 +1,4 @@
-
+// This file has been generated using Aeons. Do no edit this file directly. Update the aeons.toml file instead.
 let project = new Project('{{project_name}}');
 
 project.addAssets('{{assets}}/**', {
