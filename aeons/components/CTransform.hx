@@ -175,10 +175,6 @@ class CTransform extends Component {
    * @return The parent space position.
    */
   public function localToParentPosition(position: Vector2): Vector2 {
-    if (isCameraTransform) {
-      return position;
-    }
-
     if (angle == 0) {
       if (scaleX == 1 && scaleY == 1) {
         position.x += x;

@@ -72,22 +72,17 @@ class SDebugRender extends System implements SysRenderable {
 
       // Render all components.
       for (renderable in debugRenderBundles) {
-        if (renderable.cTransform.containsParent(camTransform)) {
-          camTarget.transform.setFrom(renderable.cTransform.matrix);
-          renderable.cDebugRender.render(camTarget);
-        } else {
-          boundsPos.set(camera.bounds.x, camera.bounds.y);
-          renderable.cTransform.worldToLocalPosition(boundsPos);
-          boundsPos.x = boundsPos.x - renderable.cTransform.x;
-          boundsPos.y = boundsPos.y - renderable.cTransform.y;
-          localBounds.x = boundsPos.x;
-          localBounds.y = boundsPos.y;
+        boundsPos.set(camera.bounds.x, camera.bounds.y);
+        renderable.cTransform.worldToLocalPosition(boundsPos);
+        boundsPos.x = boundsPos.x - renderable.cTransform.x;
+        boundsPos.y = boundsPos.y - renderable.cTransform.y;
+        localBounds.x = boundsPos.x;
+        localBounds.y = boundsPos.y;
 
-          // Only render components that are inside the camera bounds.
-          if (renderable.cDebugRender.inCameraBounds(localBounds)) {
-            camTarget.transform.setFrom(camera.matrix.multmat(renderable.cTransform.matrix));
-            renderable.cDebugRender.render(camTarget);
-          }
+        // Only render components that are inside the camera bounds.
+        if (renderable.cDebugRender.inCameraBounds(localBounds) || renderable.cTransform.containsParent(camTransform)) {
+          camTarget.transform.setFrom(camera.matrix.multmat(renderable.cTransform.matrix));
+          renderable.cDebugRender.render(camTarget);
         }
       }
 

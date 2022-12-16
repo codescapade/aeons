@@ -3,9 +3,13 @@
 ### Fixed
 - Fixed `frameName` not being set in the `CSprite` component.
 - Fixed `SNapePhysics` system and added debug drawing to it.
+- Fixed rendering things that are parented to the camera.
 
 ### Added
 - Added `magnitude()` function to `Vector2`.
+
+### Removed
+- Removed null services because they are not needed.
 
 ---
 <br>

@@ -75,26 +75,21 @@ class SRender extends System implements SysRenderable {
       // Render all the bundles to the current camera.
       camTarget.start(true, camera.backgroundColor);
       for (renderable in renderBundles) {
-        if (renderable.cTransform.containsParent(camTransform)) {
-          camTarget.transform.setFrom(renderable.cTransform.matrix);
-          renderable.cRender.render(camTarget);
-        } else {
-          tlPos.set(camera.visibilityBounds.x, camera.visibilityBounds.y);
-          brPos.set(camera.visibilityBounds.x + camera.visibilityBounds.width,
-            camera.visibilityBounds.y + camera.visibilityBounds.height);
-          renderable.cTransform.worldToLocalPosition(tlPos);
-          renderable.cTransform.worldToLocalPosition(brPos);
-          var x = Math.min(tlPos.x, brPos.x) - renderable.cTransform.x;
-          var y = Math.min(tlPos.y, brPos.y) - renderable.cTransform.y;
-          var width = Math.abs(tlPos.x - brPos.x);
-          var height = Math.abs(tlPos.y - brPos.y);
-          localBounds.set(x, y, width, height);
+        tlPos.set(camera.visibilityBounds.x, camera.visibilityBounds.y);
+        brPos.set(camera.visibilityBounds.x + camera.visibilityBounds.width,
+          camera.visibilityBounds.y + camera.visibilityBounds.height);
+        renderable.cTransform.worldToLocalPosition(tlPos);
+        renderable.cTransform.worldToLocalPosition(brPos);
+        var x = Math.min(tlPos.x, brPos.x) - renderable.cTransform.x;
+        var y = Math.min(tlPos.y, brPos.y) - renderable.cTransform.y;
+        var width = Math.abs(tlPos.x - brPos.x);
+        var height = Math.abs(tlPos.y - brPos.y);
+        localBounds.set(x, y, width, height);
 
-          // Only render components that are inside the camera bounds.
-          if (renderable.cRender.inCameraBounds(localBounds)) {
-            camTarget.transform.setFrom(camera.matrix.multmat(renderable.cTransform.matrix));
-            renderable.cRender.render(camTarget);
-          }
+        // Only render components that are inside the camera bounds.
+        if (renderable.cRender.inCameraBounds(localBounds) || renderable.cTransform.containsParent(camTransform)) {
+          camTarget.transform.setFrom(camera.matrix.multmat(renderable.cTransform.matrix));
+          renderable.cRender.render(camTarget);
         }
       }
 
