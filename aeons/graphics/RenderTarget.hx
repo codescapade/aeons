@@ -222,7 +222,7 @@ class RenderTarget {
    * @param image The image to draw.
    * @param color The tint color.
    */
-  public function drawImage(x: FastFloat, y: FastFloat, image: Image, color: Color) {
+  public inline function drawImage(x: FastFloat, y: FastFloat, image: Image, color: Color) {
     shapeRenderer.present();
     textRenderer.present();
     imageRenderer.drawImage(x, y, image, transform, color);
@@ -237,7 +237,8 @@ class RenderTarget {
    * @param image The image to draw.
    * @param color The tint color.
    */
-  public function drawImageWithSize(x: FastFloat, y: FastFloat, width: FastFloat, height: FastFloat, color: Color) {
+  public inline function drawImageWithSize(x: FastFloat, y: FastFloat, width: FastFloat, height: FastFloat,
+      color: Color) {
     shapeRenderer.present();
     textRenderer.present();
     imageRenderer.drawImageWithSize(x, y, width, height, image, transform, color);
@@ -254,7 +255,7 @@ class RenderTarget {
    * @param image The source image.
    * @param color The tint color.
    */
-  public function drawImageSection(x: FastFloat, y: FastFloat, sx: FastFloat, sy: FastFloat, sw: FastFloat,
+  public inline function drawImageSection(x: FastFloat, y: FastFloat, sx: FastFloat, sy: FastFloat, sw: FastFloat,
       sh: FastFloat, image: Image, color: Color) {
     shapeRenderer.present();
     textRenderer.present();
@@ -274,7 +275,7 @@ class RenderTarget {
    * @param image The source image.
    * @param color The tint color.
    */
-  public function drawImageSectionWithSize(x: FastFloat, y: FastFloat, width: FastFloat, height: FastFloat,
+  public inline function drawImageSectionWithSize(x: FastFloat, y: FastFloat, width: FastFloat, height: FastFloat,
       sx: FastFloat, sy: FastFloat, sw: FastFloat, sh: FastFloat, image: Image, color: Color) {
     shapeRenderer.present();
     textRenderer.present();
@@ -291,7 +292,7 @@ class RenderTarget {
    * @param transform The transformation matrix.
    * @param color The text color.
    */
-  public function drawText(x: FastFloat, y: FastFloat, text: String, font: Font, fontSize: Int, color: Color) {
+  public inline function drawText(x: FastFloat, y: FastFloat, text: String, font: Font, fontSize: Int, color: Color) {
     shapeRenderer.present();
     imageRenderer.present();
     textRenderer.drawText(x, y, text, font, fontSize, transform, color);
@@ -306,7 +307,7 @@ class RenderTarget {
    * @param transform The transformation matrix.
    * @param color The text color.
    */
-  public function drawBitmapText(x: FastFloat, y: FastFloat, text: String, font: BitmapFont, color: Color) {
+  public inline function drawBitmapText(x: FastFloat, y: FastFloat, text: String, font: BitmapFont, color: Color) {
     shapeRenderer.present();
     textRenderer.present();
     imageRenderer.drawBitmapText(x, y, text, font, transform, color);
@@ -316,7 +317,7 @@ class RenderTarget {
    * Set a shader pipeline for the renderers.
    * @param pipeline The shader pipeline.
    */
-  public function setPipeline(?pipeline: Pipeline) {
+  public inline function setPipeline(?pipeline: Pipeline) {
     // Set the g4 pipeline so you can set shader parameters.
     if (pipeline != null) {
       g4.setPipeline(pipeline.state);
@@ -331,7 +332,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setBool(location: ConstantLocation, value: Bool) {
+  public inline function setBool(location: ConstantLocation, value: Bool) {
     g4.setBool(location, value);
   }
 
@@ -340,7 +341,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setInt(location: ConstantLocation, value: Int) {
+  public inline function setInt(location: ConstantLocation, value: Int) {
     g4.setInt(location, value);
   }
 
@@ -350,7 +351,7 @@ class RenderTarget {
    * @param value1 The first new integer value.
    * @param value2 The second integer value.
    */
-  public function setInt2(location: ConstantLocation, value1: Int, value2: Int) {
+  public inline function setInt2(location: ConstantLocation, value1: Int, value2: Int) {
     g4.setInt2(location, value1, value2);
   }
 
@@ -361,7 +362,7 @@ class RenderTarget {
    * @param value2 The second integer value.
    * @param value3 The third integer value.
    */
-  public function setInt3(location: ConstantLocation, value1: Int, value2: Int, value3: Int) {
+  public inline function setInt3(location: ConstantLocation, value1: Int, value2: Int, value3: Int) {
     g4.setInt3(location, value1, value2, value3);
   }
 
@@ -372,7 +373,7 @@ class RenderTarget {
    * @param value2 The second integer value.
    * @param value4 The fourth integer value.
    */
-  public function setInt4(location: ConstantLocation, value1: Int, value2: Int, value3: Int, value4: Int) {
+  public inline function setInt4(location: ConstantLocation, value1: Int, value2: Int, value3: Int, value4: Int) {
     g4.setInt4(location, value1, value2, value3, value4);
   }
 
@@ -381,7 +382,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param values The new values.
    */
-  public function setInts(location: ConstantLocation, values: Int32Array) {
+  public inline function setInts(location: ConstantLocation, values: Int32Array) {
     g4.setInts(location, values);
   }
 
@@ -390,7 +391,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setFloat(location: ConstantLocation, value: FastFloat) {
+  public inline function setFloat(location: ConstantLocation, value: FastFloat) {
     g4.setFloat(location, value);
   }
 
@@ -400,7 +401,7 @@ class RenderTarget {
    * @param value1 The first float value.
    * @param value2 The second float value.
    */
-  public function setFloat2(location: ConstantLocation, value1: FastFloat, value2: FastFloat) {
+  public inline function setFloat2(location: ConstantLocation, value1: FastFloat, value2: FastFloat) {
     g4.setFloat2(location, value1, value2);
   }
 
@@ -411,7 +412,8 @@ class RenderTarget {
    * @param value2 The second float value.
    * @param value3 The third float value.
    */
-  public function setFloat3(location: ConstantLocation, value1: FastFloat, value2: FastFloat, value3: FastFloat) {
+  public inline function setFloat3(location: ConstantLocation, value1: FastFloat, value2: FastFloat,
+      value3: FastFloat) {
     g4.setFloat3(location, value1, value2, value3);
   }
 
@@ -423,8 +425,8 @@ class RenderTarget {
    * @param value3 The third float value.
    * @param value4 The fourth float value.
    */
-  public function setFloat4(location: ConstantLocation, value1: FastFloat, value2: FastFloat, value3: FastFloat,
-      value4: FastFloat) {
+  public inline function setFloat4(location: ConstantLocation, value1: FastFloat, value2: FastFloat,
+      value3: FastFloat, value4: FastFloat) {
     g4.setFloat4(location, value1, value2, value3, value4);
   }
 
@@ -433,7 +435,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param values The new values.
    */
-  public function setFloats(location: ConstantLocation, values: Float32Array) {
+  public inline function setFloats(location: ConstantLocation, values: Float32Array) {
     g4.setFloats(location, values);
   }
 
@@ -442,7 +444,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setVector2(location: ConstantLocation, value: FastVector2) {
+  public inline function setVector2(location: ConstantLocation, value: FastVector2) {
     g4.setVector2(location, value);
   }
 
@@ -451,7 +453,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setVector3(location: ConstantLocation, value: FastVector3) {
+  public inline function setVector3(location: ConstantLocation, value: FastVector3) {
     g4.setVector3(location, value);
   }
 
@@ -460,7 +462,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setVector4(location: ConstantLocation, value: FastVector4) {
+  public inline function setVector4(location: ConstantLocation, value: FastVector4) {
     g4.setVector4(location, value);
   }
 
@@ -469,7 +471,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setMatrix(location: ConstantLocation, value: FastMatrix4) {
+  public inline function setMatrix(location: ConstantLocation, value: FastMatrix4) {
     g4.setMatrix(location, value);
   }
 
@@ -478,7 +480,7 @@ class RenderTarget {
    * @param location The location in the shader.
    * @param value The new value.
    */
-  public function setMatrix3(location: ConstantLocation, value: FastMatrix3) {
+  public inline function setMatrix3(location: ConstantLocation, value: FastMatrix3) {
     g4.setMatrix3(location, value);
   }
 
@@ -487,7 +489,7 @@ class RenderTarget {
    * @param unit The location in the shader.
    * @param texture The texture image.
    */
-  public function setTexture(unit: TextureUnit, texture: Image) {
+  public inline function setTexture(unit: TextureUnit, texture: Image) {
     g4.setTexture(unit, texture);
   }
 
