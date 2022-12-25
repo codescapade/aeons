@@ -170,6 +170,7 @@ class SRender extends System implements SysRenderable {
    */
   function layerChange(event: LayerEvent) {
     // Add the update to the list so it can be updated next frame.
-    layerChanges.push({ entityId: event.entityId, currentLayer: event.currentLayer, newLayer: event.newLayer });
+    // Add to the start of the array to thy get added in the correct order.
+    layerChanges.unshift({ entityId: event.entityId, currentLayer: event.currentLayer, newLayer: event.newLayer });
   }
 }
