@@ -1,7 +1,6 @@
 package aeons.components;
 
 import aeons.core.Component;
-import aeons.events.SortEvent;
 import aeons.math.FastMatrix4;
 import aeons.math.Quaternion;
 import aeons.math.Vector2;
@@ -28,11 +27,6 @@ class CTransform extends Component {
    * The position on the y axis.
    */
   public var y(default, set): Float;
-
-  /**
-   * The z index for render ordering. Higher is more in front.
-   */
-  public var zIndex(default, set): Float;
 
   /**
    * The rotation angle in degrees.
@@ -103,14 +97,12 @@ class CTransform extends Component {
       scaleX = (options.scaleX == null) ? 1.0 : options.scaleX;
       scaleY = (options.scaleY == null) ? 1.0 : options.scaleY;
       parent = (options.parent == null) ? null : options.parent;
-      zIndex = options.zIndex == null ? 0.0 : options.zIndex;
     } else {
       x = 0.0;
       y = 0.0;
       angle = 0.0;
       scaleX = 1.0;
       scaleY = 1.0;
-      zIndex = 0.0;
       parent = null;
     }
 
@@ -400,13 +392,6 @@ class CTransform extends Component {
 
     return value;
   }
-
-  function set_zIndex(value: Float): Float {
-    zIndex = value;
-    SortEvent.emit(SortEvent.SORT_Z);
-
-    return value;
-  }
 }
 
 /**
@@ -437,11 +422,6 @@ typedef CTransformOptions = {
    * The y scale.
    */
   var ?scaleY: Float;
-
-  /**
-   * The zIndex. Higher draws more in front.
-   */
-  var ?zIndex: Float;
 
   /**
    * The parent transform.

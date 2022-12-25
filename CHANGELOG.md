@@ -1,4 +1,4 @@
-## TBD
+## 0.4.0 - TBD
 ---
 ### Fixed
 - Fixed `frameName` not being set in the `CSprite` component.
@@ -7,9 +7,15 @@
 
 ### Added
 - Added `magnitude()` function to `Vector2`.
+- Added `CLayer` component.
 
 ### Removed
 - Removed null services because they are not needed.
+- Removed zIndex from the `CTransform` component.
+- Removed broken timsort implementation.
+
+### Changed
+- Instead of sorting using a zIndex, the `SRender` system now uses the `CLayer` component to determine the order.
 
 ---
 <br>

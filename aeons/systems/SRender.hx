@@ -2,17 +2,23 @@ package aeons.systems;
 
 import aeons.bundles.Bundle;
 import aeons.components.CCamera;
+import aeons.components.CLayer;
 import aeons.components.CRender;
 import aeons.components.CTransform;
 import aeons.core.SysRenderable;
 import aeons.core.System;
-import aeons.events.SortEvent;
+import aeons.events.LayerEvent;
 import aeons.graphics.Color;
 import aeons.graphics.RenderTarget;
 import aeons.math.Rect;
 import aeons.math.Vector2;
 
-using aeons.utils.TimSort;
+// Container to hold layer change event updates.
+private typedef LayerChange = {
+  var entityId: Int;
+  var currentLayer: Int;
+  var newLayer: Int;
+}
 
 /**
  * The SRender system renders everything on screen.
@@ -28,19 +34,29 @@ class SRender extends System implements SysRenderable {
    * All renderable bundles in the scene.
    */
   @:bundle
-  var renderBundles: Bundle<CRender, CTransform>;
+  var renderBundles: Bundle<CRender, CTransform, CLayer>;
 
   /**
-   * Should the bundles be sorted the next frame.
+   * The layers that will be rendered.
    */
-  var sortZ: Bool = false;
+  var layers: Array<Array<Bundle<CRender, CTransform, CLayer>>> = [];
+
+  /**
+   * All layer change events since the last render.
+   */
+  var layerChanges: Array<LayerChange> = [];
 
   /**
    * Initializes the render system.
    * @return This system.
    */
   public function create(): SRender {
-    Aeons.events.on(SortEvent.SORT_Z, sortListener);
+    // Create 16 empty layers to start with.
+    for (i in 0...16) {
+      layers.push([]);
+    }
+
+    Aeons.events.on(LayerEvent.LAYER_CHANGED, layerChange);
 
     return this;
   }
@@ -50,12 +66,38 @@ class SRender extends System implements SysRenderable {
    * @param target The main render target.
    */
   public function render(target: RenderTarget) {
-    // Sort all bundles if required.
-    if (sortZ) {
-      renderBundles.bundles.timSort(sort);
-      sortZ = false;
-    }
+    // Update entities in layers that have changed layer.
+    while (layerChanges.length > 0) {
+      final change = layerChanges.pop();
 
+      // Make sure the layers exist in the array.
+      while (layers.length - 1 < change.newLayer) {
+        layers.push([]);
+      }
+
+      // New layer component, No need to remove it from a layer.
+      if (change.currentLayer == -1) {
+        final bundle = renderBundles.getByEntityIt(change.entityId);
+        if (bundle != null) {
+          layers[change.newLayer].push(bundle);
+        }
+      } else {
+        var bundle: Bundle<CRender, CTransform, CLayer> = null;
+
+        for (b in layers[change.currentLayer]) {
+          if (b.entity.id == change.entityId) {
+            bundle = b;
+            break;
+          }
+        }
+
+        if (bundle == null) {
+          bundle = renderBundles.getByEntityIt(change.entityId);
+        }
+
+        layers[change.newLayer].push(bundle);
+      }
+    }
     /**
      * Update all transforms so the multiply further down goes correct.
      */
@@ -74,22 +116,26 @@ class SRender extends System implements SysRenderable {
       var brPos = Vector2.get();
       // Render all the bundles to the current camera.
       camTarget.start(true, camera.backgroundColor);
-      for (renderable in renderBundles) {
-        tlPos.set(camera.visibilityBounds.x, camera.visibilityBounds.y);
-        brPos.set(camera.visibilityBounds.x + camera.visibilityBounds.width,
-          camera.visibilityBounds.y + camera.visibilityBounds.height);
-        renderable.cTransform.worldToLocalPosition(tlPos);
-        renderable.cTransform.worldToLocalPosition(brPos);
-        var x = Math.min(tlPos.x, brPos.x) - renderable.cTransform.x;
-        var y = Math.min(tlPos.y, brPos.y) - renderable.cTransform.y;
-        var width = Math.abs(tlPos.x - brPos.x);
-        var height = Math.abs(tlPos.y - brPos.y);
-        localBounds.set(x, y, width, height);
 
-        // Only render components that are inside the camera bounds.
-        if (renderable.cRender.inCameraBounds(localBounds) || renderable.cTransform.containsParent(camTransform)) {
-          camTarget.transform.setFrom(camera.matrix.multmat(renderable.cTransform.matrix));
-          renderable.cRender.render(camTarget);
+      // Render entities per layer. Lowest first.
+      for (bundles in layers) {
+        for (renderable in bundles) {
+          tlPos.set(camera.visibilityBounds.x, camera.visibilityBounds.y);
+          brPos.set(camera.visibilityBounds.x + camera.visibilityBounds.width,
+            camera.visibilityBounds.y + camera.visibilityBounds.height);
+          renderable.cTransform.worldToLocalPosition(tlPos);
+          renderable.cTransform.worldToLocalPosition(brPos);
+          var x = Math.min(tlPos.x, brPos.x) - renderable.cTransform.x;
+          var y = Math.min(tlPos.y, brPos.y) - renderable.cTransform.y;
+          var width = Math.abs(tlPos.x - brPos.x);
+          var height = Math.abs(tlPos.y - brPos.y);
+          localBounds.set(x, y, width, height);
+
+          // Only render components that are inside the camera bounds.
+          if (renderable.cRender.inCameraBounds(localBounds) || renderable.cTransform.containsParent(camTransform)) {
+            camTarget.transform.setFrom(camera.matrix.multmat(renderable.cTransform.matrix));
+            renderable.cRender.render(camTarget);
+          }
         }
       }
 
@@ -119,26 +165,11 @@ class SRender extends System implements SysRenderable {
   }
 
   /**
-   * The sort z event listener.
-   * @param event The sort event.
+   * Called when an entity changes render layer.
+   * @param event The layer change event.
    */
-  function sortListener(event: SortEvent) {
-    sortZ = true;
-  }
-
-  /**
-   * Sort function for render bundles.
-   * Have to use the full path for the bundles because they don't exist before the macros create them.
-   * @param a The first bundle.
-   * @param b The next bundle.
-   */
-  function sort(a: aeons.bundles.BundleCRenderCTransform, b: aeons.bundles.BundleCRenderCTransform) {
-    if (a.cTransform.zIndex > b.cTransform.zIndex) {
-      return 1;
-    } else if (a.cTransform.zIndex < b.cTransform.zIndex) {
-      return -1;
-    }
-
-    return 0;
+  function layerChange(event: LayerEvent) {
+    // Add the update to the list so it can be updated next frame.
+    layerChanges.push({ entityId: event.entityId, currentLayer: event.currentLayer, newLayer: event.newLayer });
   }
 }

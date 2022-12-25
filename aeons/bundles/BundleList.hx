@@ -108,6 +108,21 @@ class BundleList<T:BundleBase> {
   }
 
   /**
+   * Get a bundle by the entity id.
+   * @param entityId The id.
+   * @return The bundle or null if it does not exist.
+   */
+  public function getByEntityIt(entityId): T {
+    for (bundle in bundles) {
+      if (bundle.entity.id == entityId) {
+        return bundle;
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * Add a callback function for when a bundle gets added.
    * @param callback The function to call.
    */

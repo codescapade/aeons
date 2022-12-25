@@ -2,6 +2,7 @@ package scenes;
 
 import aeons.Aeons;
 import aeons.components.CCamera;
+import aeons.components.CLayer;
 import aeons.components.CSprite;
 import aeons.components.CTransform;
 import aeons.core.Entity;
@@ -23,6 +24,7 @@ class RenderScene extends Scene {
     final eSprite = Aeons.entities.addEntity(Entity);
     eSprite.addComponent(CTransform).create({ x: 100, y: 100 });
     eSprite.addComponent(CSprite).create({ atlas: atlas, frameName: 'bunny' });
+    eSprite.addComponent(CLayer).create();
 
     Aeons.events.on(KeyboardEvent.KEY_DOWN, keyDown);
   }
