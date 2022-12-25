@@ -21,6 +21,8 @@ class Tween {
    */
   public var target(default, null): Dynamic;
 
+  public var percentageComplete(get, never): Float;
+
   /**
    * True if the tween is currently active.
    */
@@ -115,11 +117,10 @@ class Tween {
    * @param properties The properties on the target to tween.
    * @param isColor Is the property a color. They are different from normal values.
    */
-  public function reset(target: Dynamic, duration: Float, properties: Dynamic, isColor: Bool) {
-    this.target = target;
+  public function reset(target: Dynamic, duration: Float, properties: Dynamic, isColor: Bool = false) {
+    updateTarget(target, properties);
     this.duration = duration;
     this.isColor = isColor;
-    createDataList(target, properties);
     ease = Easing.linear;
     onComplete = null;
     onUpdate = null;
@@ -188,6 +189,11 @@ class Tween {
    */
   public function resume() {
     paused = false;
+  }
+
+  public function updateTarget(target: Dynamic, properties: Dynamic) {
+    this.target = target;
+    createDataList(target, properties);
   }
 
   /**
@@ -267,5 +273,9 @@ class Tween {
       }
       Reflect.setProperty(target, data.propertyName, value);
     }
+  }
+
+  function get_percentageComplete(): Float {
+    return (time / duration) * 100;
   }
 }

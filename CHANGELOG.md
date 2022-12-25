@@ -8,6 +8,8 @@
 ### Added
 - Added `magnitude()` function to `Vector2`.
 - Added `CLayer` component.
+- Added `percentageComplete` field to the `Tween` class you how can track how far along a tween is.
+- Added `updateTarget` function so you can update a target and properties mid tween.
 
 ### Removed
 - Removed null services because they are not needed.
