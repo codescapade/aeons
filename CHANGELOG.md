@@ -10,11 +10,13 @@
 - Added `CLayer` component.
 - Added `percentageComplete` field to the `Tween` class you how can track how far along a tween is.
 - Added `updateTarget` function so you can update a target and properties mid tween.
+- Added `layersToIgnore` field to the `CCamera` component. This allows you to render only certain layers per camera.
 
 ### Removed
 - Removed null services because they are not needed.
 - Removed zIndex from the `CTransform` component.
 - Removed broken timsort implementation.
+- Removed `anchorX` and `anchorY` from the `Renderable` interface. Not all renderable components need it.
 
 ### Changed
 - Instead of sorting using a zIndex, the `SRender` system now uses the `CLayer` component to determine the order.

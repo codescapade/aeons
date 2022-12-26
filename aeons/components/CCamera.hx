@@ -81,6 +81,11 @@ class CCamera extends Component {
   public var visibilityBounds(default, null): Rect;
 
   /**
+   * A list of layers that shouldn't be rendered by this camera.
+   */
+  public var layersToIgnore: Array<Int> = [];
+
+  /**
    * Transform component reference.
    */
   var transform: CTransform;
@@ -124,8 +129,15 @@ class CCamera extends Component {
       if (options.isMain) {
         main = this;
       }
+
       if (options.viewWidth == null && options.viewHeight == null) {
         fullView = true;
+      }
+
+      if (options.layersToIgnore != null) {
+        for (layer in options.layersToIgnore) {
+          layersToIgnore.push(layer);
+        }
       }
     }
 
@@ -329,4 +341,9 @@ typedef CCameraOptions = {
    * Shader pipeline to use for this camera.
    */
   var ?pipeline: Pipeline;
+
+  /**
+   * Layers that shouldn't be rendered by this camera.
+   */
+  var ?layersToIgnore: Array<Int>;
 }

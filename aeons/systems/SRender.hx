@@ -118,7 +118,12 @@ class SRender extends System implements SysRenderable {
       camTarget.start(true, camera.backgroundColor);
 
       // Render entities per layer. Lowest first.
-      for (bundles in layers) {
+      for (i in 0...layers.length) {
+        if (camera.layersToIgnore.contains(i)) {
+          continue;
+        }
+
+        final bundles = layers[i];
         for (renderable in bundles) {
           tlPos.set(camera.visibilityBounds.x, camera.visibilityBounds.y);
           brPos.set(camera.visibilityBounds.x + camera.visibilityBounds.width,

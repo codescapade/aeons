@@ -60,18 +60,6 @@ class CTilemap extends Component implements Renderable {
   var visibleBounds = new Rect();
 
   /**
-   * The x axis anchor. Not used in this component.
-   */
-  @:dox(hide)
-  public var anchorX = 0.0;
-
-  /**
-   * The y axis anchor. Not used in this component.
-   */
-  @:dox(hide)
-  public var anchorY = 0.0;
-
-  /**
    * Initialize the component.
    * @return This component.
    */
