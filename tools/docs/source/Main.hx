@@ -12,6 +12,7 @@ import aeons.components.CBitmapText;
 import aeons.components.CBoxShape;
 import aeons.components.CCamera;
 import aeons.components.CDebugRender;
+import aeons.components.CLayer;
 import aeons.components.CLdtkTilemap;
 import aeons.components.CNapeBody;
 import aeons.components.CNapeTilemapCollider;
@@ -45,8 +46,8 @@ import aeons.events.Event;
 import aeons.events.EventHandler;
 import aeons.events.Events;
 import aeons.events.EventType;
+import aeons.events.LayerEvent;
 import aeons.events.SceneEvent;
-import aeons.events.SortEvent;
 import aeons.graphics.animation.Animation;
 import aeons.graphics.animation.AnimationMode;
 import aeons.graphics.atlas.Atlas;
@@ -128,7 +129,6 @@ import aeons.utils.Storage;
 import aeons.utils.Timer;
 import aeons.utils.Timers;
 import aeons.utils.TimeStep;
-import aeons.utils.TimSort;
 import aeons.Aeons;
 
 class Main {
