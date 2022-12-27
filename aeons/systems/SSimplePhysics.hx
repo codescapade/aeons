@@ -138,6 +138,11 @@ class SSimplePhysics extends System implements Updatable implements DebugRendera
    */
   var bounds: Rect;
 
+  /**
+   * The number of physics iterations per step.
+   */
+  var iterations = 8;
+
   #if debug
   var debugRays: Array<RayDraw> = [];
   #end
@@ -156,6 +161,10 @@ class SSimplePhysics extends System implements Updatable implements DebugRendera
 
     if (options.gravity != null) {
       gravity.set(options.gravity.x, options.gravity.y);
+    }
+
+    if (options.iterations != null) {
+      iterations = options.iterations;
     }
 
     return this;
@@ -233,19 +242,21 @@ class SSimplePhysics extends System implements Updatable implements DebugRendera
     }
 
     // Check for collisions.
-    for (bundle in bundles) {
-      if (!bundle.entity.active || !bundle.cSimpleBody.active || !bundle.cTransform.active) {
-        continue;
+    for (i in 0...iterations) {
+      for (bundle in bundles) {
+        if (!bundle.entity.active || !bundle.cSimpleBody.active || !bundle.cTransform.active) {
+          continue;
+        }
+        final body = bundle.cSimpleBody.body;
+        while (treeList.length > 0) {
+          treeList.pop();
+        }
+        tree.getBodyList(body, treeList);
+        for (body2 in treeList) {
+          checkCollision(body, body2);
+        }
+        updateBodyTransform(bundle);
       }
-      final body = bundle.cSimpleBody.body;
-      while (treeList.length > 0) {
-        treeList.pop();
-      }
-      tree.getBodyList(body, treeList);
-      for (body2 in treeList) {
-        checkCollision(body, body2);
-      }
-      updateBodyTransform(bundle);
     }
 
     // Check if any collisions ended this update.
@@ -470,23 +481,35 @@ class SSimplePhysics extends System implements Updatable implements DebugRendera
         && !body2.isTrigger) {
         Physics.separate(body1, body2);
         if (body1.wasCollidingwith.indexOf(body2) == -1) {
-          interactions.push(Interaction.get(COLLISION_START, body1, body2));
+          if (!hasInteraction(COLLISION_START, body1, body2)) {
+            interactions.push(Interaction.get(COLLISION_START, body1, body2));
+          }
         } else {
-          interactions.push(Interaction.get(COLLISION_STAY, body1, body2));
+          if (!hasInteraction(COLLISION_STAY, body1, body2)) {
+            interactions.push(Interaction.get(COLLISION_STAY, body1, body2));
+          }
         }
         body1.collidingWith.push(body2);
       } else if (body1.isTrigger && !body2.isTrigger) {
         if (body1.wasTriggeredBy.indexOf(body2) == -1) {
-          interactions.push(Interaction.get(TRIGGER_START, body1, body2));
+          if (!hasInteraction(TRIGGER_START, body1, body2)) {
+            interactions.push(Interaction.get(TRIGGER_START, body1, body2));
+          }
         } else {
-          interactions.push(Interaction.get(TRIGGER_STAY, body1, body2));
+          if (!hasInteraction(TRIGGER_STAY, body1, body2)) {
+            interactions.push(Interaction.get(TRIGGER_STAY, body1, body2));
+          }
         }
         body1.triggeredBy.push(body2);
       } else if (body2.isTrigger && !body1.isTrigger) {
         if (body2.wasTriggeredBy.indexOf(body1) == -1) {
-          interactions.push(Interaction.get(TRIGGER_START, body1, body2));
+          if (!hasInteraction(TRIGGER_START, body1, body2)) {
+            interactions.push(Interaction.get(TRIGGER_START, body1, body2));
+          }
         } else {
-          interactions.push(Interaction.get(TRIGGER_STAY, body1, body2));
+          if (!hasInteraction(TRIGGER_STAY, body1, body2)) {
+            interactions.push(Interaction.get(TRIGGER_STAY, body1, body2));
+          }
         }
         body2.triggeredBy.push(body1);
       }
@@ -588,6 +611,23 @@ class SSimplePhysics extends System implements Updatable implements DebugRendera
     }
   }
 
+  /**
+   * Check if an interaction is already in the list.
+   * @param type The interaction type.
+   * @param body1 The first body.
+   * @param body2 The second body.
+   * @return True if an interaction like this is in the list.
+   */
+  function hasInteraction(type: InteractionType, body1: Body, body2: Body): Bool {
+    for (interaction in interactions) {
+      if (interaction.type == type && interaction.body1 == body1 && interaction.body2 == body2) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   inline function get_worldX(): Float {
     return bounds.x;
   }
@@ -656,6 +696,11 @@ typedef SimplePhysicsSystemOptions = {
    * The height of the physics world in pixels.
    */
   var worldHeight: Float;
+
+  /**
+   * The number of physics iterations per step. Default is 8.
+   */
+  var ?iterations: Int;
 
   /**
    * The world gravity;

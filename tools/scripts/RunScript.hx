@@ -452,6 +452,13 @@ class RunScript {
     }
     template = setPlaceholder(template, 'source', source);
 
+    // Add the aeons library.
+    var aeonsLib = 'project.addLibrary(\'aeons\');${lineEnd}';
+    if (aeons.noAeonsLib != null && aeons.noAeonsLib) {
+      aeonsLib = '';
+    }
+    template = setPlaceholder(template, 'aeons_lib', aeonsLib);
+
     // Add haxe libraries.
     var libraries = '';
     if (aeons.libraries != null) {
@@ -721,7 +728,7 @@ class RunScript {
     Sys.println('- aeons setup                  Download Kha and install the \'aeons\' command line command.');
     Sys.println('- aeons create [project_name]  Create a starter project in the current directory.');
     Sys.println('- aeons build [platform]       Build the project. See Kha for all supported platforms.');
-    Sys.println('- aeons atlas                  Generate a sprite atlas in a folder with a atlas.json config file.');
+    Sys.println('- aeons atlas                  Generate a sprite atlas in a folder with aeons.toml config file.');
     Sys.println('- aeons help                   Show this list');
     Sys.println('- aeons location [kha]         Shows the aeons path. If kha is added it shows the kha path.');
     Sys.println('- aeons update kha             Update the Kha framework to the commit tested with Aeons.');
@@ -740,6 +747,7 @@ typedef Project = {
   var ?shaderFolder: String;
   var ?sourceFolder: Array<String>;
   var ?icon: String;
+  var ?noAeonsLib: Bool; // Using this to run game from the tests folder locally.
   var ?libraries: Array<String>;
   var ?defines: Array<String>;
   var ?parameters: Array<String>;

@@ -3,6 +3,7 @@ package scenes;
 import aeons.Aeons;
 import aeons.components.CBoxShape;
 import aeons.components.CCamera;
+import aeons.components.CLayer;
 import aeons.components.CTransform;
 import aeons.core.Entity;
 import aeons.core.Scene;
@@ -41,6 +42,8 @@ class GameScene extends Scene {
       filled: true,
       fillColor: Color.Orange
     });
+
+    box.addComponent(CLayer).create();
 
     box.addComponent(CRotate).create();
   }

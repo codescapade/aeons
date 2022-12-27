@@ -13,7 +13,7 @@ project.addShaders('{{shaders}}/**');
 
 {{source}}
 
-project.addLibrary('aeons');
+{{aeons_lib}}
 {{libraries}}
 {{defines}}
 {{parameters}}

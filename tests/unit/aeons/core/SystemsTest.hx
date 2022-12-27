@@ -1,7 +1,8 @@
 package aeons.core;
 
-import aeons.graphics.RenderTarget;
 import aeons.core.services.InternalSystems;
+import aeons.graphics.RenderTarget;
+
 import buddy.BuddySuite;
 
 using buddy.Should;
@@ -98,8 +99,7 @@ class SystemsTest extends BuddySuite {
   }
 }
 
-
-class TestSystem extends System {
+private class TestSystem extends System {
   public var testValue: Int;
 
   public function create(value: Int): TestSystem {
@@ -109,10 +109,11 @@ class TestSystem extends System {
   }
 }
 
-class TestSystemOne extends System implements Updatable implements SysRenderable implements DebugRenderable {
+private class TestSystemOne extends System implements Updatable implements SysRenderable implements DebugRenderable {
   public var debugDrawEnabled = false;
 
   var updateList: Array<Int>;
+
   public function create(updateList: Array<Int>): TestSystemOne {
     this.updateList = updateList;
 
@@ -132,10 +133,11 @@ class TestSystemOne extends System implements Updatable implements SysRenderable
   }
 }
 
-class TestSystemTwo extends System implements Updatable implements SysRenderable implements DebugRenderable {
+private class TestSystemTwo extends System implements Updatable implements SysRenderable implements DebugRenderable {
   public var debugDrawEnabled = false;
 
   var updateList: Array<Int>;
+
   public function create(updateList: Array<Int>): TestSystemTwo {
     this.updateList = updateList;
 

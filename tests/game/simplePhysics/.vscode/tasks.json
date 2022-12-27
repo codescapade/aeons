@@ -1,0 +1,40 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Aeons Html5",
+			"type": "shell",
+			"command": "aeons",
+			"windows": {
+				"command": "aeons.bat"
+			},
+			"args": [
+				"build",
+				"html5"
+			],
+			"problemMatcher": [
+				"$haxe-absolute",
+				"$haxe"
+			],
+			"group": "build",
+		},
+		{
+			"label": "Build Aeons Html5 Debug",
+			"type": "shell",
+			"command": "aeons",
+			"windows": {
+				"command": "aeons.bat"
+			},
+			"args": [
+				"build",
+				"debug-html5",
+				"--debug"
+			],
+			"problemMatcher": [
+				"$haxe-absolute",
+				"$haxe"
+			],
+			"group": "build",
+		}
+	]
+}

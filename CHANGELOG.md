@@ -11,6 +11,7 @@
 - Added `percentageComplete` field to the `Tween` class you how can track how far along a tween is.
 - Added `updateTarget` function so you can update a target and properties mid tween.
 - Added `layersToIgnore` field to the `CCamera` component. This allows you to render only certain layers per camera.
+- Added `iteration` field to the `SSimplePhysics` system for more stability. Defaults to 8 iterations per step.
 
 ### Removed
 - Removed null services because they are not needed.

@@ -41,7 +41,7 @@ After the installation run `haxelib run aeons setup` to download Kha and setup t
 - `aeons setup` - Run the aeons setup process.
 - `aeons create [project name]` - Create a project with the chosen name in the current directory using the starter template.
 - `aeons build [platform]` - Inside an Aeons project it will build the project for the chosen platform.
-- `aeons atlas` Inside an Aeons project it will generate the sprite atlas from the `atlas.json` config.
+- `aeons atlas` Inside an Aeons project it will generate the sprite atlas from the `aeons.toml` config.
 - `aeons location [kha]` - Shows the aeons path. If kha is added it shows the kha path.
 - `aeons update kha` - Update the Kha framework to the commit tested with Aeons.
 - `aeons update latest-kha` - Update the Kha framework to the latest version. This could break Aeons if there were api changes in Kha.

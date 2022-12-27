@@ -23,11 +23,10 @@ class AudioTest extends BuddySuite {
         });
       });
 
-      it('Should play a sound.', (done) -> {
+      it('Should add a sound.', (done) -> {
         assets.loadSound('testSound', (sound: Sound) -> {
-          final channel = audio.play(sound);
+          final channel = audio.addChannel(sound);
           channel.should.not.be(null);
-          channel.stop();
           done();
         });
       });
