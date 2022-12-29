@@ -68,12 +68,20 @@ class Scene {
   }
 
   /**
-   * Add a new entity to the scene.
-   * @param entityType The entity you want to add.
+   * Add a new custom entity to the manager.
+   * @param entityType The custom entity type you want to add.
    * @return The created entity.
    */
-  public inline function addEntity<T: Entity>(entityType: Class<T>): T {
-    return sceneProviders.entities.addEntity(entityType);
+  public inline function addCustomEntity<T: Entity>(entityType: Class<T>): T {
+    return sceneProviders.entities.addCustomEntity(entityType);
+  }
+
+  /**
+   * Add a new entity.
+   * @return The created entity.
+   */
+  public inline function addEntity(): Entity {
+    return sceneProviders.entities.addEntity();
   }
 
   /**

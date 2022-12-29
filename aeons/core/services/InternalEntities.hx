@@ -65,12 +65,16 @@ class InternalEntities implements Entities {
    */
   public function new() {}
 
-  public function addEntity<T: Entity>(entityType: Class<T>): T {
+  public function addCustomEntity<T: Entity>(entityType: Class<T>): T {
     final id = getNextEntityId();
     final entity = Type.createInstance(entityType, [id]);
     entities.push(entity);
 
     return entity;
+  }
+
+  public function addEntity(): Entity {
+    return addCustomEntity(Entity);
   }
 
   public function removeEntity(entity: Entity) {

@@ -80,14 +80,14 @@ class SoundChannel {
   }
 
   /**
-   * Audio manage4 can update the master volume.
+   * Audio manager can update the master volume.
    * @param value The new volume.
    */
   @:allow(aeons.audio.Audio)
   inline function updateMasterVolume(value: Float) {
     internalMasterVolume = value;
 
-    // Call the volume setter to update the channel volume with th3 new master volume.
+    // Call the volume setter to update the channel volume with the new master volume.
     volume = internalVolume;
   }
 

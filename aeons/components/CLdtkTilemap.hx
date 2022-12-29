@@ -58,6 +58,7 @@ class CLdtkTilemap extends Component implements Renderable {
    */
   public function addLayer(layer: LdtkLayer) {
     layers.unshift(layer);
+    layerMap[layer.id] = layer;
   }
 
   /**
@@ -67,6 +68,7 @@ class CLdtkTilemap extends Component implements Renderable {
   public function addLayers(layers: Array<LdtkLayer>) {
     for (layer in layers) {
       this.layers.push(layer);
+      layerMap[layer.id] = layer;
     }
   }
 

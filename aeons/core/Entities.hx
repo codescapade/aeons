@@ -2,11 +2,17 @@ package aeons.core;
 
 interface Entities {
   /**
-   * Add a new entity to the manager.
-   * @param entityType The entity type you want to add.
+   * Add a new custom entity to the manager.
+   * @param entityType The custom entity type you want to add.
    * @return The created entity.
    */
-  function addEntity<T: Entity>(entityType: Class<T>): T;
+  function addCustomEntity<T: Entity>(entityType: Class<T>): T;
+
+  /**
+   * Add a new entity.
+   * @return The created entity.
+   */
+  function addEntity(): Entity;
 
   /**
    * Remove an entity from the manager.
