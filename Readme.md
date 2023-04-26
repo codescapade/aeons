@@ -1,5 +1,6 @@
 ![aeons_engine_logo](tools/data/logo/logo_640.png)
-## This Engine is currently in an alpha state and things might change frequently.
+## This Engine is no longer being developed and has been archived.
+
 <br/>
 <br/>
 
